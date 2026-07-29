@@ -1,0 +1,34 @@
+{
+  "decode_tok_s": 107.825544,
+  "prefill_tok_s": 1109.171332,
+  "baseline_decode_tok_s": 107.353814,
+  "baseline_prefill_tok_s": 1139.150972,
+  "decode_speedup": 1.004394161533935,
+  "prefill_speedup": 0.9736824698947806,
+  "decode_floor": 0.95,
+  "prefill_floor": 0.95,
+  "floors_ok": true,
+  "score": 0.9966265956137631,
+  "increase_pct": -0.33734043862369,
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
+  "track": "serial",
+  "not": "multi-slot aggregate tok/s",
+  "baseline_path": "/home/frosty40/turbo/lx/baseline/baseline.json",
+  "candidate_path": "/home/frosty40/turbo/lx/results/abs-serial-w1-20260729T201511Z/graph_on_ub4k/metrics.json",
+  "candidate_meta": {
+    "stamp": "",
+    "env": {
+      "GGML_SYCL_DISABLE_DNN": null,
+      "GGML_SYCL_DISABLE_FUSION": null,
+      "GGML_SYCL_DISABLE_GRAPH": "0",
+      "GGML_SYCL_DISABLE_TOPK_MOE": null,
+      "GGML_SYCL_FORCE_MMQ": null
+    }
+  },
+  "baseline_meta": {
+    "stamp": "20260729T183834Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "v0 control pin: serial track, Q4_K_M, base-control"
+  }
+}

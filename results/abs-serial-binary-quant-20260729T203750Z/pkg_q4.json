@@ -1,0 +1,7 @@
+{
+  "tag": "pkg_q4",
+  "pp512": 819.159312,
+  "tg128": 104.963946,
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-pr-private-latest/build-positive-package/bin",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf"
+}

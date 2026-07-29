@@ -1,0 +1,19 @@
+# Large / ephemeral traces
+results/kernel-trace-*/
+results/**/trace.log
+results/**/*.err
+results/.sycl-ls.txt
+results/build-*.log
+results/resume-after-reboot-*.log
+results/quest-mount-doom/logs/
+results/quest-mount-doom/*.pid
+results/quest-mount-doom/cycles/
+
+# Local binary / env noise
+*.o
+*.so
+*.so.*
+__pycache__/
+.DS_Store
+*.swp
+*~

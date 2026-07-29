@@ -1,0 +1,7 @@
+{
+  "tag": "ctrl_q5",
+  "pp512": 1185.465137,
+  "tg128": 100.294249,
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin",
+  "model": "/mnt/data2tb/laguna/Laguna-XS-2.1-GGUF-community/Laguna-XS-2.1-Q5_K_M.gguf"
+}

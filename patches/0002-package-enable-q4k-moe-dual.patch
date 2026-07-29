@@ -1,0 +1,65 @@
+diff --git a/ggml/src/ggml-sycl/ggml-sycl.cpp b/ggml/src/ggml-sycl/ggml-sycl.cpp
+index 053bce569..e8955c985 100644
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp
+@@ -4580,10 +4580,13 @@ static bool ggml_sycl_mul_mat_id_dual_swiglu_fused(
+         return env != nullptr && std::atoi(env) != 0;
+     }();
+ 
++    // Q4_K enabled for Laguna XS serial (was Q5_K/Q6_K only — type-rejected Q4_K).
++    // Kernel falls back to two single vec_dots + fused silu*up when .dual() is absent.
+     if (gate->op != GGML_OP_MUL_MAT_ID || up->op != GGML_OP_MUL_MAT_ID ||
+         gate->src[1] != up->src[1] || gate->src[2] != up->src[2] ||
+         gate_weights->type != up_weights->type ||
+-        (gate_weights->type != GGML_TYPE_Q5_K &&
++        (gate_weights->type != GGML_TYPE_Q4_K &&
++         gate_weights->type != GGML_TYPE_Q5_K &&
+          gate_weights->type != GGML_TYPE_Q6_K) ||
+         src1->type != GGML_TYPE_F32 || gate->type != GGML_TYPE_F32 ||
+         up->type != GGML_TYPE_F32 || glu->type != GGML_TYPE_F32) {
+diff --git a/ggml/src/ggml-sycl/mmvq.cpp b/ggml/src/ggml-sycl/mmvq.cpp
+index 2751aab43..d86c2a606 100644
+--- a/ggml/src/ggml-sycl/mmvq.cpp
++++ b/ggml/src/ggml-sycl/mmvq.cpp
+@@ -5030,6 +5030,16 @@ bool ggml_sycl_mul_mat_vec_q_id_dual_swiglu_reorder(
+     int ids_row_stride, size_t src1_token_stride, size_t dst_token_stride,
+     dpct::queue_ptr stream) {
+     switch (src0_type) {
++        case GGML_TYPE_Q4_K:
++            // Laguna XS 2.1 serial path. Uses dual-submit-fused SwiGLU; Q4_K
++            // vecdot has no .dual() so kernel does two single dots + silu*up.
++            launch_mul_mat_vec_q_moe_dual_swiglu_reorder<
++                reorder_vec_dot_q_sycl<GGML_TYPE_Q4_K>>(
++                    vx_gate_base, vx_up_base, vy, ids_dev, dst_base, ncols,
++                    nrows, n_experts_used, gate_expert_stride, up_expert_stride,
++                    dst_row_stride, src1_row_stride, n_tokens, ids_row_stride,
++                    src1_token_stride, dst_token_stride, stream);
++            return true;
+         case GGML_TYPE_Q5_K:
+             launch_mul_mat_vec_q_moe_dual_swiglu_reorder<
+                 reorder_vec_dot_q_sycl<GGML_TYPE_Q5_K>>(
+@@ -6765,14 +6775,22 @@ bool ggml_sycl_mul_mat_vec_q_id_dual_swiglu_grouped_reorder(
+         n_experts_used > 0xffff) {
+         return false;
+     }
+-    if (src0_type != GGML_TYPE_Q5_K && src0_type != GGML_TYPE_Q6_K) {
++    if (src0_type != GGML_TYPE_Q4_K && src0_type != GGML_TYPE_Q5_K &&
++        src0_type != GGML_TYPE_Q6_K) {
+         return false;
+     }
+ 
+     launch_mmid_group_pairs(ids_dev, scratch, n_tokens, n_experts_used,
+                             ids_row_stride, n_as, stream);
+     const int max_groups = std::min(n_tokens * n_experts_used, n_as);
+-    if (src0_type == GGML_TYPE_Q5_K) {
++    if (src0_type == GGML_TYPE_Q4_K) {
++        launch_mul_mat_vec_q_moe_dual_swiglu_grouped_reorder<
++            reorder_vec_dot_q_sycl<GGML_TYPE_Q4_K>>(
++                vx_gate_base, vx_up_base, vy, scratch, dst_base, ncols,
++                nrows, n_as, max_groups, gate_expert_stride,
++                up_expert_stride, dst_row_stride, src1_row_stride,
++                src1_token_stride, dst_token_stride, stream);
++    } else if (src0_type == GGML_TYPE_Q5_K) {
+         launch_mul_mat_vec_q_moe_dual_swiglu_grouped_reorder<
+             reorder_vec_dot_q_sycl<GGML_TYPE_Q5_K>>(
+                 vx_gate_base, vx_up_base, vy, scratch, dst_base, ncols,

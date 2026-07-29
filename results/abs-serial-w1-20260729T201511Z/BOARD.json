@@ -1,0 +1,199 @@
+{
+  "track": "serial-absolute-wave1",
+  "baseline": {
+    "pp512": 1139.150972,
+    "tg128": 107.353814
+  },
+  "best_score": {
+    "arm": "t32_ub4k",
+    "ok": true,
+    "pp512": 1143.101574,
+    "tg128": 107.792894,
+    "score": 1.0039344899293199,
+    "increase_pct": 0.39344899293198843,
+    "decode_speedup": 1.004090027020372,
+    "prefill_speedup": 1.0034680232007036
+  },
+  "best_tg": {
+    "arm": "dnn_on_ub4k",
+    "ok": true,
+    "pp512": 1136.918882,
+    "tg128": 107.863502,
+    "score": 1.0030667328278684,
+    "increase_pct": 0.30667328278684014,
+    "decode_speedup": 1.0047477400290594,
+    "prefill_speedup": 0.9980405670057226
+  },
+  "best_pp": {
+    "arm": "ub8k_b8k",
+    "ok": true,
+    "pp512": 1146.925001,
+    "tg128": 107.64168,
+    "score": 1.003715602881213,
+    "increase_pct": 0.3715602881213087,
+    "decode_speedup": 1.0026814697053985,
+    "prefill_speedup": 1.006824406238579
+  },
+  "arms": [
+    {
+      "arm": "t32_ub4k",
+      "ok": true,
+      "pp512": 1143.101574,
+      "tg128": 107.792894,
+      "score": 1.0039344899293199,
+      "increase_pct": 0.39344899293198843,
+      "decode_speedup": 1.004090027020372,
+      "prefill_speedup": 1.0034680232007036
+    },
+    {
+      "arm": "topk_off_ub4k",
+      "ok": true,
+      "pp512": 1142.176199,
+      "tg128": 107.816598,
+      "score": 1.0038967876713139,
+      "increase_pct": 0.38967876713138505,
+      "decode_speedup": 1.004310829608718,
+      "prefill_speedup": 1.002655685746981
+    },
+    {
+      "arm": "ub8k_b8k",
+      "ok": true,
+      "pp512": 1146.925001,
+      "tg128": 107.64168,
+      "score": 1.003715602881213,
+      "increase_pct": 0.3715602881213087,
+      "decode_speedup": 1.0026814697053985,
+      "prefill_speedup": 1.006824406238579
+    },
+    {
+      "arm": "ship_ub4k_b8k",
+      "ok": true,
+      "pp512": 1142.825674,
+      "tg128": 107.762761,
+      "score": 1.0036634282666264,
+      "increase_pct": 0.3663428266626356,
+      "decode_speedup": 1.0038093383435822,
+      "prefill_speedup": 1.0032258252771784
+    },
+    {
+      "arm": "dnn_off_ub4k",
+      "ok": true,
+      "pp512": 1142.670261,
+      "tg128": 107.721774,
+      "score": 1.0033429969856107,
+      "increase_pct": 0.3342996985610691,
+      "decode_speedup": 1.0034275447353924,
+      "prefill_speedup": 1.0030893964772916
+    },
+    {
+      "arm": "ub512_b2k",
+      "ok": true,
+      "pp512": 1146.034077,
+      "tg128": 107.612567,
+      "score": 1.0033170584708426,
+      "increase_pct": 0.33170584708426265,
+      "decode_speedup": 1.0024102823212224,
+      "prefill_speedup": 1.0060423114838901
+    },
+    {
+      "arm": "dnn_on_ub4k",
+      "ok": true,
+      "pp512": 1136.918882,
+      "tg128": 107.863502,
+      "score": 1.0030667328278684,
+      "increase_pct": 0.30667328278684014,
+      "decode_speedup": 1.0047477400290594,
+      "prefill_speedup": 0.9980405670057226
+    },
+    {
+      "arm": "reconfirm_baseline",
+      "ok": true,
+      "pp512": 1142.019776,
+      "tg128": 107.629697,
+      "score": 1.0025569784430401,
+      "increase_pct": 0.25569784430401477,
+      "decode_speedup": 1.0025698481471743,
+      "prefill_speedup": 1.0025183703218576
+    },
+    {
+      "arm": "t8_ub4k",
+      "ok": true,
+      "pp512": 1140.987847,
+      "tg128": 107.557201,
+      "score": 1.0018240275746697,
+      "increase_pct": 0.18240275746697066,
+      "decode_speedup": 1.001894548432159,
+      "prefill_speedup": 1.0016124947835274
+    },
+    {
+      "arm": "fusion_off_ub4k",
+      "ok": true,
+      "pp512": 1133.711246,
+      "tg128": 107.784756,
+      "score": 1.0018096039981803,
+      "increase_pct": 0.18096039981803091,
+      "decode_speedup": 1.004014221609304,
+      "prefill_speedup": 0.9952247541074829
+    },
+    {
+      "arm": "ub2k_b4k",
+      "ok": true,
+      "pp512": 1141.911478,
+      "tg128": 107.366502,
+      "score": 1.0006939693719124,
+      "increase_pct": 0.06939693719123508,
+      "decode_speedup": 1.000118188628119,
+      "prefill_speedup": 1.002423301272485
+    },
+    {
+      "arm": "ub1k_b4k",
+      "ok": true,
+      "pp512": 1133.06918,
+      "tg128": 107.610471,
+      "score": 1.0004527349860066,
+      "increase_pct": 0.04527349860066199,
+      "decode_speedup": 1.0023907580964009,
+      "prefill_speedup": 0.9946611185439959
+    },
+    {
+      "arm": "mmq_ub4k",
+      "ok": true,
+      "pp512": 1139.06799,
+      "tg128": 107.350516,
+      "score": 0.9999587478289017,
+      "increase_pct": -0.004125217109829382,
+      "decode_speedup": 0.9999692791538827,
+      "prefill_speedup": 0.9999271545194276
+    },
+    {
+      "arm": "ub4k_b4k",
+      "ok": true,
+      "pp512": 1140.80037,
+      "tg128": 107.292071,
+      "score": 0.9999302445144985,
+      "increase_pct": -0.006975548550147703,
+      "decode_speedup": 0.9994248644021162,
+      "prefill_speedup": 1.001447918704844
+    },
+    {
+      "arm": "graph_on_ub4k",
+      "ok": true,
+      "pp512": 1109.171332,
+      "tg128": 107.825544,
+      "score": 0.9966265956137631,
+      "increase_pct": -0.33734043862369,
+      "decode_speedup": 1.004394161533935,
+      "prefill_speedup": 0.9736824698947806
+    },
+    {
+      "arm": "fa_off_ub4k",
+      "ok": true,
+      "pp512": 1039.183566,
+      "tg128": 72.20622,
+      "score": null,
+      "increase_pct": null,
+      "decode_speedup": 0.6726004164137103,
+      "prefill_speedup": 0.9122439356528065
+    }
+  ]
+}

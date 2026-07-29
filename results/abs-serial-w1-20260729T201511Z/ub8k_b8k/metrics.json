@@ -1,0 +1,15 @@
+{
+  "name": "ub8k_b8k",
+  "ok": true,
+  "stamp": "",
+  "track": "serial-absolute",
+  "pp512": 1146.925001,
+  "tg128": 107.64168,
+  "env": {
+    "GGML_SYCL_DISABLE_DNN": null,
+    "GGML_SYCL_DISABLE_FUSION": null,
+    "GGML_SYCL_DISABLE_GRAPH": null,
+    "GGML_SYCL_DISABLE_TOPK_MOE": null,
+    "GGML_SYCL_FORCE_MMQ": null
+  }
+}
