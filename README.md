@@ -37,13 +37,16 @@ cat results/LATEST_SCORE.json
 ```text
 env.sh                 # device, binary, model, serial flags
 TASK.md                # problem statement + claim boundary
+QUEST.md               # live Mount Doom board
+notes/                 # ship notes
+patches/               # kernel patches (apply on control / package trees)
 scripts/
   bench-serial.sh      # pp512 + tg128 → metrics/score.json
   score.py             # mlx.fast formula
   golden-smoke.sh      # greedy match gate
 baseline/baseline.json # pinned B70 reference (do not silent-rewrite)
 correctness/golden.json
-results/<stamp>/       # metrics.json + score.json
+results/<stamp>/       # metrics.json + score.json (large traces gitignored)
 ```
 
 ## Claim boundary (short)
