@@ -16,8 +16,8 @@ Kill down packing: `GGML_SYCL_MOE_DOWN_SGS=1`
 ## NEXT
 
 1. lm_head prune/mask only with golden oracle.  
-2. Prefill multi-token dual MMVQ golden fix.  
-3. Router full-norm / dual multi-sg / dense dual+down residual closed under tip.
+2. Prefill expert-loop host wait / multi-token dual MMVQ golden.  
+3. Packing re-probes closed under tip (`SHIP_20260730_packing_reprobe.md`).
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin

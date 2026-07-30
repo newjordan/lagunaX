@@ -1,0 +1,6 @@
+From: lagunaX fire
+Subject: [PATCH 0038] control: dense dual MMVQ multi-sg OPT-IN
+
+GGML_SYCL_DENSE_DUAL_SGS=2|4|8|16 (default 1).
+Research: sgs=4/8 golden OK, score ≤ tip +52.22%.
+See notes/SHIP_20260730_packing_reprobe.md
