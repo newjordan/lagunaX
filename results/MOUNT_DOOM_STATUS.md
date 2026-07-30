@@ -15,9 +15,11 @@ Kill packed reduce: `GGML_SYCL_DISABLE_MOE_PACKED_REDUCE=1`
 
 ## NEXT
 
-1. lm_head prune/mask only with golden oracle.  
-2. Prefill counts D2H experiments **closed** (copy-q + shared-USM both regress).  
-3. Packing / dual sgs closed under tip.
+1. **lm_head prune deprioritized** — ROI ceiling ~+4–5 tg / ~+3–4 pp score max
+   (`notes/SHIP_20260730_lm_head_roi_ceiling.md`). Not highest leverage.
+2. Re-trace under tip for non-lm_head hotspots (attn / residual / remaining MoE meta).
+3. Prefill counts D2H experiments **closed** (copy-q + shared-USM both regress).
+4. Packing / dual sgs closed under tip.
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
