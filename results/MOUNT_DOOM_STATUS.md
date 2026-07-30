@@ -16,13 +16,14 @@ Kill all dual: `GGML_SYCL_DISABLE_MOE_DUAL_SWIGLU=1`
 
 ## RESEARCH (not tip)
 
+- Dual+down multi-token fuse: **SEGFAULT** when ENABLE_MOE_DUAL_DOWN=1 (`SHIP_20260730_dual_down_multitoken.md`); default OFF
 - Dense dual prefill cap 2048: golden OK, **pp −521** → reverted  
 - Per-token dual MMVQ multi-token: golden FAIL class (opt-in MMVQ flag only)
 
 ## NEXT
 
-1. lm_head.  
-2. Dual+down multi-token epilogue.  
+1. lm_head (decode-weighted).  
+2. Fix dual+down segfault before default ON.  
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
