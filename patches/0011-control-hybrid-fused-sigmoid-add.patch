@@ -1,0 +1,91 @@
+From: lagunaX campaign
+Subject: [PATCH 0011] control: hybrid fused sigmoid+add (default ON, tip)
+
+One kernel for Laguna SIGMOID+ADD(bias); stock argsort. Golden OK.
+Formal ~tg120.2 / pp1148.9 / +9.09%. Kill: GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD=1
+
+--- a/ggml/src/ggml-sycl/topk-moe.cpp	2026-07-30 00:33:05.467706899 -0500
++++ b/ggml/src/ggml-sycl/topk-moe.cpp	2026-07-30 00:33:05.467753797 -0500
+@@ -1 +1,80 @@
+-// stock sigmoid then add via compute_forward
++// Fused sigmoid + score-correction bias ADD.
++// Writes both sigmoid buffer (unbiased probs for gather) and add buffer (argsort input).
++// f32: s = 1/(1+exp(-x)) then add = s + bias[i % n_experts] — matches stock op_sigmoid + binbcast ADD.
++// Kill: GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD=1
++static void router_sigmoid_add_kernel(const float * __restrict__ logits, const float * __restrict__ bias,
++                                      float * __restrict__ sig_out, float * __restrict__ add_out,
++                                      const int n_experts, const int n_elts) {
++    auto      item = sycl::ext::oneapi::this_work_item::get_nd_item<1>();
++    const int tid  = (int) item.get_global_id(0);
++    if (tid >= n_elts) {
++        return;
++    }
++    const float x = logits[tid];
++    const float s = 1.0f / (1.0f + sycl::exp(-x));
++    sig_out[tid]  = s;
++    add_out[tid]  = s + bias[tid % n_experts];
++}
++
++static bool ggml_sycl_router_sigmoid_add_enabled() {
++    static const bool disabled = []() {
++        const char * env = getenv("GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
++    return !disabled;
++}
++
++
++// ... hybrid Stage A ...
++// Stage A: selection. Prefer fused sigmoid+add (one launch); else stock.
++    queue_ptr stream = ctx.stream();
++    ggml_sycl_set_device(ctx.device);
++
++    const ggml_tensor * logits = sigmoid_node->src[0];
++    const ggml_tensor * bias   = add_node->src[1];
++    const int n_experts        = (int) sigmoid_node->ne[0];
++    const int n_rows           = (int) ggml_nrows(sigmoid_node);
++    const int64_t n_elts       = ggml_nelements(sigmoid_node);
++
++    const bool fuse_sig_add =
++        ggml_sycl_router_sigmoid_add_enabled() &&
++        logits && bias &&
++        logits->type == GGML_TYPE_F32 && bias->type == GGML_TYPE_F32 &&
++        sigmoid_node->type == GGML_TYPE_F32 && add_node->type == GGML_TYPE_F32 &&
++        ggml_is_contiguous(logits) && ggml_is_contiguous(sigmoid_node) &&
++        ggml_is_contiguous(add_node) && ggml_is_contiguous(bias) &&
++        ggml_nelements(logits) == n_elts && ggml_nelements(add_node) == n_elts &&
++        bias->ne[0] == n_experts && ggml_nelements(bias) == n_experts &&
++        add_node->src[0] == sigmoid_node;
++
++    if (fuse_sig_add) {
++        const float * logits_d = (const float *) logits->data;
++        const float * bias_d   = (const float *) bias->data;
++        float *       sig_d    = (float *) sigmoid_node->data;
++        float *       add_d    = (float *) add_node->data;
++        constexpr int BS = 256;
++        const int nblocks = (int) ((n_elts + BS - 1) / BS);
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++            [=](sycl::nd_item<1> item) {
++                router_sigmoid_add_kernel(logits_d, bias_d, sig_d, add_d, n_experts, (int) n_elts);
++                GGML_UNUSED(item);
++            });
++        {
++            static std::atomic<int> once{0};
++            if (once.fetch_add(1) == 0) {
++                fprintf(stderr,
++                        "[lx-control-topk-moe] fused sigmoid+add n_experts=%d n_rows=%d\n",
++                        n_experts, n_rows);
++            }
++        }
++    } else {
++        GGML_ASSERT(ggml_sycl_compute_forward(ctx, sigmoid_node));
++        GGML_ASSERT(ggml_sycl_compute_forward(ctx, add_node));
++    }
++    GGML_ASSERT(ggml_sycl_compute_forward(ctx, argsort_node));
++
++    const float *   probs_d = (const float *) sigmoid_node->data;
++    const int32_t * ids_d   = (const int32_t *) argsort_node->data;
++
++    
+\ No newline at end of file

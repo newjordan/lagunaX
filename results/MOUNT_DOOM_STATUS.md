@@ -1,26 +1,18 @@
-# Mount Doom status — 2026-07-30 (device mmid counting-sort)
+# Mount Doom status — 2026-07-30 (fused sigmoid+add tip)
 
 ## LIVE NOW — tip + research track
 
-**Scored tip:** MoE dual + hybrid mode2 + dense dual + moe-down + **device mmid counting-sort** (all default ON)  
+**Scored tip:** MoE dual + hybrid mode2 + **fused sigmoid+add** + dense dual + moe-down + device mmid sort  
 **Research (golden FAIL / opt-in):** full fused norm · integrated down · multi-token MMVQ · dual multi-token
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| tip hybrid mode2 (prior) | 1141.4 | 118.8 | +7.94% |
-| **+ device counting-sort** | **1144.8** | **118.6** | **+7.91%** (noise) |
+| **tip fused sigmoid+add** | **1148.9** | **120.2** | **+9.09%** |
+| prior + device counting-sort | 1144.8 | 118.6 | +7.91% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
-Formal: `results/20260730T052508Z/` · `notes/SHIP_20260730_mmid_device_sort.md` · `patches/0010-*.patch`  
-Kill device sort: `GGML_SYCL_DISABLE_MMID_DEVICE_SORT=1`
-
-- **Golden:** OK
-- **Floors:** OK
-- **Hit log:** `[lx-control-moe-dual] fuse hit (gate+up+swiglu)`
-- **Formal:** `results/20260729T232021Z/score.json` · `LATEST_SCORE.json`
-- **A/B:** `results/ctrl-q4k-dual-20260729T231807Z/`
-- **Code:** `treebeard-base-control-latest` (`mmvq.cpp`, `ggml-sycl.cpp`, `topk-moe` fuse)
-- Disable A/B: `GGML_SYCL_DISABLE_MOE_DUAL_SWIGLU=1`
+Formal: `results/20260730T053204Z/` · `notes/SHIP_20260730_router_sigmoid_add.md` · `patches/0011-*.patch`  
+Kill fused sig+add: `GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD=1`
 
 ### Why this worked
 Package dual was **type-rejecting Q4_K** (Q5/Q6 only). Enabling Q4_K on package helped decode (~105→107) but package still loses ~28% prefill. Porting dual onto **control** (champion base) stacks the fuse without the package solo tax.
