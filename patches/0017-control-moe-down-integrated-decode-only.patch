@@ -1,0 +1,34 @@
+From: lagunaX fire
+Subject: [PATCH 0017] control: decode-only integrated MoE-down default ON + skip DIV store
+
+# Summary
+
+Landed on treebeard-base-control-latest working tree (cumulative tip stack).
+
+## Change A — MoE down integrated (ggml-sycl.cpp fuse_moe_down_weighted)
+
+**Default ON** for decode only (`n_tokens==1 && ne12==1`):
+
+- Quantize acts with `quantize_and_reorder_q8_1_soa`
+- One-kernel `ggml_sycl_mul_mat_vec_q_id_weighted_reorder` with
+  `scratch_mmid = mmid->data`, `dst = fuse output`
+- Prefill multi-token keeps two-step `mul_mat_id` + k8 weighted reduce
+
+Env:
+- Kill: `GGML_SYCL_DISABLE_MOE_DOWN_INTEGRATED=1` or `ENABLE_MOE_DOWN_INTEGRATED=0`
+- Oracle two-step GEMV+reduce: `GGML_SYCL_MOE_DOWN_INTEGRATED_MODE=1`
+
+Root cause of prior FAIL: integrated path ran for prefill ne12>1 using fused
+reorder while stock multi-token mmid uses host counting-sort — not one-kernel math.
+
+## Change B — Hybrid mode7/8 skip DIV store (topk-moe.cpp)
+
+When DIV and SCALE buffers differ, write only SCALE (`q * s + b`). DIV is fuse
+intermediate (outputs are VIEW ids + SCALE weights).
+
+## Formal
+
+results/20260730T072139Z/ : pp512=1147.6 tg128=122.4 **+10.55%** golden OK
+
+See notes/SHIP_20260730_moe_down_integrated_decode.md
+Full control delta dump: results/20260730T072139Z/control-tree-delta.diff
