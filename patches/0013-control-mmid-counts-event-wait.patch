@@ -1,0 +1,21 @@
+From: lagunaX campaign
+Subject: [PATCH 0013] control: mmid counts event-wait (pack overlap)
+
+Replace stream->wait() after counts D2H with sycl::event wait so pack can
+overlap host offset build. Full stream wait after pack regresses pp ~20 t/s.
+Golden OK. Formal ~+9.04% vs pin (tip stamp remains fused sigmoid+add +9.09%).
+Kill: GGML_SYCL_DISABLE_MMID_DEVICE_SORT=1
+
+Hit: [lx-control-mmid] device counting-sort+prefix+ev n_tokens=... k=... n_experts=...
+
+Order:
+  hist → exclusive_scan → fill → memcpy D2H (event) → pack
+       → event.wait() → host offsets → expert GEMMs → scatter
+
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp
+@@ ggml_sycl_mul_mat_id multi-token device-sort branch
+- stream->memcpy(host_counts); stream->wait(); host offsets; pack; GEMMs
++ fill; counts_ready_ev = stream->memcpy(...); pack;
++ counts_ready_ev.wait(); host offsets; GEMMs
++ (pool allocs for counts/next hoisted to outlive event wait)

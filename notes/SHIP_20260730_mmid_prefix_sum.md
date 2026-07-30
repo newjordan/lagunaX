@@ -54,7 +54,7 @@ This change is default infrastructure under the same mmid device-sort kill-switc
 
 ## Next
 
-1. **True zero-wait expert dispatch** — compact non-empty expert list on device (or USM host-visible counts) so host never needs a mid-op wait; or fuse expert loop.  
-2. Bitexact multi-token dual/MMVQ (still golden-fail).  
-3. Fused sum/div router norm (still golden-fail).  
-4. Tiny-N MMVQ launch geometry for N≈9–29 (decode smoking gun).
+1. ~~True zero-wait / better wait~~ → **event-wait** shipped (`SHIP_20260730_mmid_counts_event.md`, ~+9.04%).  
+2. Pinned/USM counts or compact non-empty list.  
+3. Bitexact multi-token dual/MMVQ (still golden-fail).  
+4. Fused sum/div router norm (still golden-fail).
