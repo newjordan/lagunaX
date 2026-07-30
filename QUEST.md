@@ -30,13 +30,13 @@
    - Package dual was type-rejecting Q4_K (Q5/Q6 only)
    - Control dual fuse: **pp~1144 / tg~110.1 / score ~+2%** vs baseline; golden OK
    - Code in `treebeard-base-control-latest` (default ON; disable via env)
-8. **Frontier map** — `notes/FRONTIER_20260729.md`
-   - M5 inverse-scatter / lm_head-mask: only partial analogues here
-   - **Unfused Laguna router** (topk fuse declines on score-correction bias)
-   - Full **vocab=100352 lm_head** every token (~116 MB Q4 traffic)
-   - Prefill `mul_mat_id` host wait when `ne12>1`
-   - **Topk+bias fuse implemented** (`ENABLE_TOPK_MOE_BIAS=1`): ~**+5 tg** but **golden fail** → opt-in only
-   - Scored tip remains **dual-only** (~+1.6–2%)
+8. **Frontier map** — `notes/FRONTIER_20260729.md` (superseded live tip below)
+   - Full **vocab=100352 lm_head** every token (~116 MB Q4 traffic) — still open
+   - Prefill multi-token dual golden still hard
+9. **LIVE TIP (2026-07-30)** — dual+down decode + hybrid mode8 + **true top-k**
+   - Formal: **pp~3403 / tg~129.7 / +51.48%** vs pin; golden OK
+   - True top-k kill: `GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1`
+   - See `notes/SHIP_20260730_router_true_topk.md` · `results/MOUNT_DOOM_STATUS.md`
 
 ## Loop (autonomous)
 

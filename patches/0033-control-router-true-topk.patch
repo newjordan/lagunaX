@@ -1,0 +1,171 @@
+From: lagunaX fire
+Subject: [PATCH 0033] control: hybrid router true top-k (not full argsort)
+
+Default ON in hybrid Laguna bias path. Kill: GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1
+
+Formal results/20260730T105726Z/: tg=129.68 pp=3403.25 +51.48% golden OK
+Prior tip: tg=128.8 pp=3422.7 +50.93%
+
+See notes/SHIP_20260730_router_true_topk.md
+
+Control file: treebeard-base-control-latest/ggml/src/ggml-sycl/topk-moe.cpp
+Insert after ggml_sycl_router_sigmoid_add_enabled(); replace stock argsort with Stage A2.
+---
+===== FULLSNIPPET lines 262-375 (kernel + launch) =====
+// True top-k selection into full ARGSORT buffer layout (only first k slots written).
+// Replaces stock k_argsort full DESC of n_experts when only VIEW top-k is consumed.
+// Bitexact aim vs stable DESC bitonic: on ties prefer lower expert index (bitonic
+// never swaps equals; init order 0..n-1 ⇒ lower index first among ties).
+// Default ON. Kill: GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1
+static bool ggml_sycl_router_true_topk_enabled() {
+    static const bool disabled = []() {
+        const char * env = getenv("GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK");
+        return env != nullptr && std::atoi(env) != 0;
+    }();
+    return !disabled;
+}
+
+// One warp (sub-group) per token. n_experts must be divisible by WARP_SIZE.
+template <int n_experts>
+static void router_true_topk_ids_kernel(const float * __restrict__ scores, int32_t * __restrict__ ids,
+                                        const int n_rows, const int n_expert_used) {
+    auto      item_ct1 = sycl::ext::oneapi::this_work_item::get_nd_item<1>();
+    const int row      = item_ct1.get_group(0);
+    if (row >= n_rows) {
+        return;
+    }
+    const int lane = item_ct1.get_local_id(0);
+    static_assert(n_experts % WARP_SIZE == 0, "router true top-k requires n_experts % WARP_SIZE == 0");
+    constexpr int experts_per_thread = n_experts / WARP_SIZE;
+
+    scores += (size_t) n_experts * row;
+    ids    += (size_t) n_experts * row;
+
+    float wt[experts_per_thread];
+#pragma unroll
+    for (int i = 0; i < experts_per_thread; i++) {
+        const int expert = lane + i * WARP_SIZE;
+        wt[i]            = scores[expert];
+    }
+
+    const sycl::sub_group sg = item_ct1.get_sub_group();
+
+    for (int k = 0; k < n_expert_used; k++) {
+        float max_val    = wt[0];
+        int   max_expert = lane;
+#pragma unroll
+        for (int i = 1; i < experts_per_thread; i++) {
+            const int expert = lane + i * WARP_SIZE;
+            // Strict-gt or equal with lower index — match stable DESC argsort top-k.
+            if (wt[i] > max_val || (wt[i] == max_val && expert < max_expert)) {
+                max_val    = wt[i];
+                max_expert = expert;
+            }
+        }
+#pragma unroll
+        for (int mask = WARP_SIZE / 2; mask > 0; mask >>= 1) {
+            const float val    = dpct::permute_sub_group_by_xor(sg, max_val, mask);
+            const int   expert = dpct::permute_sub_group_by_xor(sg, max_expert, mask);
+            if (val > max_val || (val == max_val && expert < max_expert)) {
+                max_val    = val;
+                max_expert = expert;
+            }
+        }
+
+        // Mask selected expert in its owning lane's register (no cross-lane write).
+        if ((max_expert & (WARP_SIZE - 1)) == lane) {
+            wt[max_expert / WARP_SIZE] = -INFINITY;
+        }
+        // All lanes agree on max_expert after reduce; lane 0 stores into ARGSORT row.
+        if (lane == 0) {
+            ids[k] = max_expert;
+        }
+    }
+}
+
+template <int n_experts>
+static void launch_router_true_topk_ids(queue_ptr stream, const float * scores, int32_t * ids, int n_rows,
+                                        int n_expert_used) {
+    const sycl::range<1> block_dims(WARP_SIZE);
+    const sycl::range<1> block_nums((size_t) n_rows);
+    stream->parallel_for(sycl::nd_range<1>(block_nums * block_dims, block_dims),
+                         [=](sycl::nd_item<1> item_ct1) [[sycl::reqd_sub_group_size(WARP_SIZE)]] {
+                             router_true_topk_ids_kernel<n_experts>(scores, ids, n_rows, n_expert_used);
+                             GGML_UNUSED(item_ct1);
+                         });
+}
+
+// Dispatch true top-k for power-of-two expert counts supported by Laguna-class graphs.
+// Returns false if shape unsupported → caller falls back to stock full argsort.
+static bool ggml_sycl_launch_router_true_topk(queue_ptr stream, const float * scores, int32_t * ids, int n_experts,
+                                              int n_rows, int n_expert_used) {
+    if (!scores || !ids || n_rows <= 0 || n_expert_used <= 0 || n_expert_used > n_experts ||
+        n_expert_used > WARP_SIZE || (n_experts % WARP_SIZE) != 0) {
+        return false;
+    }
+    switch (n_experts) {
+        case 32:
+            launch_router_true_topk_ids<32>(stream, scores, ids, n_rows, n_expert_used);
+            return true;
+        case 64:
+            launch_router_true_topk_ids<64>(stream, scores, ids, n_rows, n_expert_used);
+            return true;
+        case 128:
+            launch_router_true_topk_ids<128>(stream, scores, ids, n_rows, n_expert_used);
+            return true;
+        case 256:
+            launch_router_true_topk_ids<256>(stream, scores, ids, n_rows, n_expert_used);
+            return true;
+        case 512:
+            launch_router_true_topk_ids<512>(stream, scores, ids, n_rows, n_expert_used);
+            return true;
+        default:
+            return false;
+    }
+}
+
+// Gather only: weights_out[e + t*k] = probs[ids[e + t*n_experts] + t*n_experts]
+// Matches stock get_rows on probs reshaped [1,n_experts,n_tokens] with ids VIEW [k,n_tokens]
+
+===== FULLSNIPPET lines 540-580 (call site) =====
+                        n_experts, n_rows);
+            }
+        }
+    } else {
+        GGML_ASSERT(ggml_sycl_compute_forward(ctx, sigmoid_node));
+        GGML_ASSERT(ggml_sycl_compute_forward(ctx, add_node));
+    }
+
+    // n_expert_used from get_rows dst: [1, k, n_tokens] → ne[1]=k
+    // Needed before selection so true top-k can write only first k of ARGSORT buffer.
+    const int n_expert_used = (int) getrows_node->ne[1];
+    GGML_ASSERT(n_expert_used > 0 && n_expert_used <= n_experts);
+    GGML_ASSERT(n_expert_used <= WARP_SIZE && "gather-norm assumes k <= WARP_SIZE");
+
+    // Stage A2: selection. Prefer true top-k (k iters) over full bitonic of n_experts.
+    // Writes ids[row * n_experts + 0..k-1]; VIEW/get_rows/gather only consume those slots.
+    {
+        bool did_true_topk = false;
+        if (ggml_sycl_router_true_topk_enabled() && argsort_node->type == GGML_TYPE_I32 &&
+            argsort_node->src[0] == add_node && ggml_is_contiguous(add_node) &&
+            ggml_is_contiguous(argsort_node) && add_node->type == GGML_TYPE_F32 &&
+            (int) argsort_node->ne[0] == n_experts && (int) ggml_nrows(argsort_node) == n_rows) {
+            const float * scores_d = (const float *) add_node->data;
+            int32_t *     ids_buf  = (int32_t *) argsort_node->data;
+            did_true_topk =
+                ggml_sycl_launch_router_true_topk(stream, scores_d, ids_buf, n_experts, n_rows, n_expert_used);
+            if (did_true_topk) {
+                static std::atomic<int> once{0};
+                if (once.fetch_add(1) == 0) {
+                    fprintf(stderr,
+                            "[lx-control-topk-moe] true top-k (not full argsort) n_experts=%d k=%d n_rows=%d\n",
+                            n_experts, n_expert_used, n_rows);
+                }
+            }
+        }
+        if (!did_true_topk) {
+            GGML_ASSERT(ggml_sycl_compute_forward(ctx, argsort_node));
+        }
+    }
+
+    const float *   probs_d = (const float *) sigmoid_node->data;
