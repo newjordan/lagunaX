@@ -1,23 +1,24 @@
-# Mount Doom status — 2026-07-30 (packed reduce tip)
+# Mount Doom status — 2026-07-30 (mul_mat+add shexp alias tip)
 
 ## LIVE NOW
 
-**Scored tip:** dual+down + topk+gather+sum + down sgs=8 + **expert-loop packed reduce**
+**Scored tip:** dual+down + topk + packed reduce + **mul_mat+add residual-alias (Q6 shexp)**
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **tip packed reduce** | **3540.3** | **130.2** | **+53.41%** |
-| prior down sgs=8 | 3402.1 | 130.5 | +52.22% |
+| **tip mm-add alias** | **3734.7** | **129.7** | **+55.10%** |
+| prior packed reduce | 3540.3 | 130.2 | +53.41% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
-Formal tip: `results/20260730T115251Z/` · `notes/SHIP_20260730_moe_packed_reduce.md` · `patches/0039-*.patch`  
+Formal: `results/20260730T124637Z/` · `notes/SHIP_20260730_mul_mat_add_shexp_alias.md` · `patches/0043-*`  
+Kill mm-add: `GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1`  
 Kill packed reduce: `GGML_SYCL_DISABLE_MOE_PACKED_REDUCE=1`
 
 ## NEXT
 
-1. **Re-trace under tip** (ggml/UR/attn) — MoE counts-sync class **closed** (copy-q, shared-USM, pack-overlap all flat/regress).
-2. lm_head prune deprioritized (ROI ~+4–5 tg max).
-3. Packing / dual sgs closed under tip.
+1. Optional tip rebench for noise band.
+2. Attn/FA remaining from re-trace (rope fused).
+3. Counts-sync / lm_head prune closed or low ROI.
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
