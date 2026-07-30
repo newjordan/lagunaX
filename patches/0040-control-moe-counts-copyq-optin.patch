@@ -1,0 +1,7 @@
+From: lagunaX fire
+Subject: [PATCH 0040] control: expert-loop counts D2H copy-q OPT-IN (regress)
+
+Enable: GGML_SYCL_ENABLE_MOE_COUNTS_COPY_Q=1
+Default OFF — formal ~−170 pp vs packed tip on B70.
+
+See notes/SHIP_20260730_counts_copyq_dual_sgs.md

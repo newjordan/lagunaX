@@ -16,8 +16,8 @@ Kill packed reduce: `GGML_SYCL_DISABLE_MOE_PACKED_REDUCE=1`
 ## NEXT
 
 1. lm_head prune/mask only with golden oracle.  
-2. Expert-loop host counts wait (smaller remaining prefill tax).  
-3. Packing / dense dual sgs closed under prior tip.
+2. Expert-loop host counts: copy-q dual-queue **regressed** (`SHIP_20260730_counts_copyq_dual_sgs.md`).  
+3. Packing / dual sgs closed under tip.
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
