@@ -35,7 +35,8 @@
    - **Unfused Laguna router** (topk fuse declines on score-correction bias)
    - Full **vocab=100352 lm_head** every token (~116 MB Q4 traffic)
    - Prefill `mul_mat_id` host wait when `ne12>1`
-   - **Next package candidate:** bias-aware topk-moe fuse (kill-switch + tip oracle)
+   - **Topk+bias fuse implemented** (`ENABLE_TOPK_MOE_BIAS=1`): ~**+5 tg** but **golden fail** → opt-in only
+   - Scored tip remains **dual-only** (~+1.6–2%)
 
 ## Loop (autonomous)
 

@@ -1,8 +1,9 @@
 # Mount Doom status — 2026-07-29 evening (dual win)
 
-## LIVE NOW — first kernel win
+## LIVE NOW — tip + research track
 
-**Control + Q4_K MoE dual-SwiGLU fuse (default ON)**
+**Scored tip:** Control + Q4_K MoE dual-SwiGLU (default ON)  
+**Research:** Topk+bias fuse opt-in (`GGML_SYCL_ENABLE_TOPK_MOE_BIAS=1`) — ~115 tg / golden fail
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
