@@ -3,7 +3,7 @@
 ## LIVE NOW — tip + research track
 
 **Scored tip:** Control + Q4_K MoE dual-SwiGLU (default ON)  
-**Research:** Topk+bias fuse opt-in (`GGML_SYCL_ENABLE_TOPK_MOE_BIAS=1`) — ~115 tg / golden fail
+**Research:** Hybrid router opt-in (`GGML_SYCL_ENABLE_TOPK_MOE_BIAS=1`) — stock-oracle golden OK / no win; custom gather-norm ~+4 tg probe but golden fail
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
@@ -53,13 +53,12 @@ Package dual was **type-rejecting Q4_K** (Q5/Q6 only). Enabling Q4_K on package 
 
 ## NEXT KERNEL LEVERS (in order)
 
-1. **Stay on control binary as champion** for scored claims.
-2. **Surgical dual/fusion port onto control** (not wholesale package tree):
-   - `mmvq.cpp` MoE dual-SwiGLU for Q4_K tiny-N experts only
-   - Avoid package paths that tank solo pp (~818 vs ~1136)
-3. **Tiny-N MMVQ launch geometry** for N≈9–29 expert groups (trace smoking gun)
-4. Optional: re-trace control ship path (native MMVQ, not oneDNN force) after any kernel change
-5. Keep quest daemon as continuous rebench of control / candidates
+1. **Stay on control binary as champion** for scored claims (dual ON).
+2. **Bitexact hybrid gather-norm** (router already patterns + stock-oracle golden) — or park router.
+3. **MoE down fuse / weighted reduce on control only** (not package tree).
+4. **Dense dual SwiGLU for shared expert** on control.
+5. Device multi-token `mul_mat_id` if decode tip stuck (prefill lever).
+6. Tiny-N MMVQ launch geometry for N≈9–29 expert groups (trace smoking gun)
 
 ## Target
 

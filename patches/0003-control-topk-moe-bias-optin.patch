@@ -1,5 +1,182 @@
+diff --git a/ggml/src/ggml-sycl/ggml-sycl.cpp b/ggml/src/ggml-sycl/ggml-sycl.cpp
+index 3b807c7cb..f0d7dc187 100644
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp
+@@ -2785,22 +2785,27 @@ inline void ggml_sycl_op_mean(ggml_backend_sycl_context & ctx, ggml_tensor * dst
+ }
+ 
+ 
++// Exported for hybrid topk-moe (Laguna bias): fuse sigmoid/add/norm, stock argsort only.
++void ggml_sycl_argsort_f32_i32(ggml_backend_sycl_context & ctx, const float * x, int * dst,
++                               int ncols, int nrows, ggml_sort_order order) {
++    SYCL_CHECK(ggml_sycl_set_device(ctx.device));
++    argsort_f32_i32_sycl(x, dst, ncols, nrows, order, ctx.stream(), ctx.device, ctx.pool());
++}
++
+ inline void ggml_sycl_op_argsort(ggml_backend_sycl_context & ctx, ggml_tensor * dst) {
+     GGML_ASSERT(dst->src[0]->type == GGML_TYPE_F32);
+     GGML_ASSERT(dst->type == GGML_TYPE_I32);
+-    dpct::queue_ptr main_stream = ctx.stream();
+     SYCL_CHECK(ggml_sycl_set_device(ctx.device));
+     const float * src0_dd = static_cast<const float *>(dst->src[0]->data);
+     int32_t *       dst_dd  = static_cast<int32_t *>(dst->data);
+ 
+-
+     const int64_t ncols = dst->src[0]->ne[0];
+     const int64_t nrows = ggml_nrows(dst->src[0]);
+ 
+     enum ggml_sort_order order = (enum ggml_sort_order) dst->op_params[0];
+ 
+     argsort_f32_i32_sycl(src0_dd, (int *)dst_dd, ncols, nrows, order,
+-                         main_stream, ctx.device, ctx.pool());
++                         ctx.stream(), ctx.device, ctx.pool());
+ }
+ 
+ static void ggml_sycl_op_top_k(ggml_backend_sycl_context & ctx, ggml_tensor * dst) {
+@@ -4524,6 +4529,131 @@ __dpct_inline__ static void k_copy_dst_from_contiguous(
+     }
+ }
+ 
++// Dual MoE gate+up + SwiGLU for serial decode (ne12==1). Returns true on hit.
++static bool ggml_sycl_mul_mat_id_dual_swiglu_fused(
++    ggml_backend_sycl_context & ctx,
++    const ggml_tensor * gate, const ggml_tensor * up, ggml_tensor * glu) {
++    static const bool disabled = []() {
++        const char * env = getenv("GGML_SYCL_DISABLE_MOE_DUAL_SWIGLU");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
++    if (disabled) {
++        return false;
++    }
++
++    const ggml_tensor * gate_w = gate->src[0];
++    const ggml_tensor * up_w   = up->src[0];
++    const ggml_tensor * src1   = gate->src[1];
++    const ggml_tensor * ids    = gate->src[2];
++
++    if (gate->op != GGML_OP_MUL_MAT_ID || up->op != GGML_OP_MUL_MAT_ID ||
++        gate->src[1] != up->src[1] || gate->src[2] != up->src[2] ||
++        gate_w->type != up_w->type ||
++        (gate_w->type != GGML_TYPE_Q4_K && gate_w->type != GGML_TYPE_Q5_K &&
++         gate_w->type != GGML_TYPE_Q6_K) ||
++        src1->type != GGML_TYPE_F32 || gate->type != GGML_TYPE_F32 ||
++        up->type != GGML_TYPE_F32 || glu->type != GGML_TYPE_F32) {
++        return false;
++    }
++
++    // Serial decode only (matches mmvq_fused bailouts).
++    const int64_t ne10 = src1->ne[0];
++    const int64_t ne11 = src1->ne[1];
++    const int64_t ne12 = src1->ne[2];
++    if (ne12 != 1) return false;
++    if (ids->ne[1] != 1) return false;
++    const int64_t n_ids = ids->ne[0];
++    if (ne11 != 1 && ne11 != n_ids) return false;
++    if (ne10 != gate_w->ne[0] || ne10 != up_w->ne[0] || ne10 % QK8_1 != 0) return false;
++    if (gate_w->ne[1] != up_w->ne[1] || gate_w->ne[2] != up_w->ne[2]) return false;
++    if (!ggml_is_contiguous(src1) || !ggml_is_contiguous(glu)) return false;
++    if (gate->ne[0] != gate_w->ne[1] || up->ne[0] != up_w->ne[1] ||
++        gate->ne[1] != n_ids || up->ne[1] != n_ids ||
++        gate->ne[2] != 1 || up->ne[2] != 1 ||
++        !ggml_are_same_shape(gate, up) || !ggml_are_same_shape(gate, glu)) {
++        return false;
++    }
++    if (ids->nb[0] != sizeof(int32_t)) return false;
++
++    opt_for_reorder_id(&ctx, gate_w);
++    opt_for_reorder_id(&ctx, up_w);
++    const ggml_tensor_extra_gpu * gate_extra =
++        static_cast<const ggml_tensor_extra_gpu *>(gate_w->extra);
++    const ggml_tensor_extra_gpu * up_extra =
++        static_cast<const ggml_tensor_extra_gpu *>(up_w->extra);
++    if (!gate_extra || !up_extra ||
++        !gate_extra->optimized_feature.reorder ||
++        !up_extra->optimized_feature.reorder) {
++        return false;
++    }
++
++    const queue_ptr stream = ctx.stream();
++    const int src1_padded_cols = GGML_PAD((int) ne10, MATRIX_ROW_PADDING);
++    const int n_experts_used   = (int) n_ids;
++    const int nrows            = (int) gate_w->ne[1];
++
++    ggml_sycl_pool_alloc<char> src1_q8_alloc(
++        ctx.pool(), (size_t) ne11 * src1_padded_cols * sizeof(block_q8_1) / QK8_1);
++    char * src1_q8 = src1_q8_alloc.get();
++    quantize_row_q8_1_sycl<quantize_and_reorder_q8_1_soa>(
++        (const float *) src1->data, src1_q8, (int) ne10, (int) ne11,
++        src1_padded_cols, stream);
++
++    const size_t bytes_per_qrow = (size_t) src1_padded_cols * sizeof(block_q8_1) / QK8_1;
++    const size_t src1_row_stride = (ne11 == 1) ? 0 : bytes_per_qrow;
++
++    return ggml_sycl_mul_mat_vec_q_id_dual_swiglu_reorder(
++        gate_w->type, gate_w->data, up_w->data, src1_q8,
++        (const int32_t *) ids->data, (float *) glu->data,
++        (int) ne10, nrows, n_experts_used,
++        gate_w->nb[2], up_w->nb[2], glu->nb[1], src1_row_stride, stream);
++}
++
++// Graph fuse: MUL_MAT_ID + MUL_MAT_ID + GLU(swiglu). Returns following nodes to skip.
++int ggml_sycl_fuse_moe_dual_swiglu(
++    ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i) {
++    if (i + 2 >= cgraph->n_nodes) {
++        return 0;
++    }
++    ggml_tensor * node = cgraph->nodes[i];
++    if (node->op != GGML_OP_MUL_MAT_ID) {
++        return 0;
++    }
++    ggml_tensor * mmid1 = cgraph->nodes[i + 1];
++    ggml_tensor * glu   = cgraph->nodes[i + 2];
++    if (mmid1->op != GGML_OP_MUL_MAT_ID || glu->op != GGML_OP_GLU) {
++        return 0;
++    }
++    if (ggml_get_glu_op(glu) != GGML_GLU_OP_SWIGLU) {
++        return 0;
++    }
++    const bool edges_ok =
++        ((glu->src[0] == node && glu->src[1] == mmid1) ||
++         (glu->src[0] == mmid1 && glu->src[1] == node)) &&
++        node->src[1] == mmid1->src[1] &&
++        node->src[2] == mmid1->src[2];
++    if (!edges_ok) {
++        return 0;
++    }
++    const int output = i + 2;
++    if (!ggml_can_fuse_subgraph(
++            cgraph, i,
++            { GGML_OP_MUL_MAT_ID, GGML_OP_MUL_MAT_ID, GGML_OP_GLU },
++            { output })) {
++        return 0;
++    }
++    ggml_tensor * gate = glu->src[0];
++    ggml_tensor * up   = glu->src[1];
++    if (ggml_sycl_mul_mat_id_dual_swiglu_fused(ctx, gate, up, glu)) {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr, "[lx-control-moe-dual] fuse hit (gate+up+swiglu)\n");
++        }
++        return 2;
++    }
++    return 0;
++}
++
+ // Fused MoE TG fast path. Returns false to fall back to the per-expert loop below.
+ static bool ggml_sycl_mul_mat_id_mmvq_fused(
+     ggml_backend_sycl_context & ctx, const ggml_tensor * src0,
+@@ -4892,7 +5022,8 @@ catch (sycl::exception const &exc) {
+   std::exit(1);
+ }
+ 
+-static bool ggml_sycl_compute_forward(ggml_backend_sycl_context & ctx, struct ggml_tensor * dst) try {
++// Non-static so topk-moe hybrid can re-dispatch stock ops (bitexact wiring).
++bool ggml_sycl_compute_forward(ggml_backend_sycl_context & ctx, struct ggml_tensor * dst) try {
+     if (!g_sycl_loaded) return false;
+ 
+     if (dst->src[0] != nullptr && ggml_backend_buffer_is_sycl_split(dst->src[0]->buffer)) {
 diff --git a/ggml/src/ggml-sycl/topk-moe.cpp b/ggml/src/ggml-sycl/topk-moe.cpp
-index 78574c4b5..302cd0575 100644
+index 78574c4b5..cce755708 100644
 --- a/ggml/src/ggml-sycl/topk-moe.cpp
 +++ b/ggml/src/ggml-sycl/topk-moe.cpp
 @@ -1,4 +1,7 @@
@@ -101,139 +278,41 @@ index 78574c4b5..302cd0575 100644
      float wt_sum = 0.f;
      float output_weights[experts_per_thread];
  #pragma unroll
-@@ -207,17 +210,245 @@ static void topk_moe_kernel(const float * __restrict__ logits,
+@@ -207,19 +210,101 @@ static void topk_moe_kernel(const float * __restrict__ logits,
      }
  }
  
-+// Bias path: bitonic argsort on selection scores (same network as ggml_sycl k_argsort DESC).
- template <int n_experts>
--static void launch_topk_moe(queue_ptr stream, const float * logits, float * weights, int32_t * ids, int n_rows,
--                            int n_expert_used, float clamp_val, float scale_val, const topk_moe_config & config) {
-+static void topk_moe_kernel_bias_bitonic(const float * __restrict__ logits,
-+                                         float * __restrict__       weights,
-+                                         int32_t * __restrict__     ids,
-+                                         const float * __restrict__ bias,
-+                                         const int                  n_rows,
-+                                         const int                  n_expert_used,
-+                                         const float                clamp_val,
-+                                         const float                scale_val,
-+                                         const topk_moe_config       config,
-+                                         float * __restrict__       sh_wt,
-+                                         float * __restrict__       sh_sel,
-+                                         int * __restrict__         sh_idx) {
-+    static_assert(n_experts >= WARP_SIZE && (n_experts % WARP_SIZE) == 0, "n_experts must be multiple of WARP_SIZE");
-+    auto      item_ct1 = sycl::ext::oneapi::this_work_item::get_nd_item<1>();
-+    const int row       = item_ct1.get_group(0);
-+    if (row >= n_rows) {
-+        return;
-+    }
-+    const int lane = item_ct1.get_local_id(0);
-+    constexpr int ept = n_experts / WARP_SIZE;
++// Hybrid Laguna bias path (stock-oracle stage):
++// Match SIGMOID→RESHAPE→ADD→ARGSORT→VIEW→GET_ROWS[+norm+scale] and re-dispatch every real
++// op via stock ggml_sycl_compute_forward (including stock k_argsort). Golden OK.
++// Custom kernels measured this fire:
++//   - fused sigmoid+add + stock argsort + fused gather-norm: ~115 tg, golden FAIL
++//   - stock sel + fused gather-norm: ~114 tg, golden FAIL
++//   - full stock-oracle: ~111 tg, golden OK  (no kernel win; wiring proven)
++// Full in-fuse bitonic (prior): ~97 tg, golden FAIL.
++// Next fire: debug gather-norm float/layout vs stock get_rows+div (ids look correct).
 +
-+    logits  += (size_t) n_experts * row;
-+    weights += (size_t) n_expert_used * row;
-+    ids     += (size_t) n_experts * row;
++// Exported from ggml-sycl.cpp
++bool ggml_sycl_compute_forward(ggml_backend_sycl_context & ctx, struct ggml_tensor * dst);
++void ggml_sycl_argsort_f32_i32(ggml_backend_sycl_context & ctx, const float * x, int * dst, int ncols, int nrows,
++                               ggml_sort_order order);  // available for next-fire true hybrid
 +
-+    // Load logits -> activation into shared wt; selection = wt + bias.
-+#pragma unroll
-+    for (int t = 0; t < ept; ++t) {
-+        const int expert = t * WARP_SIZE + lane;
-+        float     v      = logits[expert];
-+        sh_wt[expert]    = v;
-+    }
-+    item_ct1.barrier(sycl::access::fence_space::local_space);
-+
-+    // Apply sigmoid/softmax across experts in shared memory via registers.
-+    float wt_reg[ept];
-+#pragma unroll
-+    for (int t = 0; t < ept; ++t) {
-+        wt_reg[t] = sh_wt[t * WARP_SIZE + lane];
-+    }
-+    if (!config.delayed_softmax) {
-+        if (config.use_sigmoid) {
-+            sigmoid_warp_inplace<ept, false>(wt_reg, n_experts, lane);
-+        } else {
-+            softmax_warp_inplace<ept, false>(wt_reg, n_experts, lane);
++static void ggml_sycl_op_topk_moe_hybrid_bias_stock(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i,
++                                                    int nops) {
++    for (int j = 0; j < nops; ++j) {
++        ggml_tensor * t = cgraph->nodes[i + j];
++        if (!t || t->op == GGML_OP_NONE || t->op == GGML_OP_RESHAPE || t->op == GGML_OP_VIEW ||
++            t->op == GGML_OP_PERMUTE || t->op == GGML_OP_TRANSPOSE || ggml_is_empty(t)) {
++            continue;
 +        }
-+    }
-+#pragma unroll
-+    for (int t = 0; t < ept; ++t) {
-+        if (sycl::isnan(wt_reg[t])) {
-+            wt_reg[t] = -FLT_MAX;
-+        }
-+        const int expert = t * WARP_SIZE + lane;
-+        sh_wt[expert]    = wt_reg[t];
-+        sh_sel[expert]   = wt_reg[t] + bias[expert];
-+        sh_idx[expert]   = expert;
-+    }
-+    item_ct1.barrier(sycl::access::fence_space::local_space);
-+
-+    // Bitonic sort indices by sh_sel DESC — mirrors k_argsort_f32_i32 (DESC branch).
-+    for (int k = 2; k <= n_experts; k *= 2) {
-+        for (int j = k / 2; j > 0; j /= 2) {
-+#pragma unroll
-+            for (int t = 0; t < ept; ++t) {
-+                const int col = t * WARP_SIZE + lane;
-+                const int ixj = col ^ j;
-+                if (ixj > col) {
-+                    if ((col & k) == 0) {
-+                        if (sh_sel[sh_idx[col]] < sh_sel[sh_idx[ixj]]) {
-+                            topk_swap(sh_idx[col], sh_idx[ixj]);
-+                        }
-+                    } else {
-+                        if (sh_sel[sh_idx[col]] > sh_sel[sh_idx[ixj]]) {
-+                            topk_swap(sh_idx[col], sh_idx[ixj]);
-+                        }
-+                    }
-+                }
-+            }
-+            item_ct1.barrier(sycl::access::fence_space::local_space);
-+        }
-+    }
-+
-+    // Top-k ids + unbiased weights; optional norm over selected.
-+    float wt_sum = 0.f;
-+#pragma unroll
-+    for (int t = 0; t < ept; ++t) {
-+        const int k = t * WARP_SIZE + lane;
-+        if (k < n_expert_used) {
-+            const int expert = sh_idx[k];
-+            ids[k]           = expert;
-+            const float w    = sh_wt[expert];
-+            // stash in sh_sel[k] temporarily for reduction
-+            sh_sel[k] = w;
-+            if (config.with_norm) {
-+                wt_sum += w;
-+            }
-+        }
-+    }
-+    item_ct1.barrier(sycl::access::fence_space::local_space);
-+
-+    if (config.with_norm) {
-+        // reduce wt_sum across warp (only first n_expert_used lanes contribute)
-+        wt_sum = warp_reduce_sum<WARP_SIZE>(wt_sum);
-+        // lanes beyond used still participate with 0 contribution from above if k>=used
-+        wt_sum          = sycl::fmax(wt_sum, clamp_val);
-+        const float inv = 1.0f / wt_sum;
-+#pragma unroll
-+        for (int t = 0; t < ept; ++t) {
-+            const int k = t * WARP_SIZE + lane;
-+            if (k < n_expert_used) {
-+                weights[k] = sh_sel[k] * inv * scale_val;
-+            }
-+        }
-+    } else {
-+#pragma unroll
-+        for (int t = 0; t < ept; ++t) {
-+            const int k = t * WARP_SIZE + lane;
-+            if (k < n_expert_used) {
-+                weights[k] = sh_sel[k] * scale_val;
-+            }
-+        }
++        const bool ok = ggml_sycl_compute_forward(ctx, t);
++        GGML_ASSERT(ok && "hybrid stock-oracle: compute_forward failed");
 +    }
 +}
 +
-+template <int n_experts>
+ template <int n_experts>
+-static void launch_topk_moe(queue_ptr stream, const float * logits, float * weights, int32_t * ids, int n_rows,
+-                            int n_expert_used, float clamp_val, float scale_val, const topk_moe_config & config) {
 +static void launch_topk_moe_nobias(queue_ptr stream, const float * logits, float * weights, int32_t * ids, int n_rows,
 +                                   int n_expert_used, float clamp_val, float scale_val,
 +                                   const topk_moe_config & config) {
@@ -245,63 +324,15 @@ index 78574c4b5..302cd0575 100644
 -                                                        scale_val, config);
 +                             topk_moe_kernel_nobias<n_experts>(logits, weights, ids, n_rows, n_expert_used, clamp_val,
 +                                                               scale_val, config);
-+                             GGML_UNUSED(item_ct1);
-+                         });
-+}
-+
-+template <int n_experts>
-+static void launch_topk_moe_bias(queue_ptr stream, const float * logits, float * weights, int32_t * ids,
-+                                 const float * bias, int n_rows, int n_expert_used, float clamp_val, float scale_val,
-+                                 const topk_moe_config & config) {
-+    const sycl::range<1> block_dims(WARP_SIZE);
-+    const sycl::range<1> block_nums(n_rows);
-+    stream->submit([&](sycl::handler & cgh) {
-+        sycl::local_accessor<float, 1> sh_wt(sycl::range<1>(n_experts), cgh);
-+        sycl::local_accessor<float, 1> sh_sel(sycl::range<1>(n_experts), cgh);
-+        sycl::local_accessor<int, 1>   sh_idx(sycl::range<1>(n_experts), cgh);
-+        cgh.parallel_for(sycl::nd_range<1>(block_nums * block_dims, block_dims),
-+                         [=](sycl::nd_item<1> item_ct1) [[sycl::reqd_sub_group_size(WARP_SIZE)]] {
-+                             topk_moe_kernel_bias_bitonic<n_experts>(
-+                                 logits, weights, ids, bias, n_rows, n_expert_used, clamp_val, scale_val, config,
-+                                 sh_wt.get_multi_ptr<sycl::access::decorated::no>().get(),
-+                                 sh_sel.get_multi_ptr<sycl::access::decorated::no>().get(),
-+                                 sh_idx.get_multi_ptr<sycl::access::decorated::no>().get());
                               GGML_UNUSED(item_ct1);
                           });
-+    });
-+}
-+
+ }
+ 
 +static void launch_topk_moe_dispatch(queue_ptr stream, const float * logits, float * weights, int32_t * ids,
 +                                     const float * bias, int n_rows, int n_experts, int n_expert_used, float clamp_val,
 +                                     float scale_val, const topk_moe_config & config) {
-+    if (bias != nullptr) {
-+        switch (n_experts) {
-+            case 32:
-+                launch_topk_moe_bias<32>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                         scale_val, config);
-+                break;
-+            case 64:
-+                launch_topk_moe_bias<64>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                         scale_val, config);
-+                break;
-+            case 128:
-+                launch_topk_moe_bias<128>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                          scale_val, config);
-+                break;
-+            case 256:
-+                launch_topk_moe_bias<256>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                          scale_val, config);
-+                break;
-+            case 512:
-+                launch_topk_moe_bias<512>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                          scale_val, config);
-+                break;
-+            default:
-+                GGML_ASSERT(false && "bias topk-moe requires n_experts in {32,64,128,256,512}");
-+                break;
-+        }
-+        return;
-+    }
++    // Bias path is handled by hybrid (stock argsort) from fuse_topk_moe; do not re-enter bitonic here.
++    GGML_ASSERT(bias == nullptr && "use hybrid bias path (ggml_sycl_op_topk_moe_hybrid_bias)");
 +
 +    switch (n_experts) {
 +        case 1:
@@ -348,26 +379,21 @@ index 78574c4b5..302cd0575 100644
 +            GGML_ASSERT(false && "fatal error");
 +            break;
 +    }
- }
- 
++}
++
  static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
-@@ -226,6 +457,7 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
-                                   ggml_tensor *                   ids,
-                                   const ggml_tensor *             clamp,
-                                   const ggml_tensor *             scale,
-+                                  const ggml_tensor *             bias,
-                                   const ggml_sycl_topk_moe_args & args) {
+                                   const ggml_tensor *             logits,
+                                   ggml_tensor *                   weights,
+@@ -230,6 +315,8 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
      GGML_ASSERT(logits->type  == GGML_TYPE_F32);
      GGML_ASSERT(weights->type == GGML_TYPE_F32);
-@@ -240,6 +472,7 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
-     const float * logits_d  = (const float *) logits->data;
-     float *       weights_d = (float *) weights->data;
-     int32_t *     ids_d     = (int32_t *) ids->data;
-+    const float * bias_d    = bias ? (const float *) bias->data : nullptr;
+     GGML_ASSERT(ids->type     == GGML_TYPE_I32);
++    // Bias Laguna path uses hybrid (stock argsort); this is the no-bias fused kernel only.
++    GGML_ASSERT(!args.prob_bias);
  
-     const bool  with_norm = clamp != nullptr;
-     const float clamp_val = clamp ? ggml_get_op_params_f32(clamp, 0) : -INFINITY;
-@@ -253,51 +486,8 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
+     const int n_experts     = logits->ne[0];
+     const int n_rows        = logits->ne[1];
+@@ -253,51 +340,8 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
      queue_ptr stream = ctx.stream();
      ggml_sycl_set_device(ctx.device);
  
@@ -416,12 +442,12 @@ index 78574c4b5..302cd0575 100644
 -            GGML_ASSERT(false && "fatal error");
 -            break;
 -    }
-+    launch_topk_moe_dispatch(stream, logits_d, weights_d, ids_d, bias_d, n_rows, n_experts, n_expert_used, clamp_val,
-+                             scale_val, config);
++    launch_topk_moe_dispatch(stream, logits_d, weights_d, ids_d, /*bias=*/nullptr, n_rows, n_experts, n_expert_used,
++                             clamp_val, scale_val, config);
  }
  
  static bool ggml_sycl_should_use_topk_moe(const ggml_tensor * gating_op, const ggml_tensor * weights,
-@@ -544,23 +734,147 @@ int ggml_sycl_fuse(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i)
+@@ -544,23 +588,147 @@ int ggml_sycl_fuse(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i)
          return 0;
      }
  
@@ -434,12 +460,11 @@ index 78574c4b5..302cd0575 100644
      return ggml_sycl_fuse_topk_moe(ctx, cgraph, i);
  }
  
-+// Laguna bias fuse is OPT-IN (GGML_SYCL_ENABLE_TOPK_MOE_BIAS=1).
-+// Measured 2026-07-30: fuse hits (correct graph pattern) but
-+//   - golden still mismatches vs unfused SYCL argsort chain
-+//   - tg regresses (~97 vs ~110) — full bitonic in-fuse costs more than win
++// Laguna bias hybrid fuse is OPT-IN (GGML_SYCL_ENABLE_TOPK_MOE_BIAS=1).
++// Hybrid = sigmoid+add | stock k_argsort | gather+norm (not in-fuse bitonic).
++// Prior bitonic path: golden fail + tg regress; hybrid aims bitexact selection.
 +// Kill-switch: GGML_SYCL_DISABLE_TOPK_MOE=1
-+// Scored tip = dual only (bias fuse off).
++// Scored tip = dual only until hybrid golden+floors proven.
 +static bool ggml_sycl_topk_moe_disabled() {
 +    static const bool disabled = []() {
 +        const char * env = getenv("GGML_SYCL_DISABLE_TOPK_MOE");
@@ -542,12 +567,6 @@ index 78574c4b5..302cd0575 100644
 +            const ggml_tensor * logits  = node->src[0];
 +            const ggml_tensor * bias    = add->src[1];
 +
-+            ggml_sycl_topk_moe_args args{};
-+            args.sigmoid   = true;
-+            args.prob_bias = true;
-+            args.norm      = clamp != nullptr;
-+            args.scale     = scale != nullptr;
-+
 +            const bool can_sub = ggml_can_fuse_subgraph(cgraph, i, ops.size(), ops.data(), out_nodes, 2);
 +            const bool can_use = ggml_sycl_should_use_topk_moe(node, weights, logits, ids);
 +            const bool bias_ok = ggml_is_contiguous(bias) && bias->type == GGML_TYPE_F32;
@@ -556,9 +575,16 @@ index 78574c4b5..302cd0575 100644
 +            if (can_sub && can_use && bias_ok && can_mem) {
 +                static std::atomic<int> once{0};
 +                if (once.fetch_add(1) == 0) {
-+                    fprintf(stderr, "[lx-control-topk-moe] laguna bias fuse HIT (bitonic)\n");
++                    fprintf(stderr, "[lx-control-topk-moe] laguna bias fuse HIT (hybrid stock-oracle)\n");
 +                }
-+                ggml_sycl_op_topk_moe(ctx, logits, weights, ids, clamp, scale, bias, args);
++                GGML_UNUSED(logits);
++                GGML_UNUSED(ids);
++                GGML_UNUSED(weights);
++                GGML_UNUSED(clamp);
++                GGML_UNUSED(scale);
++                GGML_UNUSED(bias);
++                GGML_UNUSED(argsort);
++                ggml_sycl_op_topk_moe_hybrid_bias_stock(ctx, cgraph, i, (int) ops.size());
 +                return (int) ops.size() - 1;
 +            }
 +        }
@@ -574,14 +600,7 @@ index 78574c4b5..302cd0575 100644
          return 0;
      }
  
-@@ -569,15 +883,30 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
-     ggml_tensor *       ids     = nullptr;
-     const ggml_tensor * clamp   = nullptr;
-     const ggml_tensor * scale   = nullptr;
-+    const ggml_tensor * bias    = nullptr;
- 
-     std::vector<ggml_op> ops;
-     int                  out_nodes[2];
+@@ -575,9 +743,17 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
  
      if (!args.delayed_softmax) {
          const ggml_op gating_op = args.sigmoid ? GGML_OP_UNARY : GGML_OP_SOFT_MAX;
@@ -592,39 +611,26 @@ index 78574c4b5..302cd0575 100644
 +        const int i_probs = i + (int) ops.size() - 1;
 +
 +        if (args.prob_bias) {
-+            // CUDA-style reshape-before-add — only when explicitly enabled (same golden risk).
-+            if (!ggml_sycl_topk_moe_bias_enabled()) {
-+                return 0;
-+            }
-+            // SIGMOID/SOFTMAX -> RESHAPE -> ADD -> ARGSORT -> VIEW -> GET_ROWS
-+            ops.insert(ops.end(), { GGML_OP_RESHAPE, GGML_OP_ADD, GGML_OP_ARGSORT, GGML_OP_VIEW, GGML_OP_GET_ROWS });
-+            out_nodes[0] = i_probs + 4;
-+            bias         = cgraph->nodes[i_probs + 2]->src[1];
-+        } else {
-+            ops.insert(ops.end(), { GGML_OP_RESHAPE, GGML_OP_ARGSORT, GGML_OP_VIEW, GGML_OP_GET_ROWS });
-+            out_nodes[0] = i_probs + 3;
++            // CUDA-style reshape-before-add is not Laguna; hybrid Laguna path handles live bias above.
++            // Decline here — no bitonic / no untested CUDA-layout hybrid this fire.
++            return 0;
 +        }
-+        ids = cgraph->nodes[out_nodes[0]];
++        ops.insert(ops.end(), { GGML_OP_RESHAPE, GGML_OP_ARGSORT, GGML_OP_VIEW, GGML_OP_GET_ROWS });
++        out_nodes[0] = i_probs + 3;
++        ids          = cgraph->nodes[out_nodes[0]];
  
          if (args.norm) {
              ops.insert(ops.end(), { GGML_OP_RESHAPE, GGML_OP_SUM_ROWS, GGML_OP_CLAMP, GGML_OP_DIV, GGML_OP_RESHAPE });
-@@ -593,8 +922,9 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
+diff --git a/ggml/src/ggml-sycl/topk-moe.hpp b/ggml/src/ggml-sycl/topk-moe.hpp
+index 716d6440b..6d7ff73cc 100644
+--- a/ggml/src/ggml-sycl/topk-moe.hpp
++++ b/ggml/src/ggml-sycl/topk-moe.hpp
+@@ -9,4 +9,8 @@ int ggml_sycl_fuse(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i)
  
-         if (ggml_can_fuse_subgraph(cgraph, i, ops.size(), ops.data(), out_nodes, 2) &&
-             ggml_sycl_should_use_topk_moe(node, weights, logits, ids) &&
-+            (bias == nullptr || (ggml_is_contiguous(bias) && bias->type == GGML_TYPE_F32)) &&
-             ggml_sycl_check_fusion_memory_ranges(cgraph, i, (int) ops.size(), out_nodes, 2, /*is_topk_moe=*/true)) {
--            ggml_sycl_op_topk_moe(ctx, logits, weights, ids, clamp, scale, args);
-+            ggml_sycl_op_topk_moe(ctx, logits, weights, ids, clamp, scale, bias, args);
-             return (int) ops.size() - 1;
-         }
-     } else if (!args.norm && !args.prob_bias) {
-@@ -611,7 +941,7 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
-         if (ggml_can_fuse_subgraph(cgraph, i, ops.size(), ops.data(), out_nodes, 2) &&
-             ggml_sycl_should_use_topk_moe(softmax, weights, logits, ids) &&
-             ggml_sycl_check_fusion_memory_ranges(cgraph, i, (int) ops.size(), out_nodes, 2, /*is_topk_moe=*/true)) {
--            ggml_sycl_op_topk_moe(ctx, logits, weights, ids, clamp, scale, args);
-+            ggml_sycl_op_topk_moe(ctx, logits, weights, ids, clamp, scale, /*bias=*/nullptr, args);
-             return (int) ops.size() - 1;
-         }
-     }
+ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i);
+ 
++// MUL_MAT_ID + MUL_MAT_ID + GLU(swiglu) dual expert path (serial decode).
++// Implemented in ggml-sycl.cpp.
++int ggml_sycl_fuse_moe_dual_swiglu(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i);
++
+ #endif  // GGML_SYCL_TOPK_MOE_HPP

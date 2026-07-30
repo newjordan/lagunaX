@@ -34,11 +34,11 @@ Patches:
 
 **Control dual SwiGLU only** — formal ~**+2%** vs pin, golden OK.
 
-## Next experiments (not yet)
+## Next experiments
 
-1. Fuse only **sigmoid+add+get_rows+norm**, leave **device argsort** as the existing kernel (true bitexact selection).
-2. Partial top-k bitonic that matches `k_argsort` prefix without full 256 if possible.
-3. Profile barrier cost of in-fuse bitonic vs standalone argsort.
+1. ~~Fuse only sigmoid+add+get_rows+norm, leave device argsort~~ → **done as hybrid stock-oracle** (see `SHIP_20260730_hybrid_router.md`); custom gather-norm still golden-fails.
+2. Bitexact fused gather-norm (main remaining router win).
+3. Profile barrier cost of in-fuse bitonic vs standalone argsort (bitonic already rejected).
 
 ## Artifacts
 
