@@ -17,9 +17,9 @@ Kill GEMV: `GGML_SYCL_DISABLE_ROUTER_GEMV_FUSE=1`
 
 ## NEXT
 
-1. Multi-row router GEMV without pp collapse (DNNL / better batching).
-2. New theory under +62.8% tip — not packing thrash.
-3. Prefill residual2 / GEMM-post remain closed.
+1. Multi-row router GEMV **closed** under tip (`notes/SHIP_20260730_router_gemv_multirow.md`).
+2. New theory under +62.8% tip — not packing / multi-row thrash.
+3. Prefill residual2 / GEMM-post remain closed; optional DNNL gemm→sig epilogue.
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin

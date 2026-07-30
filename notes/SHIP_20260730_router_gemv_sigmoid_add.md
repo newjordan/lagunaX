@@ -57,6 +57,6 @@ Prior FA VEC GQA + mm-add+add + packed reduce + dual + hybrid mode8 + true top-k
 
 ## Next
 
-1. Faster multi-row router GEMV (or DNNL gemv+epilogue) without pp tax.
-2. Attn gate Q4_K GEMV into softplus-mul (low ROI expected).
-3. Avoid packing/sgs thrash under new tip without new theory.
+1. Multi-row closed — see `SHIP_20260730_router_gemv_multirow.md`.
+2. New theory under +62.8% tip (not multi-row thrash).
+3. Optional DNNL gemm→sigmoid epilogue for prefill without tall GEMV.
