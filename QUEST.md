@@ -30,6 +30,12 @@
    - Package dual was type-rejecting Q4_K (Q5/Q6 only)
    - Control dual fuse: **pp~1144 / tg~110.1 / score ~+2%** vs baseline; golden OK
    - Code in `treebeard-base-control-latest` (default ON; disable via env)
+8. **Frontier map** — `notes/FRONTIER_20260729.md`
+   - M5 inverse-scatter / lm_head-mask: only partial analogues here
+   - **Unfused Laguna router** (topk fuse declines on score-correction bias)
+   - Full **vocab=100352 lm_head** every token (~116 MB Q4 traffic)
+   - Prefill `mul_mat_id` host wait when `ne12>1`
+   - **Next package candidate:** bias-aware topk-moe fuse (kill-switch + tip oracle)
 
 ## Loop (autonomous)
 
