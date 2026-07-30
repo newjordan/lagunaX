@@ -1,0 +1,14 @@
+From: lagunaX campaign
+Subject: [PATCH 0014] control: hybrid mode7 stock-sum + fused DIV+SCALE (default)
+
+Default hybrid mode 7: after gather + stock sum_rows/clamp, fuse DIV+SCALE
+using stock clamp buffer. Golden OK. Formal tip +9.57% serial vs pin
+(tg121.1 / pp1143.9). Mode 6 warp full-norm remains research (golden fail).
+
+Env: GGML_SYCL_TOPK_MOE_HYBRID_MODE=7 (default) | =2 prior tip path
+
+--- a/ggml/src/ggml-sycl/topk-moe.cpp
++++ b/ggml/src/ggml-sycl/topk-moe.cpp
+@@ hybrid mode default 2 → 7
++ mode 6: router_norm_warp_kernel (research)
++ mode 7: stock sum/clamp; fused div+scale writing div_out and scale_out
