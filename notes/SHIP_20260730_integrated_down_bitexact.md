@@ -1,32 +1,25 @@
 # Research note — integrated MoE-down bitexact attempts (2026-07-30)
 
-## Status: **still research / not default**
+## Status: **RESOLVED → shipped decode-only** (see `SHIP_20260730_moe_down_integrated_decode.md`)
 
 | attempt | golden | note |
 |---------|:------:|------|
-| one-kernel register accumulate (original) | **FAIL** | pre-existing |
-| one-kernel + store experts to mmid scratch then reduce | **FAIL** | this fire |
-| direct reorder MMVQ (mmid nb strides) + k8 reduce | **FAIL** | this fire |
-| **exact** `mul_mat_id` + k8 reduce inside ENABLE path | **OK** | proves flag wiring fine |
-| weighted reduce WG=512 (default two-step) | **OK** | +9.62% < tip +9.65% |
+| one-kernel for **all** n_tokens (incl prefill) | **FAIL** | pre-existing |
+| one-kernel + scratch (all tokens) | **FAIL** | multi-token path |
+| direct reorder + reduce (all tokens) | **FAIL** | multi-token path |
+| exact `mul_mat_id` + reduce (all tokens) | **OK** | uses host-sort for ne12>1 |
+| **one-kernel n_tokens==1 only** | **OK** | **shipped default** |
+| **direct reorder+reduce n_tokens==1** | **OK** | oracle MODE=1 |
 
-Tip remains two-step mul_mat_id + k8-unroll weighted reduce (`20260730T062910Z`, +9.65%).
+## Finding (final)
 
-## Finding
+Divergence was **not** one-kernel float math on decode. Prefill `ne12>1` tip uses **host counting-sort** `mul_mat_id`; fused reorder multi-token differs → golden FAIL. Gate integrated to decode only.
 
-Divergence is **not** just “skip intermediate store”: even launches that should mirror `mul_mat_id_mmvq_fused` + reduce still golden-fail, while calling `ggml_sycl_mul_mat_id` + reduce from the same fuse branch is OK. Likely subtle stride/quantize/path differences vs the full `mul_mat_id` entry.
-
-One-kernel integrated remains blocked until a line-by-line oracle vs `mul_mat_id` outputs.
-
-## Env
+## Env (current tip)
 
 ```bash
-# still does not enable a correct faster path (falls through to two-step after this fire)
-export GGML_SYCL_ENABLE_MOE_DOWN_INTEGRATED=1
+# default ON for decode; kill:
+export GGML_SYCL_DISABLE_MOE_DOWN_INTEGRATED=1
+# oracle two-step GEMV+reduce (decode-only):
+export GGML_SYCL_MOE_DOWN_INTEGRATED_MODE=1
 ```
-
-## Next
-
-1. Diff mmid buffer after `mul_mat_id` vs after direct reorder on a single layer.  
-2. Multi-token dual/MMVQ oracle.  
-3. Other decode levers (lm_head).
