@@ -20,7 +20,7 @@ Dual multi-sg research: `GGML_SYCL_MOE_DUAL_SGS=8` (default **1**)
 ## NEXT KERNEL LEVERS
 
 1. Stay on control binary as champion.
-2. Bitexact integrated weighted-MMVQ down (still golden-fail).
+2. Bitexact integrated down — **still FAIL** except exact `mul_mat_id`+reduce alias (`SHIP_20260730_integrated_down_bitexact.md`).
 3. Multi-token dual/MMVQ oracle.
 4. lm_head / residual decode (high golden risk).
 
