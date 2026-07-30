@@ -1478,7 +1478,7 @@ index c5d70bd0e..30a14c1a1 100644
  
  #endif // GGML_SYCL_MMVQ_HPP
 diff --git a/ggml/src/ggml-sycl/topk-moe.cpp b/ggml/src/ggml-sycl/topk-moe.cpp
-index 78574c4b5..780b2ae4b 100644
+index 78574c4b5..e47780655 100644
 --- a/ggml/src/ggml-sycl/topk-moe.cpp
 +++ b/ggml/src/ggml-sycl/topk-moe.cpp
 @@ -1,4 +1,7 @@
@@ -1580,7 +1580,7 @@ index 78574c4b5..780b2ae4b 100644
      float wt_sum = 0.f;
      float output_weights[experts_per_thread];
  #pragma unroll
-@@ -207,19 +210,277 @@ static void topk_moe_kernel(const float * __restrict__ logits,
+@@ -207,19 +210,363 @@ static void topk_moe_kernel(const float * __restrict__ logits,
      }
  }
  
@@ -1625,73 +1625,51 @@ index 78574c4b5..780b2ae4b 100644
 +    weights_out[tid] = probs[(size_t) row * (size_t) n_experts + (size_t) expert];
 +}
 +
-+// Gather + sum-norm + scale. One warp per token.
-+// Bitexact aim: sequential sum of k (matches left-fold better than tree reduce for k=8),
-+// true div, then scale s*x+b. Also writes raw gather into getrows_buf when non-null
-+// (keeps intermediate buffer valid if allocator aliases / consumers exist).
-+static void router_gather_norm_kernel(const float * __restrict__ probs, const int32_t * __restrict__ ids_full,
-+                                      float * __restrict__ getrows_buf, float * __restrict__ weights,
-+                                      const int n_experts, const int n_rows, const int n_expert_used,
-+                                      const float clamp_min, const float scale_val, const float scale_bias,
-+                                      const bool with_norm) {
-+    auto      item_ct1 = sycl::ext::oneapi::this_work_item::get_nd_item<1>();
-+    const int row      = item_ct1.get_group(0);
++// Norm+scale only: read get_rows buffer [k * n_rows], write final weights.
++// One work-item per token (sequential sum over k) — matches left-to-right sum_rows
++// more closely than a warp tree reduce for small k.
++static void router_norm_scale_kernel(const float * __restrict__ getrows, float * __restrict__ weights,
++                                     const int n_rows, const int n_expert_used, const float clamp_min,
++                                     const float scale_val, const float scale_bias, const bool with_norm) {
++    auto      item  = sycl::ext::oneapi::this_work_item::get_nd_item<1>();
++    const int row   = (int) item.get_global_id(0);
 +    if (row >= n_rows) {
 +        return;
 +    }
-+    const int lane = item_ct1.get_local_id(0);
 +
-+    const float *   probs_row = probs + (size_t) n_experts * row;
-+    const int32_t * ids_row   = ids_full + (size_t) n_experts * row;
-+    float *         gr_row    = getrows_buf ? getrows_buf + (size_t) n_expert_used * row : nullptr;
-+    float *         w_row     = weights + (size_t) n_expert_used * row;
++    const float * gr_row = getrows + (size_t) n_expert_used * row;
++    float *       w_row  = weights + (size_t) n_expert_used * row;
 +
-+    // Shared k weights for sequential sum on lane 0.
-+    // n_expert_used <= WARP_SIZE (asserted at launch).
-+    float local_w = 0.f;
-+    if (lane < n_expert_used) {
-+        const int expert = ids_row[lane];
-+        local_w          = probs_row[expert];
-+        if (gr_row) {
-+            gr_row[lane] = local_w;
-+        }
-+    }
-+
-+    // Broadcast all k weights via sub_group shuffle into lane 0 sequential sum.
-+    // Use local memory via register collection: each lane holds one w; lane 0 folds.
-+    float wt_sum = 0.f;
 +    if (with_norm) {
-+        const sycl::sub_group sg = item_ct1.get_sub_group();
-+        if (lane == 0) {
-+            // Sequential left-to-right sum over lanes 0..k-1 (each holds one selected weight).
-+            for (int e = 0; e < n_expert_used; ++e) {
-+                wt_sum += dpct::select_from_sub_group(sg, local_w, e);
-+            }
-+            wt_sum = sycl::fmax(wt_sum, clamp_min);
++        float wt_sum = 0.f;
++        for (int e = 0; e < n_expert_used; ++e) {
++            wt_sum += gr_row[e];
 +        }
-+        wt_sum = dpct::select_from_sub_group(sg, wt_sum, 0);
-+        if (lane < n_expert_used) {
-+            // True div then scale (match binbcast div + scale_f32)
-+            w_row[lane] = (local_w / wt_sum) * scale_val + scale_bias;
++        wt_sum = sycl::fmax(wt_sum, clamp_min);
++        const float inv = 1.0f / wt_sum;
++        for (int e = 0; e < n_expert_used; ++e) {
++            w_row[e] = gr_row[e] * inv * scale_val + scale_bias;
 +        }
-+    } else if (lane < n_expert_used) {
-+        w_row[lane] = local_w * scale_val + scale_bias;
++    } else {
++        for (int e = 0; e < n_expert_used; ++e) {
++            w_row[e] = gr_row[e] * scale_val + scale_bias;
++        }
 +    }
 +}
 +
-+// Hybrid stages:
-+//   mode 0: stock-oracle (all stock)
-+//   mode 1: stock sel + fused gather only + stock norm  (isolate gather)
-+//   mode 2: stock sel + fused gather-norm               (full hybrid post-argsort)
-+// Env GGML_SYCL_TOPK_MOE_HYBRID_MODE=0|1|2
-+//   0 = full stock-oracle (golden OK, no win)
-+//   1 = fused gather + stock norm/scale (golden OK)  ← default
-+//   2 = fused gather-norm (faster probe ~+3 tg, still golden FAIL — research only)
++// Hybrid stages (GGML_SYCL_TOPK_MOE_HYBRID_MODE):
++//   0 = full stock-oracle
++//   1 = fused gather + stock norm/scale
++//   2 = fused gather + stock sum/div + fused scale  (default; golden OK)
++//   3 = stock get_rows + stock norm (wiring control)
++//   4 = stock all after sigmoid (same as 3)
++//   5 = stock through div + fused scale
++// Full fused sum+div+scale still golden-fails (not shipped).
 +static int ggml_sycl_topk_moe_hybrid_mode() {
 +    static const int mode = []() {
 +        const char * env = getenv("GGML_SYCL_TOPK_MOE_HYBRID_MODE");
 +        if (env == nullptr) {
-+            return 1;  // golden-safe gather fuse
++            return 2;  // gather + fused scale
 +        }
 +        return std::atoi(env);
 +    }();
@@ -1737,19 +1715,27 @@ index 78574c4b5..780b2ae4b 100644
 +        scale_val  = ggml_get_op_params_f32(scale, 0);
 +        scale_bias = ggml_get_op_params_f32(scale, 1);
 +    }
++    const bool with_norm = clamp != nullptr;
++    float *    gr_d      = (float *) getrows_node->data;
++    float *    weights_d = (float *) weights_final->data;
 +
-+    if (mode == 1) {
-+        // Fused gather → get_rows buffer; stock norm/scale for remaining real ops.
-+        float * gr_d = (float *) getrows_node->data;
-+        const int total = n_expert_used * n_rows;
++    auto launch_norm = [&]() {
 +        constexpr int BS = 256;
-+        const int     nb = (total + BS - 1) / BS;
++        const int     nb = (n_rows + BS - 1) / BS;
++        const int     nr = n_rows;
++        const int     nk = n_expert_used;
 +        stream->parallel_for(sycl::nd_range<1>(sycl::range<1>((size_t) nb * BS), sycl::range<1>(BS)),
 +                             [=](sycl::nd_item<1> item_ct1) {
-+                                 router_gather_kernel(probs_d, ids_d, gr_d, n_experts, n_rows, n_expert_used);
++                                 router_norm_scale_kernel(gr_d, weights_d, nr, nk, clamp_min, scale_val, scale_bias,
++                                                          with_norm);
 +                                 GGML_UNUSED(item_ct1);
 +                             });
-+        // Run ops after GET_ROWS (index i+5 in Laguna pattern: 0..5 = sig..getrows).
++    };
++
++    if (mode == 3) {
++        // Stock get_rows + stock norm (control for mode3 path wiring).
++        // Set GGML_SYCL_TOPK_MOE_HYBRID_MODE=4 for stock get_rows + fused norm.
++        GGML_ASSERT(ggml_sycl_compute_forward(ctx, getrows_node));
 +        for (int j = 6; j < nops; ++j) {
 +            ggml_tensor * t = cgraph->nodes[i + j];
 +            if (!t || t->op == GGML_OP_NONE || t->op == GGML_OP_RESHAPE || t->op == GGML_OP_VIEW ||
@@ -1761,31 +1747,131 @@ index 78574c4b5..780b2ae4b 100644
 +        return;
 +    }
 +
-+    // mode >= 2: fused gather + norm + scale → final weights (+ optional get_rows raw)
-+    float * weights_d  = (float *) weights_final->data;
-+    float * getrows_d  = (float *) getrows_node->data;
-+    // If final aliases get_rows, skip separate raw write (pass nullptr).
-+    if (getrows_d == weights_d) {
-+        getrows_d = nullptr;
++    if (mode == 4) {
++        // Stock everything except fuse DIV+SCALE by calling stock DIV then stock SCALE
++        // via compute_forward — should match mode3. If we need a real fuse later, compare
++        // elementwise to this. (Previous pure-math fuse golden-failed.)
++        GGML_ASSERT(ggml_sycl_compute_forward(ctx, getrows_node));
++        for (int j = 6; j < nops; ++j) {
++            ggml_tensor * t = cgraph->nodes[i + j];
++            if (!t || t->op == GGML_OP_NONE || t->op == GGML_OP_RESHAPE || t->op == GGML_OP_VIEW ||
++                t->op == GGML_OP_PERMUTE || t->op == GGML_OP_TRANSPOSE || ggml_is_empty(t)) {
++                continue;
++            }
++            GGML_ASSERT(ggml_sycl_compute_forward(ctx, t));
++        }
++        return;
 +    }
-+    const bool with_norm = clamp != nullptr;
++
++    if (mode == 5) {
++        // Stock through DIV (incl. sum/clamp/div); fuse SCALE only as x*s+b.
++        GGML_ASSERT(ggml_sycl_compute_forward(ctx, getrows_node));
++        ggml_tensor * scale_node = nullptr;
++        for (int j = 6; j < nops; ++j) {
++            ggml_tensor * t = cgraph->nodes[i + j];
++            if (!t) {
++                continue;
++            }
++            if (t->op == GGML_OP_SCALE) {
++                scale_node = t;
++                continue;
++            }
++            if (t->op == GGML_OP_RESHAPE || t->op == GGML_OP_VIEW || t->op == GGML_OP_NONE) {
++                continue;
++            }
++            GGML_ASSERT(ggml_sycl_compute_forward(ctx, t));
++        }
++        if (!scale_node) {
++            return;
++        }
++        const float * src = (const float *) scale_node->src[0]->data;
++        float *       dst = (float *) scale_node->data;
++        const int64_t nelt = ggml_nelements(scale_node);
++        const float   s    = scale_val;
++        const float   b    = scale_bias;
++        constexpr int BS   = 256;
++        const int nblocks  = (int) ((nelt + BS - 1) / BS);
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++            [=](sycl::nd_item<1> item) {
++                const int64_t idx = (int64_t) item.get_global_id(0);
++                if (idx < nelt) {
++                    dst[idx] = src[idx] * s + b;
++                }
++            });
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr, "[lx-control-topk-moe] mode=5 stock-div+fused-scale nelt=%" PRId64 " s=%g same=%d\n",
++                    nelt, (double) s, (int) (src == dst));
++        }
++        return;
++    }
++
++    // mode 1 or 2: fused gather into get_rows
 +    {
-+        static std::atomic<int> dbg{0};
-+        if (dbg.fetch_add(1) == 0) {
-+            fprintf(stderr,
-+                    "[lx-control-topk-moe] gather-norm params n_exp=%d n_used=%d n_rows=%d clamp_min=%g scale=%g bias=%g with_norm=%d\n",
-+                    n_experts, n_expert_used, n_rows, (double) clamp_min, (double) scale_val, (double) scale_bias,
-+                    (int) with_norm);
++        const int total = n_expert_used * n_rows;
++        constexpr int BS = 256;
++        const int     nb = (total + BS - 1) / BS;
++        stream->parallel_for(sycl::nd_range<1>(sycl::range<1>((size_t) nb * BS), sycl::range<1>(BS)),
++                             [=](sycl::nd_item<1> item_ct1) {
++                                 router_gather_kernel(probs_d, ids_d, gr_d, n_experts, n_rows, n_expert_used);
++                                 GGML_UNUSED(item_ct1);
++                             });
++    }
++
++    if (mode == 1) {
++        // Stock norm/scale for remaining real ops after GET_ROWS.
++        for (int j = 6; j < nops; ++j) {
++            ggml_tensor * t = cgraph->nodes[i + j];
++            if (!t || t->op == GGML_OP_NONE || t->op == GGML_OP_RESHAPE || t->op == GGML_OP_VIEW ||
++                t->op == GGML_OP_PERMUTE || t->op == GGML_OP_TRANSPOSE || ggml_is_empty(t)) {
++                continue;
++            }
++            GGML_ASSERT(ggml_sycl_compute_forward(ctx, t));
++        }
++        return;
++    }
++
++    // mode >= 2: fused gather + stock sum/clamp/div + fused scale (golden-safe scale fuse).
++    // Full fused norm (sum+div+scale) golden-fails; keep sum/div stock.
++    ggml_tensor * scale_node = nullptr;
++    for (int j = 6; j < nops; ++j) {
++        ggml_tensor * t = cgraph->nodes[i + j];
++        if (!t) {
++            continue;
++        }
++        if (t->op == GGML_OP_SCALE) {
++            scale_node = t;
++            continue;
++        }
++        if (t->op == GGML_OP_RESHAPE || t->op == GGML_OP_VIEW || t->op == GGML_OP_NONE) {
++            continue;
++        }
++        GGML_ASSERT(ggml_sycl_compute_forward(ctx, t));
++    }
++    if (scale_node) {
++        const float * src = (const float *) scale_node->src[0]->data;
++        float *       dst = (float *) scale_node->data;
++        const int64_t nelt = ggml_nelements(scale_node);
++        const float   s    = scale_val;
++        const float   b    = scale_bias;
++        constexpr int BS   = 256;
++        const int nblocks  = (int) ((nelt + BS - 1) / BS);
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++            [=](sycl::nd_item<1> item) {
++                const int64_t idx = (int64_t) item.get_global_id(0);
++                if (idx < nelt) {
++                    dst[idx] = src[idx] * s + b;
++                }
++            });
++    }
++    {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr, "[lx-control-topk-moe] hybrid mode=2 gather+stock-div+fused-scale\n");
 +        }
 +    }
-+    const sycl::range<1> block_dims(WARP_SIZE);
-+    const sycl::range<1> block_nums(n_rows);
-+    stream->parallel_for(sycl::nd_range<1>(block_nums * block_dims, block_dims),
-+                         [=](sycl::nd_item<1> item_ct1) [[sycl::reqd_sub_group_size(WARP_SIZE)]] {
-+                             router_gather_norm_kernel(probs_d, ids_d, getrows_d, weights_d, n_experts, n_rows,
-+                                                       n_expert_used, clamp_min, scale_val, scale_bias, with_norm);
-+                             GGML_UNUSED(item_ct1);
-+                         });
 +}
 +
  template <int n_experts>
@@ -1862,7 +1948,7 @@ index 78574c4b5..780b2ae4b 100644
  static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
                                    const ggml_tensor *             logits,
                                    ggml_tensor *                   weights,
-@@ -230,6 +491,8 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
+@@ -230,6 +577,8 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
      GGML_ASSERT(logits->type  == GGML_TYPE_F32);
      GGML_ASSERT(weights->type == GGML_TYPE_F32);
      GGML_ASSERT(ids->type     == GGML_TYPE_I32);
@@ -1871,7 +1957,7 @@ index 78574c4b5..780b2ae4b 100644
  
      const int n_experts     = logits->ne[0];
      const int n_rows        = logits->ne[1];
-@@ -253,51 +516,8 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
+@@ -253,51 +602,8 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
      queue_ptr stream = ctx.stream();
      ggml_sycl_set_device(ctx.device);
  
@@ -1925,7 +2011,7 @@ index 78574c4b5..780b2ae4b 100644
  }
  
  static bool ggml_sycl_should_use_topk_moe(const ggml_tensor * gating_op, const ggml_tensor * weights,
-@@ -544,23 +764,164 @@ int ggml_sycl_fuse(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i)
+@@ -544,23 +850,164 @@ int ggml_sycl_fuse(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i)
          return 0;
      }
  
@@ -2095,7 +2181,7 @@ index 78574c4b5..780b2ae4b 100644
          return 0;
      }
  
-@@ -575,9 +936,17 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
+@@ -575,9 +1022,17 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
  
      if (!args.delayed_softmax) {
          const ggml_op gating_op = args.sigmoid ? GGML_OP_UNARY : GGML_OP_SOFT_MAX;
