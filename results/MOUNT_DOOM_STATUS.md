@@ -15,9 +15,9 @@ Kill mm-add: `GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1`
 
 ## NEXT
 
-1. **FA VEC for GQA decode** — ~+3.6 tg64 but golden FAIL; opt-in `GGML_SYCL_FATTN_FORCE_VEC=1` (`notes/SHIP_20260730_fattn_vec_gqa.md`). Bitexact VEC is high leverage.
-2. Prefill double-ADD / GEMM post / chunked residual2 **closed**.
-3. Other attn fuses low ROI vs FA numerics.
+1. **Bitexact FA VEC for GQA** — still ~+3.6 tg on table; TILE geometry tweaks (ncols2=1, pb=1) **regressed**. See `notes/SHIP_20260730_fattn_vec_gqa.md`.
+2. Diff TILE vs VEC FA outputs to locate numeric divergence.
+3. Prefill residual2 / GEMM-post **closed**.
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin

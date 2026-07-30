@@ -43,8 +43,22 @@ Do not default ON without a bitexact VEC path or a separate non-golden speed tra
 
 `+56.53%` mm-add+add decode (`20260730T125600Z`).
 
+## TILE geometry probes (same fire follow-up) — all keep TILE, no golden win
+
+| experiment | tg64 | vs tip TILE |
+|------------|-----:|------------:|
+| TILE GQA pack ncols2=2 (stock tip) | **~131.5** | — |
+| TILE force ncols2=1 for decode | ~123.8 | **regress** |
+| TILE force parallel_blocks=1 decode | ~117.2 | **regress** |
+| FORCE_VEC | ~135.3 | +3.7, golden FAIL |
+
+GQA head-packing (ncols2=2 for ratio 6) and multi-block K-split **help** TILE speed;
+stripping them moves away from VEC, not toward it. Speed gap is algorithmic (VEC kernel),
+not just bad TILE launch geometry.
+
 ## Next
 
-1. Bitexact / reduced-diff VEC for GQA (match TILE softmax order) → reclaim ~+3–4 tg.
-2. Or accept opt-in force_vec for non-scored demos only.
-3. Other attn fuses (gate GEMV+softplus) low ROI vs FA.
+1. **Bitexact VEC**: match TILE softmax/K-loop order and GQA pairing (ncols2=2 semantics
+   in VEC, or fp32 path) — still the highest decode leverage (~+3–4 tg).
+2. Diff first-token FA outputs TILE vs VEC on a fixed prompt to locate divergence.
+3. Non-FA levers if FA bitexact stalls.
