@@ -1,0 +1,296 @@
+From: lagunaX campaign
+Subject: [PATCH 0010] control: multi-token mul_mat_id device counting-sort (default ON)
+
+Bitexact-safe prefill path: device histogram + mapping fill; keep expert GEMM regroup.
+Golden OK. Formal score ≈ tip (+7.91% vs +7.94%). Kill: GGML_SYCL_DISABLE_MMID_DEVICE_SORT=1
+
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp	2026-07-30 00:26:20.543613539 -0500
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp	2026-07-30 00:26:20.543669665 -0500
+@@ -1 +1,286 @@
+-// (host counting-sort multi-token path only)
++// Device counting-sort for multi-token mul_mat_id: no full ids D2H.
++// Same GEMM regroup path as host sort (per-row results bitexact; row order within
++// an expert may differ via atomics but each logical (slot,token) maps 1:1).
++// Kill: GGML_SYCL_DISABLE_MMID_DEVICE_SORT=1
++static bool ggml_sycl_mmid_device_sort_enabled() {
++    static const bool disabled = []() {
++        const char * env = getenv("GGML_SYCL_DISABLE_MMID_DEVICE_SORT");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
++    return !disabled;
++}
++
++static void mmid_device_count_experts(
++        const int32_t * __restrict__ ids, int * __restrict__ counts,
++        const int n_ids, const int n_tokens, const int ids_row_stride,
++        const int n_as, const sycl::nd_item<1> & item) {
++    const int tid = (int) item.get_global_id(0);
++    const int total = n_ids * n_tokens;
++    if (tid >= total) {
++        return;
++    }
++    const int slot  = tid % n_ids;
++    const int token = tid / n_ids;
++    const int32_t expert = ids[(size_t) token * (size_t) ids_row_stride + (size_t) slot];
++    if (expert >= 0 && expert < n_as) {
++        auto ref = sycl::atomic_ref<int, sycl::memory_order::relaxed,
++                                    sycl::memory_scope::device,
++                                    sycl::access::address_space::global_space>(counts[expert]);
++        ref.fetch_add(1);
++    }
++}
++
++static void mmid_device_fill_mapping(
++        const int32_t * __restrict__ ids, int * __restrict__ next,
++        mmid_row_mapping * __restrict__ mapping,
++        const int n_ids, const int n_tokens, const int ids_row_stride,
++        const int n_as, const sycl::nd_item<1> & item) {
++    const int tid = (int) item.get_global_id(0);
++    const int total = n_ids * n_tokens;
++    if (tid >= total) {
++        return;
++    }
++    const int slot  = tid % n_ids;
++    const int token = tid / n_ids;
++    const int32_t expert = ids[(size_t) token * (size_t) ids_row_stride + (size_t) slot];
++    if (expert < 0 || expert >= n_as) {
++        return;
++    }
++    auto ref = sycl::atomic_ref<int, sycl::memory_order::relaxed,
++                                sycl::memory_scope::device,
++                                sycl::access::address_space::global_space>(next[expert]);
++    const int pos = ref.fetch_add(1);
++    mapping[pos] = { slot, token };
++}
++
++
++// --- mul_mat_id multi-token branch ---
++// Device-routed fused path (decode always; multi-token if ENABLE_MMID_FUSED_BATCH=1).
++    if (ggml_sycl_mul_mat_id_mmvq_fused(ctx, src0, src1, ids, dst)) {
++        return;
++    }
++
++    // Multi-token device counting-sort: skip full ids D2H (mapping built on GPU).
++    const bool multi_device_sort =
++        ne12 > 1 && ggml_sycl_mmid_device_sort_enabled() && ids->nb[0] == sizeof(int32_t);
++
++    std::vector<char> ids_host;
++    if (!multi_device_sort) {
++        ids_host.resize(ggml_nbytes(ids));
++        const char * ids_dev = (const char *) ids->data;
++        SYCL_CHECK(CHECK_TRY_ERROR(
++            stream->memcpy(ids_host.data(), ids_dev, ggml_nbytes(ids))));
++        // also ensures ctx.mmid_row_mapping_host is drained before we use it again
++        SYCL_CHECK(CHECK_TRY_ERROR(stream->wait()));
++    }
++
++    ggml_tensor src0_row = *src0;
++    ggml_tensor src1_row = *src1;
++    ggml_tensor dst_row = *dst;
++
++    char *src0_original = (char *)src0->data;
++    char *src1_original = (char *)src1->data;
++    char *dst_original = (char *)dst->data;
++
++    src0_row.ne[2] = 1;
++    src0_row.ne[3] = 1;
++    src0_row.nb[3] = nb02;
++
++    src1_row.ne[1] = 1;
++    src1_row.ne[2] = 1;
++    src1_row.ne[3] = 1;
++    src1_row.nb[2] = nb11;
++    src1_row.nb[3] = nb11;
++
++    dst_row.ne[1] = 1;
++    dst_row.ne[2] = 1;
++    dst_row.ne[3] = 1;
++    dst_row.nb[2] = nb1;
++    dst_row.nb[3] = nb1;
++    if (ne12 == 1) {
++        for (int64_t iid1 = 0; iid1 < ids->ne[1]; iid1++) {
++            for (int64_t id = 0; id < n_ids; id++) {
++                const int32_t i02 = *(const int32_t *) (ids_host.data() + iid1*ids->nb[1] + id*ids->nb[0]);
++                GGML_ASSERT(i02 >= 0 && i02 < n_as);
++
++                const int64_t i11 = id % ne11;
++                const int64_t i12 = iid1;
++
++                const int64_t i1 = id;
++                const int64_t i2 = i12;
++
++            src0_row.data = src0_original + i02*nb02;
++            src1_row.data = src1_original + i11*nb11 + i12*nb12;
++            dst_row.data = dst_original + i1*nb1 + i2*nb2;
++
++            ggml_sycl_mul_mat(ctx, &src0_row, &src1_row, &dst_row);
++            }
++        }
++    } else {
++        const int64_t n_routed_rows = ids->ne[1] * n_ids;
++        ggml_sycl_pool_alloc<char> src1_contiguous(ctx.pool(), sizeof(float)*n_routed_rows*ne10);
++        ggml_sycl_pool_alloc<char>  dst_contiguous(ctx.pool(), sizeof(float)*n_routed_rows*ne0);
++
++        src1_row.data = src1_contiguous.get();
++        dst_row.data  =  dst_contiguous.get();
++
++        // how many "owned" routed rows to pass to each expert
++        std::vector<int64_t> expert_row_counts;
++        // where each expert's slice starts and the previous ends (row indices, right-exclusive)
++        std::vector<int64_t> expert_row_offsets;
++        ggml_sycl_pool_alloc<mmid_row_mapping> dev_row_mapping(ctx.pool(), n_routed_rows);
++
++        const bool use_device_sort =
++            ggml_sycl_mmid_device_sort_enabled() && ids->nb[0] == sizeof(int32_t);
++
++        if (use_device_sort) {
++            // Device histogram + fill mapping (no full ids D2H / host sort).
++            const int n_tokens_i = (int) ids->ne[1];
++            const int n_ids_i    = (int) n_ids;
++            const int n_as_i     = (int) n_as;
++            const int ids_stride = (int) (ids->nb[1] / sizeof(int32_t));
++            const int32_t * ids_d = (const int32_t *) ids->data;
++
++            ggml_sycl_pool_alloc<int> dev_counts(ctx.pool(), n_as);
++            ggml_sycl_pool_alloc<int> dev_next(ctx.pool(), n_as);
++            SYCL_CHECK(CHECK_TRY_ERROR(stream->memset(dev_counts.get(), 0, sizeof(int) * n_as)));
++
++            constexpr int BS = 256;
++            const int total  = n_ids_i * n_tokens_i;
++            const int nblocks = (total + BS - 1) / BS;
++            int * counts_d = dev_counts.get();
++            stream->parallel_for(
++                sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++                [=](sycl::nd_item<1> item) {
++                    mmid_device_count_experts(ids_d, counts_d, n_ids_i, n_tokens_i, ids_stride, n_as_i, item);
++                });
++
++            std::vector<int> host_counts(n_as);
++            SYCL_CHECK(CHECK_TRY_ERROR(
++                stream->memcpy(host_counts.data(), dev_counts.get(), sizeof(int) * n_as)));
++            // Need counts before expert GEMM loop (same sync class as prior host sort path).
++            SYCL_CHECK(CHECK_TRY_ERROR(stream->wait()));
++
++            expert_row_counts.assign(n_as, 0);
++            expert_row_offsets.assign(n_as + 1, 0);
++            for (int64_t e = 0; e < n_as; ++e) {
++                expert_row_counts[e] = host_counts[e];
++                expert_row_offsets[e + 1] = expert_row_offsets[e] + expert_row_counts[e];
++            }
++            GGML_ASSERT(expert_row_offsets[n_as] == n_routed_rows);
++
++            // next[] starts at exclusive prefix (= offsets)
++            std::vector<int> host_next(n_as);
++            for (int64_t e = 0; e < n_as; ++e) {
++                host_next[e] = (int) expert_row_offsets[e];
++            }
++            SYCL_CHECK(CHECK_TRY_ERROR(
++                stream->memcpy(dev_next.get(), host_next.data(), sizeof(int) * n_as)));
++
++            int * next_d = dev_next.get();
++            mmid_row_mapping * map_d = dev_row_mapping.get();
++            stream->parallel_for(
++                sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++                [=](sycl::nd_item<1> item) {
++                    mmid_device_fill_mapping(ids_d, next_d, map_d, n_ids_i, n_tokens_i, ids_stride, n_as_i, item);
++                });
++
++            {
++                static std::atomic<int> once{0};
++                if (once.fetch_add(1) == 0) {
++                    fprintf(stderr,
++                            "[lx-control-mmid] device counting-sort n_tokens=%d k=%d n_experts=%d\n",
++                            n_tokens_i, n_ids_i, n_as_i);
++                }
++            }
++        } else {
++            // Legacy host counting-sort (ids already D2H'd + waited above).
++            std::vector<mmid_row_mapping> & routed_row_src = ctx.mmid_row_mapping_host;
++            mmid_counting_sort_rows(ids, ids_host.data(), n_ids, n_as, n_routed_rows,
++                                    expert_row_counts, expert_row_offsets, routed_row_src);
++            SYCL_CHECK(CHECK_TRY_ERROR(
++                stream->memcpy(dev_row_mapping.get(), routed_row_src.data(),
++                               n_routed_rows * sizeof(mmid_row_mapping))));
++        }
++
++        const unsigned int max_work_group_size = ggml_sycl_info().max_work_group_sizes[ctx.device];
++        assert(max_work_group_size % (WARP_SIZE * WARP_SIZE) == 0);
++
++        {
++            sycl::range<3> block_dims(1, 1, std::min((unsigned int)ne10, max_work_group_size));
++            sycl::range<3> grid_dims(1, 1, n_routed_rows);
++            stream->submit([&](sycl::handler &cgh) {
++                char *__restrict src1_contiguous_get =
++                    src1_contiguous.get();
++                mmid_row_mapping *__restrict dev_row_mapping_get =
++                    dev_row_mapping.get();
++
++                cgh.parallel_for(
++                    sycl::nd_range<3>(grid_dims * block_dims, block_dims),
++                    [=](sycl::nd_item<3> item_ct1) {
++                        k_copy_src1_to_contiguous(
++                            src1_original, src1_contiguous_get,
++                            dev_row_mapping_get,
++                            ne11, ne10, nb11, nb12,
++                            item_ct1);
++                    });
++            });
++        }
++
++        for (int64_t i02 = 0; i02 < n_as; i02++) {
++            const int64_t num_src1_rows = expert_row_counts[i02];
++
++            if (num_src1_rows == 0) {
++                continue;
++            }
++
++            const int64_t expert_row_offset = expert_row_offsets[i02];
++
++            src0_row.data = src0_original + i02*nb02;
++
++            GGML_ASSERT(nb11 == sizeof(float)*ne10);
++            GGML_ASSERT(nb1 == sizeof(float)*ne0);
++            src1_row.data = src1_contiguous.get() + expert_row_offset*nb11;
++            src1_row.ne[1] = num_src1_rows;
++
++            src1_row.nb[1] = nb11;
++            src1_row.nb[2] = num_src1_rows*nb11;
++            src1_row.nb[3] = num_src1_rows*nb11;
++
++            dst_row.data = dst_contiguous.get() + expert_row_offset*nb1;
++            dst_row.ne[1] = num_src1_rows;
++            dst_row.nb[1] = nb1;
++            dst_row.nb[2] = num_src1_rows*nb1;
++            dst_row.nb[3] = num_src1_rows*nb1;
++
++            ggml_sycl_mul_mat(ctx, &src0_row, &src1_row, &dst_row);
++        }
++
++        {
++            sycl::range<3> block_dims(1, 1, std::min((unsigned int)ne0, max_work_group_size));
++            sycl::range<3> grid_dims(1, 1, n_routed_rows);
++            stream->submit([&](sycl::handler &cgh) {
++                const char *__restrict dst_contiguous_get =
++                    dst_contiguous.get();
++                const mmid_row_mapping *__restrict dev_row_mapping_get =
++                    dev_row_mapping.get();
++
++                cgh.parallel_for(
++                    sycl::nd_range<3>(grid_dims * block_dims, block_dims),
++                    [=](sycl::nd_item<3> item_ct1) {
++                        k_copy_dst_from_contiguous(dst_original,
++                                                   dst_contiguous_get,
++                                                   dev_row_mapping_get,
++                                                   ne0, nb1, nb2, item_ct1);
++                    });
++            });
++        }
++    }
++}
++catch (sycl::exception const &exc) {
++  std::cerr << exc.what() << "Exception caught at file:" << __FILE__
++            << ", line:" << __LINE__ << std::endl;
++  std::exit(1);
++}
++
++// ---------------------------------------------------------------------------

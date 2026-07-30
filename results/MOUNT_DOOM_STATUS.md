@@ -1,18 +1,18 @@
-# Mount Doom status — 2026-07-30 (dual multi-token park)
+# Mount Doom status — 2026-07-30 (device mmid counting-sort)
 
 ## LIVE NOW — tip + research track
 
-**Scored tip:** MoE dual + **hybrid mode2** + dense dual + moe-down (all default ON)  
-**Research (golden FAIL / opt-in):** full fused norm · integrated down · multi-token mmid · **dual multi-token**
+**Scored tip:** MoE dual + hybrid mode2 + dense dual + moe-down + **device mmid counting-sort** (all default ON)  
+**Research (golden FAIL / opt-in):** full fused norm · integrated down · multi-token MMVQ · dual multi-token
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **tip hybrid mode2** | **1141.4** | **118.8** | **+7.94%** |
-| prior mode1 tip | 1141.2 | 118.1 | +7.44% |
+| tip hybrid mode2 (prior) | 1141.4 | 118.8 | +7.94% |
+| **+ device counting-sort** | **1144.8** | **118.6** | **+7.91%** (noise) |
 | baseline pin | 1139 | 107.35 | 1.0 |
-| dual multi-token default ON | — | — | **golden FAIL** (parked) |
 
-Opt-in research: `GGML_SYCL_ENABLE_MOE_DUAL_MULTITOKEN=1` (per-token dual, cap 32). See `notes/SHIP_20260730_dual_multitoken.md` · `patches/0009-*.patch`.
+Formal: `results/20260730T052508Z/` · `notes/SHIP_20260730_mmid_device_sort.md` · `patches/0010-*.patch`  
+Kill device sort: `GGML_SYCL_DISABLE_MMID_DEVICE_SORT=1`
 
 - **Golden:** OK
 - **Floors:** OK
