@@ -2,14 +2,14 @@
 
 ## LIVE NOW — tip + research track
 
-**Scored tip:** Control + Q4_K MoE dual-SwiGLU (default ON)  
-**Research:** Hybrid router opt-in (`GGML_SYCL_ENABLE_TOPK_MOE_BIAS=1`) — stock-oracle golden OK / no win; custom gather-norm ~+4 tg probe but golden fail
+**Scored tip:** Control + Q4_K dual-SwiGLU + **hybrid router mode1** (both default ON)  
+**Research:** hybrid mode2 gather-norm (`GGML_SYCL_TOPK_MOE_HYBRID_MODE=2`) — ~+3 tg probe, golden FAIL
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **ctrl dual ON (A/B ub4k)** | **1144** | **110.1** | **+2.04%** |
-| ctrl dual OFF (A/B ub4k) | 1134 | 108.2 | +0.45% |
-| **formal harness (ub2k env)** | **1135** | **109.8** | **+1.63%** |
+| **tip dual+hybrid m1 (formal)** | **1142.6** | **110.2** | **+2.09%** |
+| dual only A/B same binary | 1146.7 | 109.9 | +1.97% |
+| hybrid m1 earlier formal | 1146.7 | 110.3 | +2.25% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
 - **Golden:** OK

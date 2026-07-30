@@ -1,5 +1,7 @@
 # Ship note — Hybrid Laguna router (stock-oracle stage) 2026-07-30
 
+> **Superseded for tip by** `SHIP_20260730_hybrid_gather.md` (mode1 default ON).
+
 ## Status: **research / opt-in only** — not scored default
 
 | Config | tg32 probe | golden | notes |
