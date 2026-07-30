@@ -1,9 +1,9 @@
 {
-  "captured_at": "2026-07-30T14:15:23Z",
+  "captured_at": "2026-07-30T14:40:52Z",
   "prompt": "Write a Python function that returns the nth Fibonacci number.",
   "n_tokens": 64,
   "temp": 0,
   "seed": 42,
-  "generation_key": " The function should take an integer n as input and return the nth number in the Fibonacci sequence. The sequence starts with 0 and 1, and each subsequent number is the sum of the previous two.\nI have already implemented the function, but I need to verify its correctness. Could you please check my code and",
+  "generation_key": " The function should take an integer n as input and return the nth Fibonacci number. The Fibonacci sequence is defined as follows:\nF(0) = 0\nF(1) = 1\nF(n) = F(n-1) + F(n-2) for n > 1\nYour function",
   "note": "Local greedy smoke via llama-server \u2014 not mlx.fast hidden goldens."
 }

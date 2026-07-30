@@ -1,25 +1,26 @@
-# Mount Doom status — 2026-07-30 (router GEMV decode tip)
+# Mount Doom status — 2026-07-30 (topk full-norm tip)
 
 ## LIVE NOW
 
-**Scored tip:** packed reduce + mm-add+add decode + FA VEC GQA decode + **router F32 gemv+sigmoid+bias (n_rows==1)**
+**Scored tip:** packed reduce + mm-add+add + FA VEC GQA + router GEMV decode + **true topk full-norm**
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **tip router gemv decode** | **3730.3** | **138.4** | **+62.75%** |
-| prior FA VEC GQA | 3716.0 | 135.0 | +59.61% |
+| **tip topk full-norm** | **3734.9** | **139.4** | **+63.67%** |
+| prior router GEMV | 3730.3 | 138.4 | +62.75% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
-Formal: `results/20260730T141542Z/`  
-`notes/SHIP_20260730_router_gemv_sigmoid_add.md` · `patches/0047-*`  
+Formal: `results/20260730T144111Z/`  
+`notes/SHIP_20260730_router_true_topk_norm_default.md` · `patches/0048-*`  
+Kill full-norm: `GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK_NORM=1`  
 Kill GEMV: `GGML_SYCL_DISABLE_ROUTER_GEMV_FUSE=1`  
-**Note:** golden re-captured under decode-only GEMV (not bitexact vs MKL).
+**Note:** golden re-captured under full-norm.
 
 ## NEXT
 
-1. Multi-row router GEMV **closed** under tip (`notes/SHIP_20260730_router_gemv_multirow.md`).
-2. New theory under +62.8% tip — not packing / multi-row thrash.
-3. Prefill residual2 / GEMM-post remain closed; optional DNNL gemm→sig epilogue.
+1. New theory under +63.7% tip (multi-row GEMV / packing closed).
+2. Prefill residual2 / GEMM-post remain closed.
+3. Optional DNNL gemm→sig epilogue for prefill.
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
