@@ -1,50 +1,46 @@
 # Ship note — Laguna topk-moe bias fuse (2026-07-30)
 
-## Status: **opt-in only** (not scored default)
+## Status: **research / opt-in only** — not scored default
 
-| Config | pp512 | tg128 | golden | score vs pin |
-|--------|------:|------:|:------:|-------------:|
-| dual ON, topk bias **OFF** (default tip) | ~1135–1145 | ~110 | **OK** | **~+1.6–2.0%** |
-| dual ON, topk bias **ON** (A/B ub4k) | 1140 | **115.1** | **FAIL** | ~+5.4% raw |
-| topk OFF (same binary) | 1145 | 110.1 | OK | ~+2.0% |
+| Config | tg128 (ub4k) | golden | notes |
+|--------|-------------:|:------:|-------|
+| dual ON, topk bias **OFF** (default) | **~110** | **OK** | scored tip |
+| dual ON, topk bias **ON** (bitonic) | **~97** | **FAIL** | fuse hits; slower + wrong tokens |
+| earlier iterative top-k ON | ~115 | FAIL | faster but not golden-safe |
 
-Absolute-speed probe (not golden-safe): **+~5 tg** when bias fuse enabled.
+## What we built
 
-## What it does
+1. **Correct Laguna graph pattern** (measured live):
+   ```
+   SIGMOID → RESHAPE → ADD(exp_probs_b) → ARGSORT → VIEW → GET_ROWS
+   [→ weight norm → scale]
+   ```
+2. **CUDA-style `has_bias` semantics** in the fused kernel: select on `wt+bias`, emit unbiased `wt`.
+3. **Bitonic DESC sort** on selection scores (same network family as SYCL `k_argsort`) for the bias path.
+4. Env:
+   - `GGML_SYCL_ENABLE_TOPK_MOE_BIAS=1` — opt-in
+   - `GGML_SYCL_DISABLE_TOPK_MOE=1` — hard kill
 
-Fuses Laguna router:
+Patches:
+- `patches/0003-control-topk-moe-bias-optin.patch`
+- rolled into refreshed `patches/0001-control-q4k-moe-dual-swiglu.patch`
 
-```
-SIGMOID → ADD(exp_probs_b) → ARGSORT → VIEW → RESHAPE(probs) → GET_ROWS
-[+ weight norm + scale]
-```
+## Why not default / scored
 
-into one warp top-k kernel (CUDA `has_bias` semantics: **select** with `wt+bias`, **emit** unbiased `wt`).
+- **Golden mismatch** even with bitonic (still diverges from the unfused chain).
+- **Speed regression** when ON (~97 vs ~110 tg): full 256-key bitonic inside the fuse does not pay for itself vs the already-GPU argsort path.
 
-Patch: `patches/0003-control-topk-moe-bias-optin.patch`  
-Also rolled into refreshed `patches/0001-control-q4k-moe-dual-swiglu.patch` (dual + topk).
+## Scored tip remains
 
-## Enable
+**Control dual SwiGLU only** — formal ~**+2%** vs pin, golden OK.
 
-```bash
-export GGML_SYCL_ENABLE_TOPK_MOE_BIAS=1
-# hard kill:
-export GGML_SYCL_DISABLE_TOPK_MOE=1
-```
+## Next experiments (not yet)
 
-## Why not default ON
-
-Teacher-forced golden **mismatches** with fuse ON. Iterative warp argmax (tie-break: lower expert id) ≠ full `ggml_argsort` DESC on some layers → different expert set → different tokens.
-
-Matches the M5 note’s lesson: restructured selection is transfer-risky even when “equivalent” in spirit.
-
-## Next for this lever
-
-1. Bitexact path: implement top-k that matches ggml_argsort total order (or use a device full-sort of 256 + view — still cheaper than unfused multi-op).  
-2. Or recapture golden under ENABLE=1 as a **separate** absolute-limit track (not scored vs pin without contract bump).  
-3. Keep default tip = dual only for mlx.fast-shaped score.
+1. Fuse only **sigmoid+add+get_rows+norm**, leave **device argsort** as the existing kernel (true bitexact selection).
+2. Partial top-k bitonic that matches `k_argsort` prefix without full 256 if possible.
+3. Profile barrier cost of in-fuse bitonic vs standalone argsort.
 
 ## Artifacts
 
-- A/B: `results/topk-bias-fuse-20260730T024717Z/`  
-- Formal dual tip: `results/LATEST_SCORE.json` / `results/20260730T025131Z/`
+- Pattern discovery + hit: fuse log `[lx-control-topk-moe] laguna bias fuse HIT (bitonic)`
+- A/B: ON ~97 tg / OFF ~110 tg (2026-07-30)

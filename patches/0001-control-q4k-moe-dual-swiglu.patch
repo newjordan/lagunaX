@@ -317,7 +317,7 @@ index c5d70bd0e..e4b38f651 100644
 +
  #endif // GGML_SYCL_MMVQ_HPP
 diff --git a/ggml/src/ggml-sycl/topk-moe.cpp b/ggml/src/ggml-sycl/topk-moe.cpp
-index 78574c4b5..119eeaa59 100644
+index 78574c4b5..302cd0575 100644
 --- a/ggml/src/ggml-sycl/topk-moe.cpp
 +++ b/ggml/src/ggml-sycl/topk-moe.cpp
 @@ -1,4 +1,7 @@
@@ -342,7 +342,7 @@ index 78574c4b5..119eeaa59 100644
  
  struct ggml_sycl_topk_moe_args {
      bool sigmoid{};
-@@ -77,19 +79,16 @@ static inline void sigmoid_warp_inplace(float (&vals)[experts_per_thread], const
+@@ -77,24 +79,31 @@ static inline void sigmoid_warp_inplace(float (&vals)[experts_per_thread], const
  }
  
  /*
@@ -355,20 +355,51 @@ index 78574c4b5..119eeaa59 100644
 -    It is intended as a fusion of the softmax->top-k->get_rows pipeline for MoE models.
 -    One sub-group handles one row/token, mirroring topk_moe_cuda's one-warp-per-row layout.
 +    Fused router: gating activation -> optional score-correction bias -> top-k ids
-+    -> optional weight norm/scale. One sub-group per token (CUDA topk_moe_cuda layout).
++    -> optional weight norm/scale. One warp (sub-group) per token.
 +
-+    has_bias: select with (wt + bias), emit unbiased wt (DeepSeek-V3 / Laguna style).
++    has_bias=false: iterative warp argmax (CUDA no-bias path).
++    has_bias=true:  bitonic argsort on selection scores matching SYCL k_argsort
++                    (GGML_SORT_ORDER_DESC) so golden matches the eager GPU path;
++                    emit unbiased wt for selected experts (Laguna / DeepSeek-V3).
  */
--template <int n_experts>
-+template <int n_experts, bool has_bias>
- static void topk_moe_kernel(const float * __restrict__ logits,
-                             float * __restrict__       weights,
-                             int32_t * __restrict__     ids,
-+                            const float * __restrict__ bias,
-                             const int                  n_rows,
-                             const int                  n_expert_used,
-                             const float                clamp_val,
-@@ -127,8 +126,6 @@ static void topk_moe_kernel(const float * __restrict__ logits,
++template <typename T>
++static inline void topk_swap(T & a, T & b) {
++    T t = a;
++    a   = b;
++    b   = t;
++}
++
++// No-bias path: iterative top-k (CUDA parity).
+ template <int n_experts>
+-static void topk_moe_kernel(const float * __restrict__ logits,
+-                            float * __restrict__       weights,
+-                            int32_t * __restrict__     ids,
+-                            const int                  n_rows,
+-                            const int                  n_expert_used,
+-                            const float                clamp_val,
+-                            const float                scale_val,
+-                            const topk_moe_config       config) {
++static void topk_moe_kernel_nobias(const float * __restrict__ logits,
++                                   float * __restrict__       weights,
++                                   int32_t * __restrict__     ids,
++                                   const int                  n_rows,
++                                   const int                  n_expert_used,
++                                   const float                clamp_val,
++                                   const float                scale_val,
++                                   const topk_moe_config       config) {
+     auto      item_ct1 = sycl::ext::oneapi::this_work_item::get_nd_item<1>();
+     const int row       = item_ct1.get_group(0);
+     if (row >= n_rows) {
+@@ -104,7 +113,7 @@ static void topk_moe_kernel(const float * __restrict__ logits,
+ 
+     logits  += (size_t) n_experts * row;
+     weights += (size_t) n_expert_used * row;
+-    ids     += (size_t) n_experts * row;  // ids row stride is n_experts (matches the argsort tensor)
++    ids     += (size_t) n_experts * row;
+ 
+     constexpr int experts_per_thread = (n_experts > WARP_SIZE) ? n_experts / WARP_SIZE : 1;
+ 
+@@ -127,8 +136,6 @@ static void topk_moe_kernel(const float * __restrict__ logits,
          }
      }
  
@@ -377,178 +408,268 @@ index 78574c4b5..119eeaa59 100644
  #pragma unroll
      for (int i = 0; i < experts_per_thread; i++) {
          if (sycl::isnan(wt[i])) {
-@@ -136,9 +133,20 @@ static void topk_moe_kernel(const float * __restrict__ logits,
+@@ -136,10 +143,6 @@ static void topk_moe_kernel(const float * __restrict__ logits,
          }
      }
  
 -    // each thread now holds either a portion of the softmax distribution or the raw logits. Do the
 -    // argmax reduce over n_expert_used, each time marking the selected expert as -inf to exclude it
 -    // from the next iteration.
-+    // selection uses wt+bias; weight emission uses unbiased wt (CUDA parity)
-+    float selection_wt[has_bias ? experts_per_thread : 1];
-+    if constexpr (has_bias) {
-+#pragma unroll
-+        for (int i = 0; i < experts_per_thread; i++) {
-+            selection_wt[i] = -INFINITY;
-+        }
-+#pragma unroll
-+        for (int i = 0; i < n_experts; i += WARP_SIZE) {
-+            const int expert = i + lane;
-+            selection_wt[i / WARP_SIZE] =
-+                (n_experts % WARP_SIZE == 0 || expert < n_experts) ? wt[i / WARP_SIZE] + bias[expert] : -INFINITY;
-+        }
-+    }
- 
+-
      float wt_sum = 0.f;
      float output_weights[experts_per_thread];
-@@ -152,27 +160,55 @@ static void topk_moe_kernel(const float * __restrict__ logits,
-     for (int k = 0; k < n_expert_used; k++) {
-         float max_val    = wt[0];
-         int   max_expert = lane;
-+
-+        if constexpr (has_bias) {
-+            float max_val_s = selection_wt[0];
  #pragma unroll
--        for (int i = 1; i < experts_per_thread; i++) {
--            const int expert = lane + i * WARP_SIZE;
--            if ((n_experts % WARP_SIZE == 0 || expert < n_experts) && wt[i] > max_val) {
--                max_val    = wt[i];
--                max_expert = expert;
-+            for (int i = 1; i < experts_per_thread; i++) {
-+                const int expert = lane + i * WARP_SIZE;
-+                if ((n_experts % WARP_SIZE == 0 || expert < n_experts) && selection_wt[i] > max_val_s) {
-+                    max_val    = wt[i];
-+                    max_val_s  = selection_wt[i];
-+                    max_expert = expert;
-+                }
-             }
--        }
- #pragma unroll
--        for (int mask = WARP_SIZE / 2; mask > 0; mask >>= 1) {
--            const float val    = dpct::permute_sub_group_by_xor(sg, max_val, mask);
--            const int   expert = dpct::permute_sub_group_by_xor(sg, max_expert, mask);
--            if (val > max_val || (val == max_val && expert < max_expert)) {
--                max_val    = val;
--                max_expert = expert;
-+            for (int mask = WARP_SIZE / 2; mask > 0; mask >>= 1) {
-+                const float val    = dpct::permute_sub_group_by_xor(sg, max_val, mask);
-+                const float val_s  = dpct::permute_sub_group_by_xor(sg, max_val_s, mask);
-+                const int   expert = dpct::permute_sub_group_by_xor(sg, max_expert, mask);
-+                if (val_s > max_val_s || (val_s == max_val_s && expert < max_expert)) {
-+                    max_val    = val;
-+                    max_val_s  = val_s;
-+                    max_expert = expert;
-+                }
-+            }
-+            if ((max_expert & (WARP_SIZE - 1)) == lane) {
-+                selection_wt[max_expert / WARP_SIZE] = -INFINITY;
-+            }
-+        } else {
-+#pragma unroll
-+            for (int i = 1; i < experts_per_thread; i++) {
-+                const int expert = lane + i * WARP_SIZE;
-+                if ((n_experts % WARP_SIZE == 0 || expert < n_experts) && wt[i] > max_val) {
-+                    max_val    = wt[i];
-+                    max_expert = expert;
-+                }
-+            }
-+#pragma unroll
-+            for (int mask = WARP_SIZE / 2; mask > 0; mask >>= 1) {
-+                const float val    = dpct::permute_sub_group_by_xor(sg, max_val, mask);
-+                const int   expert = dpct::permute_sub_group_by_xor(sg, max_expert, mask);
-+                if (val > max_val || (val == max_val && expert < max_expert)) {
-+                    max_val    = val;
-+                    max_expert = expert;
-+                }
-+            }
-+            if ((max_expert & (WARP_SIZE - 1)) == lane) {
-+                wt[max_expert / WARP_SIZE] = -INFINITY;
-             }
-         }
- 
--        if ((max_expert & (WARP_SIZE - 1)) == lane) {
--            wt[max_expert / WARP_SIZE] = -INFINITY;
--        }
-         if ((k & (WARP_SIZE - 1)) == lane) {
-             output_weights[k / WARP_SIZE] = max_val;
-         }
-@@ -207,25 +243,78 @@ static void topk_moe_kernel(const float * __restrict__ logits,
+@@ -207,17 +210,245 @@ static void topk_moe_kernel(const float * __restrict__ logits,
      }
  }
  
--template <int n_experts>
++// Bias path: bitonic argsort on selection scores (same network as ggml_sycl k_argsort DESC).
+ template <int n_experts>
 -static void launch_topk_moe(queue_ptr stream, const float * logits, float * weights, int32_t * ids, int n_rows,
 -                            int n_expert_used, float clamp_val, float scale_val, const topk_moe_config & config) {
-+template <int n_experts, bool has_bias>
-+static void launch_topk_moe(queue_ptr stream, const float * logits, float * weights, int32_t * ids,
-+                            const float * bias, int n_rows, int n_expert_used, float clamp_val, float scale_val,
-+                            const topk_moe_config & config) {
++static void topk_moe_kernel_bias_bitonic(const float * __restrict__ logits,
++                                         float * __restrict__       weights,
++                                         int32_t * __restrict__     ids,
++                                         const float * __restrict__ bias,
++                                         const int                  n_rows,
++                                         const int                  n_expert_used,
++                                         const float                clamp_val,
++                                         const float                scale_val,
++                                         const topk_moe_config       config,
++                                         float * __restrict__       sh_wt,
++                                         float * __restrict__       sh_sel,
++                                         int * __restrict__         sh_idx) {
++    static_assert(n_experts >= WARP_SIZE && (n_experts % WARP_SIZE) == 0, "n_experts must be multiple of WARP_SIZE");
++    auto      item_ct1 = sycl::ext::oneapi::this_work_item::get_nd_item<1>();
++    const int row       = item_ct1.get_group(0);
++    if (row >= n_rows) {
++        return;
++    }
++    const int lane = item_ct1.get_local_id(0);
++    constexpr int ept = n_experts / WARP_SIZE;
++
++    logits  += (size_t) n_experts * row;
++    weights += (size_t) n_expert_used * row;
++    ids     += (size_t) n_experts * row;
++
++    // Load logits -> activation into shared wt; selection = wt + bias.
++#pragma unroll
++    for (int t = 0; t < ept; ++t) {
++        const int expert = t * WARP_SIZE + lane;
++        float     v      = logits[expert];
++        sh_wt[expert]    = v;
++    }
++    item_ct1.barrier(sycl::access::fence_space::local_space);
++
++    // Apply sigmoid/softmax across experts in shared memory via registers.
++    float wt_reg[ept];
++#pragma unroll
++    for (int t = 0; t < ept; ++t) {
++        wt_reg[t] = sh_wt[t * WARP_SIZE + lane];
++    }
++    if (!config.delayed_softmax) {
++        if (config.use_sigmoid) {
++            sigmoid_warp_inplace<ept, false>(wt_reg, n_experts, lane);
++        } else {
++            softmax_warp_inplace<ept, false>(wt_reg, n_experts, lane);
++        }
++    }
++#pragma unroll
++    for (int t = 0; t < ept; ++t) {
++        if (sycl::isnan(wt_reg[t])) {
++            wt_reg[t] = -FLT_MAX;
++        }
++        const int expert = t * WARP_SIZE + lane;
++        sh_wt[expert]    = wt_reg[t];
++        sh_sel[expert]   = wt_reg[t] + bias[expert];
++        sh_idx[expert]   = expert;
++    }
++    item_ct1.barrier(sycl::access::fence_space::local_space);
++
++    // Bitonic sort indices by sh_sel DESC — mirrors k_argsort_f32_i32 (DESC branch).
++    for (int k = 2; k <= n_experts; k *= 2) {
++        for (int j = k / 2; j > 0; j /= 2) {
++#pragma unroll
++            for (int t = 0; t < ept; ++t) {
++                const int col = t * WARP_SIZE + lane;
++                const int ixj = col ^ j;
++                if (ixj > col) {
++                    if ((col & k) == 0) {
++                        if (sh_sel[sh_idx[col]] < sh_sel[sh_idx[ixj]]) {
++                            topk_swap(sh_idx[col], sh_idx[ixj]);
++                        }
++                    } else {
++                        if (sh_sel[sh_idx[col]] > sh_sel[sh_idx[ixj]]) {
++                            topk_swap(sh_idx[col], sh_idx[ixj]);
++                        }
++                    }
++                }
++            }
++            item_ct1.barrier(sycl::access::fence_space::local_space);
++        }
++    }
++
++    // Top-k ids + unbiased weights; optional norm over selected.
++    float wt_sum = 0.f;
++#pragma unroll
++    for (int t = 0; t < ept; ++t) {
++        const int k = t * WARP_SIZE + lane;
++        if (k < n_expert_used) {
++            const int expert = sh_idx[k];
++            ids[k]           = expert;
++            const float w    = sh_wt[expert];
++            // stash in sh_sel[k] temporarily for reduction
++            sh_sel[k] = w;
++            if (config.with_norm) {
++                wt_sum += w;
++            }
++        }
++    }
++    item_ct1.barrier(sycl::access::fence_space::local_space);
++
++    if (config.with_norm) {
++        // reduce wt_sum across warp (only first n_expert_used lanes contribute)
++        wt_sum = warp_reduce_sum<WARP_SIZE>(wt_sum);
++        // lanes beyond used still participate with 0 contribution from above if k>=used
++        wt_sum          = sycl::fmax(wt_sum, clamp_val);
++        const float inv = 1.0f / wt_sum;
++#pragma unroll
++        for (int t = 0; t < ept; ++t) {
++            const int k = t * WARP_SIZE + lane;
++            if (k < n_expert_used) {
++                weights[k] = sh_sel[k] * inv * scale_val;
++            }
++        }
++    } else {
++#pragma unroll
++        for (int t = 0; t < ept; ++t) {
++            const int k = t * WARP_SIZE + lane;
++            if (k < n_expert_used) {
++                weights[k] = sh_sel[k] * scale_val;
++            }
++        }
++    }
++}
++
++template <int n_experts>
++static void launch_topk_moe_nobias(queue_ptr stream, const float * logits, float * weights, int32_t * ids, int n_rows,
++                                   int n_expert_used, float clamp_val, float scale_val,
++                                   const topk_moe_config & config) {
      const sycl::range<1> block_dims(WARP_SIZE);
      const sycl::range<1> block_nums(n_rows);
      stream->parallel_for(sycl::nd_range<1>(block_nums * block_dims, block_dims),
                           [=](sycl::nd_item<1> item_ct1) [[sycl::reqd_sub_group_size(WARP_SIZE)]] {
 -                             topk_moe_kernel<n_experts>(logits, weights, ids, n_rows, n_expert_used, clamp_val,
 -                                                        scale_val, config);
-+                             topk_moe_kernel<n_experts, has_bias>(logits, weights, ids, bias, n_rows, n_expert_used,
-+                                                                  clamp_val, scale_val, config);
++                             topk_moe_kernel_nobias<n_experts>(logits, weights, ids, n_rows, n_expert_used, clamp_val,
++                                                               scale_val, config);
++                             GGML_UNUSED(item_ct1);
++                         });
++}
++
++template <int n_experts>
++static void launch_topk_moe_bias(queue_ptr stream, const float * logits, float * weights, int32_t * ids,
++                                 const float * bias, int n_rows, int n_expert_used, float clamp_val, float scale_val,
++                                 const topk_moe_config & config) {
++    const sycl::range<1> block_dims(WARP_SIZE);
++    const sycl::range<1> block_nums(n_rows);
++    stream->submit([&](sycl::handler & cgh) {
++        sycl::local_accessor<float, 1> sh_wt(sycl::range<1>(n_experts), cgh);
++        sycl::local_accessor<float, 1> sh_sel(sycl::range<1>(n_experts), cgh);
++        sycl::local_accessor<int, 1>   sh_idx(sycl::range<1>(n_experts), cgh);
++        cgh.parallel_for(sycl::nd_range<1>(block_nums * block_dims, block_dims),
++                         [=](sycl::nd_item<1> item_ct1) [[sycl::reqd_sub_group_size(WARP_SIZE)]] {
++                             topk_moe_kernel_bias_bitonic<n_experts>(
++                                 logits, weights, ids, bias, n_rows, n_expert_used, clamp_val, scale_val, config,
++                                 sh_wt.get_multi_ptr<sycl::access::decorated::no>().get(),
++                                 sh_sel.get_multi_ptr<sycl::access::decorated::no>().get(),
++                                 sh_idx.get_multi_ptr<sycl::access::decorated::no>().get());
                               GGML_UNUSED(item_ct1);
                           });
- }
- 
-+template <bool has_bias>
++    });
++}
++
 +static void launch_topk_moe_dispatch(queue_ptr stream, const float * logits, float * weights, int32_t * ids,
 +                                     const float * bias, int n_rows, int n_experts, int n_expert_used, float clamp_val,
 +                                     float scale_val, const topk_moe_config & config) {
++    if (bias != nullptr) {
++        switch (n_experts) {
++            case 32:
++                launch_topk_moe_bias<32>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
++                                         scale_val, config);
++                break;
++            case 64:
++                launch_topk_moe_bias<64>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
++                                         scale_val, config);
++                break;
++            case 128:
++                launch_topk_moe_bias<128>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
++                                          scale_val, config);
++                break;
++            case 256:
++                launch_topk_moe_bias<256>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
++                                          scale_val, config);
++                break;
++            case 512:
++                launch_topk_moe_bias<512>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
++                                          scale_val, config);
++                break;
++            default:
++                GGML_ASSERT(false && "bias topk-moe requires n_experts in {32,64,128,256,512}");
++                break;
++        }
++        return;
++    }
++
 +    switch (n_experts) {
 +        case 1:
-+            launch_topk_moe<1, has_bias>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                         scale_val, config);
++            launch_topk_moe_nobias<1>(stream, logits, weights, ids, n_rows, n_expert_used, clamp_val, scale_val,
++                                      config);
 +            break;
 +        case 2:
-+            launch_topk_moe<2, has_bias>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                         scale_val, config);
++            launch_topk_moe_nobias<2>(stream, logits, weights, ids, n_rows, n_expert_used, clamp_val, scale_val,
++                                      config);
 +            break;
 +        case 4:
-+            launch_topk_moe<4, has_bias>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                         scale_val, config);
++            launch_topk_moe_nobias<4>(stream, logits, weights, ids, n_rows, n_expert_used, clamp_val, scale_val,
++                                      config);
 +            break;
 +        case 8:
-+            launch_topk_moe<8, has_bias>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                         scale_val, config);
++            launch_topk_moe_nobias<8>(stream, logits, weights, ids, n_rows, n_expert_used, clamp_val, scale_val,
++                                      config);
 +            break;
 +        case 16:
-+            launch_topk_moe<16, has_bias>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                          scale_val, config);
++            launch_topk_moe_nobias<16>(stream, logits, weights, ids, n_rows, n_expert_used, clamp_val, scale_val,
++                                       config);
 +            break;
 +        case 32:
-+            launch_topk_moe<32, has_bias>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                          scale_val, config);
++            launch_topk_moe_nobias<32>(stream, logits, weights, ids, n_rows, n_expert_used, clamp_val, scale_val,
++                                       config);
 +            break;
 +        case 64:
-+            launch_topk_moe<64, has_bias>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                          scale_val, config);
++            launch_topk_moe_nobias<64>(stream, logits, weights, ids, n_rows, n_expert_used, clamp_val, scale_val,
++                                       config);
 +            break;
 +        case 128:
-+            launch_topk_moe<128, has_bias>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                           scale_val, config);
++            launch_topk_moe_nobias<128>(stream, logits, weights, ids, n_rows, n_expert_used, clamp_val, scale_val,
++                                        config);
 +            break;
 +        case 256:
-+            launch_topk_moe<256, has_bias>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                           scale_val, config);
++            launch_topk_moe_nobias<256>(stream, logits, weights, ids, n_rows, n_expert_used, clamp_val, scale_val,
++                                        config);
 +            break;
 +        case 512:
-+            launch_topk_moe<512, has_bias>(stream, logits, weights, ids, bias, n_rows, n_expert_used, clamp_val,
-+                                           scale_val, config);
++            launch_topk_moe_nobias<512>(stream, logits, weights, ids, n_rows, n_expert_used, clamp_val, scale_val,
++                                        config);
 +            break;
 +        default:
 +            GGML_ASSERT(false && "fatal error");
 +            break;
 +    }
-+}
-+
+ }
+ 
  static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
-                                   const ggml_tensor *             logits,
-                                   ggml_tensor *                   weights,
+@@ -226,6 +457,7 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
                                    ggml_tensor *                   ids,
                                    const ggml_tensor *             clamp,
                                    const ggml_tensor *             scale,
@@ -556,7 +677,7 @@ index 78574c4b5..119eeaa59 100644
                                    const ggml_sycl_topk_moe_args & args) {
      GGML_ASSERT(logits->type  == GGML_TYPE_F32);
      GGML_ASSERT(weights->type == GGML_TYPE_F32);
-@@ -240,6 +329,7 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
+@@ -240,6 +472,7 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
      const float * logits_d  = (const float *) logits->data;
      float *       weights_d = (float *) weights->data;
      int32_t *     ids_d     = (int32_t *) ids->data;
@@ -564,7 +685,7 @@ index 78574c4b5..119eeaa59 100644
  
      const bool  with_norm = clamp != nullptr;
      const float clamp_val = clamp ? ggml_get_op_params_f32(clamp, 0) : -INFINITY;
-@@ -253,50 +343,12 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
+@@ -253,51 +486,8 @@ static void ggml_sycl_op_topk_moe(ggml_backend_sycl_context &     ctx,
      queue_ptr stream = ctx.stream();
      ggml_sycl_set_device(ctx.device);
  
@@ -612,16 +733,13 @@ index 78574c4b5..119eeaa59 100644
 -        default:
 -            GGML_ASSERT(false && "fatal error");
 -            break;
-+    if (bias_d != nullptr) {
-+        launch_topk_moe_dispatch<true>(stream, logits_d, weights_d, ids_d, bias_d, n_rows, n_experts, n_expert_used,
-+                                        clamp_val, scale_val, config);
-+    } else {
-+        launch_topk_moe_dispatch<false>(stream, logits_d, weights_d, ids_d, bias_d, n_rows, n_experts, n_expert_used,
-+                                         clamp_val, scale_val, config);
-     }
+-    }
++    launch_topk_moe_dispatch(stream, logits_d, weights_d, ids_d, bias_d, n_rows, n_experts, n_expert_used, clamp_val,
++                             scale_val, config);
  }
  
-@@ -544,23 +596,147 @@ int ggml_sycl_fuse(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i)
+ static bool ggml_sycl_should_use_topk_moe(const ggml_tensor * gating_op, const ggml_tensor * weights,
+@@ -544,23 +734,147 @@ int ggml_sycl_fuse(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i)
          return 0;
      }
  
@@ -634,12 +752,12 @@ index 78574c4b5..119eeaa59 100644
      return ggml_sycl_fuse_topk_moe(ctx, cgraph, i);
  }
  
-+// Laguna score-correction bias fuse is OPT-IN: GGML_SYCL_ENABLE_TOPK_MOE_BIAS=1.
-+// Default OFF — iterative warp top-k can diverge from full ggml_argsort on ties /
-+// equal floats (golden mismatch observed 2026-07-30). When enabled, still
-+// respects GGML_SYCL_DISABLE_TOPK_MOE=1 as a hard kill-switch.
-+// Non-bias legacy topk fuse remains available via the existing detector path
-+// unless DISABLE is set.
++// Laguna bias fuse is OPT-IN (GGML_SYCL_ENABLE_TOPK_MOE_BIAS=1).
++// Measured 2026-07-30: fuse hits (correct graph pattern) but
++//   - golden still mismatches vs unfused SYCL argsort chain
++//   - tg regresses (~97 vs ~110) — full bitonic in-fuse costs more than win
++// Kill-switch: GGML_SYCL_DISABLE_TOPK_MOE=1
++// Scored tip = dual only (bias fuse off).
 +static bool ggml_sycl_topk_moe_disabled() {
 +    static const bool disabled = []() {
 +        const char * env = getenv("GGML_SYCL_DISABLE_TOPK_MOE");
@@ -710,34 +828,33 @@ index 78574c4b5..119eeaa59 100644
 -    if (!ggml_sycl_topk_moe_fusion(cgraph, i, args)) {
 -        return 0;
 +    // -------------------------------------------------------------------------
-+    // Pattern Laguna / DeepSeek score-correction (most important for this box):
-+    //   SIGMOID -> ADD(bias) -> ARGSORT -> VIEW -> RESHAPE(probs) -> GET_ROWS
-+    //   [-> RESHAPE -> SUM_ROWS -> CLAMP -> DIV -> RESHAPE] [-> SCALE]
-+    // Select on biased scores; weights from unbiased sigmoid (GET_ROWS on reshape).
++    // Laguna live graph (measured): SIGMOID -> RESHAPE -> ADD(bias) -> ARGSORT
++    //   -> VIEW -> GET_ROWS [-> norm/scale]
++    // ADD.src[0] is the sigmoid (not the reshape); GET_ROWS reads reshaped probs.
 +    // -------------------------------------------------------------------------
 +    if (node->op == GGML_OP_UNARY && ggml_get_unary_op(node) == GGML_UNARY_OP_SIGMOID &&
 +        i + 5 < cgraph->n_nodes) {
-+        ggml_tensor * add     = cgraph->nodes[i + 1];
-+        ggml_tensor * argsort = cgraph->nodes[i + 2];
-+        ggml_tensor * view    = cgraph->nodes[i + 3];
-+        ggml_tensor * reshape = cgraph->nodes[i + 4];
++        ggml_tensor * reshape = cgraph->nodes[i + 1];
++        ggml_tensor * add     = cgraph->nodes[i + 2];
++        ggml_tensor * argsort = cgraph->nodes[i + 3];
++        ggml_tensor * view    = cgraph->nodes[i + 4];
 +        ggml_tensor * getrows = cgraph->nodes[i + 5];
 +
 +        const bool laguna_ok =
++            reshape->op == GGML_OP_RESHAPE && reshape->src[0] == node &&
 +            add->op == GGML_OP_ADD && add->src[0] == node && add->src[1] != nullptr &&
 +            argsort->op == GGML_OP_ARGSORT && argsort->src[0] == add &&
 +            view->op == GGML_OP_VIEW && view->src[0] == argsort &&
-+            reshape->op == GGML_OP_RESHAPE && reshape->src[0] == node &&
 +            getrows->op == GGML_OP_GET_ROWS && getrows->src[0] == reshape && getrows->src[1] == view;
 +
 +        if (laguna_ok && ggml_sycl_topk_moe_bias_enabled()) {
-+            std::vector<ggml_op> ops = { GGML_OP_UNARY,   GGML_OP_ADD,     GGML_OP_ARGSORT,
-+                                         GGML_OP_VIEW,    GGML_OP_RESHAPE, GGML_OP_GET_ROWS };
++            std::vector<ggml_op> ops = { GGML_OP_UNARY, GGML_OP_RESHAPE, GGML_OP_ADD, GGML_OP_ARGSORT,
++                                         GGML_OP_VIEW,  GGML_OP_GET_ROWS };
 +            const ggml_tensor * clamp = nullptr;
 +            const ggml_tensor * scale = nullptr;
 +            ggml_sycl_topk_append_norm_scale(cgraph, i, ops, clamp, scale);
 +
-+            int out_nodes[2] = { i + 3, i + (int) ops.size() - 1 };  // VIEW ids, final weights
++            int out_nodes[2] = { i + 4, i + (int) ops.size() - 1 };  // VIEW ids, final weights
 +            ggml_tensor *       ids     = cgraph->nodes[out_nodes[0]];
 +            ggml_tensor *       weights = cgraph->nodes[out_nodes[1]];
 +            const ggml_tensor * logits  = node->src[0];
@@ -749,14 +866,15 @@ index 78574c4b5..119eeaa59 100644
 +            args.norm      = clamp != nullptr;
 +            args.scale     = scale != nullptr;
 +
-+            if (ggml_can_fuse_subgraph(cgraph, i, ops.size(), ops.data(), out_nodes, 2) &&
-+                ggml_sycl_should_use_topk_moe(node, weights, logits, ids) &&
-+                ggml_is_contiguous(bias) && bias->type == GGML_TYPE_F32 &&
-+                ggml_sycl_check_fusion_memory_ranges(cgraph, i, (int) ops.size(), out_nodes, 2,
-+                                                    /*is_topk_moe=*/true)) {
++            const bool can_sub = ggml_can_fuse_subgraph(cgraph, i, ops.size(), ops.data(), out_nodes, 2);
++            const bool can_use = ggml_sycl_should_use_topk_moe(node, weights, logits, ids);
++            const bool bias_ok = ggml_is_contiguous(bias) && bias->type == GGML_TYPE_F32;
++            const bool can_mem = ggml_sycl_check_fusion_memory_ranges(cgraph, i, (int) ops.size(), out_nodes, 2,
++                                                                     /*is_topk_moe=*/true);
++            if (can_sub && can_use && bias_ok && can_mem) {
 +                static std::atomic<int> once{0};
 +                if (once.fetch_add(1) == 0) {
-+                    fprintf(stderr, "[lx-control-topk-moe] laguna bias fuse hit (ENABLE_TOPK_MOE_BIAS=1)\n");
++                    fprintf(stderr, "[lx-control-topk-moe] laguna bias fuse HIT (bitonic)\n");
 +                }
 +                ggml_sycl_op_topk_moe(ctx, logits, weights, ids, clamp, scale, bias, args);
 +                return (int) ops.size() - 1;
@@ -774,7 +892,7 @@ index 78574c4b5..119eeaa59 100644
          return 0;
      }
  
-@@ -569,15 +745,30 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
+@@ -569,15 +883,30 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
      ggml_tensor *       ids     = nullptr;
      const ggml_tensor * clamp   = nullptr;
      const ggml_tensor * scale   = nullptr;
@@ -808,7 +926,7 @@ index 78574c4b5..119eeaa59 100644
  
          if (args.norm) {
              ops.insert(ops.end(), { GGML_OP_RESHAPE, GGML_OP_SUM_ROWS, GGML_OP_CLAMP, GGML_OP_DIV, GGML_OP_RESHAPE });
-@@ -593,8 +784,9 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
+@@ -593,8 +922,9 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
  
          if (ggml_can_fuse_subgraph(cgraph, i, ops.size(), ops.data(), out_nodes, 2) &&
              ggml_sycl_should_use_topk_moe(node, weights, logits, ids) &&
@@ -819,7 +937,7 @@ index 78574c4b5..119eeaa59 100644
              return (int) ops.size() - 1;
          }
      } else if (!args.norm && !args.prob_bias) {
-@@ -611,7 +803,7 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
+@@ -611,7 +941,7 @@ int ggml_sycl_fuse_topk_moe(ggml_backend_sycl_context & ctx, ggml_cgraph * cgrap
          if (ggml_can_fuse_subgraph(cgraph, i, ops.size(), ops.data(), out_nodes, 2) &&
              ggml_sycl_should_use_topk_moe(softmax, weights, logits, ids) &&
              ggml_sycl_check_fusion_memory_ranges(cgraph, i, (int) ops.size(), out_nodes, 2, /*is_topk_moe=*/true)) {
