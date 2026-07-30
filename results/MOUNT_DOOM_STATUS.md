@@ -1,27 +1,26 @@
-# Mount Doom status — 2026-07-30 (moe-down k8 unroll tip)
+# Mount Doom status — 2026-07-30 (noop-reshape skip tip)
 
 ## LIVE NOW — tip + research track
 
-**Scored tip:** MoE dual + hybrid **mode7** + fused sigmoid+add + dense dual + moe-down weighted (**k=8 unroll**) + device mmid sort/prefix/event  
-**Research (golden FAIL / opt-in):** full fused norm (mode6) · mode8 · integrated down · multi-token MMVQ/dual · dual multi-sg (sgs=8/16)
+**Scored tip:** MoE dual + hybrid **mode7** (noop reshape skip) + fused sigmoid+add + dense dual + moe-down k8 unroll + device mmid sort/prefix/event  
+**Research (golden FAIL / opt-in):** mode6 full norm · integrated down · multi-token dual/MMVQ · dual multi-sg · pair-embd reduce
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **tip + k8 unroll reduce** | **1139.5** | **121.4** | **+9.65%** |
-| dual sgs=8 research | 1124.5 | 121.4 | +9.32% |
-| prior hybrid mode7 | 1143.9 | 121.1 | +9.57% |
+| **tip + noop reshape skip** | **1140.4** | **121.4** | **+9.71%** |
+| prior k8 unroll reduce | 1139.5 | 121.4 | +9.65% |
+| hybrid mode7 only | 1143.9 | 121.1 | +9.57% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
-Formal tip: `results/20260730T062910Z/` · sgs8: `results/20260730T063711Z/`  
-Notes: `SHIP_20260730_moe_down_unroll.md`, `SHIP_20260730_dual_sgs8.md`  
+Formal tip: `results/20260730T065902Z/` · `notes/SHIP_20260730_hybrid_noop_reshape.md` · `patches/0016-*.patch`  
 Kill moe-down: `GGML_SYCL_DISABLE_MOE_DOWN_WEIGHTED=1`  
-Dual multi-sg research: `GGML_SYCL_MOE_DUAL_SGS=8` (default **1**)
+Hybrid fallback: `GGML_SYCL_TOPK_MOE_HYBRID_MODE=2`
 
 ## NEXT KERNEL LEVERS
 
 1. Stay on control binary as champion.
-2. Bitexact integrated down — **still FAIL** except exact `mul_mat_id`+reduce alias (`SHIP_20260730_integrated_down_bitexact.md`).
-3. Multi-token dual/MMVQ oracle.
+2. Multi-token dual/MMVQ oracle (golden-fail when defaulted).
+3. Integrated down mmid-buffer oracle.
 4. lm_head / residual decode (high golden risk).
 
 ## Commands

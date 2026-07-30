@@ -1,0 +1,10 @@
+From: lagunaX campaign
+Subject: [PATCH 0016] control: hybrid mode7 skip no-op reshape (default)
+
+Skip RESHAPE when data pointer aliases src (no device work).
+Golden OK. Formal tip +9.71% (tg121.4 / pp1140.4) vs prior +9.65%.
+
+--- a/ggml/src/ggml-sycl/topk-moe.cpp
++++ b/ggml/src/ggml-sycl/topk-moe.cpp
+@@ mode 7/8 tail loop
++ if (RESHAPE && t->data == t->src[0]->data) continue;
