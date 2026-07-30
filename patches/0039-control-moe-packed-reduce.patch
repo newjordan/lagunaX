@@ -1,0 +1,11 @@
+From: lagunaX fire
+Subject: [PATCH 0039] control: expert-loop packed weighted reduce (skip scatter)
+
+Default ON. Kill: GGML_SYCL_DISABLE_MOE_PACKED_REDUCE=1
+
+Formal results/20260730T115251Z/: tg=130.16 pp=3540.30 +53.41% golden OK
+Rebench2 20260730T115337Z: +53.07%
+Prior tip: +52.22%
+
+See notes/SHIP_20260730_moe_packed_reduce.md
+Control: treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp

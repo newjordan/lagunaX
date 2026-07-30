@@ -1,23 +1,23 @@
-# Mount Doom status — 2026-07-30 (down sgs=8 tip)
+# Mount Doom status — 2026-07-30 (packed reduce tip)
 
 ## LIVE NOW
 
-**Scored tip:** dual+down + dense dual multi-col + mode8 true top-k+gather+sum + **down MMVQ sgs=8**
+**Scored tip:** dual+down + topk+gather+sum + down sgs=8 + **expert-loop packed reduce**
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **tip down sgs=8** | **3402.1** | **130.5** | **+52.22%** |
-| prior true top-k+gather+sum | 3409.5 | 130.1 | +51.95% |
+| **tip packed reduce** | **3540.3** | **130.2** | **+53.41%** |
+| prior down sgs=8 | 3402.1 | 130.5 | +52.22% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
-Formal tip: `results/20260730T113629Z/` · `notes/SHIP_20260730_moe_down_sgs8.md` · `patches/0037-*.patch`  
-Kill down packing: `GGML_SYCL_MOE_DOWN_SGS=1`
+Formal tip: `results/20260730T115251Z/` · `notes/SHIP_20260730_moe_packed_reduce.md` · `patches/0039-*.patch`  
+Kill packed reduce: `GGML_SYCL_DISABLE_MOE_PACKED_REDUCE=1`
 
 ## NEXT
 
 1. lm_head prune/mask only with golden oracle.  
-2. Prefill expert-loop host wait / multi-token dual MMVQ golden.  
-3. Packing re-probes closed under tip (`SHIP_20260730_packing_reprobe.md`).
+2. Expert-loop host counts wait (smaller remaining prefill tax).  
+3. Packing / dense dual sgs closed under prior tip.
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
