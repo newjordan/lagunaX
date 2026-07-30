@@ -1,0 +1,8 @@
+From: lagunaX fire
+Subject: [PATCH 0036] control: true top-k full-norm OPT-IN (golden fail default)
+
+Enable: GGML_SYCL_ENABLE_ROUTER_TRUE_TOPK_NORM=1
+Default OFF — greedy golden FAIL when ON (mode6-class).
+
+Tip remains true top-k+gather+sum (+51.95%).
+See notes/SHIP_20260730_router_true_topk_norm.md

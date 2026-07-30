@@ -18,7 +18,7 @@ Kill: `GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1`
 
 1. lm_head prune/mask only with golden oracle.  
 2. Prefill multi-token dual MMVQ golden fix.  
-3. Dual multi-sg / mode9 closed under tip (`SHIP_20260730_mode9_sgs_reprobe.md`).
+3. Router full-norm in top-k: golden FAIL opt-in only (`SHIP_20260730_router_true_topk_norm.md`).
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
