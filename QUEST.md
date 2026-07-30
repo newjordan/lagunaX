@@ -33,10 +33,10 @@
 8. **Frontier map** — `notes/FRONTIER_20260729.md` (superseded live tip below)
    - Full **vocab=100352 lm_head** every token (~116 MB Q4 traffic) — still open
    - Prefill multi-token dual golden still hard
-9. **LIVE TIP (2026-07-30)** — packed reduce + **mul_mat+add residual-alias (Q6 shexp)**
-   - Formal: **pp~3735 / tg~129.7 / +55.10%** vs pin; golden OK
-   - Kill mm-add: `GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1`
-   - See `notes/SHIP_20260730_mul_mat_add_shexp_alias.md` · `results/MOUNT_DOOM_STATUS.md`
+9. **LIVE TIP (2026-07-30)** — **mul_mat+add+add decode** + packed reduce + residual-alias
+   - Formal: **pp~3711 / tg~131.6 / +56.53%** vs pin; golden OK
+   - Kill: `GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1`
+   - See `notes/SHIP_20260730_mul_mat_add_add_decode.md` · `results/MOUNT_DOOM_STATUS.md`
 
 ## Loop (autonomous)
 
