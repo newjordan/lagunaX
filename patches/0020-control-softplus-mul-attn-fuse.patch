@@ -1,0 +1,11 @@
+From: lagunaX fire
+Subject: [PATCH 0020] control: softplus×mul attn gate fuse default ON
+
+Fuse Laguna XS.2 per-head attn gate softplus+broadcast-mul into one kernel
+(stock softplus math).
+
+Kill: GGML_SYCL_DISABLE_SOFTPLUS_MUL_FUSE=1
+
+Formal results/20260730T074337Z/: tg=127.2 pp=1158.8 +14.07% golden OK
+
+See notes/SHIP_20260730_softplus_mul_attn.md
