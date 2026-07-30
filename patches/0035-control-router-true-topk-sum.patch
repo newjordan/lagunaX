@@ -1,0 +1,13 @@
+From: lagunaX fire
+Subject: [PATCH 0035] control: true top-k+gather+sum fuse (mode8)
+
+Default ON with true top-k. Kill: GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1
+
+Formal results/20260730T112258Z/: tg=130.13 pp=3409.51 +51.95% golden OK
+Prior tip: +51.81% true top-k+gather
+
+See notes/SHIP_20260730_router_true_topk_sum.md
+Control: treebeard-base-control-latest/ggml/src/ggml-sycl/topk-moe.cpp
+
+In-kernel: after selecting top-k, warp-sum selected probs → SUM_ROWS buffer
+(mode8 skips stock SUM). Same butterfly order as k_sum_rows / mode9.
