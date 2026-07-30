@@ -1,0 +1,8 @@
+From: lagunaX fire
+Subject: [PATCH 0023] control: hybrid mode8 default (fused clamp+div+scale)
+
+Default GGML_SYCL_TOPK_MOE_HYBRID_MODE 7→8.
+
+Formal results/20260730T081402Z/: tg=128.6 pp=3015.2 +46.08% golden OK
+
+See notes/SHIP_20260730_hybrid_mode8_default.md
