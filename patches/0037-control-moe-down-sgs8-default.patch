@@ -1,0 +1,9 @@
+From: lagunaX fire
+Subject: [PATCH 0037] control: MoE down weighted MMVQ sgs=8 default
+
+Default GGML_SYCL_MOE_DOWN_SGS=8 (kill =1).
+Formal results/20260730T113629Z/: tg=130.53 pp=3402.08 +52.22% golden OK
+Prior tip: +51.95% true top-k+gather+sum
+
+See notes/SHIP_20260730_moe_down_sgs8.md
+Control: treebeard-base-control-latest/ggml/src/ggml-sycl/mmvq.cpp
