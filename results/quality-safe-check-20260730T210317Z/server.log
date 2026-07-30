@@ -1,0 +1,47 @@
+0.00.113.434 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.113.815 W srv  llama_server: -----------------
+0.00.113.817 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set
+0.00.113.818 W srv  llama_server: this can be a security risk (cross-origin attacks)
+0.00.113.818 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655
+0.00.113.818 W srv  llama_server: -----------------
+0.00.115.082 I srv    load_model: loading model '/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf'
+0.00.303.487 W load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=2
+[lx-control-rope] fuse hit (rope+view+set_rows) mode=2 ne0=128 ne1=8 type=f16
+[lx-control-fattn] kernel=TILE Q=[128,2,48] K=[128,256]
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=2
+[lx-control-dense-dual] mmvq dual n_rows=8192 ncols=2048 ncols_dst=2 sgs=1 (first entry)
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu) ncols_dst=2
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=2
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=2
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=2
+[lx-control-mmid] device counting-sort+prefix+ev n_tokens=2 k=8 n_experts=256
+[lx-control-moe-down] fuse hit (weighted reduce) embd=2048 k=8 tokens=2
+[lx-control-moe-down] multi-token two-step weighted reduce embd=2048 k=8 tokens=2
+[lx-control-add] fuse hit (add+add residual) nelt=4096 ne0=2048 ne1=2
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 sgs=1 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-control-moe-down] two-step scratch experts=0 weights=1 tokens=1
+0.15.172.447 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8192, kv_unified = 'false'
+0.15.180.371 I srv          init: chat template supports preserving reasoning, consider enabling it via --reasoning-preserve
+0.15.180.407 I srv  llama_server: model loaded
+0.15.180.411 I srv  llama_server: listening on http://127.0.0.1:18920
+0.16.037.600 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.16.037.673 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+0.17.558.848 I slot print_timing: id  0 | task 0 | prompt eval time =    1049.38 ms /    23 tokens (   45.63 ms per token,    21.92 tokens per second)
+0.17.558.851 I slot print_timing: id  0 | task 0 |        eval time =     471.77 ms /    64 tokens (    7.37 ms per token,   135.66 tokens per second)
+0.17.558.852 I slot print_timing: id  0 | task 0 |       total time =    1521.15 ms /    87 tokens
+0.17.558.853 I slot print_timing: id  0 | task 0 |    graphs reused =         63
+0.17.558.879 I slot      release: id  0 | task 0 | stop processing: n_tokens = 86, truncated = 0
+0.17.607.227 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 15718382878
+0.17.611.178 I slot launch_slot_: id  0 | task 67 | processing task, is_child = 0
+[lx-control-dense-dual] multi-col GEMM dual ncols_dst=1079 nrows=8192
+0.18.656.982 I slot print_timing: id  0 | task 67 | prompt eval time =     848.71 ms /  1083 tokens (    0.78 ms per token,  1276.06 tokens per second)
+0.18.656.985 I slot print_timing: id  0 | task 67 |        eval time =     197.08 ms /    24 tokens (    8.21 ms per token,   121.78 tokens per second)
+0.18.656.986 I slot print_timing: id  0 | task 67 |       total time =    1045.79 ms /  1107 tokens
+0.18.656.986 I slot print_timing: id  0 | task 67 |    graphs reused =         85
+0.18.657.020 I slot      release: id  0 | task 67 | stop processing: n_tokens = 1107, truncated = 0

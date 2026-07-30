@@ -45,6 +45,16 @@ unset GGML_SYCL_ENABLE_MOE_PIPELINE 2>/dev/null || true
 unset GGML_SYCL_ENABLE_MOE_DOWN_GROUPED 2>/dev/null || true
 export GGML_SYCL_DISABLE_GRAPH="${GGML_SYCL_DISABLE_GRAPH:-1}"
 
+# Quality-safe tip (2026-07-30 PPL bisect): these three default-ON fuses wreck logprobs
+# and/or multitoken MoE (PPL 1e5–1e7, dual_down neg-stddev, long-ctx abort).
+# With them killed: PPL~1.0, golden OK, formal ~+20% (pp~1185 / tg~136).
+# Do NOT unset for "speed" without re-proving PPL. See notes/SHIP_20260730_quality_safe_tip.md
+export GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE="${GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE:-1}"
+export GGML_SYCL_DISABLE_MOE_DUAL_DOWN="${GGML_SYCL_DISABLE_MOE_DUAL_DOWN:-1}"
+export GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN="${GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN:-1}"
+# Experimental QKV shared quant: never default ON (device-lost probe)
+export GGML_SYCL_DISABLE_QKV_SHARED_QUANT="${GGML_SYCL_DISABLE_QKV_SHARED_QUANT:-1}"
+
 export LD_LIBRARY_PATH="${LX_BIN}:${LD_LIBRARY_PATH:-}"
 
 # Frozen window (mlx.fast-shaped)

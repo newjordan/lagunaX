@@ -1,0 +1,15 @@
+{
+  "ok": false,
+  "ans": "Q: secret code for Carousel? Answer with code only:\nQ: secret: what is the secret code for Carousel",
+  "timings": {
+    "cache_n": 1,
+    "prompt_n": 1083,
+    "prompt_ms": 848.707,
+    "prompt_per_token_ms": 0.78366297322253,
+    "prompt_per_second": 1276.0587576159971,
+    "predicted_n": 24,
+    "predicted_ms": 197.084,
+    "predicted_per_token_ms": 8.211833333333333,
+    "predicted_per_second": 121.77548659454851
+  }
+}
