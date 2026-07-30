@@ -1,0 +1,22 @@
+From: lagunaX fire
+Subject: [PATCH 0019] control: ADD+ADD residual fuse default ON
+
+# Summary
+
+Fuse Laguna FFN residual: `(moe + shexp) + residual` in one kernel.
+
+## Change (ggml-sycl.cpp)
+
+`ggml_sycl_fuse_add_add`:
+- Match ADD→ADD where second consumes first
+- Contiguous same-shape F32 only
+- Kernel: `t = a+b; dst = t+c` (left-to-right)
+- Wired in `ggml_sycl_fuse` after RMS fuse
+
+Kill: `GGML_SYCL_DISABLE_ADD_ADD_FUSE=1`
+
+## Formal
+
+tg128≈125.2 / pp512≈1145 / **+12.35%** golden OK
+
+See notes/SHIP_20260730_add_add_residual.md
