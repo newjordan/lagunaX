@@ -1,0 +1,109 @@
+-- pp512 --
+[lx-control-topk-moe] laguna bias fuse HIT (hybrid mode=8: 0=stock 1=gather 2=gather-norm)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=512
+[lx-control-topk-moe] hybrid mode=8 stock-sum+fused-clamp+div-scale nelt=4096
+[lx-control-mmid] device counting-sort+prefix+ev n_tokens=512 k=8 n_experts=256
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-control-moe-down] fuse hit (weighted reduce) embd=2048 k=8 tokens=1
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu)
+[
+  {
+    "build_commit": "7e1e28cae",
+    "build_number": 10170,
+    "cpu_info": "AMD Ryzen 9 5950X 16-Core Processor",
+    "gpu_info": "Intel(R) Arc(TM) Pro B70 Graphics",
+    "backends": "SYCL",
+    "model_filename": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "model_type": "laguna 30B.A3B Q4_K - Medium",
+    "model_size": 20270574592,
+    "model_n_params": 33442617088,
+    "n_batch": 2048,
+    "n_ubatch": 2048,
+    "n_threads": 16,
+    "cpu_mask": "0x0",
+    "cpu_strict": false,
+    "poll": 50,
+    "type_k": "f16",
+    "type_v": "f16",
+    "n_gpu_layers": 99,
+    "n_cpu_moe": 0,
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "no_kv_offload": false,
+    "flash_attn": -1,
+    "devices": "auto",
+    "tensor_split": "0.00",
+    "tensor_buft_overrides": "none",
+    "load_mode": "mmap",
+    "embeddings": false,
+    "no_op_offload": 0,
+    "no_host": false,
+    "fit_target": 0,
+    "fit_min_ctx": 0,
+    "n_prompt": 512,
+    "n_gen": 0,
+    "n_depth": 0,
+    "test_time": "2026-07-30T06:22:12Z",
+    "avg_ns": 449798815,
+    "stddev_ns": 4099927,
+    "avg_ts": 1138.362470,
+    "stddev_ts": 10.393767,
+    "samples_ns": [ 452041879, 454380344, 451658525, 445301892, 445611436 ],
+    "samples_ts": [ 1132.64, 1126.81, 1133.6, 1149.78, 1148.98 ]
+  }
+]
+-- tg128 --
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu)
+[lx-control-topk-moe] laguna bias fuse HIT (hybrid mode=8: 0=stock 1=gather 2=gather-norm)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=1
+[lx-control-topk-moe] hybrid mode=8 stock-sum+fused-clamp+div-scale nelt=8
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-control-moe-down] fuse hit (weighted reduce) embd=2048 k=8 tokens=1
+[
+  {
+    "build_commit": "7e1e28cae",
+    "build_number": 10170,
+    "cpu_info": "AMD Ryzen 9 5950X 16-Core Processor",
+    "gpu_info": "Intel(R) Arc(TM) Pro B70 Graphics",
+    "backends": "SYCL",
+    "model_filename": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "model_type": "laguna 30B.A3B Q4_K - Medium",
+    "model_size": 20270574592,
+    "model_n_params": 33442617088,
+    "n_batch": 2048,
+    "n_ubatch": 2048,
+    "n_threads": 16,
+    "cpu_mask": "0x0",
+    "cpu_strict": false,
+    "poll": 50,
+    "type_k": "f16",
+    "type_v": "f16",
+    "n_gpu_layers": 99,
+    "n_cpu_moe": 0,
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "no_kv_offload": false,
+    "flash_attn": -1,
+    "devices": "auto",
+    "tensor_split": "0.00",
+    "tensor_buft_overrides": "none",
+    "load_mode": "mmap",
+    "embeddings": false,
+    "no_op_offload": 0,
+    "no_host": false,
+    "fit_target": 0,
+    "fit_min_ctx": 0,
+    "n_prompt": 0,
+    "n_gen": 128,
+    "n_depth": 0,
+    "test_time": "2026-07-30T06:22:31Z",
+    "avg_ns": 1055659929,
+    "stddev_ns": 2033233,
+    "avg_ts": 121.251529,
+    "stddev_ts": 0.234112,
+    "samples_ns": [ 1052037898, 1056524991, 1056723275, 1056732252, 1056281230 ],
+    "samples_ts": [ 121.669, 121.152, 121.129, 121.128, 121.18 ]
+  }
+]
