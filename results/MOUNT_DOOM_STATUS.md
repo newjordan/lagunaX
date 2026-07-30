@@ -2,14 +2,13 @@
 
 ## LIVE NOW — tip + research track
 
-**Scored tip:** Control + MoE dual + hybrid m1 + **dense dual shexp** (all default ON)  
-**Research:** hybrid mode2 gather-norm (`HYBRID_MODE=2`) — golden FAIL; MoE down fuse next
+**Scored tip:** MoE dual + hybrid m1 + dense dual shexp + **moe-down weighted** (all default ON)  
+**Research:** hybrid mode2 gather-norm; multi-token mul_mat_id prefill
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **tip dual+hybrid+dense-dual** | **1143.8** | **113.3** | **+4.26%** |
-| prior dual+hybrid m1 | 1142.6 | 110.2 | +2.09% |
-| dual only A/B | 1146.7 | 109.9 | +1.97% |
+| **tip + moe-down-weighted** | **1131.7** | **119.2** | **+7.99%** |
+| prior dual+hybrid+dense | 1143.8 | 113.3 | +4.26% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
 - **Golden:** OK
