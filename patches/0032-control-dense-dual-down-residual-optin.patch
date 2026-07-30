@@ -1,0 +1,30 @@
+diff --git a/ggml/src/ggml-sycl/ggml-sycl.cpp b/ggml/src/ggml-sycl/ggml-sycl.cpp
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp
+@@
+ // Graph fuse: MUL_MAT + MUL_MAT + GLU(swiglu) for dense shared expert.
++// Prefer dual+down+residual: ... + MUL_MAT(down) + ADD when present (shexp → moe residual).
+ // Kill dual: DISABLE_DENSE_DUAL_SWIGLU=1
++// Kill dual+down only: DISABLE_DENSE_DUAL_DOWN=1
++// OPT-IN dual+down residual: ENABLE_DENSE_DUAL_DOWN=1 (decode ncols<=32 MMVQ addend)
+ int ggml_sycl_fuse_dense_dual_swiglu(
+     ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i) {
+@@
+     ggml_tensor * gate = glu->src[0];
+     ggml_tensor * up   = glu->src[1];
+ 
++    // dual + down + residual ADD — OPT-IN ENABLE_DENSE_DUAL_DOWN=1
++    // See notes/SHIP_20260730_dense_dual_down_residual.md
++    // Formal 20260730T103913Z: golden OK, +50.06% under tip +50.93% → default OFF
++    static const bool enable_dual_down = []() {
++        const char * en  = getenv("GGML_SYCL_ENABLE_DENSE_DUAL_DOWN");
++        const char * dis = getenv("GGML_SYCL_DISABLE_DENSE_DUAL_DOWN");
++        if (dis != nullptr && std::atoi(dis) != 0) return false;
++        return en != nullptr && std::atoi(en) != 0;
++    }();
++    if (enable_dual_down && i + 4 < cgraph->n_nodes) {
++        // ... topology: MUL_MAT,MUL_MAT,GLU,MUL_MAT,ADD; allow down/add alias;
++        // residual may alias add; ncols<=32 MMVQ row_addend into add buffer; return 4
++    }
++
+     const int output = i + 2;
