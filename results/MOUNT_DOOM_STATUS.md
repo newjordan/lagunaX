@@ -1,15 +1,18 @@
-# Mount Doom status — 2026-07-29 evening (dual win)
+# Mount Doom status — 2026-07-30 (dual multi-token park)
 
 ## LIVE NOW — tip + research track
 
 **Scored tip:** MoE dual + **hybrid mode2** + dense dual + moe-down (all default ON)  
-**Research:** full fused norm / integrated down / multi-token mmid (golden FAIL)
+**Research (golden FAIL / opt-in):** full fused norm · integrated down · multi-token mmid · **dual multi-token**
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
 | **tip hybrid mode2** | **1141.4** | **118.8** | **+7.94%** |
 | prior mode1 tip | 1141.2 | 118.1 | +7.44% |
 | baseline pin | 1139 | 107.35 | 1.0 |
+| dual multi-token default ON | — | — | **golden FAIL** (parked) |
+
+Opt-in research: `GGML_SYCL_ENABLE_MOE_DUAL_MULTITOKEN=1` (per-token dual, cap 32). See `notes/SHIP_20260730_dual_multitoken.md` · `patches/0009-*.patch`.
 
 - **Golden:** OK
 - **Floors:** OK

@@ -1,0 +1,69 @@
+From: lagunaX campaign
+Subject: [PATCH 0009] control: MoE dual SwiGLU multi-token (opt-in only)
+
+Research path: per-token dual launches for ne12 in 1..32.
+Golden FAIL when default ON — ENABLE_MOE_DUAL_MULTITOKEN=1 only.
+Decode (ne12==1) remains default tip dual.
+
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp	2026-07-30 00:14:42.002803778 -0500
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp	2026-07-30 00:14:42.003864151 -0500
+@@ -1,4 +1,6 @@
+ // Dual MoE gate+up + SwiGLU. Decode (ne12==1) always on tip.
++// Multi-token per-token dual launches: OPT-IN only — golden FAIL when defaulted
++// (2026-07-30). Cap 32. Enable: GGML_SYCL_ENABLE_MOE_DUAL_MULTITOKEN=1
+ // Full dual kill: GGML_SYCL_DISABLE_MOE_DUAL_SWIGLU=1
+ static bool ggml_sycl_mul_mat_id_dual_swiglu_fused(
+     ggml_backend_sycl_context & ctx,
+@@ -10,6 +12,10 @@
+     if (disabled) {
+         return false;
+     }
++    static const bool enable_multitoken = []() {
++        const char * env = getenv("GGML_SYCL_ENABLE_MOE_DUAL_MULTITOKEN");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
+ 
+     const ggml_tensor * gate_w = gate->src[0];
+     const ggml_tensor * up_w   = up->src[0];
+@@ -29,7 +35,9 @@
+     const int64_t ne10 = src1->ne[0];
+     const int64_t ne11 = src1->ne[1];
+     const int64_t ne12 = src1->ne[2];
+-    if (ne12 != 1) return false;
++    // Decode always; multi-token opt-in only (golden fail when default ON).
++    if (ne12 < 1 || ne12 > 32) return false;
++    if (ne12 > 1 && !enable_multitoken) return false;
+     if (ids->ne[1] != ne12) return false;
+     const int64_t n_ids = ids->ne[0];
+     if (ne11 != 1 && ne11 != n_ids) return false;
+@@ -62,6 +70,7 @@
+     const int n_experts_used   = (int) n_ids;
+     const int nrows            = (int) gate_w->ne[1];
+ 
++    // Quantize all token×slot activation rows.
+     ggml_sycl_pool_alloc<char> src1_q8_alloc(
+         ctx.pool(), (size_t) ne11 * ne12 * src1_padded_cols * sizeof(block_q8_1) / QK8_1);
+     char * src1_q8 = src1_q8_alloc.get();
+@@ -76,6 +85,7 @@
+     const size_t dst_token_stride  = glu->nb[2];
+     const int32_t * ids_base       = (const int32_t *) ids->data;
+ 
++    // Per-token dual launches: identical to ne12==1 path with pointer offsets.
+     for (int64_t t = 0; t < ne12; ++t) {
+         const int32_t * ids_t = ids_base + t * ids_row_stride;
+         const char *    vy_t  = src1_q8 + t * src1_token_stride;
+@@ -88,6 +98,14 @@
+         }
+     }
+ 
++    {
++        static std::atomic<int> once{0};
++        if (ne12 > 1 && once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-moe-dual] multi-token dual n_tokens=%" PRId64 " k=%d\n",
++                    ne12, n_experts_used);
++        }
++    }
+     return true;
+ }
+ 
