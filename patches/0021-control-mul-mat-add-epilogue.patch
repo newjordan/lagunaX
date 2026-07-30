@@ -1,0 +1,10 @@
+From: lagunaX fire
+Subject: [PATCH 0021] control: MUL_MAT+ADD residual epilogue decode-only
+
+Reorder MMVQ row_addend epilogue for Q4/5/6_K; fuse o_proj+residual.
+
+Kill: GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
+
+Formal results/20260730T075349Z/: tg=128.2 pp=1147.3 +14.46% golden OK
+
+See notes/SHIP_20260730_mul_mat_add_epilogue.md
