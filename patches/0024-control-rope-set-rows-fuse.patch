@@ -1,0 +1,10 @@
+From: lagunaX fire
+Subject: [PATCH 0024] control: ROPE+VIEW+SET_ROWS fuse + iswa k-last expand
+
+Wire ggml_sycl_rope_fused; fix ISWA expand to q→v→k then cpy_k.
+
+Kill: GGML_SYCL_DISABLE_ROPE_SET_ROWS_FUSE=1
+
+Formal results/20260730T084016Z/: tg=128.9 pp=3005.5 +46.18% golden OK
+
+See notes/SHIP_20260730_rope_set_rows_fuse.md
