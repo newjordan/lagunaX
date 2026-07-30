@@ -56,7 +56,7 @@ Device scan may seed `next[]`, but pack→GEMM must stay continuous.
 1. **Stay on control binary as champion** for scored claims (dual ON).
 2. **Zero-wait expert dispatch** (compact non-empty list / USM counts) — only if pack→GEMM stays continuous.
 3. **Bitexact hybrid gather-norm** — still golden-fails when fused beyond stock sum/div.
-4. Tiny-N MMVQ launch geometry for N≈9–29 expert groups (decode smoking gun).
+4. ~~Tiny-N / multi-sg dual MMVQ packing~~ — **tried sgs=16; golden OK, pp regress, reverted** (`SHIP_20260730_mmvq_multisg.md`).
 5. Bitexact multi-token dual/MMVQ only after oracle vs GEMM rows.
 6. lm_head prune — high golden risk; largest byte stream.
 
