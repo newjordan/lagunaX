@@ -1,0 +1,23 @@
+From: lagunaX fire
+Subject: [PATCH 0018] control: RMS_NORM+MUL fuse default ON
+
+# Summary
+
+Landed on treebeard-base-control-latest working tree.
+
+## Change
+
+Fuse Laguna pre-norm chain `RMS_NORM → MUL(weight)` into one SYCL kernel:
+
+- `norm.cpp`: mul epilogue on `rms_norm_f32` (sequential (scale*x)*w)
+- `ggml_sycl_op_rms_norm_fused`: write into MUL buffer
+- `ggml_sycl_fuse_rms_norm_mul`: graph match + can_fuse_subgraph
+- Wired in `ggml_sycl_fuse` after moe-down
+
+Kill: `GGML_SYCL_DISABLE_RMS_NORM_FUSE=1`
+
+## Formal
+
+results/20260730T072939Z/ : pp512=1146.4 tg128=123.2 **+11.04%** golden OK
+
+See notes/SHIP_20260730_rms_norm_mul_fuse.md
