@@ -1,23 +1,24 @@
-# Mount Doom status — 2026-07-30 (mul_mat+add+add decode tip)
+# Mount Doom status — 2026-07-30 (FA VEC GQA decode tip)
 
 ## LIVE NOW
 
-**Scored tip:** packed reduce + mm-add residual-alias + **mul_mat+add+add (decode ne11≤32)**
+**Scored tip:** packed reduce + mm-add+add decode + **FA VEC for GQA decode**
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **tip mm-add+add decode** | **3711.2** | **131.6** | **+56.53%** |
-| prior mm-add alias | 3734.7 | 129.7 | +55.10% |
+| **tip FA VEC GQA** | **3716.0** | **135.0** | **+59.61%** |
+| prior mm-add+add | 3711.2 | 131.6 | +56.53% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
-Formal: `results/20260730T125600Z/` · `notes/SHIP_20260730_mul_mat_add_add_decode.md` · `patches/0044-*`  
-Kill mm-add: `GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1`
+Formal: `results/20260730T134432Z/` · `notes/SHIP_20260730_fattn_vec_gqa_default.md` · `patches/0046-*`  
+Kill VEC→TILE: `GGML_SYCL_FATTN_FORCE_TILE=1`  
+**Note:** golden re-captured under VEC (not bitexact vs TILE).
 
 ## NEXT
 
-1. **Bitexact FA VEC for GQA** — still ~+3.6 tg on table; TILE geometry tweaks (ncols2=1, pb=1) **regressed**. See `notes/SHIP_20260730_fattn_vec_gqa.md`.
-2. Diff TILE vs VEC FA outputs to locate numeric divergence.
-3. Prefill residual2 / GEMM-post **closed**.
+1. Optional tip rebench.
+2. Further MoE/attn under new tip.
+3. Prefill residual2 / GEMM-post remain closed.
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
