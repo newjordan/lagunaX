@@ -16,9 +16,9 @@ Opt-in dense dual+down residual: `GGML_SYCL_ENABLE_DENSE_DUAL_DOWN=1`
 
 ## NEXT
 
-1. **lm_head** (decode-weighted).  
-2. GEMM residual addend for prefill dense dual+down (if revisiting).  
-3. Hybrid router fuse sigmoid+add+norm + stock `k_argsort`.
+1. **Hybrid true TOP_K** (replace full argsort 256→k=8; bitexact/ties) — mode8 still full sort.  
+2. lm_head prune/mask only with golden oracle (packing A/B exhausted — see `SHIP_20260730_lm_head_q6_nsg_probe.md`).  
+3. GEMM residual addend for prefill dense dual+down (if revisiting).
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
