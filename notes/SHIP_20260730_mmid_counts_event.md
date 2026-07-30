@@ -42,7 +42,7 @@ Default mmid path: device counting-sort + prefix-sum + **event counts wait**.
 
 ## Next
 
-1. Pinned/USM host counts if L0 pageable D2H still blocks enqueue.  
-2. Compact non-empty expert list (shorter host GEMM loop) without mid-op full wait.  
-3. Bitexact multi-token dual/MMVQ.  
-4. Fused router sum/div (golden-fail).
+1. ~~Pinned/USM host counts / compact active~~ → **tried; no win** (`SHIP_20260730_mmid_pinned_compact.md`).  
+2. Bitexact multi-token dual/MMVQ.  
+3. Fused router sum/div (golden-fail).  
+4. Decode-side (lm_head / residual) — high golden risk.

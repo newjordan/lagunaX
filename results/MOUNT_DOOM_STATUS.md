@@ -56,7 +56,7 @@ Kill mmid device sort/prefix/ev: `GGML_SYCL_DISABLE_MMID_DEVICE_SORT=1`
 ## NEXT KERNEL LEVERS (in order)
 
 1. **Stay on control binary as champion** for scored claims (dual ON).
-2. **True zero mid-op sync** — pinned/USM counts or compact non-empty list; event-wait already shipped (`0013`).
+2. ~~Pinned/USM counts + compact active~~ — **tried; golden OK, pp slightly worse, reverted** (`SHIP_20260730_mmid_pinned_compact.md`). Event-wait remains default.
 3. **Bitexact hybrid gather-norm** — still golden-fails when fused beyond stock sum/div.
 4. ~~Tiny-N / multi-sg dual MMVQ packing~~ — **tried sgs=16; golden OK, pp regress, reverted** (`SHIP_20260730_mmvq_multisg.md`).
 5. Bitexact multi-token dual/MMVQ only after oracle vs GEMM rows.
