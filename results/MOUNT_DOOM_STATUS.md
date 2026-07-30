@@ -15,9 +15,9 @@ Kill mm-add: `GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1`
 
 ## NEXT
 
-1. GEMM residual epilogue **closed for now** (pp collapse; see `notes/SHIP_20260730_gemm_residual_epilogue.md`).
-2. Attn/FA remaining from re-trace.
-3. Isolated single-ADD post-only correctness probe (optional).
+1. Prefill double-ADD / chunked-MMVQ residual2 **closed** (pp~2845 under tip; `notes/SHIP_20260730_chunked_mmvq_residual2.md`).
+2. GEMM post-epilogue **closed** (`notes/SHIP_20260730_gemm_residual_epilogue.md`).
+3. Attn/FA remaining from re-trace.
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
