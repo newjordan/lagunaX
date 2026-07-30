@@ -15,9 +15,9 @@ Kill mm-add: `GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1`
 
 ## NEXT
 
-1. Prefill double-ADD / chunked-MMVQ residual2 **closed** (pp~2845 under tip; `notes/SHIP_20260730_chunked_mmvq_residual2.md`).
-2. GEMM post-epilogue **closed** (`notes/SHIP_20260730_gemm_residual_epilogue.md`).
-3. Attn/FA remaining from re-trace.
+1. **FA VEC for GQA decode** — ~+3.6 tg64 but golden FAIL; opt-in `GGML_SYCL_FATTN_FORCE_VEC=1` (`notes/SHIP_20260730_fattn_vec_gqa.md`). Bitexact VEC is high leverage.
+2. Prefill double-ADD / GEMM post / chunked residual2 **closed**.
+3. Other attn fuses low ROI vs FA numerics.
 
 ```bash
 export LX_BIN=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
