@@ -1,0 +1,18 @@
+stamp=20260730T214536Z
+binary=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
+-rwxrwxr-x 1 frosty40 frosty40 564624 Jul 30 10:02 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench
+-rwxrwxr-x 1 frosty40 frosty40 662784 Jul 30 05:29 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-server
+a6281386770d3b8c6f15fe7a4f12ea21  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0.17.0
+model_sha256=771a73e1249b9bc08e17d3fca59f5c49b7b9c8a6a47b5a6ac82f95c6e76923c4
+GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
+GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
+GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
+GGML_SYCL_DISABLE_GRAPH=1
+SRV_CTX=32768
+template=/home/frosty40/turbo/worktrees/treebeard-pr-private-latest/models/templates/poolside-Laguna-XS-2.1.jinja
+INFO: Output filtered by ONEAPI_DEVICE_SELECTOR environment variable, which is set to level_zero:gpu.
+To see device ids, use the --ignore-device-selectors CLI option.
+
+[level_zero:gpu] Intel(R) oneAPI Unified Runtime over Level-Zero V2, Intel(R) Arc(TM) Pro B70 Graphics 20.2.0 [1.15.38308+1]
+tool-eval-bench 2.1.0
+8b3259be7411fe27c7610d0de64ae1d3b622b9ef

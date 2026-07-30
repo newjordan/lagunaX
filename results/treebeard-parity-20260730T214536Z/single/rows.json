@@ -1,0 +1,102 @@
+[
+  {
+    "wall_s": 1.1192152500152588,
+    "prompt_n": 29,
+    "predicted_n": 53,
+    "pp_tps": 175.23611555915426,
+    "tg_tps": 136.4983787598221,
+    "preview": "In LLM serving, reducing latency (faster response times) typically comes at the cost of lower throughput (fewer requests processed per second), and vice versa, as optimizing for one often requires sac",
+    "ok": true,
+    "tag": "p0_r0"
+  },
+  {
+    "wall_s": 0.5571119785308838,
+    "prompt_n": 29,
+    "predicted_n": 53,
+    "pp_tps": 191.60758766047135,
+    "tg_tps": 136.47869516067146,
+    "preview": "In LLM serving, reducing latency (faster response times) typically comes at the cost of lower throughput (fewer requests processed per second), and vice versa, as optimizing for one often requires sac",
+    "ok": true,
+    "tag": "p0_r1"
+  },
+  {
+    "wall_s": 0.8538200855255127,
+    "prompt_n": 25,
+    "predicted_n": 96,
+    "pp_tps": 182.25293791735922,
+    "tg_tps": 135.48471774722785,
+    "preview": "Here's a Python function that returns the nth Fibonacci number using an efficient iterative approach:  ```python def fibonacci(n):     if n < 0:         raise ValueError(\"n must be a non-negative inte",
+    "ok": true,
+    "tag": "p1_r0"
+  },
+  {
+    "wall_s": 0.8699066638946533,
+    "prompt_n": 25,
+    "predicted_n": 96,
+    "pp_tps": 182.20644719292747,
+    "tg_tps": 134.9135077933631,
+    "preview": "To solve this problem, we need to write a Python function that returns the nth Fibonacci number. The Fibonacci sequence is defined such that each number is the sum of the two preceding ones, starting ",
+    "ok": true,
+    "tag": "p1_r1"
+  },
+  {
+    "wall_s": 0.87595534324646,
+    "prompt_n": 25,
+    "predicted_n": 96,
+    "pp_tps": 175.23077893585852,
+    "tg_tps": 135.06136850931642,
+    "preview": "Fusing GPU kernels without correctness gates (mechanisms to ensure proper synchronization and data integrity) introduces several critical risks:  1. **Race Conditions**:      Without synchronization, ",
+    "ok": true,
+    "tag": "p2_r0"
+  },
+  {
+    "wall_s": 0.8735270500183105,
+    "prompt_n": 25,
+    "predicted_n": 96,
+    "pp_tps": 175.43367203727615,
+    "tg_tps": 135.50843187101856,
+    "preview": "Fusing GPU kernels without correctness gates (e.g., assertions, validation checks, or synchronization) introduces several critical risks:  1. **Race Conditions**:      Merging kernels can lead to conc",
+    "ok": true,
+    "tag": "p2_r1"
+  },
+  {
+    "wall_s": 0.7220163345336914,
+    "prompt_n": 25,
+    "predicted_n": 76,
+    "pp_tps": 178.72589881254515,
+    "tg_tps": 135.90649633052462,
+    "preview": "MoE (Mixture of Experts) routing dynamically selects the most relevant expert sub-networks for each input token based on a learned gating mechanism, enabling efficient sparse activation where only a s",
+    "ok": true,
+    "tag": "p3_r0"
+  },
+  {
+    "wall_s": 0.6814653873443604,
+    "prompt_n": 25,
+    "predicted_n": 71,
+    "pp_tps": 179.59770114942526,
+    "tg_tps": 136.06589422122397,
+    "preview": "MoE (Mixture of Experts) routing dynamically selects the most relevant expert sub-networks for each input token based on a learned gating mechanism, enabling sparse activation where only a subset of p",
+    "ok": true,
+    "tag": "p3_r1"
+  },
+  {
+    "wall_s": 0.890470027923584,
+    "prompt_n": 33,
+    "predicted_n": 96,
+    "pp_tps": 203.19070987445278,
+    "tg_tps": 135.56813640413992,
+    "preview": "To debug the `E_SCHEMA_MISSING` error, I'll check the migration status and schema state:  ```bash # Check current migration status flyctl deploy --check-migrations  # Or if using a different migration",
+    "ok": true,
+    "tag": "p4_r0"
+  },
+  {
+    "wall_s": 0.8941535949707031,
+    "prompt_n": 33,
+    "predicted_n": 96,
+    "pp_tps": 204.3419569767298,
+    "tg_tps": 135.3590186471148,
+    "preview": "To debug the `E_SCHEMA_MISSING` error, I'll check the database schema status and migration history. Here's the next command:  ```bash # Check current database schema version and pending migrations ech",
+    "ok": true,
+    "tag": "p4_r1"
+  }
+]

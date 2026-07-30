@@ -1,31 +1,18 @@
-# Mount Doom status — 2026-07-30 (quality-safe tip)
+# Mount Doom status — 2026-07-30 (Treebeard-parity)
 
-## Where we are
+## Bankable tip: quality-safe
 
-| claim | status |
-|-------|--------|
-| Full tip +63% (default binary fuses) | **INVALID** — broken logprobs / multitoken |
-| **Quality-safe tip** (3 env kills, now `env.sh` default) | **LIVE bankable floor** |
-| Formal | **pp 1185 / tg 135.7 / +20.4%** (`20260730T194852Z`) |
-| PPL tiny | **1.0004** |
-| Golden | OK |
-| Chat | **OK** (real fib code, tg~136) |
-| Short needle | weak fail (echo, not crash/garbage) |
-| Agent Bench 69 | not re-run yet |
+| Gate | Result |
+|------|--------|
+| Formal | **+20.3%** · pp **1174** · tg **136** |
+| Prefill ladder 16k | ~1862 t/s |
+| Needles | **3/3** |
+| Dossier | **12/14** |
+| Single-agent tg p50 | **135.5** · 10/10 content |
+| Held-out | **30.4%** (14/46) |
+| Agent Bench 69 | **not valid** (c=32k tool prompts overflow; c=64k OOM) |
+| Multi-slot np4 | 8/8 · ~36 t/s/req |
 
-## Kills (required)
+Full scorecard: `results/treebeard-parity-20260730T214536Z/SCORECARD.md`
 
-```bash
-# in env.sh defaults
-export GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
-export GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
-export GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
-```
-
-Culprits: `MUL_MAT_ADD` alone → PPL~1e6; `MOE_DUAL_DOWN` → PPL fail; dual multitoken needed for tip restore.
-
-## Not done
-
-- Fix mm-add / dual-down in source (or leave dead)
-- Full long-ctx needles + agent 69 on quality-safe stack
-- Source default-OFF rebuild (env only for now; tip binary still compiles fuses ON)
+Env kills (default in env.sh): MUL_MAT_ADD · MOE_DUAL_DOWN · MOE_DUAL_MULTITOKEN
