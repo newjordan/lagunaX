@@ -33,10 +33,10 @@
 8. **Frontier map** — `notes/FRONTIER_20260729.md` (superseded live tip below)
    - Full **vocab=100352 lm_head** every token (~116 MB Q4 traffic) — still open
    - Prefill multi-token dual golden still hard
-9. **LIVE TIP (2026-07-30)** — dual+down decode + hybrid mode8 + **true top-k**
-   - Formal: **pp~3403 / tg~129.7 / +51.48%** vs pin; golden OK
-   - True top-k kill: `GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1`
-   - See `notes/SHIP_20260730_router_true_topk.md` · `results/MOUNT_DOOM_STATUS.md`
+9. **LIVE TIP (2026-07-30)** — dual+down decode + hybrid mode8 + **true top-k+gather**
+   - Formal: **pp~3407 / tg~129.7 / +51.58%** vs pin; golden OK
+   - Kill: `GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1`
+   - See `notes/SHIP_20260730_router_true_topk_gather.md` · `results/MOUNT_DOOM_STATUS.md`
 
 ## Loop (autonomous)
 
