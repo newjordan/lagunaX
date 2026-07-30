@@ -2,14 +2,14 @@
 
 ## LIVE NOW — tip + research track
 
-**Scored tip:** Control + Q4_K dual-SwiGLU + **hybrid router mode1** (both default ON)  
-**Research:** hybrid mode2 gather-norm (`GGML_SYCL_TOPK_MOE_HYBRID_MODE=2`) — ~+3 tg probe, golden FAIL
+**Scored tip:** Control + MoE dual + hybrid m1 + **dense dual shexp** (all default ON)  
+**Research:** hybrid mode2 gather-norm (`HYBRID_MODE=2`) — golden FAIL; MoE down fuse next
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **tip dual+hybrid m1 (formal)** | **1142.6** | **110.2** | **+2.09%** |
-| dual only A/B same binary | 1146.7 | 109.9 | +1.97% |
-| hybrid m1 earlier formal | 1146.7 | 110.3 | +2.25% |
+| **tip dual+hybrid+dense-dual** | **1143.8** | **113.3** | **+4.26%** |
+| prior dual+hybrid m1 | 1142.6 | 110.2 | +2.09% |
+| dual only A/B | 1146.7 | 109.9 | +1.97% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
 - **Golden:** OK
