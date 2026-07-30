@@ -1,0 +1,147 @@
+# 0025: MoE down prefill two-step weighted reduce + alias scratch
+# Base: tip after 0024 (rope+set_rows). Apply to control ggml-sycl.cpp.
+# Formal: results/20260730T085918Z/  +47.88%
+#
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp
+@@ -30,17 +30,19 @@
+     const int64_t n_embd         = mmid->ne[0];
+     const int64_t n_experts_used = mmid->ne[1];
+     const int64_t n_tokens       = mmid->ne[2];
+ 
+-    // Laguna serial: k=8, n_embd=2048, n_tokens usually 1 (decode). Cap prefill modestly.
++    // Laguna serial: k=8, n_embd=2048. Two-step weighted reduce is golden-safe for
++    // prefill (same MUL-then-ADD order as VIEW+ADD chain). Cap matches serial ubatch.
++    // Integrated one-kernel path stays decode-only (n_tokens==1) below.
+     if (mmid->type != GGML_TYPE_F32 || mul->type != GGML_TYPE_F32 ||
+         weights == nullptr || weights->type != GGML_TYPE_F32 ||
+         !ggml_are_same_shape(mmid, mul) || mmid->ne[3] != 1 ||
+         weights->ne[0] != 1 || weights->ne[1] != n_experts_used ||
+         weights->ne[2] != n_tokens || weights->ne[3] != 1 ||
+         !ggml_is_contiguous(mmid) || !ggml_is_contiguous(weights) ||
+         n_experts_used < 2 || n_experts_used > 16 ||
+-        n_tokens < 1 || n_tokens > 32 || n_embd < 1) {
++        n_tokens < 1 || n_tokens > 2048 || n_embd < 1) {
+         return 0;
+     }
+ 
+     // Build expected op list: MMID, MUL, VIEW×k, ADD×(k-1)
+@@ -98,19 +100,14 @@
+         dst->ne[0] != n_embd || dst->ne[1] != n_tokens) {
+         return 0;
+     }
+ 
+-    // Hard-reject if weights or mmid buffer overlap final dst (product allocator reuse).
+-    // Measured regress when fusing with weight/dst alias on other models; stay safe.
+-    if (ggml_sycl_tensor_buf_overlap(weights, dst) ||
++    // Prefill product allocator often aliases mmid/mul/weights with final dst.
++    // Two-step path uses pool scratch (experts and/or a tiny weights copy).
++    const bool mmid_dst_overlap =
+         ggml_sycl_tensor_buf_overlap(mmid, dst) ||
+-        ggml_sycl_tensor_buf_overlap(mul, dst)) {
+-        static std::atomic<int> once{0};
+-        if (once.fetch_add(1) == 0) {
+-            fprintf(stderr, "[lx-control-moe-down] skip: buffer overlap with dst\n");
+-        }
+-        return 0;
+-    }
++        ggml_sycl_tensor_buf_overlap(mul, dst);
++    const bool weights_dst_overlap = ggml_sycl_tensor_buf_overlap(weights, dst);
+ 
+     // Integrated weighted MMVQ for **decode only** (n_tokens==1). Default ON.
+     // Root cause of prior golden FAIL: applying fused reorder on prefill ne12>1 while tip
+     // uses host counting-sort mul_mat_id for multi-token — not the one-kernel math itself.
+@@ -137,9 +134,10 @@
+     const int64_t ne12 = src1->ne[2];
+ 
+     bool integrated = false;
+     const char * integrated_kind = "integrated weighted-mmvq";
+-    if (enable_integrated &&
++    // Integrated needs distinct scratch vs dst and live weights (no weight/dst alias).
++    if (enable_integrated && !mmid_dst_overlap && !weights_dst_overlap &&
+         n_tokens == 1 && ne12 == 1 &&
+         ne11 == n_experts_used &&
+         ne10 == src0->ne[0] && ne10 % QK8_1 == 0 &&
+         src1->type == GGML_TYPE_F32 && ggml_is_contiguous(src1) &&
+@@ -211,26 +209,67 @@
+         }
+     }
+ 
+     if (!integrated) {
+-        // Fallback / default tip: Expert down projections into mmid buffer + weighted reduce
++        // Two-step: mul_mat_id into expert buffer + weighted reduce → dst.
++        // Prefill often aliases mmid/mul/weights with dst; scratch as needed.
++        void * saved_mmid = mmid->data;
++        std::unique_ptr<ggml_sycl_pool_alloc<float>> expert_scratch;
++        std::unique_ptr<ggml_sycl_pool_alloc<float>> weight_scratch;
++        if (mmid_dst_overlap) {
++            const size_t expert_nelt =
++                (size_t) n_embd * (size_t) n_experts_used * (size_t) n_tokens;
++            expert_scratch = std::make_unique<ggml_sycl_pool_alloc<float>>(
++                ctx.pool(), expert_nelt);
++            mmid->data = expert_scratch->get();
++        }
++        const float * weight_ptr = static_cast<const float *>(weights->data);
++        if (weights_dst_overlap) {
++            // weights is [1, k, n_tokens] contiguous — tiny vs experts.
++            const size_t w_nelt = (size_t) n_experts_used * (size_t) n_tokens;
++            weight_scratch = std::make_unique<ggml_sycl_pool_alloc<float>>(
++                ctx.pool(), w_nelt);
++            // Copy before dst is written (and before mmid may clobber if triple-alias).
++            // Do this *before* mul_mat_id when weights might share storage with mmid.
++            ctx.stream()->memcpy(weight_scratch->get(), weights->data,
++                                 w_nelt * sizeof(float));
++            weight_ptr = weight_scratch->get();
++        }
++        {
++            static std::atomic<int> once_sc{0};
++            if ((mmid_dst_overlap || weights_dst_overlap) &&
++                once_sc.fetch_add(1) == 0) {
++                fprintf(stderr,
++                        "[lx-control-moe-down] two-step scratch "
++                        "experts=%d weights=%d tokens=%" PRId64 "\n",
++                        (int) mmid_dst_overlap, (int) weights_dst_overlap,
++                        n_tokens);
++            }
++        }
+         ggml_sycl_mul_mat_id(ctx, mmid);
+         ggml_sycl_moe_weighted_reduce(
+-            ctx, static_cast<const float *>(mmid->data),
+-            static_cast<const float *>(weights->data),
++            ctx, static_cast<const float *>(mmid->data), weight_ptr,
+             static_cast<float *>(dst->data),
+             n_embd, n_experts_used, n_tokens);
+-    }
+-
+-    static std::atomic<int> once{0};
+-    if (once.fetch_add(1) == 0) {
+-        fprintf(stderr,
+-                "[lx-control-moe-down] fuse hit (%s) embd=%" PRId64
+-                " k=%" PRId64 " tokens=%" PRId64 "
+-",
+-                integrated ? integrated_kind : "weighted reduce",
+-                n_embd, n_experts_used, n_tokens);
++        mmid->data = saved_mmid;
++    }
++
++    {
++        static std::atomic<int> once{0};
++        static std::atomic<int> once_mt{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-moe-down] fuse hit (%s) embd=%" PRId64
++                    " k=%" PRId64 " tokens=%" PRId64 "\n",
++                    integrated ? integrated_kind : "weighted reduce",
++                    n_embd, n_experts_used, n_tokens);
++        }
++        if (n_tokens > 1 && !integrated && once_mt.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-moe-down] multi-token two-step weighted reduce "
++                    "embd=%" PRId64 " k=%" PRId64 " tokens=%" PRId64 "\n",
++                    n_embd, n_experts_used, n_tokens);
++        }
+     }
+     return n_ops - 1;
+ }
+ 
+-
