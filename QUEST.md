@@ -33,10 +33,10 @@
 8. **Frontier map** — `notes/FRONTIER_20260729.md` (superseded live tip below)
    - Full **vocab=100352 lm_head** every token (~116 MB Q4 traffic) — still open
    - Prefill multi-token dual golden still hard
-9. **LIVE TIP (2026-07-30)** — **FA VEC GQA decode** + mm-add+add + packed reduce
-   - Formal: **pp~3716 / tg~135.0 / +59.61%** vs pin; golden re-captured OK
-   - Kill TILE: `GGML_SYCL_FATTN_FORCE_TILE=1`
-   - See `notes/SHIP_20260730_fattn_vec_gqa_default.md` · `results/MOUNT_DOOM_STATUS.md`
+9. **LIVE TIP (2026-07-30)** — **router GEMV+sig+bias decode** + FA VEC GQA + mm-add+add + packed reduce
+   - Formal: **pp~3730 / tg~138.4 / +62.75%** vs pin; golden re-captured OK
+   - Kill GEMV: `GGML_SYCL_DISABLE_ROUTER_GEMV_FUSE=1` · Kill TILE: `GGML_SYCL_FATTN_FORCE_TILE=1`
+   - See `notes/SHIP_20260730_router_gemv_sigmoid_add.md` · `results/MOUNT_DOOM_STATUS.md`
 
 ## Loop (autonomous)
 
