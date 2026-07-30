@@ -16,6 +16,12 @@ Kill full-norm: `GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK_NORM=1`
 Kill GEMV: `GGML_SYCL_DISABLE_ROUTER_GEMV_FUSE=1`  
 **Note:** golden re-captured under full-norm.
 
+## ALERT
+
+Control **source tip stack was gutted** mid-day (see `notes/SHIP_20260730_tip_source_regression.md`).
+`topk-moe.cpp` restored from 0048 fullsnippet; softplus/mm-add/rms/rope still missing in `ggml-sycl.cpp`.
+Use tip binary backup for scored claims until rebuild is coherent.
+
 ## NEXT
 
 1. New theory under +63.7% tip (multi-row GEMV / packing closed).
