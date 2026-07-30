@@ -1,0 +1,42 @@
+From: lagunaX campaign
+Subject: [PATCH 0012] control: mmid device exclusive prefix-sum (default ON)
+
+Device exclusive scan seeds next[] (drops H2D offsets). Keep early counts
+D2H+wait before pack — wait-after-pack regresses pp ~20 t/s.
+Golden OK. Formal ~+8.99% vs pin (tip stamp remains fused sigmoid+add +9.09%).
+Kill: GGML_SYCL_DISABLE_MMID_DEVICE_SORT=1
+
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp
+@@
+ static void mmid_device_fill_mapping(
+         const int32_t * __restrict__ ids, int * __restrict__ next,
+         mmid_row_mapping * __restrict__ mapping,
+         const int n_ids, const int n_tokens, const int ids_row_stride,
+         const int n_as, const sycl::nd_item<1> & item) {
+     ...
+ }
+ 
++// Exclusive prefix-sum of expert histogram → next[] row offsets (device, no H2D).
++// n_as is small (Laguna=256); single-thread sequential scan is free vs a host round-trip.
++static void mmid_device_exclusive_scan(
++        const int * __restrict__ counts, int * __restrict__ next,
++        const int n_as, const sycl::nd_item<1> & item) {
++    if (item.get_global_id(0) != 0) {
++        return;
++    }
++    int sum = 0;
++    for (int i = 0; i < n_as; ++i) {
++        next[i] = sum;
++        sum += counts[i];
++    }
++}
++
+ // Device path in ggml_sycl_mul_mat_id (ne12>1, use_device_sort):
+ // BEFORE:
+ //   hist → D2H counts + wait → host exclusive scan → H2D next → fill → pack → GEMMs
+ // AFTER:
+ //   hist → device exclusive_scan(next) → fill → D2H counts + wait → host offsets
+ //        → pack → GEMMs  (pack→GEMM continuous; no H2D next)
+ //
+ // Hit log: [lx-control-mmid] device counting-sort+prefix n_tokens=... k=... n_experts=...

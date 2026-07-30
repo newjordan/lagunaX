@@ -47,6 +47,7 @@ Kill: `GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD=1` (falls back to stock sigmoid then
 
 ## Next
 
-1. Device prefix-sum / drop remaining counts wait on multi-token mmid.  
-2. Bitexact multi-token dual/MMVQ (still golden-fail).  
-3. Fused sum/div router norm (still golden-fail).
+1. ~~Device prefix-sum / drop remaining counts wait on multi-token mmid.~~ → **done** as default infra (`SHIP_20260730_mmid_prefix_sum.md`); wait-after-pack regresses pp; tip stamp stays this ship.  
+2. Zero-wait expert dispatch without pack→GEMM bubble; or tiny-N MMVQ geometry.  
+3. Bitexact multi-token dual/MMVQ (still golden-fail).  
+4. Fused sum/div router norm (still golden-fail).

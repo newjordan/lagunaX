@@ -1,21 +1,27 @@
-# Mount Doom status — 2026-07-30 (fused sigmoid+add tip)
+# Mount Doom status — 2026-07-30 (fused sigmoid+add tip; mmid prefix-sum default)
 
 ## LIVE NOW — tip + research track
 
 **Scored tip:** MoE dual + hybrid mode2 + **fused sigmoid+add** + dense dual + moe-down + device mmid sort  
-**Research (golden FAIL / opt-in):** full fused norm · integrated down · multi-token MMVQ · dual multi-token
+**Default infra (not tip stamp):** device mmid **exclusive prefix-sum** (no H2D next)  
+**Research (golden FAIL / opt-in):** full fused norm · integrated down · multi-token MMVQ · dual multi-token · wait-after-pack mmid
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
 | **tip fused sigmoid+add** | **1148.9** | **120.2** | **+9.09%** |
+| + mmid prefix-sum (default) | 1143.0 | 120.3 | +8.99% |
 | prior + device counting-sort | 1144.8 | 118.6 | +7.91% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
-Formal: `results/20260730T053204Z/` · `notes/SHIP_20260730_router_sigmoid_add.md` · `patches/0011-*.patch`  
-Kill fused sig+add: `GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD=1`
+Formal tip: `results/20260730T053204Z/` · prefix-sum: `results/20260730T054207Z/`  
+Notes: `notes/SHIP_20260730_router_sigmoid_add.md`, `notes/SHIP_20260730_mmid_prefix_sum.md`  
+Patches: `patches/0011-*.patch`, `patches/0012-*.patch`  
+Kill fused sig+add: `GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD=1`  
+Kill mmid device sort/prefix: `GGML_SYCL_DISABLE_MMID_DEVICE_SORT=1`
 
-### Why this worked
-Package dual was **type-rejecting Q4_K** (Q5/Q6 only). Enabling Q4_K on package helped decode (~105→107) but package still loses ~28% prefill. Porting dual onto **control** (champion base) stacks the fuse without the package solo tax.
+### Prefix-sum lesson
+Deferring counts wait until **after pack** regresses pp ~20 t/s (host bubble before expert GEMMs).  
+Device scan may seed `next[]`, but pack→GEMM must stay continuous.
 
 ## POST-REBOOT A/B (pre-dual, serial ship flags)
 
@@ -48,15 +54,15 @@ Package dual was **type-rejecting Q4_K** (Q5/Q6 only). Enabling Q4_K on package 
 ## NEXT KERNEL LEVERS (in order)
 
 1. **Stay on control binary as champion** for scored claims (dual ON).
-2. **Bitexact hybrid gather-norm** (router already patterns + stock-oracle golden) — or park router.
-3. **MoE down fuse / weighted reduce on control only** (not package tree).
-4. **Dense dual SwiGLU for shared expert** on control.
-5. Device multi-token `mul_mat_id` if decode tip stuck (prefill lever).
-6. Tiny-N MMVQ launch geometry for N≈9–29 expert groups (trace smoking gun)
+2. **Zero-wait expert dispatch** (compact non-empty list / USM counts) — only if pack→GEMM stays continuous.
+3. **Bitexact hybrid gather-norm** — still golden-fails when fused beyond stock sum/div.
+4. Tiny-N MMVQ launch geometry for N≈9–29 expert groups (decode smoking gun).
+5. Bitexact multi-token dual/MMVQ only after oracle vs GEMM rows.
+6. lm_head prune — high golden risk; largest byte stream.
 
 ## Target
 
-Beat **tg128 107.9 / pp512 1147** on control+Q4 — first real win must be kernel, not knobs.
+Beat **tg128 120+ / pp512 1150+** on control+Q4 with golden — next real tip needs decode or clean prefill without host bubble.
 
 ## Commands
 
