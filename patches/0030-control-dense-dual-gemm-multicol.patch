@@ -1,0 +1,2507 @@
+diff --git a/ggml/src/ggml-sycl/ggml-sycl.cpp b/ggml/src/ggml-sycl/ggml-sycl.cpp
+index 3b807c7cb..d5c016c39 100644
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp
+@@ -2785,22 +2785,27 @@ inline void ggml_sycl_op_mean(ggml_backend_sycl_context & ctx, ggml_tensor * dst
+ }
+ 
+ 
++// Exported for hybrid topk-moe (Laguna bias): fuse sigmoid/add/norm, stock argsort only.
++void ggml_sycl_argsort_f32_i32(ggml_backend_sycl_context & ctx, const float * x, int * dst,
++                               int ncols, int nrows, ggml_sort_order order) {
++    SYCL_CHECK(ggml_sycl_set_device(ctx.device));
++    argsort_f32_i32_sycl(x, dst, ncols, nrows, order, ctx.stream(), ctx.device, ctx.pool());
++}
++
+ inline void ggml_sycl_op_argsort(ggml_backend_sycl_context & ctx, ggml_tensor * dst) {
+     GGML_ASSERT(dst->src[0]->type == GGML_TYPE_F32);
+     GGML_ASSERT(dst->type == GGML_TYPE_I32);
+-    dpct::queue_ptr main_stream = ctx.stream();
+     SYCL_CHECK(ggml_sycl_set_device(ctx.device));
+     const float * src0_dd = static_cast<const float *>(dst->src[0]->data);
+     int32_t *       dst_dd  = static_cast<int32_t *>(dst->data);
+ 
+-
+     const int64_t ncols = dst->src[0]->ne[0];
+     const int64_t nrows = ggml_nrows(dst->src[0]);
+ 
+     enum ggml_sort_order order = (enum ggml_sort_order) dst->op_params[0];
+ 
+     argsort_f32_i32_sycl(src0_dd, (int *)dst_dd, ncols, nrows, order,
+-                         main_stream, ctx.device, ctx.pool());
++                         ctx.stream(), ctx.device, ctx.pool());
+ }
+ 
+ static void ggml_sycl_op_top_k(ggml_backend_sycl_context & ctx, ggml_tensor * dst) {
+@@ -4524,152 +4529,1503 @@ __dpct_inline__ static void k_copy_dst_from_contiguous(
+     }
+ }
+ 
+-// Fused MoE TG fast path. Returns false to fall back to the per-expert loop below.
+-static bool ggml_sycl_mul_mat_id_mmvq_fused(
+-    ggml_backend_sycl_context & ctx, const ggml_tensor * src0,
+-    const ggml_tensor * src1, const ggml_tensor * ids, ggml_tensor * dst)
+-{
++// Dual MoE gate+up + SwiGLU.
++// Decode (ne12==1): reorder MMVQ dual — tip default ON.
++// Prefill (ne12>1): expert-batched dual GEMM with shared sort+pack (bitexact vs
++//   stock mul_mat_id×2 + swiglu). Default ON. Kill prefill:
++//   GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
++// Full dual kill: GGML_SYCL_DISABLE_MOE_DUAL_SWIGLU=1
++// Legacy per-token MMVQ multi-token: GGML_SYCL_ENABLE_MOE_DUAL_MULTITOKEN_MMVQ=1 (research)
++
++// Forward: defined after mmid device-sort helpers / weighted reduce.
++static bool ggml_sycl_mul_mat_id_dual_swiglu_multitoken_gemm(
++    ggml_backend_sycl_context & ctx,
++    const ggml_tensor * gate_w, const ggml_tensor * up_w,
++    const ggml_tensor * src1, const ggml_tensor * ids, ggml_tensor * glu);
++// Dual+down multi-token: dual multitoken into real glu, stock mmid down, weighted reduce.
++// Uses live graph tensors (stack shells segfaulted).
++static bool ggml_sycl_mul_mat_id_dual_down_multitoken(
++    ggml_backend_sycl_context & ctx,
++    ggml_tensor * gate, ggml_tensor * up, ggml_tensor * glu,
++    ggml_tensor * down_mmid, const ggml_tensor * weights, ggml_tensor * dst_final);
++
++static bool ggml_sycl_mul_mat_id_dual_swiglu_fused(
++    ggml_backend_sycl_context & ctx,
++    const ggml_tensor * gate, const ggml_tensor * up, ggml_tensor * glu) {
++    static const bool disabled = []() {
++        const char * env = getenv("GGML_SYCL_DISABLE_MOE_DUAL_SWIGLU");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
++    if (disabled) {
++        return false;
++    }
++    // Prefill dual GEMM default ON; hard-off: DISABLE_MOE_DUAL_MULTITOKEN=1
++    static const bool enable_multitoken = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN");
++        if (dis != nullptr && std::atoi(dis) != 0) {
++            return false;
++        }
++        // Legacy: ENABLE=0 forces off; ENABLE unset/1 stays on (default).
++        const char * env = getenv("GGML_SYCL_ENABLE_MOE_DUAL_MULTITOKEN");
++        if (env != nullptr && std::atoi(env) == 0) {
++            return false;
++        }
++        return true;
++    }();
++    // Research: old per-token MMVQ multi-token (golden-fail class).
++    static const bool enable_multitoken_mmvq = []() {
++        const char * env = getenv("GGML_SYCL_ENABLE_MOE_DUAL_MULTITOKEN_MMVQ");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
++
++    const ggml_tensor * gate_w = gate->src[0];
++    const ggml_tensor * up_w   = up->src[0];
++    const ggml_tensor * src1   = gate->src[1];
++    const ggml_tensor * ids    = gate->src[2];
++
++    if (gate->op != GGML_OP_MUL_MAT_ID || up->op != GGML_OP_MUL_MAT_ID ||
++        gate->src[1] != up->src[1] || gate->src[2] != up->src[2] ||
++        gate_w->type != up_w->type ||
++        (gate_w->type != GGML_TYPE_Q4_K && gate_w->type != GGML_TYPE_Q5_K &&
++         gate_w->type != GGML_TYPE_Q6_K) ||
++        src1->type != GGML_TYPE_F32 || gate->type != GGML_TYPE_F32 ||
++        up->type != GGML_TYPE_F32 || glu->type != GGML_TYPE_F32) {
++        return false;
++    }
++
+     const int64_t ne10 = src1->ne[0];
+     const int64_t ne11 = src1->ne[1];
+     const int64_t ne12 = src1->ne[2];
+-    if (ne12 != 1) return false;
+-    if (src1->type != GGML_TYPE_F32 || dst->type != GGML_TYPE_F32) return false;
+-    if (ne10 != src0->ne[0] || ne10 % QK8_1 != 0) return false;
+-    if (!ggml_is_contiguous(src1)) return false;
+-
+-    const int64_t n_ids_per_group = ids->ne[0];
+-    if (ids->ne[1] != 1) return false;
+-    if (ne11 != 1 && ne11 != n_ids_per_group) return false;
+-
+-    const queue_ptr stream           = ctx.stream();
+-    const int       src1_padded_cols = GGML_PAD((int) ne10, MATRIX_ROW_PADDING);
+-    const int       n_experts_used   = (int) n_ids_per_group;
+-    const int       nrows            = (int) src0->ne[1];
++    if (ne12 < 1) return false;
++    if (ids->ne[1] != ne12) return false;
++    const int64_t n_ids = ids->ne[0];
++    if (ne11 != 1 && ne11 != n_ids) return false;
++    if (ne10 != gate_w->ne[0] || ne10 != up_w->ne[0] || ne10 % QK8_1 != 0) return false;
++    if (gate_w->ne[1] != up_w->ne[1] || gate_w->ne[2] != up_w->ne[2]) return false;
++    if (!ggml_is_contiguous(src1) || !ggml_is_contiguous(glu)) return false;
++    if (gate->ne[0] != gate_w->ne[1] || up->ne[0] != up_w->ne[1] ||
++        gate->ne[1] != n_ids || up->ne[1] != n_ids ||
++        gate->ne[2] != ne12 || up->ne[2] != ne12 ||
++        glu->ne[2] != ne12 ||
++        !ggml_are_same_shape(gate, up) || !ggml_are_same_shape(gate, glu)) {
++        return false;
++    }
++    if (ids->nb[0] != sizeof(int32_t)) return false;
+ 
+-    // Lazily reorder the (Q4_K) expert weights into a per-expert SoA layout, then run the reorder
+-    // GEMV. Placed after the bail checks so a non-dispatchable op does not pay the reorder cost.
+-    opt_for_reorder_id(&ctx, src0);
+-    const ggml_tensor_extra_gpu * src0_extra =
+-        static_cast<const ggml_tensor_extra_gpu *>(src0->extra);
+-    const bool use_reorder = src0_extra && src0_extra->optimized_feature.reorder;
++    // Prefill: expert-batched dual GEMM (shared sort+pack). Default ON.
++    if (ne12 > 1) {
++        if (!enable_multitoken) {
++            return false;
++        }
++        if (!enable_multitoken_mmvq) {
++            return ggml_sycl_mul_mat_id_dual_swiglu_multitoken_gemm(
++                ctx, gate_w, up_w, src1, ids, glu);
++        }
++        // Fall through to legacy per-token MMVQ if MMVQ research flag set (cap 32).
++        if (ne12 > 32) {
++            return false;
++        }
++    }
+ 
+-    ggml_sycl_pool_alloc<char> src1_q8_alloc(ctx.pool(),
+-        (size_t) ne11 * src1_padded_cols * sizeof(block_q8_1) / QK8_1);
+-    char * src1_ddq = src1_q8_alloc.get();
+-    if (use_reorder) {
+-        quantize_row_q8_1_sycl<quantize_and_reorder_q8_1_soa>(
+-            (const float *) src1->data, src1_ddq, (int) ne10, (int) ne11,
+-            src1_padded_cols, stream);
+-    } else {
+-        quantize_row_q8_1_sycl<quantize_q8_1>(
+-            (const float *) src1->data, src1_ddq, (int) ne10, (int) ne11,
+-            src1_padded_cols, stream);
++    // Decode (ne12==1) or research multi-token MMVQ: reorder dual path.
++    opt_for_reorder_id(&ctx, gate_w);
++    opt_for_reorder_id(&ctx, up_w);
++    const ggml_tensor_extra_gpu * gate_extra =
++        static_cast<const ggml_tensor_extra_gpu *>(gate_w->extra);
++    const ggml_tensor_extra_gpu * up_extra =
++        static_cast<const ggml_tensor_extra_gpu *>(up_w->extra);
++    if (!gate_extra || !up_extra ||
++        !gate_extra->optimized_feature.reorder ||
++        !up_extra->optimized_feature.reorder) {
++        return false;
+     }
+ 
+-    const size_t bytes_per_qrow = (size_t) src1_padded_cols * sizeof(block_q8_1) / QK8_1;
+-    const size_t src1_row_stride = (ne11 == 1) ? 0 : bytes_per_qrow;
++    const queue_ptr stream = ctx.stream();
++    const int src1_padded_cols = GGML_PAD((int) ne10, MATRIX_ROW_PADDING);
++    const int n_experts_used   = (int) n_ids;
++    const int nrows            = (int) gate_w->ne[1];
++
++    ggml_sycl_pool_alloc<char> src1_q8_alloc(
++        ctx.pool(), (size_t) ne11 * ne12 * src1_padded_cols * sizeof(block_q8_1) / QK8_1);
++    char * src1_q8 = src1_q8_alloc.get();
++    quantize_row_q8_1_sycl<quantize_and_reorder_q8_1_soa>(
++        (const float *) src1->data, src1_q8, (int) ne10, (int) (ne11 * ne12),
++        src1_padded_cols, stream);
++
++    const size_t bytes_per_qrow    = (size_t) src1_padded_cols * sizeof(block_q8_1) / QK8_1;
++    const size_t src1_row_stride   = (ne11 == 1) ? 0 : bytes_per_qrow;
++    const size_t src1_token_stride = (size_t) ne11 * bytes_per_qrow;
++    const int    ids_row_stride    = (int) (ids->nb[1] / sizeof(int32_t));
++    const size_t dst_token_stride  = glu->nb[2];
++    const int32_t * ids_base       = (const int32_t *) ids->data;
++
++    for (int64_t t = 0; t < ne12; ++t) {
++        const int32_t * ids_t = ids_base + t * ids_row_stride;
++        const char *    vy_t  = src1_q8 + t * src1_token_stride;
++        float *         dst_t = (float *) ((char *) glu->data + t * dst_token_stride);
++        if (!ggml_sycl_mul_mat_vec_q_id_dual_swiglu_reorder(
++                gate_w->type, gate_w->data, up_w->data, vy_t, ids_t, dst_t,
++                (int) ne10, nrows, n_experts_used,
++                gate_w->nb[2], up_w->nb[2], glu->nb[1], src1_row_stride, stream)) {
++            return false;
++        }
++    }
+ 
+-    if (use_reorder) {
+-        return ggml_sycl_mul_mat_vec_q_id_reorder(
+-            src0->type, src0->data, src1_ddq, (const int32_t *) ids->data,
+-            (float *) dst->data, (int) ne10, nrows, n_experts_used,
+-            /*expert_weight_stride=*/ src0->nb[2],
+-            /*dst_row_stride=*/ dst->nb[1],
+-            src1_row_stride, stream);
++    {
++        static std::atomic<int> once{0};
++        if (ne12 > 1 && once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-moe-dual] multi-token dual MMVQ n_tokens=%" PRId64 " k=%d\n",
++                    ne12, n_experts_used);
++        }
+     }
+-    return ggml_sycl_mul_mat_vec_q_id(
+-        src0->type, src0->data, src1_ddq, (const int32_t *) ids->data,
+-        (float *) dst->data, (int) ne10, nrows, n_experts_used,
+-        /*expert_weight_stride=*/ src0->nb[2],
+-        /*dst_row_stride=*/ dst->nb[1],
+-        src1_row_stride, stream);
++    return true;
+ }
+ 
+-// counting sort of the routed rows by expert id (row_id_i, as chosen by the router):
+-// builds a projection of a memory layout where each expert's slice is contiguous
+-static void mmid_counting_sort_rows(
+-        const ggml_tensor * ids, const char * ids_host,
+-        int64_t n_ids, int64_t n_as, int64_t n_routed_rows,
+-        std::vector<int64_t> & expert_counts,
+-        std::vector<int64_t> & expert_row_offsets,
+-        std::vector<mmid_row_mapping> & routed_row_src) {
++// Graph fuse: MUL_MAT_ID + MUL_MAT_ID + GLU(swiglu). Returns following nodes to skip.
++int ggml_sycl_fuse_moe_dual_swiglu(
++    ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i) {
++    if (i + 2 >= cgraph->n_nodes) {
++        return 0;
++    }
++    ggml_tensor * node = cgraph->nodes[i];
++    if (node->op != GGML_OP_MUL_MAT_ID) {
++        return 0;
++    }
++    ggml_tensor * mmid1 = cgraph->nodes[i + 1];
++    ggml_tensor * glu   = cgraph->nodes[i + 2];
++    if (mmid1->op != GGML_OP_MUL_MAT_ID || glu->op != GGML_OP_GLU) {
++        return 0;
++    }
++    if (ggml_get_glu_op(glu) != GGML_GLU_OP_SWIGLU) {
++        return 0;
++    }
++    const bool edges_ok =
++        ((glu->src[0] == node && glu->src[1] == mmid1) ||
++         (glu->src[0] == mmid1 && glu->src[1] == node)) &&
++        node->src[1] == mmid1->src[1] &&
++        node->src[2] == mmid1->src[2];
++    if (!edges_ok) {
++        return 0;
++    }
++    ggml_tensor * gate = glu->src[0];
++    ggml_tensor * up   = glu->src[1];
+ 
+-    // frequencies: how many routed rows each expert "owns"
+-    expert_counts.assign(n_as, 0);
+-    for (int64_t iid1 = 0; iid1 < ids->ne[1]; iid1++) {
+-        for (int64_t id = 0; id < n_ids; id++) {
+-            const int32_t row_id_i = *(const int32_t *) (ids_host + iid1*ids->nb[1] + id*ids->nb[0]);
+-            GGML_ASSERT(row_id_i >= 0 && row_id_i < n_as);
+-            expert_counts[row_id_i]++;
++    // Prefer dual+down multi-token when weighted-down chain follows GLU (same ids).
++    // Pattern: dual×2 + GLU + MMID(down) + MUL(w) + VIEW×k + ADD×(k-1)
++    // Default ON; kill: GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
++    // Uses live graph tensors (stack shells segfaulted).
++    static const bool enable_dual_down = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_MOE_DUAL_DOWN");
++        if (dis != nullptr && std::atoi(dis) != 0) {
++            return false;
++        }
++        const char * env = getenv("GGML_SYCL_ENABLE_MOE_DUAL_DOWN");
++        // Default ON when unset; explicit 0 disables.
++        if (env == nullptr) {
++            return true;
++        }
++        return std::atoi(env) != 0;
++    }();
++    if (enable_dual_down && i + 5 < cgraph->n_nodes) {
++        ggml_tensor * down_mmid = cgraph->nodes[i + 3];
++        ggml_tensor * mul_w     = cgraph->nodes[i + 4];
++        // Scan past noop RESHAPE/NONE if down not immediately adjacent (some layers).
++        int di = i + 3;
++        while (di + 1 < cgraph->n_nodes && di < i + 8) {
++            ggml_tensor * cand = cgraph->nodes[di];
++            if (cand && cand->op == GGML_OP_MUL_MAT_ID && cand->src[1] == glu &&
++                cand->src[2] == node->src[2]) {
++                down_mmid = cand;
++                mul_w = cgraph->nodes[di + 1];
++                break;
++            }
++            if (cand && (cand->op == GGML_OP_NONE || cand->op == GGML_OP_RESHAPE ||
++                         cand->op == GGML_OP_VIEW || cand->op == GGML_OP_PERMUTE ||
++                         cand->op == GGML_OP_TRANSPOSE)) {
++                di++;
++                continue;
++            }
++            break;
++        }
++        if (down_mmid && down_mmid->op == GGML_OP_MUL_MAT_ID && down_mmid->src[1] == glu &&
++            down_mmid->src[2] == node->src[2] &&
++            mul_w && mul_w->op == GGML_OP_MUL &&
++            (mul_w->src[0] == down_mmid || mul_w->src[1] == down_mmid)) {
++            const int dual_down_base = di; // first down op index
++            (void) dual_down_base;
++            const ggml_tensor * weights =
++                mul_w->src[0] == down_mmid ? mul_w->src[1] : mul_w->src[0];
++            const int64_t n_embd         = down_mmid->ne[0];
++            const int64_t n_experts_used = down_mmid->ne[1];
++            const int64_t n_tokens       = down_mmid->ne[2];
++            const int n_views = (int) n_experts_used;
++            const int n_adds  = (int) n_experts_used - 1;
++            // dual(3) + gap + down_mmid + mul + views + adds; gap = di - (i+3)
++            const int gap = di - (i + 3);
++            const int n_ops = 3 + gap + 2 + n_views + n_adds;
++            const int mul_idx = di + 1;
++            const int view0_idx = di + 2;
++            if (n_experts_used >= 2 && n_experts_used <= 16 &&
++                n_tokens >= 2 && n_tokens <= 2048 &&
++                weights && weights->type == GGML_TYPE_F32 &&
++                weights->ne[0] == 1 && weights->ne[1] == n_experts_used &&
++                weights->ne[2] == n_tokens &&
++                down_mmid->type == GGML_TYPE_F32 && mul_w->type == GGML_TYPE_F32 &&
++                i + n_ops <= cgraph->n_nodes) {
++                std::vector<ggml_op> ops;
++                ops.reserve((size_t) n_ops);
++                ops.push_back(GGML_OP_MUL_MAT_ID);
++                ops.push_back(GGML_OP_MUL_MAT_ID);
++                ops.push_back(GGML_OP_GLU);
++                for (int g = 0; g < gap; ++g) {
++                    ops.push_back(cgraph->nodes[i + 3 + g]->op);
++                }
++                ops.push_back(GGML_OP_MUL_MAT_ID);
++                ops.push_back(GGML_OP_MUL);
++                for (int v = 0; v < n_views; ++v) {
++                    ops.push_back(GGML_OP_VIEW);
++                }
++                for (int a = 0; a < n_adds; ++a) {
++                    ops.push_back(GGML_OP_ADD);
++                }
++                const int output = i + n_ops - 1;
++                bool views_ok = true;
++                for (int v = 0; v < n_views && views_ok; ++v) {
++                    ggml_tensor * view = cgraph->nodes[view0_idx + v];
++                    views_ok = view && view->op == GGML_OP_VIEW && view->src[0] == mul_w &&
++                               view->ne[0] == n_embd && view->ne[1] == n_tokens;
++                }
++                ggml_tensor * prev = cgraph->nodes[view0_idx];
++                for (int a = 0; a < n_adds && views_ok; ++a) {
++                    ggml_tensor * add = cgraph->nodes[view0_idx + n_views + a];
++                    ggml_tensor * v1  = cgraph->nodes[view0_idx + a + 1];
++                    views_ok = add && add->op == GGML_OP_ADD &&
++                               ((add->src[0] == prev && add->src[1] == v1) ||
++                                (add->src[1] == prev && add->src[0] == v1));
++                    prev = add;
++                }
++                (void) mul_idx;
++                ggml_tensor * dst = cgraph->nodes[output];
++                const ggml_tensor * down_w = down_mmid->src[0];
++                // Gate/up may be Q4_K while down is Q6_K (Laguna Q4_K_M mix) — do not require same type.
++                const bool gate_type_ok =
++                    gate->src[0] &&
++                    (gate->src[0]->type == GGML_TYPE_Q4_K || gate->src[0]->type == GGML_TYPE_Q5_K ||
++                     gate->src[0]->type == GGML_TYPE_Q6_K);
++                const bool down_type_ok =
++                    down_w &&
++                    (down_w->type == GGML_TYPE_Q4_K || down_w->type == GGML_TYPE_Q5_K ||
++                     down_w->type == GGML_TYPE_Q6_K);
++                const bool types_ok =
++                    gate_type_ok && down_type_ok &&
++                    down_w->ne[0] == gate->src[0]->ne[1] &&
++                    down_w->ne[1] == n_embd &&
++                    down_w->ne[2] == gate->src[0]->ne[2] &&
++                    down_mmid->src[0] == down_w &&
++                    down_mmid->data && glu->data && weights->data && dst->data;
++                if (views_ok && types_ok && dst && dst->type == GGML_TYPE_F32 &&
++                    ggml_is_contiguous(dst) && dst->ne[0] == n_embd &&
++                    dst->ne[1] == n_tokens &&
++                    ggml_sycl_mul_mat_id_dual_down_multitoken(
++                               ctx, gate, up, glu, down_mmid, weights, dst)) {
++                    static std::atomic<int> once{0};
++                    if (once.fetch_add(1) == 0) {
++                        fprintf(stderr,
++                                "[lx-control-moe-dual] fuse hit (dual+down multi-token) "
++                                "tokens=%" PRId64 " k=%" PRId64 "\n",
++                                n_tokens, n_experts_used);
++                    }
++                    return n_ops - 1;
++                }
++            }
+         }
+     }
+ 
+-    // where each expert's slice starts (row indices) and the previous ends
+-    expert_row_offsets.assign(n_as + 1, 0);
+-    for (int64_t i02 = 0; i02 < n_as; i02++) {
+-        expert_row_offsets[i02 + 1] = expert_row_offsets[i02] + expert_counts[i02];
++    const int output = i + 2;
++    if (!ggml_can_fuse_subgraph(
++            cgraph, i,
++            { GGML_OP_MUL_MAT_ID, GGML_OP_MUL_MAT_ID, GGML_OP_GLU },
++            { output })) {
++        return 0;
++    }
++    if (ggml_sycl_mul_mat_id_dual_swiglu_fused(ctx, gate, up, glu)) {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr, "[lx-control-moe-dual] fuse hit (gate+up+swiglu)\n");
++        }
++        return 2;
++    }
++    return 0;
++}
++
++// Elementwise SwiGLU (defined later with multi-token dual helpers).
++static void moe_dual_swiglu_contiguous(
++    const float * __restrict__ gate, const float * __restrict__ up,
++    float * __restrict__ dst, const int64_t n,
++    const sycl::nd_item<1> & item);
++
++// Dense shared-expert dual gate+up + SwiGLU (MUL_MAT + MUL_MAT + GLU).
++// Decode/small batch (ncols_dst<=32): reorder MMVQ dual.
++// Prefill multi-col (33..2048): stock GEMM dual + fused swiglu (MMVQ multi-col
++//   regressed pp hard on B70; GEMM matches stock math, elides gate/up graph stores).
++// Kill: GGML_SYCL_DISABLE_DENSE_DUAL_SWIGLU=1
++// Kill prefill GEMM path only: GGML_SYCL_DISABLE_DENSE_DUAL_GEMM=1
++static bool ggml_sycl_mul_mat_dense_dual_swiglu_fused(
++    ggml_backend_sycl_context & ctx, const ggml_tensor * gate,
++    const ggml_tensor * up, ggml_tensor * glu) {
++    static const bool disabled = []() {
++        const char * env = getenv("GGML_SYCL_DISABLE_DENSE_DUAL_SWIGLU");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
++    if (disabled) {
++        return false;
++    }
++    static const bool enable_gemm_mt = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_DENSE_DUAL_GEMM");
++        return !(dis != nullptr && std::atoi(dis) != 0);
++    }();
++
++    const ggml_tensor * gate_w = gate->src[0];
++    const ggml_tensor * up_w   = up->src[0];
++    const ggml_tensor * src1   = gate->src[1];
++
++    const bool type_ok =
++        gate_w->type == up_w->type &&
++        (gate_w->type == GGML_TYPE_Q4_K || gate_w->type == GGML_TYPE_Q5_K ||
++         gate_w->type == GGML_TYPE_Q6_K);
++    if (gate->op != GGML_OP_MUL_MAT || up->op != GGML_OP_MUL_MAT ||
++        gate->src[1] != up->src[1] || !type_ok ||
++        src1->type != GGML_TYPE_F32 || gate->type != GGML_TYPE_F32 ||
++        up->type != GGML_TYPE_F32 || glu->type != GGML_TYPE_F32) {
++        return false;
+     }
+ 
+-    std::vector<int64_t> expert_row_next = expert_row_offsets;
+-    routed_row_src.resize(n_routed_rows);
+-    for (int64_t iid1 = 0; iid1 < ids->ne[1]; iid1++) {
+-        for (int64_t id = 0; id < n_ids; id++) {
+-            const int32_t row_id_i = *(const int32_t *) (ids_host + iid1*ids->nb[1] + id*ids->nb[0]);
+-            GGML_ASSERT(row_id_i >= 0 && row_id_i < n_as);
++    const int64_t ncols     = src1->ne[0];
++    const int64_t ncols_dst = src1->ne[1];
++    const int64_t nrows     = gate_w->ne[1];
++    if (ncols_dst < 1 || ncols_dst > 2048 ||
++        src1->ne[2] != 1 || src1->ne[3] != 1 ||
++        gate_w->ne[0] != ncols || up_w->ne[0] != ncols ||
++        up_w->ne[1] != nrows ||
++        gate_w->ne[2] != 1 || gate_w->ne[3] != 1 ||
++        up_w->ne[2] != 1 || up_w->ne[3] != 1 ||
++        ncols % QK8_1 != 0 ||
++        !ggml_is_contiguous(src1) || !ggml_is_contiguous(glu) ||
++        !ggml_is_contiguous(gate_w) || !ggml_is_contiguous(up_w) ||
++        gate->ne[0] != nrows || up->ne[0] != nrows ||
++        gate->ne[1] != ncols_dst || up->ne[1] != ncols_dst ||
++        !ggml_are_same_shape(gate, up) || !ggml_are_same_shape(gate, glu) ||
++        ggml_get_glu_op(glu) != GGML_GLU_OP_SWIGLU ||
++        ggml_get_op_params_i32(glu, 1) != 0 /* swapped */) {
++        return false;
++    }
+ 
+-            // find and validate the next free row for a given expert (row_id_i)
+-            const int64_t routed_row = expert_row_next[row_id_i]++;
+-            GGML_ASSERT(routed_row >= expert_row_offsets[row_id_i]);
+-            GGML_ASSERT(routed_row < expert_row_offsets[row_id_i + 1]);
+-            routed_row_src[routed_row] = {(int32_t) id, (int32_t) iid1};
++    // Prefill multi-col: stock GEMM path (bitexact vs separate mul_mat + swiglu).
++    if (ncols_dst > 32) {
++        if (!enable_gemm_mt) {
++            return false;
++        }
++        const size_t nelt = (size_t) nrows * (size_t) ncols_dst;
++        ggml_sycl_pool_alloc<float> gate_tmp(ctx.pool(), nelt);
++        ggml_sycl_pool_alloc<float> up_tmp(ctx.pool(), nelt);
++
++        // Shells from live tensors (preserve type/extra for mul_mat dispatch).
++        ggml_tensor gate_dst = *gate;
++        ggml_tensor up_dst   = *up;
++        gate_dst.data = gate_tmp.get();
++        up_dst.data   = up_tmp.get();
++        // Ensure contiguous F32 layout for temps matching [nrows, ncols_dst].
++        gate_dst.nb[0] = sizeof(float);
++        gate_dst.nb[1] = sizeof(float) * (size_t) nrows;
++        gate_dst.nb[2] = gate_dst.nb[1] * (size_t) ncols_dst;
++        gate_dst.nb[3] = gate_dst.nb[2];
++        up_dst.nb[0] = gate_dst.nb[0];
++        up_dst.nb[1] = gate_dst.nb[1];
++        up_dst.nb[2] = gate_dst.nb[2];
++        up_dst.nb[3] = gate_dst.nb[3];
++
++        ggml_sycl_mul_mat(ctx, gate_w, src1, &gate_dst);
++        ggml_sycl_mul_mat(ctx, up_w, src1, &up_dst);
++
++        const queue_ptr stream = ctx.stream();
++        const float * gd = gate_tmp.get();
++        const float * ud = up_tmp.get();
++        float *       dd = (float *) glu->data;
++        // glu may be non-row-major if nb[1] != nrows*sizeof(float) — require contiguous.
++        if (!ggml_is_contiguous(glu)) {
++            return false;
++        }
++        constexpr int BS = 256;
++        const int nblocks = (int) ((nelt + BS - 1) / BS);
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++            [=](sycl::nd_item<1> item) {
++                moe_dual_swiglu_contiguous(gd, ud, dd, (int64_t) nelt, item);
++            });
++        {
++            static std::atomic<int> once{0};
++            if (once.fetch_add(1) == 0) {
++                fprintf(stderr,
++                        "[lx-control-dense-dual] multi-col GEMM dual ncols_dst=%" PRId64
++                        " nrows=%" PRId64 "\n",
++                        ncols_dst, nrows);
++            }
+         }
++        return true;
+     }
+-}
+-
+-static void ggml_sycl_mul_mat_id(ggml_backend_sycl_context & ctx,
+-                                 ggml_tensor *dst) try {
+-    scope_op_debug_print scope_dbg_print(__func__, dst, /*num_src=*/3);
+-    const ggml_tensor *src0 = dst->src[0];
+-    const ggml_tensor *src1 = dst->src[1];
+-    GGML_ASSERT(!ggml_backend_buffer_is_sycl_split(src0->buffer) && "mul_mat_id does not support split buffers");
+ 
+-    const ggml_tensor *ids = dst->src[2];
+-    GGML_TENSOR_BINARY_OP_LOCALS
++    // Decode / small batch: reorder MMVQ dual.
++    auto ensure_reorder = [&](const ggml_tensor * w) {
++        if (!g_ggml_sycl_enable_optimize || !ctx.opt_feature.reorder) {
++            return false;
++        }
++        if (!ggml_sycl_supports_reorder_mmvq(w->type)) {
++            return false;
++        }
++        ggml_tensor_extra_gpu * extra = static_cast<ggml_tensor_extra_gpu *>(w->extra);
++        if (!extra) {
++            return false;
++        }
++        if (extra->optimized_feature.reorder) {
++            return true;
++        }
++        if (reorder_qw(w, ctx.stream())) {
++            extra->optimized_feature.reorder = true;
++            return true;
++        }
++        return false;
++    };
++    if (!ensure_reorder(gate_w) || !ensure_reorder(up_w)) {
++        return false;
++    }
+ 
+     const queue_ptr stream = ctx.stream();
+-
+-    const int64_t n_as = ne02;
+-    const int64_t n_ids = ids->ne[0];
+-
+-    if (ne12 == 1) {
+-        if (ggml_sycl_mul_mat_id_mmvq_fused(ctx, src0, src1, ids, dst)) {
+-            return;
++    const int src1_padded_cols = GGML_PAD((int) ncols, MATRIX_ROW_PADDING);
++    ggml_sycl_pool_alloc<char> src1_q8_alloc(
++        ctx.pool(),
++        (size_t) ncols_dst * src1_padded_cols * sizeof(block_q8_1) / QK8_1);
++    char * src1_q8 = src1_q8_alloc.get();
++    quantize_row_q8_1_sycl<quantize_and_reorder_q8_1_soa>(
++        (const float *) src1->data, src1_q8, (int) ncols, (int) ncols_dst,
++        src1_padded_cols, stream);
++
++    const size_t bytes_per_qrow =
++        (size_t) src1_padded_cols * sizeof(block_q8_1) / QK8_1;
++    const size_t dst_col_stride = glu->nb[1] / sizeof(float);
++
++    return ggml_sycl_mul_mat_vec_q_dense_dual_swiglu_reorder(
++        gate_w->type, gate_w->data, up_w->data, src1_q8, (float *) glu->data,
++        (int) ncols, (int) nrows, (int) ncols_dst, bytes_per_qrow, dst_col_stride,
++        stream);
++}
++
++// Graph fuse: MUL_MAT + MUL_MAT + GLU(swiglu) for dense shared expert.
++int ggml_sycl_fuse_dense_dual_swiglu(
++    ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i) {
++    if (i + 2 >= cgraph->n_nodes) {
++        return 0;
++    }
++    ggml_tensor * node = cgraph->nodes[i];
++    if (node->op != GGML_OP_MUL_MAT) {
++        return 0;
++    }
++    ggml_tensor * mm1 = cgraph->nodes[i + 1];
++    ggml_tensor * glu = cgraph->nodes[i + 2];
++    if (mm1->op != GGML_OP_MUL_MAT || glu->op != GGML_OP_GLU) {
++        return 0;
++    }
++    if (ggml_get_glu_op(glu) != GGML_GLU_OP_SWIGLU) {
++        return 0;
++    }
++    const bool edges_ok =
++        ((glu->src[0] == node && glu->src[1] == mm1) ||
++         (glu->src[0] == mm1 && glu->src[1] == node)) &&
++        node->src[1] == mm1->src[1];
++    if (!edges_ok) {
++        return 0;
++    }
++    const int output = i + 2;
++    if (!ggml_can_fuse_subgraph(
++            cgraph, i,
++            { GGML_OP_MUL_MAT, GGML_OP_MUL_MAT, GGML_OP_GLU },
++            { output })) {
++        return 0;
++    }
++    ggml_tensor * gate = glu->src[0];
++    ggml_tensor * up   = glu->src[1];
++    if (ggml_sycl_mul_mat_dense_dual_swiglu_fused(ctx, gate, up, glu)) {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-dense-dual] fuse hit (shared gate+up+swiglu) ncols_dst=%" PRId64 "\n",
++                    gate->ne[1]);
+         }
++        return 2;
+     }
++    return 0;
++}
+ 
+-    std::vector<char> ids_host(ggml_nbytes(ids));
+-    const char * ids_dev = (const char *) ids->data;
++// Graph fuse: RMS_NORM → MUL(weight). Default ON (Laguna pre-norm every layer).
++// Kill: GGML_SYCL_DISABLE_RMS_NORM_FUSE=1
++int ggml_sycl_fuse_rms_norm_mul(
++    ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i) {
++    static const bool enabled = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_RMS_NORM_FUSE");
++        return !(dis != nullptr && std::atoi(dis) != 0);
++    }();
++    if (!enabled || i + 1 >= cgraph->n_nodes) {
++        return 0;
++    }
++    ggml_tensor * rms = cgraph->nodes[i];
++    ggml_tensor * mul = cgraph->nodes[i + 1];
++    if (rms->op != GGML_OP_RMS_NORM || mul->op != GGML_OP_MUL) {
++        return 0;
++    }
++    if (mul->src[0] != rms && mul->src[1] != rms) {
++        return 0;
++    }
++    if (rms->type != GGML_TYPE_F32 || mul->type != GGML_TYPE_F32 ||
++        !rms->src[0] || rms->src[0]->type != GGML_TYPE_F32 ||
++        !rms->data || !mul->data) {
++        return 0;
++    }
++    // Weight operand must be F32.
++    const ggml_tensor * w = mul->src[0] == rms ? mul->src[1] : mul->src[0];
++    if (!w || w->type != GGML_TYPE_F32 || !w->data) {
++        return 0;
++    }
++    // Output is MUL (weight-scaled norm). RMS intermediate is elided.
++    const int output = i + 1;
++    if (!ggml_can_fuse_subgraph(
++            cgraph, i, { GGML_OP_RMS_NORM, GGML_OP_MUL }, { output })) {
++        return 0;
++    }
++    ggml_sycl_op_rms_norm_fused(ctx, rms, mul);
++    {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-rms] fuse hit (rms_norm+mul) ne0=%" PRId64 " ne1=%" PRId64 "\n",
++                    rms->src[0]->ne[0], rms->src[0]->ne[1]);
++        }
++    }
++    return 1;  // skip following MUL
++}
+ 
+-    SYCL_CHECK(CHECK_TRY_ERROR(
+-        stream->memcpy(ids_host.data(), ids_dev, ggml_nbytes(ids))));
++// Graph fuse: ROPE → VIEW → SET_ROWS (KV cache write). Port of CUDA rope_fused.
++// Writes roped K/V straight into cache; skips intermediate rope buffer + set_rows.
++// Default ON. Kill: GGML_SYCL_DISABLE_ROPE_SET_ROWS_FUSE=1
++int ggml_sycl_fuse_rope_set_rows(
++    ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i) {
++    static const bool enabled = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_ROPE_SET_ROWS_FUSE");
++        return !(dis != nullptr && std::atoi(dis) != 0);
++    }();
++    if (!enabled || i + 2 >= cgraph->n_nodes) {
++        return 0;
++    }
++    ggml_tensor * rope     = cgraph->nodes[i];
++    ggml_tensor * view     = cgraph->nodes[i + 1];
++    ggml_tensor * set_rows = cgraph->nodes[i + 2];
++    if (rope->op != GGML_OP_ROPE || view->op != GGML_OP_VIEW ||
++        set_rows->op != GGML_OP_SET_ROWS) {
++        return 0;
++    }
++    // VIEW of rope; SET_ROWS values = view (src[0]=b values, src[1]=indices)
++    if (view->src[0] != rope || set_rows->src[0] != view) {
++        return 0;
++    }
++    if (!rope->src[0] || rope->src[0]->ne[3] != 1) {
++        return 0;
++    }
++    if (set_rows->src[0]->type != GGML_TYPE_F32 && set_rows->src[0]->type != GGML_TYPE_F16) {
++        return 0;
++    }
++    if (!set_rows->src[1] || set_rows->src[1]->type != GGML_TYPE_I64) {
++        return 0;
++    }
++    // The view should flatten two dims of rope into one dim
++    if (!ggml_is_contiguous(view) || view->ne[0] != rope->ne[0] * rope->ne[1]) {
++        return 0;
++    }
++    // Only norm/neox paths have fusion code in rope kernels
++    const int mode = ((const int32_t *) rope->op_params)[2];
++    if (mode != GGML_ROPE_TYPE_NORMAL && mode != GGML_ROPE_TYPE_NEOX) {
++        return 0;
++    }
++    const int output = i + 2;
++    if (!ggml_can_fuse_subgraph(
++            cgraph, i, { GGML_OP_ROPE, GGML_OP_VIEW, GGML_OP_SET_ROWS }, { output })) {
++        return 0;
++    }
+ 
+-    // also ensures ctx.mmid_row_mapping_host is drained before we use it again
+-    SYCL_CHECK(CHECK_TRY_ERROR(stream->wait()));
++    ggml_sycl_rope_fused(ctx, rope, set_rows);
++    {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-rope] fuse hit (rope+view+set_rows) mode=%d ne0=%" PRId64
++                    " ne1=%" PRId64 " type=%s\n",
++                    mode, rope->ne[0], rope->ne[1], ggml_type_name(set_rows->type));
++        }
++    }
++    return 2;  // skip VIEW + SET_ROWS
++}
+ 
+-    ggml_tensor src0_row = *src0;
+-    ggml_tensor src1_row = *src1;
+-    ggml_tensor dst_row = *dst;
++// Graph fuse: MUL_MAT → ADD residual (Laguna o_proj + inpSA). Decode-weighted.
++// Reorder MMVQ writes gemv+addend into ADD buffer (one launch). Default ON.
++// Kill: GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
++int ggml_sycl_fuse_mul_mat_add(
++    ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i) {
++    static const bool enabled = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE");
++        return !(dis != nullptr && std::atoi(dis) != 0);
++    }();
++    if (!enabled || i + 1 >= cgraph->n_nodes) {
++        return 0;
++    }
++    ggml_tensor * mm  = cgraph->nodes[i];
++    ggml_tensor * add = cgraph->nodes[i + 1];
++    if (mm->op != GGML_OP_MUL_MAT || add->op != GGML_OP_ADD) {
++        return 0;
++    }
++    if (add->src[0] != mm && add->src[1] != mm) {
++        return 0;
++    }
++    const ggml_tensor * residual = add->src[0] == mm ? add->src[1] : add->src[0];
++    if (!residual || !mm->src[0] || !mm->src[1] || !residual->data || !add->data) {
++        return 0;
++    }
++    // F32 contiguous same-shape residual; decode-ish activation batch (ne11==1)
++    // or small prefill (ne11<=8) — MMVQ path. Prefer decode for score.
++    if (mm->type != GGML_TYPE_F32 || add->type != GGML_TYPE_F32 ||
++        residual->type != GGML_TYPE_F32 ||
++        !ggml_are_same_shape(mm, add) || !ggml_are_same_shape(mm, residual) ||
++        !ggml_is_contiguous(add) || !ggml_is_contiguous(residual) ||
++        !ggml_is_contiguous(mm->src[1])) {
++        return 0;
++    }
++    const ggml_tensor * w = mm->src[0];
++    const ggml_tensor * x = mm->src[1];
++    if (!ggml_is_quantized(w->type) || x->type != GGML_TYPE_F32) {
++        return 0;
++    }
++    // Any batch size: multi-col 2..8 uses switch_ncols addend; larger uses per-col loop offset.
++    if (x->ne[1] < 1) {
++        return 0;
++    }
++    // Only types with reorder MMVQ addend epilogue wired (Q4_K/Q5_K/Q6_K).
++    if (w->type != GGML_TYPE_Q4_K && w->type != GGML_TYPE_Q5_K && w->type != GGML_TYPE_Q6_K) {
++        return 0;
++    }
++    const int output = i + 1;
++    if (!ggml_can_fuse_subgraph(cgraph, i, { GGML_OP_MUL_MAT, GGML_OP_ADD }, { output })) {
++        return 0;
++    }
++    // Buffer overlap: residual must not alias add dst during gemv write.
++    if (residual->data == add->data) {
++        return 0;
++    }
+ 
+-    char *src0_original = (char *)src0->data;
+-    char *src1_original = (char *)src1->data;
+-    char *dst_original = (char *)dst->data;
++    // Write gemv+residual into ADD output; elide MUL_MAT intermediate.
++    void * saved_mm_data = mm->data;
++    mm->data = add->data;
++    ggml_sycl_mmvq_set_row_addend(static_cast<const float *>(residual->data));
++    ggml_sycl_mul_mat(ctx, mm->src[0], mm->src[1], mm);
++    ggml_sycl_mmvq_set_row_addend(nullptr);
++    mm->data = saved_mm_data;
+ 
+-    src0_row.ne[2] = 1;
+-    src0_row.ne[3] = 1;
+-    src0_row.nb[3] = nb02;
++    {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-mm-add] fuse hit (mul_mat+add) ne0=%" PRId64 " ne1=%" PRId64
++                    " wtype=%s\n",
++                    add->ne[0], add->ne[1], ggml_type_name(w->type));
++        }
++    }
++    return 1;
++}
+ 
+-    src1_row.ne[1] = 1;
+-    src1_row.ne[2] = 1;
++// Graph fuse: SOFTPLUS → (RESHAPE×) → MUL attn gate (Laguna XS.2 per-head + direct).
++// dst = attn * softplus(gate_logits) with ggml broadcast for per-head path.
++// Default ON. Kill: GGML_SYCL_DISABLE_SOFTPLUS_MUL_FUSE=1
++int ggml_sycl_fuse_softplus_mul(
++    ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i) {
++    static const bool enabled = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_SOFTPLUS_MUL_FUSE");
++        return !(dis != nullptr && std::atoi(dis) != 0);
++    }();
++    if (!enabled || i + 1 >= cgraph->n_nodes) {
++        return 0;
++    }
++    ggml_tensor * soft = cgraph->nodes[i];
++    if (soft->op != GGML_OP_UNARY || ggml_get_unary_op(soft) != GGML_UNARY_OP_SOFTPLUS) {
++        return 0;
++    }
++    if (!soft->src[0] || soft->type != GGML_TYPE_F32 || soft->src[0]->type != GGML_TYPE_F32 ||
++        !soft->src[0]->data) {
++        return 0;
++    }
++
++    // Scan forward over RESHAPE/VIEW only to find MUL that consumes softplus (or reshape of it).
++    ggml_tensor * mul = nullptr;
++    int           mul_j = -1;
++    for (int j = i + 1; j < cgraph->n_nodes && j < i + 6; ++j) {
++        ggml_tensor * t = cgraph->nodes[j];
++        if (!t) {
++            continue;
++        }
++        if (t->op == GGML_OP_RESHAPE || t->op == GGML_OP_VIEW || t->op == GGML_OP_NONE ||
++            t->op == GGML_OP_PERMUTE || t->op == GGML_OP_TRANSPOSE) {
++            continue;
++        }
++        if (t->op == GGML_OP_MUL) {
++            mul   = t;
++            mul_j = j;
++            break;
++        }
++        // Other real op → not our pattern
++        return 0;
++    }
++    if (!mul || mul_j < 0 || mul->type != GGML_TYPE_F32 || !mul->data) {
++        return 0;
++    }
++
++    // Trace softplus lineage: soft or reshape/view chain from soft.
++    auto is_soft_lineage = [&](const ggml_tensor * t) -> bool {
++        for (int depth = 0; t && depth < 4; ++depth) {
++            if (t == soft) {
++                return true;
++            }
++            if (t->op == GGML_OP_RESHAPE || t->op == GGML_OP_VIEW) {
++                t = t->src[0];
++                continue;
++            }
++            break;
++        }
++        return false;
++    };
++
++    const ggml_tensor * attn = nullptr;
++    if (is_soft_lineage(mul->src[0])) {
++        attn = mul->src[1];
++    } else if (is_soft_lineage(mul->src[1])) {
++        attn = mul->src[0];
++    } else {
++        return 0;
++    }
++    if (!attn || attn->type != GGML_TYPE_F32 || !attn->data || !ggml_is_contiguous(attn) ||
++        !ggml_is_contiguous(soft->src[0]) || !ggml_is_contiguous(mul)) {
++        return 0;
++    }
++
++    // Build op list soft .. mul inclusive for can_fuse_subgraph.
++    const int n_ops = mul_j - i + 1;
++    std::vector<ggml_op> ops;
++    ops.reserve((size_t) n_ops);
++    for (int j = i; j <= mul_j; ++j) {
++        ops.push_back(cgraph->nodes[j]->op);
++    }
++    const int output = mul_j;
++    if (!ggml_can_fuse_subgraph(cgraph, i, n_ops, ops.data(), &output, 1)) {
++        return 0;
++    }
++
++    // Optional trailing reshape of mul that is a no-op view (same data) — include in skip.
++    int skip = n_ops - 1;  // following nodes after soft
++    if (mul_j + 1 < cgraph->n_nodes) {
++        ggml_tensor * tail = cgraph->nodes[mul_j + 1];
++        if (tail && tail->op == GGML_OP_RESHAPE && tail->src[0] == mul &&
++            tail->data == mul->data && ggml_nelements(tail) == ggml_nelements(mul)) {
++            // Still need can_fuse to allow eliding reshape only if not an output used elsewhere.
++            // Safe: view reshape shares storage; compute is no-op. Skip it.
++            skip += 1;
++        }
++    }
++
++    const float * gate_d = (const float *) soft->src[0]->data;
++    const float * attn_d = (const float *) attn->data;
++    float *       dst_d  = (float *) mul->data;
++
++    const int64_t nelt = ggml_nelements(mul);
++    // Layout: softplus src [ne0_g, ne1_g, ...] typically [n_head, T]
++    // attn matches mul shape. Broadcast softplus over leading dims of attn/mul.
++    const int64_t ne0_a = mul->ne[0];
++    const int64_t ne1_a = mul->ne[1];
++    const int64_t ne2_a = mul->ne[2];
++    const int64_t ne3_a = mul->ne[3];
++    const int64_t ne0_g = soft->src[0]->ne[0];
++    const int64_t ne1_g = soft->src[0]->ne[1];
++    const int64_t ne2_g = soft->src[0]->ne[2];
++    const int64_t ne3_g = soft->src[0]->ne[3];
++
++    // Validate broadcast of gate onto mul (ggml rules: dims equal or 1).
++    auto dim_ok = [](int64_t a, int64_t g) { return g == a || g == 1 || a == 1; };
++    if (!dim_ok(ne0_a, ne0_g) || !dim_ok(ne1_a, ne1_g) || !dim_ok(ne2_a, ne2_g) ||
++        !dim_ok(ne3_a, ne3_g)) {
++        // XS.2: gate [n_head, T] vs mul [head_dim, n_head, T] — gate lacks leading head_dim.
++        // Treat as gate aligned to dims 1.. of mul when soft nelements == ne1_a*ne2_a*ne3_a
++        // and ne0_g == ne1_a (n_head) and ne1_g == ne2_a (T).
++        const bool xs2 =
++            (ne0_g == ne1_a && ne1_g == ne2_a && ne2_g == 1 && ne3_g == 1 && ne3_a == 1 &&
++             ggml_nelements(soft->src[0]) == ne1_a * ne2_a);
++        if (!xs2) {
++            return 0;
++        }
++        // XS.2 per-head kernel: mul [hd, nh, T], gate [nh, T]
++        const int64_t hd = ne0_a;
++        const int64_t nh = ne1_a;
++        const int64_t nt = ne2_a;
++        constexpr int BS = 256;
++        const int nblocks = (int) ((nelt + BS - 1) / BS);
++        queue_ptr stream = ctx.stream();
++        SYCL_CHECK(ggml_sycl_set_device(ctx.device));
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++            [=](sycl::nd_item<1> item) {
++                const int64_t idx = (int64_t) item.get_global_id(0);
++                if (idx >= nelt) {
++                    return;
++                }
++                // idx = d + h*hd + t*hd*nh
++                const int64_t d = idx % hd;
++                const int64_t tmp = idx / hd;
++                const int64_t h = tmp % nh;
++                const int64_t t = tmp / nh;
++                const float x = gate_d[h + t * nh];
++                const float ax = sycl::fabs(x);
++                const float m  = sycl::fmax(x, 0.0f);
++                const float sp = m + sycl::log1p(sycl::exp(-ax));
++                dst_d[idx] = attn_d[idx] * sp;
++                (void) d;
++            });
++        {
++            static std::atomic<int> once{0};
++            if (once.fetch_add(1) == 0) {
++                fprintf(stderr,
++                        "[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=%" PRId64
++                        " nh=%" PRId64 " T=%" PRId64 "\n",
++                        hd, nh, nt);
++            }
++        }
++        return skip;
++    }
++
++    // General same-rank broadcast (incl. identical shapes).
++    constexpr int BS = 256;
++    const int nblocks = (int) ((nelt + BS - 1) / BS);
++    queue_ptr stream = ctx.stream();
++    SYCL_CHECK(ggml_sycl_set_device(ctx.device));
++    stream->parallel_for(
++        sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++        [=](sycl::nd_item<1> item) {
++            const int64_t idx = (int64_t) item.get_global_id(0);
++            if (idx >= nelt) {
++                return;
++            }
++            // Decode mul linear index into coords (row-major ne0 fastest).
++            int64_t rem = idx;
++            const int64_t i0 = rem % ne0_a; rem /= ne0_a;
++            const int64_t i1 = rem % ne1_a; rem /= ne1_a;
++            const int64_t i2 = rem % ne2_a; rem /= ne2_a;
++            const int64_t i3 = rem;
++            const int64_t g0 = (ne0_g == 1) ? 0 : i0;
++            const int64_t g1 = (ne1_g == 1) ? 0 : i1;
++            const int64_t g2 = (ne2_g == 1) ? 0 : i2;
++            const int64_t g3 = (ne3_g == 1) ? 0 : i3;
++            const int64_t gidx =
++                g0 + ne0_g * (g1 + ne1_g * (g2 + ne2_g * g3));
++            const float x = gate_d[gidx];
++            const float ax = sycl::fabs(x);
++            const float m  = sycl::fmax(x, 0.0f);
++            const float sp = m + sycl::log1p(sycl::exp(-ax));
++            dst_d[idx] = attn_d[idx] * sp;
++        });
++    {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-softplus-mul] fuse hit (broadcast) nelt=%" PRId64 "\n", nelt);
++        }
++    }
++    return skip;
++}
++
++// Graph fuse: ADD → ADD residual chain (Laguna: moe+shexp then +ffn_inp).
++// dst = (a + b) + c with left-to-right order matching two stock ADDs.
++// Default ON. Kill: GGML_SYCL_DISABLE_ADD_ADD_FUSE=1
++int ggml_sycl_fuse_add_add(
++    ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i) {
++    static const bool enabled = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_ADD_ADD_FUSE");
++        return !(dis != nullptr && std::atoi(dis) != 0);
++    }();
++    if (!enabled || i + 1 >= cgraph->n_nodes) {
++        return 0;
++    }
++    ggml_tensor * add0 = cgraph->nodes[i];
++    ggml_tensor * add1 = cgraph->nodes[i + 1];
++    if (add0->op != GGML_OP_ADD || add1->op != GGML_OP_ADD) {
++        return 0;
++    }
++    if (add1->src[0] != add0 && add1->src[1] != add0) {
++        return 0;
++    }
++    if (!add0->src[0] || !add0->src[1] || !add1->src[0] || !add1->src[1]) {
++        return 0;
++    }
++    const ggml_tensor * a = add0->src[0];
++    const ggml_tensor * b = add0->src[1];
++    const ggml_tensor * c = add1->src[0] == add0 ? add1->src[1] : add1->src[0];
++    if (a->type != GGML_TYPE_F32 || b->type != GGML_TYPE_F32 || c->type != GGML_TYPE_F32 ||
++        add0->type != GGML_TYPE_F32 || add1->type != GGML_TYPE_F32) {
++        return 0;
++    }
++    // Contiguous same-shape only (no broadcast surface) — Laguna residual is this case.
++    if (!ggml_are_same_shape(a, b) || !ggml_are_same_shape(a, c) ||
++        !ggml_are_same_shape(a, add1) ||
++        !ggml_is_contiguous(a) || !ggml_is_contiguous(b) || !ggml_is_contiguous(c) ||
++        !ggml_is_contiguous(add1) ||
++        !a->data || !b->data || !c->data || !add1->data) {
++        return 0;
++    }
++    const int output = i + 1;
++    if (!ggml_can_fuse_subgraph(cgraph, i, { GGML_OP_ADD, GGML_OP_ADD }, { output })) {
++        return 0;
++    }
++
++    const int64_t nelt = ggml_nelements(add1);
++    const float * ad = (const float *) a->data;
++    const float * bd = (const float *) b->data;
++    const float * cd = (const float *) c->data;
++    float *       dd = (float *) add1->data;
++    constexpr int BS = 256;
++    const int nblocks = (int) ((nelt + BS - 1) / BS);
++    queue_ptr stream = ctx.stream();
++    SYCL_CHECK(ggml_sycl_set_device(ctx.device));
++    stream->parallel_for(
++        sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++        [=](sycl::nd_item<1> item) {
++            const int64_t idx = (int64_t) item.get_global_id(0);
++            if (idx >= nelt) {
++                return;
++            }
++            // Left-to-right: (a+b)+c matches stock ADD then ADD.
++            const float t = ad[idx] + bd[idx];
++            dd[idx]       = t + cd[idx];
++        });
++    {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-add] fuse hit (add+add residual) nelt=%" PRId64 " ne0=%" PRId64 " ne1=%" PRId64 "\n",
++                    nelt, add1->ne[0], add1->ne[1]);
++        }
++    }
++    return 1;  // skip following ADD
++}
++
++// Multi-token fused MMID default OFF until golden-proven (single-token path is tip).
++// Enable: GGML_SYCL_ENABLE_MMID_FUSED_BATCH=1
++// Hard-off: GGML_SYCL_DISABLE_MMID_FUSED_BATCH=1
++static bool ggml_sycl_mmid_fused_batch_enabled() {
++    static const bool enabled = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_MMID_FUSED_BATCH");
++        if (dis != nullptr && std::atoi(dis) != 0) {
++            return false;
++        }
++        const char * env = getenv("GGML_SYCL_ENABLE_MMID_FUSED_BATCH");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
++    return enabled;
++}
++
++// Fused MoE MMVQ: device-side ids, no host wait.
++// ne12==1 always (decode tip). Multi-token: opt-in ENABLE_MMID_FUSED_BATCH=1, cap 64.
++// Multi-token uses per-token single-row launches (bitexact vs ne12==1 path; avoids D2H).
++static bool ggml_sycl_mul_mat_id_mmvq_fused(
++    ggml_backend_sycl_context & ctx, const ggml_tensor * src0,
++    const ggml_tensor * src1, const ggml_tensor * ids, ggml_tensor * dst)
++{
++    const int64_t ne10 = src1->ne[0];
++    const int64_t ne11 = src1->ne[1];
++    const int64_t ne12 = src1->ne[2];
++    if (ne12 < 1 || ne12 > 64) return false;
++    if (ne12 > 1 && !ggml_sycl_mmid_fused_batch_enabled()) return false;
++    if (src1->type != GGML_TYPE_F32 || dst->type != GGML_TYPE_F32) return false;
++    if (ne10 != src0->ne[0] || ne10 % QK8_1 != 0) return false;
++    if (!ggml_is_contiguous(src1) || !ggml_is_contiguous(dst)) return false;
++
++    const int64_t n_ids_per_group = ids->ne[0];
++    // ids layout: [n_experts_used, n_tokens] with ne[1]==ne12
++    if (ids->ne[1] != ne12) return false;
++    if (ids->nb[0] != sizeof(int32_t)) return false;
++    if (ne11 != 1 && ne11 != n_ids_per_group) return false;
++
++    const queue_ptr stream           = ctx.stream();
++    const int       src1_padded_cols = GGML_PAD((int) ne10, MATRIX_ROW_PADDING);
++    const int       n_experts_used   = (int) n_ids_per_group;
++    const int       nrows            = (int) src0->ne[1];
++
++    opt_for_reorder_id(&ctx, src0);
++    const ggml_tensor_extra_gpu * src0_extra =
++        static_cast<const ggml_tensor_extra_gpu *>(src0->extra);
++    const bool use_reorder = src0_extra && src0_extra->optimized_feature.reorder;
++
++    // Quantize all token×slot activation rows.
++    ggml_sycl_pool_alloc<char> src1_q8_alloc(ctx.pool(),
++        (size_t) ne11 * ne12 * src1_padded_cols * sizeof(block_q8_1) / QK8_1);
++    char * src1_ddq = src1_q8_alloc.get();
++    if (use_reorder) {
++        quantize_row_q8_1_sycl<quantize_and_reorder_q8_1_soa>(
++            (const float *) src1->data, src1_ddq, (int) ne10, (int) (ne11 * ne12),
++            src1_padded_cols, stream);
++    } else {
++        quantize_row_q8_1_sycl<quantize_q8_1>(
++            (const float *) src1->data, src1_ddq, (int) ne10, (int) (ne11 * ne12),
++            src1_padded_cols, stream);
++    }
++
++    const size_t bytes_per_qrow    = (size_t) src1_padded_cols * sizeof(block_q8_1) / QK8_1;
++    const size_t src1_row_stride   = (ne11 == 1) ? 0 : bytes_per_qrow;
++    const size_t src1_token_stride = (size_t) ne11 * bytes_per_qrow;
++    const int    ids_row_stride    = (int) (ids->nb[1] / sizeof(int32_t));
++    const size_t dst_token_stride  = dst->nb[2];
++    const int32_t * ids_base       = (const int32_t *) ids->data;
++
++    // Per-token launches: same kernel as decode (n_tokens=1) with pointer offsets.
++    // Avoids multi-token grid bugs while still skipping D2H + counting sort.
++    for (int64_t t = 0; t < ne12; ++t) {
++        const int32_t * ids_t = ids_base + t * ids_row_stride;
++        const char *    vy_t  = src1_ddq + t * src1_token_stride;
++        float *         dst_t = (float *) ((char *) dst->data + t * dst_token_stride);
++        bool ok;
++        if (use_reorder) {
++            ok = ggml_sycl_mul_mat_vec_q_id_reorder(
++                src0->type, src0->data, vy_t, ids_t, dst_t, (int) ne10, nrows, n_experts_used,
++                src0->nb[2], dst->nb[1], src1_row_stride,
++                /*n_tokens=*/1, /*ids_row_stride=*/n_experts_used, /*src1_token_stride=*/0,
++                /*dst_token_stride=*/0, stream);
++        } else {
++            ok = ggml_sycl_mul_mat_vec_q_id(
++                src0->type, src0->data, vy_t, ids_t, dst_t, (int) ne10, nrows, n_experts_used,
++                src0->nb[2], dst->nb[1], src1_row_stride,
++                1, n_experts_used, 0, 0, stream);
++        }
++        if (!ok) {
++            return false;
++        }
++    }
++
++    {
++        static std::atomic<int> once{0};
++        if (ne12 > 1 && once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-mmid] multi-token fused (per-token) n_tokens=%" PRId64
++                    " k=%d reorder=%d\n",
++                    ne12, n_experts_used, (int) use_reorder);
++        }
++    }
++    return true;
++}
++
++// counting sort of the routed rows by expert id (row_id_i, as chosen by the router):
++// builds a projection of a memory layout where each expert's slice is contiguous
++static void mmid_counting_sort_rows(
++        const ggml_tensor * ids, const char * ids_host,
++        int64_t n_ids, int64_t n_as, int64_t n_routed_rows,
++        std::vector<int64_t> & expert_counts,
++        std::vector<int64_t> & expert_row_offsets,
++        std::vector<mmid_row_mapping> & routed_row_src) {
++
++    // frequencies: how many routed rows each expert "owns"
++    expert_counts.assign(n_as, 0);
++    for (int64_t iid1 = 0; iid1 < ids->ne[1]; iid1++) {
++        for (int64_t id = 0; id < n_ids; id++) {
++            const int32_t row_id_i = *(const int32_t *) (ids_host + iid1*ids->nb[1] + id*ids->nb[0]);
++            GGML_ASSERT(row_id_i >= 0 && row_id_i < n_as);
++            expert_counts[row_id_i]++;
++        }
++    }
++
++    // where each expert's slice starts (row indices) and the previous ends
++    expert_row_offsets.assign(n_as + 1, 0);
++    for (int64_t i02 = 0; i02 < n_as; i02++) {
++        expert_row_offsets[i02 + 1] = expert_row_offsets[i02] + expert_counts[i02];
++    }
++
++    std::vector<int64_t> expert_row_next = expert_row_offsets;
++    routed_row_src.resize(n_routed_rows);
++    for (int64_t iid1 = 0; iid1 < ids->ne[1]; iid1++) {
++        for (int64_t id = 0; id < n_ids; id++) {
++            const int32_t row_id_i = *(const int32_t *) (ids_host + iid1*ids->nb[1] + id*ids->nb[0]);
++            GGML_ASSERT(row_id_i >= 0 && row_id_i < n_as);
++
++            // find and validate the next free row for a given expert (row_id_i)
++            const int64_t routed_row = expert_row_next[row_id_i]++;
++            GGML_ASSERT(routed_row >= expert_row_offsets[row_id_i]);
++            GGML_ASSERT(routed_row < expert_row_offsets[row_id_i + 1]);
++            routed_row_src[routed_row] = {(int32_t) id, (int32_t) iid1};
++        }
++    }
++}
++
++// Device counting-sort for multi-token mul_mat_id: no full ids D2H.
++// Same GEMM regroup path as host sort (per-row results bitexact; row order within
++// an expert may differ via atomics but each logical (slot,token) maps 1:1).
++// Kill: GGML_SYCL_DISABLE_MMID_DEVICE_SORT=1
++static bool ggml_sycl_mmid_device_sort_enabled() {
++    static const bool disabled = []() {
++        const char * env = getenv("GGML_SYCL_DISABLE_MMID_DEVICE_SORT");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
++    return !disabled;
++}
++
++static void mmid_device_count_experts(
++        const int32_t * __restrict__ ids, int * __restrict__ counts,
++        const int n_ids, const int n_tokens, const int ids_row_stride,
++        const int n_as, const sycl::nd_item<1> & item) {
++    const int tid = (int) item.get_global_id(0);
++    const int total = n_ids * n_tokens;
++    if (tid >= total) {
++        return;
++    }
++    const int slot  = tid % n_ids;
++    const int token = tid / n_ids;
++    const int32_t expert = ids[(size_t) token * (size_t) ids_row_stride + (size_t) slot];
++    if (expert >= 0 && expert < n_as) {
++        auto ref = sycl::atomic_ref<int, sycl::memory_order::relaxed,
++                                    sycl::memory_scope::device,
++                                    sycl::access::address_space::global_space>(counts[expert]);
++        ref.fetch_add(1);
++    }
++}
++
++static void mmid_device_fill_mapping(
++        const int32_t * __restrict__ ids, int * __restrict__ next,
++        mmid_row_mapping * __restrict__ mapping,
++        const int n_ids, const int n_tokens, const int ids_row_stride,
++        const int n_as, const sycl::nd_item<1> & item) {
++    const int tid = (int) item.get_global_id(0);
++    const int total = n_ids * n_tokens;
++    if (tid >= total) {
++        return;
++    }
++    const int slot  = tid % n_ids;
++    const int token = tid / n_ids;
++    const int32_t expert = ids[(size_t) token * (size_t) ids_row_stride + (size_t) slot];
++    if (expert < 0 || expert >= n_as) {
++        return;
++    }
++    auto ref = sycl::atomic_ref<int, sycl::memory_order::relaxed,
++                                sycl::memory_scope::device,
++                                sycl::access::address_space::global_space>(next[expert]);
++    const int pos = ref.fetch_add(1);
++    mapping[pos] = { slot, token };
++}
++
++// Exclusive prefix-sum of expert histogram → next[] row offsets (device, no H2D).
++// n_as is small (Laguna=256); single-thread sequential scan is free vs a host round-trip.
++static void mmid_device_exclusive_scan(
++        const int * __restrict__ counts, int * __restrict__ next,
++        const int n_as, const sycl::nd_item<1> & item) {
++    if (item.get_global_id(0) != 0) {
++        return;
++    }
++    int sum = 0;
++    for (int i = 0; i < n_as; ++i) {
++        next[i] = sum;
++        sum += counts[i];
++    }
++}
++
++// Elementwise SwiGLU on contiguous expert-batch rows (same as stock swiglu).
++static void moe_dual_swiglu_contiguous(
++    const float * __restrict__ gate, const float * __restrict__ up,
++    float * __restrict__ dst, const int64_t n,
++    const sycl::nd_item<1> & item) {
++    const int64_t i = (int64_t) item.get_global_linear_id();
++    if (i >= n) {
++        return;
++    }
++    const float g = gate[i];
++    // Match dual-MMVQ / stock: silu(g)*up = g/(1+exp(-g))*up
++    dst[i] = (g / (1.0f + sycl::exp(-g))) * up[i];
++}
++
++// Multi-token dual: one device-sort + pack, then per-expert gate GEMM + up GEMM + swiglu + scatter.
++// Bitexact class of stock mul_mat_id (same GEMM path) + swiglu; saves duplicate sort/pack.
++static bool ggml_sycl_mul_mat_id_dual_swiglu_multitoken_gemm(
++    ggml_backend_sycl_context & ctx,
++    const ggml_tensor * gate_w, const ggml_tensor * up_w,
++    const ggml_tensor * src1, const ggml_tensor * ids, ggml_tensor * glu) {
++    const int64_t ne10 = src1->ne[0];
++    const int64_t ne11 = src1->ne[1];
++    const int64_t ne12 = src1->ne[2];
++    const int64_t n_ids = ids->ne[0];
++    const int64_t n_as  = gate_w->ne[2];
++    const int64_t ne0   = gate_w->ne[1]; // nrows / expert intermediate
++    const int64_t n_routed_rows = ne12 * n_ids;
++
++    if (ne12 < 2 || ne12 > 2048) {
++        return false;
++    }
++    if (ids->ne[1] != ne12 || ids->nb[0] != sizeof(int32_t)) {
++        return false;
++    }
++    if (ne11 != 1 && ne11 != n_ids) {
++        return false;
++    }
++    if (!ggml_is_contiguous(src1) || !ggml_is_contiguous(glu)) {
++        return false;
++    }
++    if (glu->ne[0] != ne0 || glu->ne[1] != n_ids || glu->ne[2] != ne12) {
++        return false;
++    }
++
++    const queue_ptr stream = ctx.stream();
++    char * src1_original = (char *) src1->data;
++    char * glu_original  = (char *) glu->data;
++    const size_t nb11 = src1->nb[1];
++    const size_t nb12 = src1->nb[2];
++    const size_t nb1  = glu->nb[1];
++    const size_t nb2  = glu->nb[2];
++    const size_t nb_w = gate_w->nb[2];
++    GGML_ASSERT(nb11 == sizeof(float) * (size_t) ne10);
++    GGML_ASSERT(nb1 == sizeof(float) * (size_t) ne0);
++    GGML_ASSERT(up_w->nb[2] == nb_w);
++
++    ggml_sycl_pool_alloc<char> src1_contiguous(ctx.pool(), sizeof(float) * n_routed_rows * ne10);
++    ggml_sycl_pool_alloc<char> gate_contiguous(ctx.pool(), sizeof(float) * n_routed_rows * ne0);
++    ggml_sycl_pool_alloc<char> up_contiguous(ctx.pool(), sizeof(float) * n_routed_rows * ne0);
++    ggml_sycl_pool_alloc<mmid_row_mapping> dev_row_mapping(ctx.pool(), n_routed_rows);
++
++    std::vector<int64_t> expert_row_counts;
++    std::vector<int64_t> expert_row_offsets;
++    std::vector<int> host_counts_device;
++    sycl::event counts_ready_ev;
++    bool device_sort_active = false;
++
++    const bool use_device_sort =
++        ggml_sycl_mmid_device_sort_enabled() && ids->nb[0] == sizeof(int32_t);
++
++    if (use_device_sort) {
++        const int n_tokens_i = (int) ne12;
++        const int n_ids_i    = (int) n_ids;
++        const int n_as_i     = (int) n_as;
++        const int ids_stride = (int) (ids->nb[1] / sizeof(int32_t));
++        const int32_t * ids_d = (const int32_t *) ids->data;
++
++        ggml_sycl_pool_alloc<int> dev_counts(ctx.pool(), n_as);
++        ggml_sycl_pool_alloc<int> dev_next(ctx.pool(), n_as);
++        SYCL_CHECK(CHECK_TRY_ERROR(stream->memset(dev_counts.get(), 0, sizeof(int) * n_as)));
++
++        constexpr int BS = 256;
++        const int total   = n_ids_i * n_tokens_i;
++        const int nblocks = (total + BS - 1) / BS;
++        int * counts_d = dev_counts.get();
++        int * next_d   = dev_next.get();
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++            [=](sycl::nd_item<1> item) {
++                mmid_device_count_experts(ids_d, counts_d, n_ids_i, n_tokens_i, ids_stride, n_as_i, item);
++            });
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>(1), sycl::range<1>(1)),
++            [=](sycl::nd_item<1> item) {
++                mmid_device_exclusive_scan(counts_d, next_d, n_as_i, item);
++            });
++        mmid_row_mapping * map_d = dev_row_mapping.get();
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++            [=](sycl::nd_item<1> item) {
++                mmid_device_fill_mapping(ids_d, next_d, map_d, n_ids_i, n_tokens_i, ids_stride, n_as_i, item);
++            });
++        host_counts_device.resize(n_as);
++        counts_ready_ev = stream->memcpy(host_counts_device.data(), counts_d, sizeof(int) * n_as);
++        device_sort_active = true;
++    } else {
++        std::vector<char> ids_host(ggml_nbytes(ids));
++        SYCL_CHECK(CHECK_TRY_ERROR(
++            stream->memcpy(ids_host.data(), ids->data, ggml_nbytes(ids))));
++        SYCL_CHECK(CHECK_TRY_ERROR(stream->wait()));
++        std::vector<mmid_row_mapping> & routed_row_src = ctx.mmid_row_mapping_host;
++        mmid_counting_sort_rows(ids, ids_host.data(), n_ids, n_as, n_routed_rows,
++                                expert_row_counts, expert_row_offsets, routed_row_src);
++        SYCL_CHECK(CHECK_TRY_ERROR(
++            stream->memcpy(dev_row_mapping.get(), routed_row_src.data(),
++                           n_routed_rows * sizeof(mmid_row_mapping))));
++    }
++
++    // Pack activations once (shared by gate + up).
++    {
++        const unsigned int max_wg = ggml_sycl_info().max_work_group_sizes[ctx.device];
++        sycl::range<3> block_dims(1, 1, std::min((unsigned int) ne10, max_wg));
++        sycl::range<3> grid_dims(1, 1, n_routed_rows);
++        char * src1_contig = src1_contiguous.get();
++        mmid_row_mapping * map_d = dev_row_mapping.get();
++        stream->submit([&](sycl::handler & cgh) {
++            cgh.parallel_for(
++                sycl::nd_range<3>(grid_dims * block_dims, block_dims),
++                [=](sycl::nd_item<3> item_ct1) {
++                    k_copy_src1_to_contiguous(
++                        src1_original, src1_contig, map_d,
++                        ne11, ne10, nb11, nb12, item_ct1);
++                });
++        });
++    }
++
++    if (device_sort_active) {
++        counts_ready_ev.wait();
++        expert_row_counts.assign(n_as, 0);
++        expert_row_offsets.assign(n_as + 1, 0);
++        for (int64_t e = 0; e < n_as; ++e) {
++            expert_row_counts[e] = host_counts_device[e];
++            expert_row_offsets[e + 1] = expert_row_offsets[e] + expert_row_counts[e];
++        }
++        GGML_ASSERT(expert_row_offsets[n_as] == n_routed_rows);
++    }
++
++    // Per-expert: gate GEMM + up GEMM on shared packed rows → swiglu into gate buffer.
++    ggml_tensor src0_row = *gate_w;
++    ggml_tensor src1_row = *src1;
++    ggml_tensor dst_row  = *glu;
++    src0_row.ne[2] = 1;
++    src0_row.ne[3] = 1;
++    src0_row.nb[3] = nb_w;
++    src1_row.ne[2] = 1;
++    src1_row.ne[3] = 1;
++    src1_row.nb[2] = nb11;
++    src1_row.nb[3] = nb11;
++    dst_row.ne[2] = 1;
++    dst_row.ne[3] = 1;
++    dst_row.nb[2] = nb1;
++    dst_row.nb[3] = nb1;
++
++    char * gate_w_base = (char *) gate_w->data;
++    char * up_w_base   = (char *) up_w->data;
++
++    for (int64_t i02 = 0; i02 < n_as; i02++) {
++        const int64_t num_src1_rows = expert_row_counts[i02];
++        if (num_src1_rows == 0) {
++            continue;
++        }
++        const int64_t expert_row_offset = expert_row_offsets[i02];
++
++        src1_row.data = src1_contiguous.get() + expert_row_offset * nb11;
++        src1_row.ne[1] = num_src1_rows;
++        src1_row.nb[1] = nb11;
++        src1_row.nb[2] = num_src1_rows * nb11;
++        src1_row.nb[3] = num_src1_rows * nb11;
++
++        // Gate GEMM
++        src0_row.data = gate_w_base + i02 * nb_w;
++        dst_row.data  = gate_contiguous.get() + expert_row_offset * nb1;
++        dst_row.ne[1] = num_src1_rows;
++        dst_row.nb[1] = nb1;
++        dst_row.nb[2] = num_src1_rows * nb1;
++        dst_row.nb[3] = num_src1_rows * nb1;
++        ggml_sycl_mul_mat(ctx, &src0_row, &src1_row, &dst_row);
++
++        // Up GEMM
++        src0_row.data = up_w_base + i02 * nb_w;
++        dst_row.data  = up_contiguous.get() + expert_row_offset * nb1;
++        ggml_sycl_mul_mat(ctx, &src0_row, &src1_row, &dst_row);
++
++        // Swiglu into gate_contiguous slice (overwrite gate values).
++        const int64_t nelt = num_src1_rows * ne0;
++        const float * gd = (const float *) (gate_contiguous.get() + expert_row_offset * nb1);
++        const float * ud = (const float *) (up_contiguous.get() + expert_row_offset * nb1);
++        float *       dd = (float *) (gate_contiguous.get() + expert_row_offset * nb1);
++        constexpr int BS = 256;
++        const int nblocks = (int) ((nelt + BS - 1) / BS);
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++            [=](sycl::nd_item<1> item) {
++                moe_dual_swiglu_contiguous(gd, ud, dd, nelt, item);
++            });
++    }
++
++    // Scatter swiglu (in gate_contiguous) → glu layout [ne0, k, T]
++    {
++        const unsigned int max_wg = ggml_sycl_info().max_work_group_sizes[ctx.device];
++        sycl::range<3> block_dims(1, 1, std::min((unsigned int) ne0, max_wg));
++        sycl::range<3> grid_dims(1, 1, n_routed_rows);
++        const char * cont = gate_contiguous.get();
++        mmid_row_mapping * map_d = dev_row_mapping.get();
++        stream->submit([&](sycl::handler & cgh) {
++            cgh.parallel_for(
++                sycl::nd_range<3>(grid_dims * block_dims, block_dims),
++                [=](sycl::nd_item<3> item_ct1) {
++                    k_copy_dst_from_contiguous(glu_original, cont, map_d, ne0, nb1, nb2, item_ct1);
++                });
++        });
++    }
++
++    {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-moe-dual] multi-token expert-batched dual GEMM "
++                    "n_tokens=%" PRId64 " k=%" PRId64 " n_experts=%" PRId64 "\n",
++                    ne12, n_ids, n_as);
++        }
++    }
++    return true;
++}
++
++
++static void ggml_sycl_mul_mat_id(ggml_backend_sycl_context & ctx,
++                                 ggml_tensor *dst) try {
++    scope_op_debug_print scope_dbg_print(__func__, dst, /*num_src=*/3);
++    const ggml_tensor *src0 = dst->src[0];
++    const ggml_tensor *src1 = dst->src[1];
++    GGML_ASSERT(!ggml_backend_buffer_is_sycl_split(src0->buffer) && "mul_mat_id does not support split buffers");
++
++    const ggml_tensor *ids = dst->src[2];
++    GGML_TENSOR_BINARY_OP_LOCALS
++
++    const queue_ptr stream = ctx.stream();
++
++    const int64_t n_as = ne02;
++    const int64_t n_ids = ids->ne[0];
++
++    // Device-routed fused path (decode always; multi-token if ENABLE_MMID_FUSED_BATCH=1).
++    if (ggml_sycl_mul_mat_id_mmvq_fused(ctx, src0, src1, ids, dst)) {
++        return;
++    }
++
++    // Multi-token device counting-sort: skip full ids D2H (mapping built on GPU).
++    const bool multi_device_sort =
++        ne12 > 1 && ggml_sycl_mmid_device_sort_enabled() && ids->nb[0] == sizeof(int32_t);
++
++    std::vector<char> ids_host;
++    if (!multi_device_sort) {
++        ids_host.resize(ggml_nbytes(ids));
++        const char * ids_dev = (const char *) ids->data;
++        SYCL_CHECK(CHECK_TRY_ERROR(
++            stream->memcpy(ids_host.data(), ids_dev, ggml_nbytes(ids))));
++        // also ensures ctx.mmid_row_mapping_host is drained before we use it again
++        SYCL_CHECK(CHECK_TRY_ERROR(stream->wait()));
++    }
++
++    ggml_tensor src0_row = *src0;
++    ggml_tensor src1_row = *src1;
++    ggml_tensor dst_row = *dst;
++
++    char *src0_original = (char *)src0->data;
++    char *src1_original = (char *)src1->data;
++    char *dst_original = (char *)dst->data;
++
++    src0_row.ne[2] = 1;
++    src0_row.ne[3] = 1;
++    src0_row.nb[3] = nb02;
++
++    src1_row.ne[1] = 1;
++    src1_row.ne[2] = 1;
+     src1_row.ne[3] = 1;
+     src1_row.nb[2] = nb11;
+     src1_row.nb[3] = nb11;
+@@ -4710,15 +6066,82 @@ static void ggml_sycl_mul_mat_id(ggml_backend_sycl_context & ctx,
+         std::vector<int64_t> expert_row_counts;
+         // where each expert's slice starts and the previous ends (row indices, right-exclusive)
+         std::vector<int64_t> expert_row_offsets;
+-        // the sources (slot/token pairs) of contiguous rows to guide k_copy_src1_to_contiguous
+-        std::vector<mmid_row_mapping> & routed_row_src = ctx.mmid_row_mapping_host;
++        ggml_sycl_pool_alloc<mmid_row_mapping> dev_row_mapping(ctx.pool(), n_routed_rows);
+ 
+-        mmid_counting_sort_rows(ids, ids_host.data(), n_ids, n_as, n_routed_rows,
+-                                expert_row_counts, expert_row_offsets, routed_row_src);
++        const bool use_device_sort =
++            ggml_sycl_mmid_device_sort_enabled() && ids->nb[0] == sizeof(int32_t);
++
++        // Event-only counts sync (not stream->wait): pack can overlap host offset build.
++        // Order: hist → scan → fill → D2H(event) → pack → event.wait → offsets → GEMMs.
++        // Full stream->wait after pack regressed pp ~20 t/s (host bubble before GEMMs).
++        // Note: host_pool pinned counts + compact-active list measured ~flat/slightly worse
++        // (2026-07-30, +8.99% vs event+vector +9.04%); keep pageable vector D2H.
++        std::vector<int> host_counts_device;
++        sycl::event      counts_ready_ev;
++        bool             device_sort_active = false;
++        ggml_sycl_pool_alloc<int> dev_counts;
++        ggml_sycl_pool_alloc<int> dev_next;
++
++        if (use_device_sort) {
++            // Device histogram + exclusive prefix-sum → next[] + fill mapping.
++            // Drops full-ids D2H and H2D of offsets (prior path: host scan + H2D next).
++            const int n_tokens_i = (int) ids->ne[1];
++            const int n_ids_i    = (int) n_ids;
++            const int n_as_i     = (int) n_as;
++            const int ids_stride = (int) (ids->nb[1] / sizeof(int32_t));
++            const int32_t * ids_d = (const int32_t *) ids->data;
++
++            dev_counts.alloc(ctx.pool(), n_as);
++            dev_next.alloc(ctx.pool(), n_as);
++            SYCL_CHECK(CHECK_TRY_ERROR(stream->memset(dev_counts.get(), 0, sizeof(int) * n_as)));
++
++            constexpr int BS = 256;
++            const int total  = n_ids_i * n_tokens_i;
++            const int nblocks = (total + BS - 1) / BS;
++            int * counts_d = dev_counts.get();
++            int * next_d   = dev_next.get();
++            stream->parallel_for(
++                sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++                [=](sycl::nd_item<1> item) {
++                    mmid_device_count_experts(ids_d, counts_d, n_ids_i, n_tokens_i, ids_stride, n_as_i, item);
++                });
+ 
+-        ggml_sycl_pool_alloc<mmid_row_mapping> dev_row_mapping(ctx.pool(), n_routed_rows);
+-        SYCL_CHECK(CHECK_TRY_ERROR(
+-                stream->memcpy(dev_row_mapping.get(), routed_row_src.data(), n_routed_rows*sizeof(mmid_row_mapping))));
++            // next[i] = exclusive_scan(counts) on device (no H2D offsets).
++            stream->parallel_for(
++                sycl::nd_range<1>(sycl::range<1>(1), sycl::range<1>(1)),
++                [=](sycl::nd_item<1> item) {
++                    mmid_device_exclusive_scan(counts_d, next_d, n_as_i, item);
++                });
++
++            mmid_row_mapping * map_d = dev_row_mapping.get();
++            stream->parallel_for(
++                sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++                [=](sycl::nd_item<1> item) {
++                    mmid_device_fill_mapping(ids_d, next_d, map_d, n_ids_i, n_tokens_i, ids_stride, n_as_i, item);
++                });
++
++            // D2H after fill; pack enqueues next; event.wait covers hist..D2H only (not pack).
++            host_counts_device.resize(n_as);
++            counts_ready_ev = stream->memcpy(host_counts_device.data(), counts_d, sizeof(int) * n_as);
++            device_sort_active = true;
++
++            {
++                static std::atomic<int> once{0};
++                if (once.fetch_add(1) == 0) {
++                    fprintf(stderr,
++                            "[lx-control-mmid] device counting-sort+prefix+ev n_tokens=%d k=%d n_experts=%d\n",
++                            n_tokens_i, n_ids_i, n_as_i);
++                }
++            }
++        } else {
++            // Legacy host counting-sort (ids already D2H'd + waited above).
++            std::vector<mmid_row_mapping> & routed_row_src = ctx.mmid_row_mapping_host;
++            mmid_counting_sort_rows(ids, ids_host.data(), n_ids, n_as, n_routed_rows,
++                                    expert_row_counts, expert_row_offsets, routed_row_src);
++            SYCL_CHECK(CHECK_TRY_ERROR(
++                stream->memcpy(dev_row_mapping.get(), routed_row_src.data(),
++                               n_routed_rows * sizeof(mmid_row_mapping))));
++        }
+ 
+         const unsigned int max_work_group_size = ggml_sycl_info().max_work_group_sizes[ctx.device];
+         assert(max_work_group_size % (WARP_SIZE * WARP_SIZE) == 0);
+@@ -4744,6 +6167,17 @@ static void ggml_sycl_mul_mat_id(ggml_backend_sycl_context & ctx,
+             });
+         }
+ 
++        if (device_sort_active) {
++            counts_ready_ev.wait();
++            expert_row_counts.assign(n_as, 0);
++            expert_row_offsets.assign(n_as + 1, 0);
++            for (int64_t e = 0; e < n_as; ++e) {
++                expert_row_counts[e] = host_counts_device[e];
++                expert_row_offsets[e + 1] = expert_row_offsets[e] + expert_row_counts[e];
++            }
++            GGML_ASSERT(expert_row_offsets[n_as] == n_routed_rows);
++        }
++
+         for (int64_t i02 = 0; i02 < n_as; i02++) {
+             const int64_t num_src1_rows = expert_row_counts[i02];
+ 
+@@ -4800,6 +6234,735 @@ catch (sycl::exception const &exc) {
+   std::exit(1);
+ }
+ 
++// ---------------------------------------------------------------------------
++// MoE down weighted reduce (Laguna: MUL_MAT_ID → MUL(w) → VIEW×k → ADD×(k-1))
++// Surgical port of treebeard-moe-weighted-reduce / down-reduce idea onto control.
++// Default ON (measured 2026-07-30: +7.4% formal vs pin with dual+hybrid+dense).
++// Kill: GGML_SYCL_DISABLE_MOE_DOWN_WEIGHTED=1  or  ENABLE_MOE_DOWN_WEIGHTED=0
++// ---------------------------------------------------------------------------
++static void ggml_sycl_moe_weighted_reduce(
++    ggml_backend_sycl_context & ctx,
++    const float *               expert_values,
++    const float *               weight_data,
++    float *                     dst_data,
++    int64_t                     n_embd,
++    int64_t                     n_experts_used,
++    int64_t                     n_tokens) {
++    const int64_t total      = n_embd * n_tokens;
++    constexpr int block_size = 256;
++    const int64_t global     = ((total + block_size - 1) / block_size) * block_size;
++    const queue_ptr stream   = ctx.stream();
++    const int64_t k          = n_experts_used;
++
++    stream->submit([&](sycl::handler & cgh) {
++        cgh.parallel_for(
++            sycl::nd_range<1>(sycl::range<1>((size_t) global), sycl::range<1>(block_size)),
++            [=](sycl::nd_item<1> item) {
++                const int64_t out = (int64_t) item.get_global_linear_id();
++                if (out >= total) {
++                    return;
++                }
++                const int64_t token = out / n_embd;
++                const int64_t row   = out - token * n_embd;
++                const float * vals  = expert_values + (token * k) * n_embd + row;
++                const float * wts   = weight_data + token * k;
++                float sum = 0.0f;
++                // Expert order 0..k-1 matches sequential ADD chain.
++                // Laguna k=8 fully unrolled (same volatile MUL-then-ADD as before).
++                if (k == 8) {
++#pragma unroll
++                    for (int expert = 0; expert < 8; ++expert) {
++                        const float value  = vals[expert * n_embd];
++                        const float weight = wts[expert];
++                        volatile float weighted = value * weight;
++                        sum += weighted;
++                    }
++                } else {
++                    for (int64_t expert = 0; expert < k; ++expert) {
++                        const float value  = vals[expert * n_embd];
++                        const float weight = wts[expert];
++                        volatile float weighted = value * weight;
++                        sum += weighted;
++                    }
++                }
++                dst_data[out] = sum;
++            });
++    });
++}
++
++static bool ggml_sycl_tensor_buf_overlap(const ggml_tensor * a, const ggml_tensor * b) {
++    if (!a || !b || !a->data || !b->data) {
++        return false;
++    }
++    const uintptr_t a0 = reinterpret_cast<uintptr_t>(a->data);
++    const uintptr_t b0 = reinterpret_cast<uintptr_t>(b->data);
++    const uintptr_t a1 = a0 + (uintptr_t) ggml_nbytes(a);
++    const uintptr_t b1 = b0 + (uintptr_t) ggml_nbytes(b);
++    return a0 < b1 && b0 < a1;
++}
++
++// Fuse Laguna MoE down tail for serial decode (n_tokens small).
++// Graph: MUL_MAT_ID → MUL(weights) → VIEW×n_experts → ADD×(n_experts-1)
++// Returns following-nodes-to-skip (0 = no fuse).
++
++
++
++// Multi-token dual+down **expert-loop**: one sort+pack of activations, then per expert
++// gate GEMM + up GEMM + swiglu + down GEMM (no glu materialize, no second ids sort).
++// Templates for mul_mat shells are live weight/act tensors (stack-only shells segfaulted).
++// Default ON via fuse. Kill: GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
++// Fallback: if expert-loop fails, compose path (dual fuse + stock mmid + reduce).
++static bool ggml_sycl_mul_mat_id_dual_down_multitoken_expert_loop(
++    ggml_backend_sycl_context & ctx,
++    ggml_tensor * gate, ggml_tensor * up, ggml_tensor * glu,
++    ggml_tensor * down_mmid, const ggml_tensor * weights, ggml_tensor * dst_final) {
++    const ggml_tensor * gate_w = gate->src[0];
++    const ggml_tensor * up_w   = up->src[0];
++    const ggml_tensor * down_w = down_mmid->src[0];
++    const ggml_tensor * src1   = gate->src[1];
++    const ggml_tensor * ids    = gate->src[2];
++
++    if (!gate_w || !up_w || !down_w || !src1 || !ids) {
++        return false;
++    }
++    // Gate/up often Q4_K; down may be Q6_K in Q4_K_M mixes — allow mixed K-quants.
++    auto is_kquant = [](ggml_type t) {
++        return t == GGML_TYPE_Q4_K || t == GGML_TYPE_Q5_K || t == GGML_TYPE_Q6_K;
++    };
++    if (gate_w->type != up_w->type || !is_kquant(gate_w->type) || !is_kquant(down_w->type)) {
++        return false;
++    }
++
++    const int64_t ne10 = src1->ne[0];       // embd
++    const int64_t ne11 = src1->ne[1];
++    const int64_t ne12 = src1->ne[2];       // tokens
++    const int64_t n_ids = ids->ne[0];
++    const int64_t n_as  = gate_w->ne[2];
++    const int64_t n_ff  = gate_w->ne[1];
++    const int64_t n_embd = down_mmid->ne[0];
++    const int64_t n_experts_used = down_mmid->ne[1];
++    const int64_t n_tokens = down_mmid->ne[2];
++    const int64_t n_routed_rows = ne12 * n_ids;
++
++    if (ne12 != n_tokens || n_ids != n_experts_used || ne12 < 2 || ne12 > 2048) {
++        return false;
++    }
++    if (ids->ne[1] != ne12 || ids->nb[0] != sizeof(int32_t)) {
++        return false;
++    }
++    if (ne11 != 1 && ne11 != n_ids) {
++        return false;
++    }
++    if (!ggml_is_contiguous(src1) || ne10 != gate_w->ne[0] || ne10 % QK8_1 != 0) {
++        return false;
++    }
++    if (down_w->ne[0] != n_ff || down_w->ne[1] != n_embd || down_w->ne[2] != n_as) {
++        return false;
++    }
++    if (up_w->ne[1] != n_ff || up_w->ne[2] != n_as) {
++        return false;
++    }
++
++    const queue_ptr stream = ctx.stream();
++    char * src1_original = (char *) src1->data;
++    const size_t nb11 = src1->nb[1];
++    const size_t nb12 = src1->nb[2];
++    const size_t nb_act = sizeof(float) * (size_t) ne10;
++    const size_t nb_ff  = sizeof(float) * (size_t) n_ff;
++    const size_t nb_em  = sizeof(float) * (size_t) n_embd;
++    const size_t nb_wg  = gate_w->nb[2];
++    const size_t nb_wu  = up_w->nb[2];
++    const size_t nb_wd  = down_w->nb[2];
++    GGML_ASSERT(nb11 == nb_act);
++
++    ggml_sycl_pool_alloc<char> src1_contiguous(ctx.pool(), n_routed_rows * nb_act);
++    ggml_sycl_pool_alloc<char> mid_contiguous(ctx.pool(), n_routed_rows * nb_ff);
++    ggml_sycl_pool_alloc<char> up_contiguous(ctx.pool(), n_routed_rows * nb_ff);
++    ggml_sycl_pool_alloc<char> down_contiguous(ctx.pool(), n_routed_rows * nb_em);
++    ggml_sycl_pool_alloc<mmid_row_mapping> dev_row_mapping(ctx.pool(), n_routed_rows);
++
++    // Experts scatter target: real down_mmid or scratch if aliases final dst.
++    const bool mmid_dst_overlap =
++        (down_mmid->data == dst_final->data) ||
++        ((uintptr_t) down_mmid->data < (uintptr_t) dst_final->data + ggml_nbytes(dst_final) &&
++         (uintptr_t) dst_final->data < (uintptr_t) down_mmid->data + ggml_nbytes(down_mmid));
++    std::unique_ptr<ggml_sycl_pool_alloc<float>> expert_scratch;
++    float * experts_base = (float *) down_mmid->data;
++    if (mmid_dst_overlap) {
++        expert_scratch = std::make_unique<ggml_sycl_pool_alloc<float>>(
++            ctx.pool(), (size_t) n_embd * (size_t) n_experts_used * (size_t) n_tokens);
++        experts_base = expert_scratch->get();
++    }
++
++    std::vector<int64_t> expert_row_counts;
++    std::vector<int64_t> expert_row_offsets;
++    std::vector<int> host_counts_device;
++    sycl::event counts_ready_ev;
++    bool device_sort_active = false;
++
++    const bool use_device_sort =
++        ggml_sycl_mmid_device_sort_enabled() && ids->nb[0] == sizeof(int32_t);
++
++    if (use_device_sort) {
++        const int n_tokens_i = (int) ne12;
++        const int n_ids_i    = (int) n_ids;
++        const int n_as_i     = (int) n_as;
++        const int ids_stride = (int) (ids->nb[1] / sizeof(int32_t));
++        const int32_t * ids_d = (const int32_t *) ids->data;
++        ggml_sycl_pool_alloc<int> dev_counts(ctx.pool(), n_as);
++        ggml_sycl_pool_alloc<int> dev_next(ctx.pool(), n_as);
++        SYCL_CHECK(CHECK_TRY_ERROR(stream->memset(dev_counts.get(), 0, sizeof(int) * n_as)));
++        constexpr int BS = 256;
++        const int total   = n_ids_i * n_tokens_i;
++        const int nblocks = (total + BS - 1) / BS;
++        int * counts_d = dev_counts.get();
++        int * next_d   = dev_next.get();
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++            [=](sycl::nd_item<1> item) {
++                mmid_device_count_experts(ids_d, counts_d, n_ids_i, n_tokens_i, ids_stride, n_as_i, item);
++            });
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>(1), sycl::range<1>(1)),
++            [=](sycl::nd_item<1> item) {
++                mmid_device_exclusive_scan(counts_d, next_d, n_as_i, item);
++            });
++        mmid_row_mapping * map_d = dev_row_mapping.get();
++        stream->parallel_for(
++            sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++            [=](sycl::nd_item<1> item) {
++                mmid_device_fill_mapping(ids_d, next_d, map_d, n_ids_i, n_tokens_i, ids_stride, n_as_i, item);
++            });
++        host_counts_device.resize(n_as);
++        counts_ready_ev = stream->memcpy(host_counts_device.data(), counts_d, sizeof(int) * n_as);
++        device_sort_active = true;
++    } else {
++        std::vector<char> ids_host(ggml_nbytes(ids));
++        SYCL_CHECK(CHECK_TRY_ERROR(
++            stream->memcpy(ids_host.data(), ids->data, ggml_nbytes(ids))));
++        SYCL_CHECK(CHECK_TRY_ERROR(stream->wait()));
++        std::vector<mmid_row_mapping> & routed_row_src = ctx.mmid_row_mapping_host;
++        mmid_counting_sort_rows(ids, ids_host.data(), n_ids, n_as, n_routed_rows,
++                                expert_row_counts, expert_row_offsets, routed_row_src);
++        SYCL_CHECK(CHECK_TRY_ERROR(
++            stream->memcpy(dev_row_mapping.get(), routed_row_src.data(),
++                           n_routed_rows * sizeof(mmid_row_mapping))));
++    }
++
++    // Pack activations once.
++    {
++        const unsigned int max_wg = ggml_sycl_info().max_work_group_sizes[ctx.device];
++        sycl::range<3> block_dims(1, 1, std::min((unsigned int) ne10, max_wg));
++        sycl::range<3> grid_dims(1, 1, n_routed_rows);
++        char * src1_contig = src1_contiguous.get();
++        mmid_row_mapping * map_d = dev_row_mapping.get();
++        stream->submit([&](sycl::handler & cgh) {
++            cgh.parallel_for(
++                sycl::nd_range<3>(grid_dims * block_dims, block_dims),
++                [=](sycl::nd_item<3> item_ct1) {
++                    k_copy_src1_to_contiguous(
++                        src1_original, src1_contig, map_d,
++                        ne11, ne10, nb11, nb12, item_ct1);
++                });
++        });
++    }
++
++    if (device_sort_active) {
++        counts_ready_ev.wait();
++        expert_row_counts.assign(n_as, 0);
++        expert_row_offsets.assign(n_as + 1, 0);
++        for (int64_t e = 0; e < n_as; ++e) {
++            expert_row_counts[e] = host_counts_device[e];
++            expert_row_offsets[e + 1] = expert_row_offsets[e] + expert_row_counts[e];
++        }
++        GGML_ASSERT(expert_row_offsets[n_as] == n_routed_rows);
++    }
++
++    // Shells templated from live tensors (preserve type/extra/buffer metadata).
++    ggml_tensor src0_row = *gate_w;
++    ggml_tensor src1_row = *src1;
++    ggml_tensor dst_mid  = *glu;       // F32 template for mid/swiglu
++    ggml_tensor dst_down = *down_mmid; // F32 template for down rows
++    src0_row.ne[2] = 1;
++    src0_row.ne[3] = 1;
++    src1_row.ne[2] = 1;
++    src1_row.ne[3] = 1;
++    dst_mid.ne[2]  = 1;
++    dst_mid.ne[3]  = 1;
++    dst_down.ne[2] = 1;
++    dst_down.ne[3] = 1;
++
++    char * gate_w_base = (char *) gate_w->data;
++    char * up_w_base   = (char *) up_w->data;
++    char * down_w_base = (char *) down_w->data;
++
++    for (int64_t i02 = 0; i02 < n_as; i02++) {
++        const int64_t num_src1_rows = expert_row_counts[i02];
++        if (num_src1_rows == 0) {
++            continue;
++        }
++        const int64_t expert_row_offset = expert_row_offsets[i02];
++
++        // Packed act [embd, N]
++        src1_row.data  = src1_contiguous.get() + expert_row_offset * nb_act;
++        src1_row.ne[0] = ne10;
++        src1_row.ne[1] = num_src1_rows;
++        src1_row.nb[0] = sizeof(float);
++        src1_row.nb[1] = nb_act;
++        src1_row.nb[2] = num_src1_rows * nb_act;
++        src1_row.nb[3] = num_src1_rows * nb_act;
++
++        // Gate: [ff, embd] @ [embd, N] -> [ff, N]
++        src0_row = *gate_w;
++        src0_row.ne[2] = 1;
++        src0_row.ne[3] = 1;
++        src0_row.data  = gate_w_base + i02 * nb_wg;
++        dst_mid.ne[0]  = n_ff;
++        dst_mid.ne[1]  = num_src1_rows;
++        dst_mid.nb[0]  = sizeof(float);
++        dst_mid.nb[1]  = nb_ff;
++        dst_mid.nb[2]  = num_src1_rows * nb_ff;
++        dst_mid.nb[3]  = num_src1_rows * nb_ff;
++        dst_mid.data   = mid_contiguous.get() + expert_row_offset * nb_ff;
++        ggml_sycl_mul_mat(ctx, &src0_row, &src1_row, &dst_mid);
++
++        // Up GEMM into up buffer
++        src0_row = *up_w;
++        src0_row.ne[2] = 1;
++        src0_row.ne[3] = 1;
++        src0_row.data  = up_w_base + i02 * nb_wu;
++        dst_mid.data   = up_contiguous.get() + expert_row_offset * nb_ff;
++        ggml_sycl_mul_mat(ctx, &src0_row, &src1_row, &dst_mid);
++
++        // Swiglu: mid = silu(gate)*up (overwrite mid_contiguous)
++        {
++            const int64_t nelt = num_src1_rows * n_ff;
++            const float * gd = (const float *) (mid_contiguous.get() + expert_row_offset * nb_ff);
++            // gate was overwritten by second mul into up_contiguous — restore gate from first write.
++            // Fix: gate result is still in mid until we overwrote... wait we wrote gate to mid,
++            // then up to up_contiguous. mid still has gate. Good.
++            const float * ud = (const float *) (up_contiguous.get() + expert_row_offset * nb_ff);
++            float *       dd = (float *) (mid_contiguous.get() + expert_row_offset * nb_ff);
++            constexpr int BS = 256;
++            const int nblocks = (int) ((nelt + BS - 1) / BS);
++            stream->parallel_for(
++                sycl::nd_range<1>(sycl::range<1>((size_t) nblocks * BS), sycl::range<1>(BS)),
++                [=](sycl::nd_item<1> item) {
++                    moe_dual_swiglu_contiguous(gd, ud, dd, nelt, item);
++                });
++        }
++
++        // Down: [embd, ff] @ [ff, N] -> [embd, N]
++        src0_row = *down_w;
++        src0_row.ne[2] = 1;
++        src0_row.ne[3] = 1;
++        src0_row.data  = down_w_base + i02 * nb_wd;
++        src1_row.data  = mid_contiguous.get() + expert_row_offset * nb_ff;
++        src1_row.ne[0] = n_ff;
++        src1_row.ne[1] = num_src1_rows;
++        src1_row.nb[0] = sizeof(float);
++        src1_row.nb[1] = nb_ff;
++        src1_row.nb[2] = num_src1_rows * nb_ff;
++        src1_row.nb[3] = num_src1_rows * nb_ff;
++        dst_down.ne[0] = n_embd;
++        dst_down.ne[1] = num_src1_rows;
++        dst_down.nb[0] = sizeof(float);
++        dst_down.nb[1] = nb_em;
++        dst_down.nb[2] = num_src1_rows * nb_em;
++        dst_down.nb[3] = num_src1_rows * nb_em;
++        dst_down.data  = down_contiguous.get() + expert_row_offset * nb_em;
++        ggml_sycl_mul_mat(ctx, &src0_row, &src1_row, &dst_down);
++    }
++
++    // Scatter expert-batch down → [embd, k, T]
++    {
++        const unsigned int max_wg = ggml_sycl_info().max_work_group_sizes[ctx.device];
++        sycl::range<3> block_dims(1, 1, std::min((unsigned int) n_embd, max_wg));
++        sycl::range<3> grid_dims(1, 1, n_routed_rows);
++        char * dst_orig = (char *) experts_base;
++        const char * cont = down_contiguous.get();
++        mmid_row_mapping * map_d = dev_row_mapping.get();
++        const size_t nb1_sc = nb_em;
++        const size_t nb2_sc = nb_em * (size_t) n_experts_used;
++        stream->submit([&](sycl::handler & cgh) {
++            cgh.parallel_for(
++                sycl::nd_range<3>(grid_dims * block_dims, block_dims),
++                [=](sycl::nd_item<3> item_ct1) {
++                    k_copy_dst_from_contiguous(dst_orig, cont, map_d, n_embd, nb1_sc, nb2_sc, item_ct1);
++                });
++        });
++    }
++
++    const float * weight_ptr = (const float *) weights->data;
++    std::unique_ptr<ggml_sycl_pool_alloc<float>> weight_scratch;
++    const bool weights_dst_overlap =
++        ((uintptr_t) weights->data < (uintptr_t) dst_final->data + ggml_nbytes(dst_final) &&
++         (uintptr_t) dst_final->data < (uintptr_t) weights->data + ggml_nbytes(weights));
++    if (weights_dst_overlap) {
++        const size_t w_nelt = (size_t) n_experts_used * (size_t) n_tokens;
++        weight_scratch = std::make_unique<ggml_sycl_pool_alloc<float>>(ctx.pool(), w_nelt);
++        ctx.stream()->memcpy(weight_scratch->get(), weights->data, w_nelt * sizeof(float));
++        weight_ptr = weight_scratch->get();
++    }
++
++    ggml_sycl_moe_weighted_reduce(
++        ctx, experts_base, weight_ptr, (float *) dst_final->data,
++        n_embd, n_experts_used, n_tokens);
++
++    {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-moe-dual] multi-token dual+down EXPERT-LOOP "
++                    "n_tokens=%" PRId64 " k=%" PRId64 " n_experts=%" PRId64 "\n",
++                    n_tokens, n_experts_used, n_as);
++        }
++    }
++    return true;
++}
++
++// Entry: try expert-loop; fall back to compose (dual fuse + stock mmid + reduce).
++static bool ggml_sycl_mul_mat_id_dual_down_multitoken(
++    ggml_backend_sycl_context & ctx,
++    ggml_tensor * gate, ggml_tensor * up, ggml_tensor * glu,
++    ggml_tensor * down_mmid, const ggml_tensor * weights, ggml_tensor * dst_final) {
++    if (!gate || !up || !glu || !down_mmid || !weights || !dst_final) {
++        return false;
++    }
++    if (!glu->data || !down_mmid->data || !weights->data || !dst_final->data) {
++        return false;
++    }
++    // Prefer expert-loop (skip glu write + second sort). Env: DISABLE_MOE_DUAL_DOWN_EXPERT_LOOP=1
++    static const bool enable_eloop = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_MOE_DUAL_DOWN_EXPERT_LOOP");
++        return !(dis != nullptr && std::atoi(dis) != 0);
++    }();
++    if (enable_eloop &&
++        ggml_sycl_mul_mat_id_dual_down_multitoken_expert_loop(
++            ctx, gate, up, glu, down_mmid, weights, dst_final)) {
++        return true;
++    }
++    // Compose fallback (graph tensors).
++    if (!ggml_sycl_mul_mat_id_dual_swiglu_fused(ctx, gate, up, glu)) {
++        return false;
++    }
++    ggml_sycl_mul_mat_id(ctx, down_mmid);
++    const int64_t n_embd         = down_mmid->ne[0];
++    const int64_t n_experts_used = down_mmid->ne[1];
++    const int64_t n_tokens       = down_mmid->ne[2];
++    const bool mmid_dst_overlap =
++        (down_mmid->data == dst_final->data) ||
++        ((uintptr_t) down_mmid->data < (uintptr_t) dst_final->data + ggml_nbytes(dst_final) &&
++         (uintptr_t) dst_final->data < (uintptr_t) down_mmid->data + ggml_nbytes(down_mmid));
++    const bool weights_dst_overlap =
++        ((uintptr_t) weights->data < (uintptr_t) dst_final->data + ggml_nbytes(dst_final) &&
++         (uintptr_t) dst_final->data < (uintptr_t) weights->data + ggml_nbytes(weights));
++    const float * weight_ptr = (const float *) weights->data;
++    std::unique_ptr<ggml_sycl_pool_alloc<float>> expert_scratch;
++    std::unique_ptr<ggml_sycl_pool_alloc<float>> weight_scratch;
++    const float * expert_ptr = (const float *) down_mmid->data;
++    if (mmid_dst_overlap) {
++        const size_t nelt = (size_t) n_embd * (size_t) n_experts_used * (size_t) n_tokens;
++        expert_scratch = std::make_unique<ggml_sycl_pool_alloc<float>>(ctx.pool(), nelt);
++        ctx.stream()->memcpy(expert_scratch->get(), down_mmid->data, nelt * sizeof(float));
++        expert_ptr = expert_scratch->get();
++    }
++    if (weights_dst_overlap) {
++        const size_t w_nelt = (size_t) n_experts_used * (size_t) n_tokens;
++        weight_scratch = std::make_unique<ggml_sycl_pool_alloc<float>>(ctx.pool(), w_nelt);
++        ctx.stream()->memcpy(weight_scratch->get(), weights->data, w_nelt * sizeof(float));
++        weight_ptr = weight_scratch->get();
++    }
++    ggml_sycl_moe_weighted_reduce(
++        ctx, expert_ptr, weight_ptr, (float *) dst_final->data,
++        n_embd, n_experts_used, n_tokens);
++    {
++        static std::atomic<int> once{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-moe-dual] multi-token dual+down (compose fallback) "
++                    "n_tokens=%" PRId64 " k=%" PRId64 "\n",
++                    n_tokens, n_experts_used);
++        }
++    }
++    return true;
++}
++
++int ggml_sycl_fuse_moe_down_weighted(
++    ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i) {
++    static const bool enabled = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_MOE_DOWN_WEIGHTED");
++        if (dis != nullptr && std::atoi(dis) != 0) {
++            return false;
++        }
++        const char * env = getenv("GGML_SYCL_ENABLE_MOE_DOWN_WEIGHTED");
++        // Default ON when unset; explicit 0 disables.
++        if (env == nullptr) {
++            return true;
++        }
++        return std::atoi(env) != 0;
++    }();
++    if (!enabled) {
++        return 0;
++    }
++
++    ggml_tensor * mmid = cgraph->nodes[i];
++    if (mmid->op != GGML_OP_MUL_MAT_ID || i + 2 >= cgraph->n_nodes) {
++        return 0;
++    }
++    ggml_tensor * mul = cgraph->nodes[i + 1];
++    if (mul->op != GGML_OP_MUL ||
++        (mul->src[0] != mmid && mul->src[1] != mmid)) {
++        return 0;
++    }
++    const ggml_tensor * weights = mul->src[0] == mmid ? mul->src[1] : mul->src[0];
++
++    const int64_t n_embd         = mmid->ne[0];
++    const int64_t n_experts_used = mmid->ne[1];
++    const int64_t n_tokens       = mmid->ne[2];
++
++    // Laguna serial: k=8, n_embd=2048. Two-step weighted reduce is golden-safe for
++    // prefill (same MUL-then-ADD order as VIEW+ADD chain). Cap matches serial ubatch.
++    // Integrated one-kernel path stays decode-only (n_tokens==1) below.
++    if (mmid->type != GGML_TYPE_F32 || mul->type != GGML_TYPE_F32 ||
++        weights == nullptr || weights->type != GGML_TYPE_F32 ||
++        !ggml_are_same_shape(mmid, mul) || mmid->ne[3] != 1 ||
++        weights->ne[0] != 1 || weights->ne[1] != n_experts_used ||
++        weights->ne[2] != n_tokens || weights->ne[3] != 1 ||
++        !ggml_is_contiguous(mmid) || !ggml_is_contiguous(weights) ||
++        n_experts_used < 2 || n_experts_used > 16 ||
++        n_tokens < 1 || n_tokens > 2048 || n_embd < 1) {
++        return 0;
++    }
++
++    // Build expected op list: MMID, MUL, VIEW×k, ADD×(k-1)
++    const int n_views = (int) n_experts_used;
++    const int n_adds  = (int) n_experts_used - 1;
++    const int n_ops   = 2 + n_views + n_adds;
++    if (i + n_ops > cgraph->n_nodes) {
++        return 0;
++    }
++
++    std::vector<ggml_op> ops;
++    ops.reserve((size_t) n_ops);
++    ops.push_back(GGML_OP_MUL_MAT_ID);
++    ops.push_back(GGML_OP_MUL);
++    for (int v = 0; v < n_views; ++v) {
++        ops.push_back(GGML_OP_VIEW);
++    }
++    for (int a = 0; a < n_adds; ++a) {
++        ops.push_back(GGML_OP_ADD);
++    }
++    const int output = i + n_ops - 1;
++    if (!ggml_can_fuse_subgraph(cgraph, i, n_ops, ops.data(), &output, 1)) {
++        return 0;
++    }
++
++    // Validate view/add wiring: views of mul (or mmid if weights applied in reduce).
++    // After expand, views source the weighted experts tensor (mul).
++    for (int v = 0; v < n_views; ++v) {
++        ggml_tensor * view = cgraph->nodes[i + 2 + v];
++        if (view->op != GGML_OP_VIEW || view->src[0] != mul) {
++            return 0;
++        }
++        // view_2d(experts, n_embd, n_tokens, nb2, v*nb1)
++        if (view->ne[0] != n_embd || view->ne[1] != n_tokens) {
++            return 0;
++        }
++    }
++    // First ADD: view0 + view1; subsequent: prev_add + view[i+1]
++    ggml_tensor * prev = cgraph->nodes[i + 2];  // view0
++    for (int a = 0; a < n_adds; ++a) {
++        ggml_tensor * add = cgraph->nodes[i + 2 + n_views + a];
++        ggml_tensor * v1  = cgraph->nodes[i + 2 + a + 1];  // next view
++        if (add->op != GGML_OP_ADD) {
++            return 0;
++        }
++        const bool ok = (add->src[0] == prev && add->src[1] == v1) ||
++                        (add->src[1] == prev && add->src[0] == v1);
++        if (!ok) {
++            return 0;
++        }
++        prev = add;
++    }
++    ggml_tensor * dst = cgraph->nodes[output];
++    if (dst->type != GGML_TYPE_F32 || !ggml_is_contiguous(dst) ||
++        dst->ne[0] != n_embd || dst->ne[1] != n_tokens) {
++        return 0;
++    }
++
++    // Prefill product allocator often aliases mmid/mul/weights with final dst.
++    // Two-step path uses pool scratch (experts and/or a tiny weights copy).
++    const bool mmid_dst_overlap =
++        ggml_sycl_tensor_buf_overlap(mmid, dst) ||
++        ggml_sycl_tensor_buf_overlap(mul, dst);
++    const bool weights_dst_overlap = ggml_sycl_tensor_buf_overlap(weights, dst);
++
++    // Integrated weighted MMVQ for **decode only** (n_tokens==1). Default ON.
++    // Root cause of prior golden FAIL: applying fused reorder on prefill ne12>1 while tip
++    // uses host counting-sort mul_mat_id for multi-token — not the one-kernel math itself.
++    // Kill: GGML_SYCL_DISABLE_MOE_DOWN_INTEGRATED=1  or  ENABLE_MOE_DOWN_INTEGRATED=0
++    // Oracle two-step GEMV+reduce (same as tip): GGML_SYCL_MOE_DOWN_INTEGRATED_MODE=1
++    static const bool enable_integrated = []() {
++        const char * dis = getenv("GGML_SYCL_DISABLE_MOE_DOWN_INTEGRATED");
++        if (dis != nullptr && std::atoi(dis) != 0) {
++            return false;
++        }
++        const char * env = getenv("GGML_SYCL_ENABLE_MOE_DOWN_INTEGRATED");
++        // Default ON when unset; explicit 0 disables.
++        if (env == nullptr) {
++            return true;
++        }
++        return std::atoi(env) != 0;
++    }();
++
++    const ggml_tensor * src0 = mmid->src[0];
++    const ggml_tensor * src1 = mmid->src[1];
++    const ggml_tensor * ids  = mmid->src[2];
++    const int64_t ne10 = src1->ne[0];
++    const int64_t ne11 = src1->ne[1];
++    const int64_t ne12 = src1->ne[2];
++
++    bool integrated = false;
++    const char * integrated_kind = "integrated weighted-mmvq";
++    // Integrated needs distinct scratch vs dst and live weights (no weight/dst alias).
++    if (enable_integrated && !mmid_dst_overlap && !weights_dst_overlap &&
++        n_tokens == 1 && ne12 == 1 &&
++        ne11 == n_experts_used &&
++        ne10 == src0->ne[0] && ne10 % QK8_1 == 0 &&
++        src1->type == GGML_TYPE_F32 && ggml_is_contiguous(src1) &&
++        ids->ne[0] == n_experts_used && ids->ne[1] == n_tokens &&
++        ids->nb[0] == sizeof(int32_t) &&
++        n_embd == src0->ne[1] &&
++        (src0->type == GGML_TYPE_Q4_K || src0->type == GGML_TYPE_Q5_K ||
++         src0->type == GGML_TYPE_Q6_K)) {
++        static const int imode = []() {
++            const char * e = getenv("GGML_SYCL_MOE_DOWN_INTEGRATED_MODE");
++            return e ? std::atoi(e) : 0;  // 0 = one-kernel tip
++        }();
++        opt_for_reorder_id(&ctx, src0);
++        const ggml_tensor_extra_gpu * extra =
++            static_cast<const ggml_tensor_extra_gpu *>(src0->extra);
++        if (extra && extra->optimized_feature.reorder) {
++            const queue_ptr stream = ctx.stream();
++            const int src1_padded_cols = GGML_PAD((int) ne10, MATRIX_ROW_PADDING);
++            ggml_sycl_pool_alloc<char> src1_q8_alloc(
++                ctx.pool(),
++                (size_t) ne11 * ne12 * src1_padded_cols * sizeof(block_q8_1) / QK8_1);
++            char * src1_ddq = src1_q8_alloc.get();
++            quantize_row_q8_1_sycl<quantize_and_reorder_q8_1_soa>(
++                (const float *) src1->data, src1_ddq, (int) ne10, (int) (ne11 * ne12),
++                src1_padded_cols, stream);
++
++            const size_t bytes_per_qrow    = (size_t) src1_padded_cols * sizeof(block_q8_1) / QK8_1;
++            const size_t src1_row_stride   = bytes_per_qrow;
++            const size_t src1_token_stride = (size_t) ne11 * bytes_per_qrow;
++            const int    ids_row_stride    = (int) (ids->nb[1] / sizeof(int32_t));
++            const size_t weights_tok_stride = (size_t) n_experts_used;
++            const size_t dst_tok_stride     = dst->nb[1];  // [n_embd, n_tokens]
++
++            if (imode == 1) {
++                // Oracle: same launch as mul_mat_id_mmvq_fused (ne12 tokens, per-token grid)
++                // then stock weighted reduce — should match two-step tip.
++                bool ok = true;
++                for (int64_t t = 0; t < ne12 && ok; ++t) {
++                    const int32_t * ids_t = (const int32_t *) ids->data + t * ids_row_stride;
++                    const char *    vy_t  = src1_ddq + t * src1_token_stride;
++                    float *         dst_t =
++                        (float *) ((char *) mmid->data + t * (size_t) n_experts_used * (size_t) n_embd * sizeof(float));
++                    ok = ggml_sycl_mul_mat_vec_q_id_reorder(
++                        src0->type, src0->data, vy_t, ids_t, dst_t, (int) ne10, (int) n_embd,
++                        (int) n_experts_used, src0->nb[2], mmid->nb[1], src1_row_stride,
++                        /*n_tokens=*/1, /*ids_row_stride=*/(int) n_experts_used,
++                        /*src1_token_stride=*/0, /*dst_token_stride=*/0, stream);
++                }
++                if (ok) {
++                    ggml_sycl_moe_weighted_reduce(
++                        ctx, static_cast<const float *>(mmid->data),
++                        static_cast<const float *>(weights->data),
++                        static_cast<float *>(dst->data),
++                        n_embd, n_experts_used, n_tokens);
++                    integrated     = true;
++                    integrated_kind = "direct reorder+reduce oracle";
++                }
++            } else {
++                integrated = ggml_sycl_mul_mat_vec_q_id_weighted_reorder(
++                    src0->type, src0->data, src1_ddq, (const int32_t *) ids->data,
++                    (const float *) weights->data,
++                    /*scratch_mmid=*/(float *) mmid->data,
++                    /*dst=*/(float *) dst->data,
++                    (int) ne10, (int) n_embd, (int) n_experts_used,
++                    src0->nb[2], src1_row_stride, (int) n_tokens, ids_row_stride,
++                    src1_token_stride, weights_tok_stride, dst_tok_stride, stream);
++                integrated_kind = "integrated weighted-mmvq";
++            }
++        }
++    }
++
++    if (!integrated) {
++        // Two-step: mul_mat_id into expert buffer + weighted reduce → dst.
++        // Prefill often aliases mmid/mul/weights with dst; scratch as needed.
++        void * saved_mmid = mmid->data;
++        std::unique_ptr<ggml_sycl_pool_alloc<float>> expert_scratch;
++        std::unique_ptr<ggml_sycl_pool_alloc<float>> weight_scratch;
++        if (mmid_dst_overlap) {
++            const size_t expert_nelt =
++                (size_t) n_embd * (size_t) n_experts_used * (size_t) n_tokens;
++            expert_scratch = std::make_unique<ggml_sycl_pool_alloc<float>>(
++                ctx.pool(), expert_nelt);
++            mmid->data = expert_scratch->get();
++        }
++        const float * weight_ptr = static_cast<const float *>(weights->data);
++        if (weights_dst_overlap) {
++            // weights is [1, k, n_tokens] contiguous — tiny vs experts.
++            const size_t w_nelt = (size_t) n_experts_used * (size_t) n_tokens;
++            weight_scratch = std::make_unique<ggml_sycl_pool_alloc<float>>(
++                ctx.pool(), w_nelt);
++            // Copy before dst is written (and before mmid may clobber if triple-alias).
++            // Do this *before* mul_mat_id when weights might share storage with mmid.
++            ctx.stream()->memcpy(weight_scratch->get(), weights->data,
++                                 w_nelt * sizeof(float));
++            weight_ptr = weight_scratch->get();
++        }
++        {
++            static std::atomic<int> once_sc{0};
++            if ((mmid_dst_overlap || weights_dst_overlap) &&
++                once_sc.fetch_add(1) == 0) {
++                fprintf(stderr,
++                        "[lx-control-moe-down] two-step scratch "
++                        "experts=%d weights=%d tokens=%" PRId64 "\n",
++                        (int) mmid_dst_overlap, (int) weights_dst_overlap,
++                        n_tokens);
++            }
++        }
++        ggml_sycl_mul_mat_id(ctx, mmid);
++        ggml_sycl_moe_weighted_reduce(
++            ctx, static_cast<const float *>(mmid->data), weight_ptr,
++            static_cast<float *>(dst->data),
++            n_embd, n_experts_used, n_tokens);
++        mmid->data = saved_mmid;
++    }
++
++    {
++        static std::atomic<int> once{0};
++        static std::atomic<int> once_mt{0};
++        if (once.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-moe-down] fuse hit (%s) embd=%" PRId64
++                    " k=%" PRId64 " tokens=%" PRId64 "\n",
++                    integrated ? integrated_kind : "weighted reduce",
++                    n_embd, n_experts_used, n_tokens);
++        }
++        if (n_tokens > 1 && !integrated && once_mt.fetch_add(1) == 0) {
++            fprintf(stderr,
++                    "[lx-control-moe-down] multi-token two-step weighted reduce "
++                    "embd=%" PRId64 " k=%" PRId64 " tokens=%" PRId64 "\n",
++                    n_embd, n_experts_used, n_tokens);
++        }
++    }
++    return n_ops - 1;
++}
++
+ static void ggml_sycl_scale(ggml_backend_sycl_context & ctx, ggml_tensor * dst) {
+     scope_op_debug_print scope_dbg_print(__func__, dst, /*num_src=*/1);
+     ggml_sycl_op_scale(ctx, dst);
+@@ -4892,7 +7055,8 @@ catch (sycl::exception const &exc) {
+   std::exit(1);
+ }
+ 
+-static bool ggml_sycl_compute_forward(ggml_backend_sycl_context & ctx, struct ggml_tensor * dst) try {
++// Non-static so topk-moe hybrid can re-dispatch stock ops (bitexact wiring).
++bool ggml_sycl_compute_forward(ggml_backend_sycl_context & ctx, struct ggml_tensor * dst) try {
+     if (!g_sycl_loaded) return false;
+ 
+     if (dst->src[0] != nullptr && ggml_backend_buffer_is_sycl_split(dst->src[0]->buffer)) {
