@@ -3,12 +3,12 @@
 ## LIVE NOW — tip + research track
 
 **Scored tip:** MoE dual + hybrid m1 + dense dual shexp + **moe-down weighted** (all default ON)  
-**Research:** hybrid mode2 gather-norm; multi-token mul_mat_id prefill
+**Research:** multi-token mmid (`ENABLE_MMID_FUSED_BATCH=1`) golden FAIL; hybrid mode2
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **tip + moe-down-weighted** | **1131.7** | **119.2** | **+7.99%** |
-| prior dual+hybrid+dense | 1143.8 | 113.3 | +4.26% |
+| **tip reaffirm (batch off)** | **1136.6** | **119.3** | **+8.15%** |
+| tip + moe-down earlier | 1131.7 | 119.2 | +7.99% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
 - **Golden:** OK
