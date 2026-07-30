@@ -6,12 +6,12 @@
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **tip true top-k+gather** | **3407.5** | **129.7** | **+51.58%** |
+| **tip true top-k+gather** | **3412.8** | **129.9** | **+51.81%** |
 | prior true top-k only | 3403.3 | 129.7 | +51.48% |
 | prior dual+down decode | 3422.7 | 128.8 | +50.93% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
-Formal tip: `results/20260730T110313Z/` · `notes/SHIP_20260730_router_true_topk_gather.md` · `patches/0034-*.patch`  
+Formal tip: `results/20260730T110508Z/` · `notes/SHIP_20260730_router_true_topk_gather.md` · `patches/0034-*.patch`  
 Kill: `GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1`
 
 ## NEXT

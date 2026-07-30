@@ -34,7 +34,7 @@
    - Full **vocab=100352 lm_head** every token (~116 MB Q4 traffic) — still open
    - Prefill multi-token dual golden still hard
 9. **LIVE TIP (2026-07-30)** — dual+down decode + hybrid mode8 + **true top-k+gather**
-   - Formal: **pp~3407 / tg~129.7 / +51.58%** vs pin; golden OK
+   - Formal: **pp~3413 / tg~130.0 / +51.81%** vs pin; golden OK
    - Kill: `GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1`
    - See `notes/SHIP_20260730_router_true_topk_gather.md` · `results/MOUNT_DOOM_STATUS.md`
 

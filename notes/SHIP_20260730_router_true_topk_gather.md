@@ -5,10 +5,11 @@
 | arm | pp512 | tg128 | score | golden |
 |-----|------:|------:|------:|:------:|
 | prior true top-k | 3403.3 | 129.7 | +51.48% | OK |
-| **+ gather fuse** | **3407.5** | **129.7** | **+51.58%** | **OK** |
+| gather shape-bug (no fuse) | 3407.5 | 129.7 | +51.58% | OK (noise) |
+| **true top-k+gather (fixed)** | **3412.8** | **129.9** | **+51.81%** | **OK** |
 | baseline pin | 1139 | 107.35 | 0 | — |
 
-Formal tip: `results/20260730T110313Z/`
+Formal tip: `results/20260730T110508Z/`
 
 Hit:
 ```
@@ -22,14 +23,18 @@ Extend hybrid true top-k kernel so selection also writes the **get_rows** buffer
 from unbiased sigmoid probs in the same launch (lane0: `ids[k]=e; gr[k]=probs[e]`).
 
 Skips the separate `router_gather_kernel` launch when true top-k is active
-(default hybrid mode8). Stock argsort fallback still uses standalone gather.
+(default hybrid mode8).
 
-Kill true top-k (+gather): `GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1`
+**Shape fix:** get_rows is `[1,k,n_tokens]` — match `ne[2]==n_rows` and
+`nelements==k*n_rows` (first formal used `ggml_nrows==n_rows` which never held;
+fuse was dead → noise rebench only).
+
+Kill: `GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1`
 
 ## Why
 
 One fewer kernel per MoE layer (×~39 sparse) on decode and prefill. Golden OK.
-Formal **+0.10%** vs prior tip (both tg/pp slight lift).
+Formal **+0.33%** vs true top-k tip.
 
 ## Tip stack
 

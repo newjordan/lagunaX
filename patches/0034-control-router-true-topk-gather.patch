@@ -3,11 +3,12 @@ Subject: [PATCH 0034] control: true top-k+gather fuse
 
 Default ON with true top-k. Kill: GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1
 
-Formal results/20260730T110313Z/: tg=129.74 pp=3407.5 +51.58% golden OK
-Prior tip: tg=129.68 pp=3403.3 +51.48%
+Formal results/20260730T110508Z/: +51.81% golden OK (gather hit confirmed)
+Prior true top-k tip: +51.48%
+
+Shape: get_rows [1,k,n_tokens] → ne[2]==n_rows (not ggml_nrows).
 
 See notes/SHIP_20260730_router_true_topk_gather.md
-Control: treebeard-base-control-latest/ggml/src/ggml-sycl/topk-moe.cpp
 ---
 // One warp (sub-group) per token. n_experts must be divisible by WARP_SIZE.
 // If probs/gather_out non-null, also write get_rows layout [k * n_rows] contiguous
@@ -135,7 +136,7 @@ static void router_gather_kernel(const float * __restrict__ probs, const int32_t
     const int tid  = (int) item.get_global_id(0);
     const int total = n_expert_used * n_rows;
     if (tid >= total) {
-===== call site did_topk_gather =====
+===== want_gather call site =====
             if (once.fetch_add(1) == 0) {
                 fprintf(stderr,
                         "[lx-control-topk-moe] fused sigmoid+add n_experts=%d n_rows=%d\n",
@@ -169,12 +170,14 @@ static void router_gather_kernel(const float * __restrict__ probs, const int32_t
             const float * scores_d = (const float *) add_node->data;
             int32_t *     ids_buf  = (int32_t *) argsort_node->data;
             // Fuse gather when mode will use fused gather path (default mode8).
+            // get_rows layout is [1, k, n_tokens] → ne[1]=k, ne[2]=n_tokens (not nrows==n_tokens).
             const bool want_gather =
                 mode != 3 && mode != 4 && mode != 5 && mode > 0 &&
                 probs_d && gr_d && getrows_node->type == GGML_TYPE_F32 &&
                 ggml_is_contiguous(getrows_node) && ggml_is_contiguous(sigmoid_node) &&
                 (int) getrows_node->ne[1] == n_expert_used &&
-                (int) ggml_nrows(getrows_node) == n_rows;
+                (int) getrows_node->ne[2] == n_rows &&
+                ggml_nelements(getrows_node) == (int64_t) n_expert_used * (int64_t) n_rows;
             did_true_topk = ggml_sycl_launch_router_true_topk(
                 stream, scores_d, ids_buf, n_experts, n_rows, n_expert_used,
                 want_gather ? probs_d : nullptr, want_gather ? gr_d : nullptr);
@@ -203,3 +206,6 @@ static void router_gather_kernel(const float * __restrict__ probs, const int32_t
         clamp_max = ggml_get_op_params_f32(clamp, 1);
     }
     if (scale) {
+        scale_val  = ggml_get_op_params_f32(scale, 0);
+        scale_bias = ggml_get_op_params_f32(scale, 1);
+    }
