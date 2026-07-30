@@ -1,0 +1,12 @@
+From: lagunaX campaign
+Subject: [PATCH 0015] control: MoE down weighted-reduce k=8 unroll (default)
+
+Unroll expert loop when k==8 in ggml_sycl_moe_weighted_reduce.
+Golden OK. Formal tip +9.65% (tg121.4 / pp1139.5) vs prior mode7 +9.57%.
+Kill: GGML_SYCL_DISABLE_MOE_DOWN_WEIGHTED=1
+
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp
+@@ ggml_sycl_moe_weighted_reduce
++ if (k == 8) { #pragma unroll for expert 0..7 volatile mul-add }
++ else { existing loop }

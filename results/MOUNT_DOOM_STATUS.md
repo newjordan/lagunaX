@@ -1,28 +1,26 @@
-# Mount Doom status — 2026-07-30 (hybrid mode7 tip)
+# Mount Doom status — 2026-07-30 (moe-down k8 unroll tip)
 
 ## LIVE NOW — tip + research track
 
-**Scored tip:** MoE dual + hybrid **mode7** (stock sum/clamp + fused DIV+SCALE) + fused sigmoid+add + dense dual + moe-down + device mmid sort/prefix/event  
-**Research (golden FAIL / opt-in):** full fused norm (mode6) · mode8 clamp-fuse (~tip) · integrated down · multi-token MMVQ · dual multi-token · multi-sg dual · pinned counts
+**Scored tip:** MoE dual + hybrid **mode7** + fused sigmoid+add + dense dual + moe-down weighted (**k=8 unroll**) + device mmid sort/prefix/event  
+**Research (golden FAIL / opt-in):** full fused norm (mode6) · mode8 · integrated down · multi-token MMVQ/dual · multi-sg dual
 
 | arm | pp512 | tg128 | score |
 |-----|------:|------:|------:|
-| **tip hybrid mode7** | **1143.9** | **121.1** | **+9.57%** |
-| mode8 stock-sum+fused clamp/div/scale | 1138.4 | 121.3 | +9.54% |
-| prior fused sigmoid+add (mode2) | 1148.9 | 120.2 | +9.09% |
+| **tip + k8 unroll reduce** | **1139.5** | **121.4** | **+9.65%** |
+| prior hybrid mode7 | 1143.9 | 121.1 | +9.57% |
+| mode8 research | 1138.4 | 121.3 | +9.54% |
 | baseline pin | 1139 | 107.35 | 1.0 |
 
-Formal tip: `results/20260730T061617Z/` · mode8: `results/20260730T062159Z/`  
-Notes: `SHIP_20260730_hybrid_mode7.md`, `SHIP_20260730_hybrid_mode8.md`  
-Fallback mode2: `GGML_SYCL_TOPK_MOE_HYBRID_MODE=2` · mode8 research: `=8`  
-Kill fused sig+add: `GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD=1`  
-Kill mmid device sort: `GGML_SYCL_DISABLE_MMID_DEVICE_SORT=1`
+Formal tip: `results/20260730T062910Z/` · `notes/SHIP_20260730_moe_down_unroll.md` · `patches/0015-*.patch`  
+Kill moe-down: `GGML_SYCL_DISABLE_MOE_DOWN_WEIGHTED=1`  
+Fallback hybrid mode2: `GGML_SYCL_TOPK_MOE_HYBRID_MODE=2`
 
 ## NEXT KERNEL LEVERS
 
 1. Stay on control binary as champion.
-2. Bitexact multi-token dual/MMVQ oracle.
-3. Integrated weighted-MMVQ down golden fix.
+2. Bitexact integrated weighted-MMVQ down (still golden-fail).
+3. Multi-token dual/MMVQ oracle.
 4. lm_head / residual decode (high golden risk).
 
 ## Commands
