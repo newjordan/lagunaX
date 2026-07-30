@@ -1,0 +1,12 @@
+From: lagunaX fire
+Subject: [PATCH 0022] control: MUL_MAT+ADD epilogue any-batch (prefill+decode)
+
+Multi-col reorder addend + per-col loop offset for ne11>8.
+Fuse no longer decode-only.
+
+Kill: GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
+
+Formal results/20260730T080609Z/: tg=128.1 pp=3006.4 +45.49% golden OK
+Kill A/B: pp~1156 tg~127 +13.8%
+
+See notes/SHIP_20260730_mul_mat_add_multicol.md
