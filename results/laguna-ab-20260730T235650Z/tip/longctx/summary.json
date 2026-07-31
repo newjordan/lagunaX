@@ -1,0 +1,374 @@
+{
+  "base": "http://127.0.0.1:18940",
+  "model": "laguna-tip",
+  "prefill": [
+    {
+      "target_chars": 2000,
+      "ok": true,
+      "prompt_n": 359,
+      "pp_tps": 413.9488064091728,
+      "tg_tps": 43.92840767758745,
+      "wall_s": 1.5976929664611816,
+      "preview": " Broadway decade notes repeatedly emphasize the importance of staying focused on the main topic and avoiding repetition."
+    },
+    {
+      "target_chars": 8000,
+      "ok": true,
+      "prompt_n": 1402,
+      "pp_tps": 1786.6746187705335,
+      "tg_tps": 121.2277338748172,
+      "wall_s": 1.052795171737671,
+      "preview": " Broadway decade notes. Broadway decade notes. Broadway decade notes. Broadway decade notes. Broadway decade notes. Broa"
+    },
+    {
+      "target_chars": 16000,
+      "ok": true,
+      "prompt_n": 2793,
+      "pp_tps": 2155.7429749253056,
+      "tg_tps": 111.05673958235724,
+      "wall_s": 1.5893115997314453,
+      "preview": " Broadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroa"
+    },
+    {
+      "target_chars": 32000,
+      "ok": true,
+      "prompt_n": 5577,
+      "pp_tps": 2388.452174210969,
+      "tg_tps": 106.15605603712808,
+      "wall_s": 2.646469831466675,
+      "preview": " Broadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroa"
+    },
+    {
+      "target_chars": 48000,
+      "ok": true,
+      "prompt_n": 8359,
+      "pp_tps": 2358.804699210778,
+      "tg_tps": 101.03880521612832,
+      "wall_s": 3.874399423599243,
+      "preview": " Broadway decade notes.\n</assistant>\n</think>\nThe repeated phrase \"Broadway decade notes\" appears to be a placeholder or"
+    }
+  ],
+  "needles": {
+    "n_paragraphs": 100,
+    "doc_chars": 42739,
+    "needles_ok": 3,
+    "needles_total": 3,
+    "results": [
+      {
+        "show": "Carousel",
+        "code": "TB-CAR-1945-X",
+        "depth": 0.1,
+        "paragraph_index": 9,
+        "ok": true,
+        "answer": "TB-CAR-1945-X\n",
+        "wall_s": 6.7000572681427,
+        "usage": {
+          "completion_tokens": 12,
+          "prompt_tokens": 11286,
+          "total_tokens": 11298,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        }
+      },
+      {
+        "show": "Company",
+        "code": "TB-COM-1970-Q",
+        "depth": 0.5,
+        "paragraph_index": 49,
+        "ok": true,
+        "answer": "TB-COM-1970-Q\n",
+        "wall_s": 0.3372156620025635,
+        "usage": {
+          "completion_tokens": 11,
+          "prompt_tokens": 11286,
+          "total_tokens": 11297,
+          "prompt_tokens_details": {
+            "cached_tokens": 11270
+          }
+        }
+      },
+      {
+        "show": "Hadestown",
+        "code": "TB-HAD-2019-Z",
+        "depth": 0.9,
+        "paragraph_index": 89,
+        "ok": true,
+        "answer": "TB-HAD-2019-Z\n",
+        "wall_s": 0.3584470748901367,
+        "usage": {
+          "completion_tokens": 12,
+          "prompt_tokens": 11288,
+          "total_tokens": 11300,
+          "prompt_tokens_details": {
+            "cached_tokens": 11270
+          }
+        }
+      }
+    ]
+  },
+  "dossier": {
+    "doc_chars": 61092,
+    "qa_ok": 12,
+    "qa_total": 14,
+    "results": [
+      {
+        "q": "What year did Oklahoma! open?",
+        "section": "1940s Golden Age",
+        "ok": true,
+        "accept": [
+          "1943"
+        ],
+        "answer": "Oklahoma! opened in 1943.\n",
+        "wall_s": 9.42666220664978,
+        "usage": {
+          "completion_tokens": 14,
+          "prompt_tokens": 16093,
+          "total_tokens": 16107,
+          "prompt_tokens_details": {
+            "cached_tokens": 22
+          }
+        }
+      },
+      {
+        "q": "Who were the writers associated with Oklahoma! in this dossier?",
+        "section": "1940s Golden Age",
+        "ok": true,
+        "accept": [
+          "rodgers",
+          "hammerstein"
+        ],
+        "answer": "Rodgers and Hammerstein were the writers associated with Oklahoma! according to the dossier.\n",
+        "wall_s": 0.5204505920410156,
+        "usage": {
+          "completion_tokens": 21,
+          "prompt_tokens": 16099,
+          "total_tokens": 16120,
+          "prompt_tokens_details": {
+            "cached_tokens": 16068
+          }
+        }
+      },
+      {
+        "q": "In what year did West Side Story premiere on Broadway according to the dossier?",
+        "section": "1950s Innovation",
+        "ok": true,
+        "accept": [
+          "1957"
+        ],
+        "answer": "West Side Story premiered on Broadway in 1957.\n",
+        "wall_s": 0.48943281173706055,
+        "usage": {
+          "completion_tokens": 17,
+          "prompt_tokens": 16102,
+          "total_tokens": 16119,
+          "prompt_tokens_details": {
+            "cached_tokens": 16068
+          }
+        }
+      },
+      {
+        "q": "Who wrote the lyrics for West Side Story per the dossier?",
+        "section": "1950s Innovation",
+        "ok": true,
+        "accept": [
+          "sondheim"
+        ],
+        "answer": "Stephen Sondheim wrote the lyrics for West Side Story per the dossier.\n",
+        "wall_s": 0.49984049797058105,
+        "usage": {
+          "completion_tokens": 19,
+          "prompt_tokens": 16099,
+          "total_tokens": 16118,
+          "prompt_tokens_details": {
+            "cached_tokens": 16068
+          }
+        }
+      },
+      {
+        "q": "Which 1968 musical is linked to counterculture rock energy in the dossier?",
+        "section": "1960s Concept Growth",
+        "ok": true,
+        "accept": [
+          "hair"
+        ],
+        "answer": "Hair (1968)\n",
+        "wall_s": 0.42223429679870605,
+        "usage": {
+          "completion_tokens": 10,
+          "prompt_tokens": 16105,
+          "total_tokens": 16115,
+          "prompt_tokens_details": {
+            "cached_tokens": 16068
+          }
+        }
+      },
+      {
+        "q": "Which 1975 show about dancers is mentioned as a long-running phenomenon?",
+        "section": "1970s Sondheim Peak",
+        "ok": true,
+        "accept": [
+          "chorus line",
+          "a chorus line"
+        ],
+        "answer": "A Chorus Line\n",
+        "wall_s": 0.3753387928009033,
+        "usage": {
+          "completion_tokens": 7,
+          "prompt_tokens": 16103,
+          "total_tokens": 16110,
+          "prompt_tokens_details": {
+            "cached_tokens": 16068
+          }
+        }
+      },
+      {
+        "q": "Which composer is tied to mega-musicals like Phantom in the dossier?",
+        "section": "1980s Mega-Musicals",
+        "ok": true,
+        "accept": [
+          "andrew lloyd webber",
+          "lloyd webber"
+        ],
+        "answer": "Andrew Lloyd Webber\n",
+        "wall_s": 0.37399744987487793,
+        "usage": {
+          "completion_tokens": 7,
+          "prompt_tokens": 16102,
+          "total_tokens": 16109,
+          "prompt_tokens_details": {
+            "cached_tokens": 16068
+          }
+        }
+      },
+      {
+        "q": "What year does the dossier give for Phantom on Broadway?",
+        "section": "1980s Mega-Musicals",
+        "ok": false,
+        "accept": [
+          "1988"
+        ],
+        "answer": "The dossier does not provide a specific year for The Phantom of the Opera on Broadway.\n",
+        "wall_s": 0.5230917930603027,
+        "usage": {
+          "completion_tokens": 21,
+          "prompt_tokens": 16098,
+          "total_tokens": 16119,
+          "prompt_tokens_details": {
+            "cached_tokens": 16068
+          }
+        }
+      },
+      {
+        "q": "Who wrote Rent according to the dossier?",
+        "section": "1990s New Voices",
+        "ok": false,
+        "accept": [
+          "jonathan larson",
+          "larson"
+        ],
+        "answer": "The dossier does not specify who wrote Rent.\n",
+        "wall_s": 0.4201827049255371,
+        "usage": {
+          "completion_tokens": 13,
+          "prompt_tokens": 16095,
+          "total_tokens": 16108,
+          "prompt_tokens_details": {
+            "cached_tokens": 16068
+          }
+        }
+      },
+      {
+        "q": "What year did Rent open per the dossier?",
+        "section": "1990s New Voices",
+        "ok": true,
+        "accept": [
+          "1996"
+        ],
+        "answer": "1996\n",
+        "wall_s": 0.3597993850708008,
+        "usage": {
+          "completion_tokens": 7,
+          "prompt_tokens": 16097,
+          "total_tokens": 16104,
+          "prompt_tokens_details": {
+            "cached_tokens": 16068
+          }
+        }
+      },
+      {
+        "q": "Which 2003 fantasy blockbuster is named in the dossier?",
+        "section": "2000s Diversification",
+        "ok": true,
+        "accept": [
+          "wicked"
+        ],
+        "answer": "The 2003 fantasy blockbuster named in the dossier is **Wicked**.\n",
+        "wall_s": 0.5448169708251953,
+        "usage": {
+          "completion_tokens": 22,
+          "prompt_tokens": 16103,
+          "total_tokens": 16125,
+          "prompt_tokens_details": {
+            "cached_tokens": 16069
+          }
+        }
+      },
+      {
+        "q": "What year did Hamilton open on Broadway per the dossier?",
+        "section": "2010s Hamilton Era",
+        "ok": true,
+        "accept": [
+          "2015"
+        ],
+        "answer": "Hamilton opened on Broadway in 2015.\n",
+        "wall_s": 0.45336031913757324,
+        "usage": {
+          "completion_tokens": 15,
+          "prompt_tokens": 16099,
+          "total_tokens": 16114,
+          "prompt_tokens_details": {
+            "cached_tokens": 16069
+          }
+        }
+      },
+      {
+        "q": "Who is credited with book, music, and lyrics for Hamilton here?",
+        "section": "2010s Hamilton Era",
+        "ok": true,
+        "accept": [
+          "lin-manuel miranda",
+          "miranda"
+        ],
+        "answer": "Lin-Manuel Miranda is credited with book, music, and lyrics for Hamilton.\n",
+        "wall_s": 0.5033056735992432,
+        "usage": {
+          "completion_tokens": 19,
+          "prompt_tokens": 16101,
+          "total_tokens": 16120,
+          "prompt_tokens_details": {
+            "cached_tokens": 16069
+          }
+        }
+      },
+      {
+        "q": "What major disruption to Broadway does the 2020s section mention?",
+        "section": "2020s Continuity",
+        "ok": true,
+        "accept": [
+          "pandemic"
+        ],
+        "answer": "The 2020s section mentions \"pandemic shutdowns\" as the major disruption to Broadway.\n",
+        "wall_s": 0.5704367160797119,
+        "usage": {
+          "completion_tokens": 24,
+          "prompt_tokens": 16103,
+          "total_tokens": 16127,
+          "prompt_tokens_details": {
+            "cached_tokens": 16069
+          }
+        }
+      }
+    ]
+  }
+}

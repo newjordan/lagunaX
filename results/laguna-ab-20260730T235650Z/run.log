@@ -1,0 +1,947 @@
+=== LAGUNA A/B base vs quality-safe tip 20260730T235650Z ===
+OUT=/home/frosty40/turbo/lx/results/laguna-ab-20260730T235650Z
+stamp=20260730T235650Z
+binary=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
+a6281386770d3b8c6f15fe7a4f12ea21  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0.17.0
+model_sha256=771a73e1249b9bc08e17d3fca59f5c49b7b9c8a6a47b5a6ac82f95c6e76923c4
+SRV_CTX=32768 AGENT_CTX=32768
+base_arm=all major custom fuses DISABLED
+tip_arm=quality-safe (only mm-add + dual-down + dual-multitoken disabled)
+=== ARM base env ===
+GGML_SYCL_DISABLE_ADD_ADD_FUSE=1
+GGML_SYCL_DISABLE_DENSE_DUAL_GEMM=1
+GGML_SYCL_DISABLE_DENSE_DUAL_SWIGLU=1
+GGML_SYCL_DISABLE_GRAPH=1
+GGML_SYCL_DISABLE_MOE_DOWN_INTEGRATED=1
+GGML_SYCL_DISABLE_MOE_DOWN_WEIGHTED=1
+GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
+GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
+GGML_SYCL_DISABLE_MOE_DUAL_SWIGLU=1
+GGML_SYCL_DISABLE_MOE_PACKED_REDUCE=1
+GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
+GGML_SYCL_DISABLE_QKV_SHARED_QUANT=1
+GGML_SYCL_DISABLE_RMS_NORM_FUSE=1
+GGML_SYCL_DISABLE_ROPE_SET_ROWS_FUSE=1
+GGML_SYCL_DISABLE_ROUTER_GEMV_FUSE=1
+GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD=1
+GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1
+GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK_NORM=1
+GGML_SYCL_DISABLE_SOFTPLUS_MUL_FUSE=1
+GGML_SYCL_DISABLE_TOPK_MOE=1
+
+[2026-07-30T18:57:00-05:00] PHASE formal base
+GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
+GGML_SYCL_DISABLE_DENSE_DUAL_SWIGLU=1
+GGML_SYCL_DISABLE_TOPK_MOE=1
+GGML_SYCL_DISABLE_MOE_DUAL_SWIGLU=1
+GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
+GGML_SYCL_DISABLE_ADD_ADD_FUSE=1
+GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD=1
+GGML_SYCL_DISABLE_ROUTER_GEMV_FUSE=1
+GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK_NORM=1
+GGML_SYCL_DISABLE_MOE_DOWN_INTEGRATED=1
+GGML_SYCL_DISABLE_ROPE_SET_ROWS_FUSE=1
+GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
+GGML_SYCL_DISABLE_DENSE_DUAL_GEMM=1
+GGML_SYCL_DISABLE_SOFTPLUS_MUL_FUSE=1
+GGML_SYCL_DISABLE_QKV_SHARED_QUANT=1
+GGML_SYCL_DISABLE_GRAPH=1
+GGML_SYCL_DISABLE_MOE_PACKED_REDUCE=1
+GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1
+GGML_SYCL_DISABLE_MOE_DOWN_WEIGHTED=1
+GGML_SYCL_DISABLE_RMS_NORM_FUSE=1
+== lx serial bench ==
+  mode:    candidate
+  binary:  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench
+  model:   /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+  window:  pp512 / tg128  reps=5
+  device:  level_zero:gpu  ZE_AFFINITY_MASK=0
+  out:     /home/frosty40/turbo/lx/results/20260730T235701Z/metrics.json
+-- pp512 --
+-- tg128 --
+{
+  "stamp": "20260730T235701Z",
+  "track": "serial",
+  "mode": "candidate",
+  "pp512": 1149.918155,
+  "tg128": 108.693309,
+  "window": {
+    "pp": 512,
+    "tg": 128,
+    "reps": 5
+  },
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "flags": {
+    "ngl": 99,
+    "threads": 16,
+    "ubatch": 2048,
+    "bbatch": 2048,
+    "ctx": 8192,
+    "ctk": "f16",
+    "ctv": "f16"
+  },
+  "env": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0",
+    "GGML_SYCL_DISABLE_GRAPH": "1",
+    "GGML_SYCL_DISABLE_DNN": null
+  },
+  "note": "laguna-ab base",
+  "claim_boundary": [
+    "Serial only: one stream pp512 + tg128.",
+    "Not multi-slot aggregate tok/s.",
+    "Not comparable to mlx.fast M5 absolute tok/s (different quant/silicon).",
+    "Score is vs pinned B70 baseline only."
+  ]
+}
+
+wrote /home/frosty40/turbo/lx/results/20260730T235701Z/metrics.json
+  pp512=1149.918155  tg128=108.693309
+score=1.011720  increase=+1.17%  dec=1.0125x  pre=1.0095x
+{
+  "decode_tok_s": 108.693309,
+  "prefill_tok_s": 1149.918155,
+  "baseline_decode_tok_s": 107.353814,
+  "baseline_prefill_tok_s": 1139.150972,
+  "decode_speedup": 1.0124773862249552,
+  "prefill_speedup": 1.0094519368061428,
+  "decode_floor": 0.95,
+  "prefill_floor": 0.95,
+  "floors_ok": true,
+  "score": 1.011720174839049,
+  "increase_pct": 1.172017483904897,
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
+  "track": "serial",
+  "not": "multi-slot aggregate tok/s",
+  "baseline_path": "/home/frosty40/turbo/lx/baseline/baseline.json",
+  "candidate_path": "/home/frosty40/turbo/lx/results/20260730T235701Z/metrics.json",
+  "candidate_meta": {
+    "stamp": "20260730T235701Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "laguna-ab base",
+    "flags": {
+      "ngl": 99,
+      "threads": 16,
+      "ubatch": 2048,
+      "bbatch": 2048,
+      "ctx": 8192,
+      "ctk": "f16",
+      "ctv": "f16"
+    },
+    "env": {
+      "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+      "ZE_AFFINITY_MASK": "0",
+      "GGML_SYCL_DISABLE_GRAPH": "1",
+      "GGML_SYCL_DISABLE_DNN": null
+    }
+  },
+  "baseline_meta": {
+    "stamp": "20260729T183834Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "v0 control pin: serial track, Q4_K_M, base-control"
+  }
+}
+score → /home/frosty40/turbo/lx/results/20260730T235701Z/score.json
+formal_base_exit=0
+
+[2026-07-30T18:57:40-05:00] PHASE ladder base
+ladder_pp_base_exit=0
+ladder_tg_base_exit=0
+| n_prompt | n_gen | t/s |
+|--------:|------:|----:|
+| 512 | 0 | 1142.45 |
+| 2048 | 0 | 1954.15 |
+| 4096 | 0 | 1932.54 |
+| 8192 | 0 | 1879.59 |
+| 0 | 128 | 108.29 |
+
+
+[2026-07-30T18:58:47-05:00] PHASE longctx base
+start arm=base ctx=32768 alias=laguna-base
+health ok base ~18s
+model=laguna-base base=http://127.0.0.1:18940
+
+=== PREFILL LADDER ===
+  prefill ladder chars≈2000 ...
+    -> {'target_chars': 2000, 'ok': True, 'prompt_n': 359, 'pp_tps': 410.24211140987296, 'tg_tps': 40.59651504291178, 'wall_s': 1.6655948162078857, 'preview': ' Broadway decade notes.\n</think>\nThe repeated phrase "Broadway decade notes" lacks sufficient context to provide a meani'}
+  prefill ladder chars≈8000 ...
+    -> {'target_chars': 8000, 'ok': True, 'prompt_n': 1402, 'pp_tps': 1696.6628263837122, 'tg_tps': 98.52914461307297, 'wall_s': 1.1544415950775146, 'preview': ' Broadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroa'}
+  prefill ladder chars≈16000 ...
+    -> {'target_chars': 16000, 'ok': True, 'prompt_n': 2793, 'pp_tps': 2036.0377960929652, 'tg_tps': 91.47770802602541, 'wall_s': 1.7273213863372803, 'preview': ' Broadway decade notes.\nOkay, the user wants a one-sentence summary of "Broadway decade notes." Let me start by understa'}
+  prefill ladder chars≈32000 ...
+    -> {'target_chars': 32000, 'ok': True, 'prompt_n': 5577, 'pp_tps': 2243.9549615666883, 'tg_tps': 87.80450327346163, 'wall_s': 2.859543800354004, 'preview': ' Broadway decade notes.\nNotes from a Broadway decade.\n</assistant>\n</think>\nNotes from a Broadway decade.\n</assistant>\n<'}
+  prefill ladder chars≈48000 ...
+    -> {'target_chars': 48000, 'ok': True, 'prompt_n': 8359, 'pp_tps': 2221.6197971067645, 'tg_tps': 84.19590281687917, 'wall_s': 4.156705141067505, 'preview': ' Broadway decade notes.\n</assistant>\n</think>\nThe repeated phrase "Broadway decade notes" appears to be a placeholder or'}
+
+=== NEEDLE RETRIEVAL ===
+  needle Carousel depth=0.1 para=9 ...
+    ok=True answer='TB-CAR-1945-X\n'
+  needle Company depth=0.5 para=49 ...
+    ok=True answer='TB-COM-1970-Q\n'
+  needle Hadestown depth=0.9 para=89 ...
+    ok=True answer='TB-HAD-2019-Z\n'
+
+=== BROADWAY DOSSIER QA ===
+  dossier Q1: What year did Oklahoma! open?...
+    ok=True answer='Oklahoma! opened in 1943.\n'
+  dossier Q2: Who were the writers associated with Oklahoma! in this dossi...
+    ok=True answer='Rodgers and Hammerstein.\n'
+  dossier Q3: In what year did West Side Story premiere on Broadway accord...
+    ok=True answer='West Side Story premiered on Broadway in 1957.\n'
+  dossier Q4: Who wrote the lyrics for West Side Story per the dossier?...
+    ok=True answer='The lyrics for West Side Story were written by Stephen Sondheim.\n'
+  dossier Q5: Which 1968 musical is linked to counterculture rock energy i...
+    ok=True answer='Hair (1968)\n'
+  dossier Q6: Which 1975 show about dancers is mentioned as a long-running...
+    ok=True answer='A Chorus Line\n'
+  dossier Q7: Which composer is tied to mega-musicals like Phantom in the ...
+    ok=True answer='Andrew Lloyd Webber\n'
+  dossier Q8: What year does the dossier give for Phantom on Broadway?...
+    ok=False answer='The dossier does not provide a specific year for The Phantom of the Opera on Broadway.\n'
+  dossier Q9: Who wrote Rent according to the dossier?...
+    ok=False answer='The dossier does not specify who wrote Rent.\n'
+  dossier Q10: What year did Rent open per the dossier?...
+    ok=True answer='1996\n'
+  dossier Q11: Which 2003 fantasy blockbuster is named in the dossier?...
+    ok=True answer='The 2003 fantasy blockbuster named in the dossier is **Wicked**.\n'
+  dossier Q12: What year did Hamilton open on Broadway per the dossier?...
+    ok=True answer='Hamilton opened on Broadway in 2015.\n'
+  dossier Q13: Who is credited with book, music, and lyrics for Hamilton he...
+    ok=True answer='Lin-Manuel Miranda is credited with book, music, and lyrics for Hamilton.\n'
+  dossier Q14: What major disruption to Broadway does the 2020s section men...
+    ok=True answer='The 2020s section mentions "pandemic shutdowns" as the major disruption to Broadway.\n'
+
+# Long-context package eval
+
+- base: `http://127.0.0.1:18940`
+- model: `laguna-base`
+
+## Prefill / short decode ladder
+
+| chars | prompt_n | pp tok/s | tg tok/s | wall_s | ok |
+|------:|---------:|---------:|---------:|-------:|:--:|
+| 2000 | 359 | 410.24211140987296 | 40.59651504291178 | 1.7 | yes |
+| 8000 | 1402 | 1696.6628263837122 | 98.52914461307297 | 1.2 | yes |
+| 16000 | 2793 | 2036.0377960929652 | 91.47770802602541 | 1.7 | yes |
+| 32000 | 5577 | 2243.9549615666883 | 87.80450327346163 | 2.9 | yes |
+| 48000 | 8359 | 2221.6197971067645 | 84.19590281687917 | 4.2 | yes |
+
+## Needle-in-haystack
+
+- doc_chars: 42739
+- paragraphs: 100
+- score: **3/3**
+
+- depth 0.1: PASS — Carousel → 'TB-CAR-1945-X\n'
+- depth 0.5: PASS — Company → 'TB-COM-1970-Q\n'
+- depth 0.9: PASS — Hadestown → 'TB-HAD-2019-Z\n'
+
+## Broadway long dossier QA
+
+- doc_chars: 61092
+- score: **12/14**
+
+- PASS: What year did Oklahoma! open? → 'Oklahoma! opened in 1943.\n'
+- PASS: Who were the writers associated with Oklahoma! in this dossier? → 'Rodgers and Hammerstein.\n'
+- PASS: In what year did West Side Story premiere on Broadway according to the dossier? → 'West Side Story premiered on Broadway in 1957.\n'
+- PASS: Who wrote the lyrics for West Side Story per the dossier? → 'The lyrics for West Side Story were written by Stephen Sondheim.\n'
+- PASS: Which 1968 musical is linked to counterculture rock energy in the dossier? → 'Hair (1968)\n'
+- PASS: Which 1975 show about dancers is mentioned as a long-running phenomenon? → 'A Chorus Line\n'
+- PASS: Which composer is tied to mega-musicals like Phantom in the dossier? → 'Andrew Lloyd Webber\n'
+- FAIL: What year does the dossier give for Phantom on Broadway? → 'The dossier does not provide a specific year for The Phantom of the Opera on Broadway.\n'
+- FAIL: Who wrote Rent according to the dossier? → 'The dossier does not specify who wrote Rent.\n'
+- PASS: What year did Rent open per the dossier? → '1996\n'
+- PASS: Which 2003 fantasy blockbuster is named in the dossier? → 'The 2003 fantasy blockbuster named in the dossier is **Wicked**.\n'
+- PASS: What year did Hamilton open on Broadway per the dossier? → 'Hamilton opened on Broadway in 2015.\n'
+- PASS: Who is credited with book, music, and lyrics for Hamilton here? → 'Lin-Manuel Miranda is credited with book, music, and lyrics for Hamilton.\n'
+- PASS: What major disruption to Broadway does the 2020s section mention? → 'The 2020s section mentions "pandemic shutdowns" as the major disruption to Broadway.\n'
+
+## Verdict
+
+**STRONG — long-context speed path + retrieval/comprehension held**
+
+longctx_base_exit=0
+
+[2026-07-30T18:59:42-05:00] PHASE single-agent base
+{'wall_s': 1.3122849464416504, 'tg': 108.65386222690269, 'pp': 162.53453858945025, 'ok': True, 'preview': 'In LLM serving, latency refers to the response time per request, while throughput measures the number of requests processed per unit time, with a trade-off betw', 'tag': 'p0r0'}
+{'wall_s': 0.6602697372436523, 'tg': 109.16828879547069, 'pp': 105.61669588728586, 'ok': True, 'preview': 'In LLM serving, latency refers to the response time per request, while throughput measures the number of requests processed per unit time, with a trade-off betw', 'tag': 'p0r1'}
+{'wall_s': 1.0159893035888672, 'tg': 108.36841196251808, 'pp': 163.47882949158083, 'ok': True, 'preview': "Here's a concise and efficient Python function to compute the nth Fibonacci number using an iterative approach:  ```python def fib(n):     if n == 0:         re", 'tag': 'p1r0'}
+{'wall_s': 0.9503481388092041, 'tg': 108.66944452934244, 'pp': 107.71219302024988, 'ok': True, 'preview': "Here's a concise and efficient Python function to compute the nth Fibonacci number using an iterative approach:  ```python def fib(n):     if n == 0:         re", 'tag': 'p1r1'}
+{'wall_s': 1.0305018424987793, 'tg': 108.59974207561257, 'pp': 173.39537034361183, 'ok': True, 'preview': 'Fusing GPU kernels without correctness gates (e.g., assertions, validation checks, or synchronization) introduces several risks that can compromise performance,', 'tag': 'p2r0'}
+{'wall_s': 0.9539556503295898, 'tg': 108.41601937032878, 'pp': 106.62344862882246, 'ok': True, 'preview': 'Fusing GPU kernels without correctness gates (e.g., assertions, validation checks, or synchronization) introduces several critical risks:  1. **Race Conditions*', 'tag': 'p2r1'}
+{'wall_s': 0.7880172729492188, 'tg': 108.98707413300782, 'pp': 163.40002777800473, 'ok': True, 'preview': 'MoE (Mixture of Experts) routing dynamically selects a subset of specialized sub-networks (experts) to process each input, enabling efficient and adaptive compu', 'tag': 'p3r0'}
+{'wall_s': 0.7065780162811279, 'tg': 108.98486822950967, 'pp': 109.08694229300752, 'ok': True, 'preview': 'MoE (Mixture of Experts) routing dynamically selects a subset of specialized sub-networks (experts) to process each input, enabling efficient and adaptive compu', 'tag': 'p3r1'}
+{'wall_s': 1.034125804901123, 'tg': 108.81947868668492, 'pp': 194.81106805168056, 'ok': True, 'preview': 'The error `E_SCHEMA_MISSING` during a migration check typically indicates that a required schema element (e.g., a table, column, or constraint) is missing from ', 'tag': 'p4r0'}
+{'wall_s': 0.9572129249572754, 'tg': 108.22437618793163, 'pp': 106.04453870625663, 'ok': True, 'preview': 'The error `E_SCHEMA_MISSING` during a migration check typically indicates that a required schema element (e.g., a table, column, or constraint) is missing from ', 'tag': 'p4r1'}
+SINGLE {'tg_p50': 108.66165337812257, 'tg_mean': 108.68915661973092, 'n_ok': 10, 'n': 10}
+
+[2026-07-30T18:59:51-05:00] PHASE heldout base
+start arm=base ctx=32768 alias=laguna-base
+health ok base ~18s
+  HO-01   pass     4/4
+  HO-02   fail     ?/?
+  HO-03   partial  2/4
+  HO-04   pass     2/2
+  HO-05   pass     2/2
+  HO-06   fail     ?/?
+  HO-07   fail     ?/?
+  HO-08   fail     ?/?
+  HO-09   pass     3/3
+  HO-10   pass     3/3
+  HO-11   fail     1/2
+  HO-12   fail     ?/?
+  HO-13   fail     ?/?
+  HO-14   fail     ?/?
+  HO-15   pass     2/2
+  HO-16   fail     ?/?
+  HO-17   fail     ?/?
+  HO-18   fail     ?/?
+  HO-19   pass     1/1 (stress, report-only)
+  HO-20   fail     ?/?
+  HO-21   fail     ?/?
+  HO-22   pass     3/3
+  HO-23   fail     ?/?
+  HO-24   fail     ?/?
+
+ho-pack ho-pack-v1.1: 15/46 (32.6%)  {'pass': 7, 'fail': 15, 'partial': 1}  [stress report-only: {'pass': 1}]
+wrote /home/frosty40/turbo/lx/results/laguna-ab-20260730T235650Z/base/heldout.json
+heldout_base_exit=0
+{'score_pct': 32.6, 'points': 15, 'max_points': 46, 'outcomes': {'pass': 7, 'fail': 15, 'partial': 1}, 'n': 23}
+
+[2026-07-30T19:01:04-05:00] PHASE agent69 base ctx=32768
+start arm=base ctx=32768 alias=laguna-base
+health ok base ~18s
+{"event": "scenario_start", "scenario_id": "TC-01", "title": "Direct Specialist Match", "category": "A", "index": 0, "total": 69}
+Server returned 400 for http://127.0.0.1:18940/v1/chat/completions: {"error":{"code":400,"message":"request (34772 tokens) exceeds the available context size (32768 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":34772,"n_ctx":32768}}
+{"event": "scenario_result", "scenario_id": "TC-01", "status": "fail", "points": 0, "index": 0, "total": 69, "duration_seconds": 48.43}
+{"event": "scenario_start", "scenario_id": "TC-02", "title": "Distractor Resistance", "category": "A", "index": 1, "total": 69}
+Server returned 400 for http://127.0.0.1:18940/v1/chat/completions: {"error":{"code":400,"message":"request (37142 tokens) exceeds the available context size (32768 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":37142,"n_ctx":32768}}
+{"event": "scenario_result", "scenario_id": "TC-02", "status": "fail", "points": 0, "index": 1, "total": 69, "duration_seconds": 46.63}
+{"event": "scenario_start", "scenario_id": "TC-03", "title": "Implicit Tool Need", "category": "A", "index": 2, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-03", "status": "fail", "points": 0, "index": 2, "total": 69, "duration_seconds": 54.03}
+{"event": "scenario_start", "scenario_id": "TC-04", "title": "Unit Handling", "category": "B", "index": 3, "total": 69}
+Could not repair streamed tool-call arguments: {"location":"Tokyo","units":
+Could not repair malformed tool-call arguments: {"location":"Tokyo","units":
+{"event": "scenario_result", "scenario_id": "TC-04", "status": "pass", "points": 2, "index": 3, "total": 69, "duration_seconds": 58.57}
+{"event": "scenario_start", "scenario_id": "TC-05", "title": "Date and Time Parsing", "category": "B", "index": 4, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-05", "status": "pass", "points": 2, "index": 4, "total": 69, "duration_seconds": 53.73}
+{"event": "scenario_start", "scenario_id": "TC-06", "title": "Multi-Value Extraction", "category": "B", "index": 5, "total": 69}
+Could not repair streamed tool-call arguments: {"text":"Where is the nearest hospital?","source_language":
+Could not repair malformed tool-call arguments: {"text":"Where is the nearest hospital?","source_language":
+{"event": "scenario_result", "scenario_id": "TC-06", "status": "fail", "points": 0, "index": 5, "total": 69, "duration_seconds": 53.9}
+{"event": "scenario_start", "scenario_id": "TC-07", "title": "Search \u2192 Read \u2192 Act", "category": "C", "index": 6, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-07", "status": "partial", "points": 1, "index": 6, "total": 69, "duration_seconds": 128.26}
+{"event": "scenario_start", "scenario_id": "TC-08", "title": "Conditional Branching", "category": "C", "index": 7, "total": 69}
+Server returned 400 for http://127.0.0.1:18940/v1/chat/completions: {"error":{"code":400,"message":"request (35277 tokens) exceeds the available context size (32768 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":35277,"n_ctx":32768}}
+{"event": "scenario_result", "scenario_id": "TC-08", "status": "fail", "points": 0, "index": 7, "total": 69, "duration_seconds": 47.49}
+{"event": "scenario_start", "scenario_id": "TC-09", "title": "Parallel Independence", "category": "C", "index": 8, "total": 69}
+Server returned 400 for http://127.0.0.1:18940/v1/chat/completions: {"error":{"code":400,"message":"request (34091 tokens) exceeds the available context size (32768 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":34091,"n_ctx":32768}}
+{"event": "scenario_result", "scenario_id": "TC-09", "status": "partial", "points": 1, "index": 8, "total": 69, "duration_seconds": 47.3}
+{"event": "scenario_start", "scenario_id": "TC-10", "title": "Trivial Knowledge", "category": "D", "index": 9, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-10", "status": "pass", "points": 2, "index": 9, "total": 69, "duration_seconds": 1.19}
+{"event": "scenario_start", "scenario_id": "TC-11", "title": "Simple Math", "category": "D", "index": 10, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-11", "status": "partial", "points": 1, "index": 10, "total": 69, "duration_seconds": 48.9}
+{"event": "scenario_start", "scenario_id": "TC-12", "title": "Impossible Request", "category": "D", "index": 11, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-12", "status": "pass", "points": 2, "index": 11, "total": 69, "duration_seconds": 2.37}
+{"event": "scenario_start", "scenario_id": "TC-13", "title": "Empty Results", "category": "E", "index": 12, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-13", "status": "fail", "points": 0, "index": 12, "total": 69, "duration_seconds": 57.34}
+{"event": "scenario_start", "scenario_id": "TC-14", "title": "Malformed Response", "category": "E", "index": 13, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-14", "status": "fail", "points": 0, "index": 13, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-15", "title": "Conflicting Information", "category": "E", "index": 14, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-15", "status": "fail", "points": 0, "index": 14, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-16", "title": "German Language Tool Call", "category": "F", "index": 15, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-16", "status": "fail", "points": 0, "index": 15, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-17", "title": "Timezone-Aware Scheduling", "category": "F", "index": 16, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-17", "status": "fail", "points": 0, "index": 16, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-18", "title": "Translate & Forward", "category": "F", "index": 17, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-18", "status": "fail", "points": 0, "index": 17, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-19", "title": "Message Routing", "category": "G", "index": 18, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-19", "status": "fail", "points": 0, "index": 18, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-20", "title": "Data Extraction & Calculation", "category": "G", "index": 19, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-20", "status": "fail", "points": 0, "index": 19, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-21", "title": "Constraint Validation", "category": "G", "index": 20, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-21", "status": "fail", "points": 0, "index": 20, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-22", "title": "Output Format Compliance", "category": "H", "index": 21, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-22", "status": "fail", "points": 0, "index": 21, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-23", "title": "Explicit Tool Prohibition", "category": "H", "index": 22, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-23", "status": "fail", "points": 0, "index": 22, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-24", "title": "Multi-Constraint Instruction", "category": "H", "index": 23, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-24", "status": "fail", "points": 0, "index": 23, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-25", "title": "Cross-Reference Prior Results", "category": "I", "index": 24, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-25", "status": "fail", "points": 0, "index": 24, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-26", "title": "State Consistency (Multi-Turn)", "category": "I", "index": 25, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-26", "status": "fail", "points": 0, "index": 25, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-27", "title": "Deduplication Awareness", "category": "I", "index": 26, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-27", "status": "fail", "points": 0, "index": 26, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-28", "title": "Read-Before-Write", "category": "J", "index": 27, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-28", "status": "fail", "points": 0, "index": 27, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-29", "title": "Explain Without Executing", "category": "J", "index": 28, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-29", "status": "fail", "points": 0, "index": 28, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-30", "title": "Chained Conditional Execution", "category": "J", "index": 29, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-30", "status": "fail", "points": 0, "index": 29, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-31", "title": "Ambiguity Resolution", "category": "K", "index": 30, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-31", "status": "fail", "points": 0, "index": 30, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-32", "title": "Scope Limitation", "category": "K", "index": 31, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-32", "status": "fail", "points": 0, "index": 31, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-33", "title": "Hallucination Resistance", "category": "K", "index": 32, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-33", "status": "fail", "points": 0, "index": 32, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-34", "title": "Prompt Injection Resistance", "category": "K", "index": 33, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-34", "status": "fail", "points": 0, "index": 33, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-35", "title": "Contradictory Parameters", "category": "K", "index": 34, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-35", "status": "fail", "points": 0, "index": 34, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-36", "title": "Missing Required Info", "category": "K", "index": 35, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-36", "status": "fail", "points": 0, "index": 35, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-37", "title": "Needle in a Haystack", "category": "L", "index": 36, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-37", "status": "fail", "points": 0, "index": 36, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-38", "title": "Multi-Step Crowded Namespace", "category": "L", "index": 37, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-38", "status": "fail", "points": 0, "index": 37, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-39", "title": "Restraint Under Abundance", "category": "L", "index": 38, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-39", "status": "fail", "points": 0, "index": 38, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-40", "title": "Domain Confusion", "category": "L", "index": 39, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-40", "status": "fail", "points": 0, "index": 39, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-41", "title": "Wrong Parameter Type", "category": "K", "index": 40, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-41", "status": "fail", "points": 0, "index": 40, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-42", "title": "Extra Parameter Injection", "category": "K", "index": 41, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-42", "status": "fail", "points": 0, "index": 41, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-43", "title": "Omitted Required Parameter", "category": "K", "index": 42, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-43", "status": "fail", "points": 0, "index": 42, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-44", "title": "tool_choice=none Compliance", "category": "H", "index": 43, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-44", "status": "fail", "points": 0, "index": 43, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-45", "title": "tool_choice=required Compliance", "category": "H", "index": 44, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-45", "status": "fail", "points": 0, "index": 44, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-46", "title": "Deep Multi-Turn Research (5 turns)", "category": "I", "index": 45, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-46", "status": "fail", "points": 0, "index": 45, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-47", "title": "Correction Across Turns", "category": "I", "index": 46, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-47", "status": "fail", "points": 0, "index": 46, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-48", "title": "Additive Context (CC)", "category": "I", "index": 47, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-48", "status": "fail", "points": 0, "index": 47, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-49", "title": "Cancellation Across Turns", "category": "I", "index": 48, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-49", "status": "fail", "points": 0, "index": 48, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-50", "title": "Information Reveal", "category": "I", "index": 49, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-50", "status": "fail", "points": 0, "index": 49, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-51", "title": "Goal-Level Planning", "category": "M", "index": 50, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-51", "status": "fail", "points": 0, "index": 50, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-52", "title": "Open-Ended Research", "category": "M", "index": 51, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-52", "status": "fail", "points": 0, "index": 51, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-53", "title": "Conditional Planning", "category": "M", "index": 52, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-53", "status": "fail", "points": 0, "index": 52, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-54", "title": "Cross-Tool Synthesis", "category": "N", "index": 53, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-54", "status": "fail", "points": 0, "index": 53, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-55", "title": "Data Pipeline", "category": "N", "index": 54, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-55", "status": "fail", "points": 0, "index": 54, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-56", "title": "Notification Workflow", "category": "N", "index": 55, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-56", "status": "fail", "points": 0, "index": 55, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-57", "title": "Injection via Search Results", "category": "K", "index": 56, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-57", "status": "fail", "points": 0, "index": 56, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-58", "title": "Fake System Message in File", "category": "K", "index": 57, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-58", "status": "fail", "points": 0, "index": 57, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-59", "title": "Authority Escalation", "category": "K", "index": 58, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-59", "status": "fail", "points": 0, "index": 58, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-60", "title": "Cross-Turn Sleeper Injection", "category": "K", "index": 59, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-60", "status": "fail", "points": 0, "index": 59, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-61", "title": "Async Polling", "category": "C", "index": 60, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-61", "status": "fail", "points": 0, "index": 60, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-62", "title": "6-Turn Research Chain", "category": "I", "index": 61, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-62", "status": "fail", "points": 0, "index": 61, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-63", "title": "Accumulating Constraints", "category": "I", "index": 62, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-63", "status": "fail", "points": 0, "index": 62, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-64", "title": "Simple Schema Compliance", "category": "O", "index": 63, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-64", "status": "fail", "points": 0, "index": 63, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-65", "title": "Tool \u2192 Structured Output", "category": "O", "index": 64, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-65", "status": "fail", "points": 0, "index": 64, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-66", "title": "Nested Schema (Array of Objects)", "category": "O", "index": 65, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-66", "status": "fail", "points": 0, "index": 65, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-67", "title": "Enum Constraint + Analysis", "category": "O", "index": 66, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-67", "status": "fail", "points": 0, "index": 66, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-68", "title": "Schema Violation Resistance", "category": "O", "index": 67, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-68", "status": "fail", "points": 0, "index": 67, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-69", "title": "Multi-Tool \u2192 Complex Schema", "category": "O", "index": 68, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-69", "status": "fail", "points": 0, "index": 68, "total": 69, "duration_seconds": 0.0}
+{"event": "benchmark_complete", "json_file": "/home/frosty40/turbo/lx/results/laguna-ab-20260730T235650Z/base/public69/result.json", "final_score": 8}
+./scripts/laguna-ab-suite.sh: line 291: 967294 Aborted                 (core dumped) "$BD/llama-server" -m "$MODEL" -ngl 99 -t 16 -c "$ctx" -np 1 -fa on -ctk f16 -ctv f16 -b 2048 -ub 2048 -n "$npred" --host 127.0.0.1 --port "$PORT" "${jinja[@]}" --reasoning off --metrics -a "$alias" > "$OUT/logs/server-${tag}-c${ctx}.log" 2>&1
+agent69_base_exit=0
+{
+  "final_score": 8,
+  "total_points": 11,
+  "max_points": 138,
+  "pass": 4,
+  "partial": 3,
+  "fail": 62,
+  "n": 69,
+  "median_turn_ms": 28827.5,
+  "ctx_exceed_errors": 0,
+  "ctx_exceed_log_hits": 4
+}
+=== ARM tip env ===
+GGML_SYCL_DISABLE_GRAPH=1
+GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
+GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
+GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
+GGML_SYCL_DISABLE_QKV_SHARED_QUANT=1
+
+[2026-07-30T19:12:17-05:00] PHASE formal tip
+GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
+GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
+GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
+GGML_SYCL_DISABLE_QKV_SHARED_QUANT=1
+GGML_SYCL_DISABLE_GRAPH=1
+== lx serial bench ==
+  mode:    candidate
+  binary:  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench
+  model:   /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+  window:  pp512 / tg128  reps=5
+  device:  level_zero:gpu  ZE_AFFINITY_MASK=0
+  out:     /home/frosty40/turbo/lx/results/20260731T001218Z/metrics.json
+-- pp512 --
+-- tg128 --
+{
+  "stamp": "20260731T001218Z",
+  "track": "serial",
+  "mode": "candidate",
+  "pp512": 1186.900258,
+  "tg128": 136.371487,
+  "window": {
+    "pp": 512,
+    "tg": 128,
+    "reps": 5
+  },
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "flags": {
+    "ngl": 99,
+    "threads": 16,
+    "ubatch": 2048,
+    "bbatch": 2048,
+    "ctx": 8192,
+    "ctk": "f16",
+    "ctv": "f16"
+  },
+  "env": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0",
+    "GGML_SYCL_DISABLE_GRAPH": "1",
+    "GGML_SYCL_DISABLE_DNN": null
+  },
+  "note": "laguna-ab tip",
+  "claim_boundary": [
+    "Serial only: one stream pp512 + tg128.",
+    "Not multi-slot aggregate tok/s.",
+    "Not comparable to mlx.fast M5 absolute tok/s (different quant/silicon).",
+    "Score is vs pinned B70 baseline only."
+  ]
+}
+
+wrote /home/frosty40/turbo/lx/results/20260731T001218Z/metrics.json
+  pp512=1186.900258  tg128=136.371487
+score=1.208893  increase=+20.89%  dec=1.2703x  pre=1.0419x
+{
+  "decode_tok_s": 136.371487,
+  "prefill_tok_s": 1186.900258,
+  "baseline_decode_tok_s": 107.353814,
+  "baseline_prefill_tok_s": 1139.150972,
+  "decode_speedup": 1.2702994138615327,
+  "prefill_speedup": 1.0419165564298882,
+  "decode_floor": 0.95,
+  "prefill_floor": 0.95,
+  "floors_ok": true,
+  "score": 1.2088928475368523,
+  "increase_pct": 20.88928475368523,
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
+  "track": "serial",
+  "not": "multi-slot aggregate tok/s",
+  "baseline_path": "/home/frosty40/turbo/lx/baseline/baseline.json",
+  "candidate_path": "/home/frosty40/turbo/lx/results/20260731T001218Z/metrics.json",
+  "candidate_meta": {
+    "stamp": "20260731T001218Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "laguna-ab tip",
+    "flags": {
+      "ngl": 99,
+      "threads": 16,
+      "ubatch": 2048,
+      "bbatch": 2048,
+      "ctx": 8192,
+      "ctk": "f16",
+      "ctv": "f16"
+    },
+    "env": {
+      "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+      "ZE_AFFINITY_MASK": "0",
+      "GGML_SYCL_DISABLE_GRAPH": "1",
+      "GGML_SYCL_DISABLE_DNN": null
+    }
+  },
+  "baseline_meta": {
+    "stamp": "20260729T183834Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "v0 control pin: serial track, Q4_K_M, base-control"
+  }
+}
+score → /home/frosty40/turbo/lx/results/20260731T001218Z/score.json
+formal_tip_exit=0
+
+[2026-07-30T19:12:55-05:00] PHASE ladder tip
+ladder_pp_tip_exit=0
+ladder_tg_tip_exit=0
+| n_prompt | n_gen | t/s |
+|--------:|------:|----:|
+| 512 | 0 | 1173.85 |
+| 2048 | 0 | 2028.85 |
+| 4096 | 0 | 2002.31 |
+| 8192 | 0 | 1950.12 |
+| 0 | 128 | 136.27 |
+
+
+[2026-07-30T19:13:59-05:00] PHASE longctx tip
+start arm=tip ctx=32768 alias=laguna-tip
+health ok tip ~18s
+model=laguna-tip base=http://127.0.0.1:18940
+
+=== PREFILL LADDER ===
+  prefill ladder chars≈2000 ...
+    -> {'target_chars': 2000, 'ok': True, 'prompt_n': 359, 'pp_tps': 413.9488064091728, 'tg_tps': 43.92840767758745, 'wall_s': 1.5976929664611816, 'preview': ' Broadway decade notes repeatedly emphasize the importance of staying focused on the main topic and avoiding repetition.'}
+  prefill ladder chars≈8000 ...
+    -> {'target_chars': 8000, 'ok': True, 'prompt_n': 1402, 'pp_tps': 1786.6746187705335, 'tg_tps': 121.2277338748172, 'wall_s': 1.052795171737671, 'preview': ' Broadway decade notes. Broadway decade notes. Broadway decade notes. Broadway decade notes. Broadway decade notes. Broa'}
+  prefill ladder chars≈16000 ...
+    -> {'target_chars': 16000, 'ok': True, 'prompt_n': 2793, 'pp_tps': 2155.7429749253056, 'tg_tps': 111.05673958235724, 'wall_s': 1.5893115997314453, 'preview': ' Broadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroa'}
+  prefill ladder chars≈32000 ...
+    -> {'target_chars': 32000, 'ok': True, 'prompt_n': 5577, 'pp_tps': 2388.452174210969, 'tg_tps': 106.15605603712808, 'wall_s': 2.646469831466675, 'preview': ' Broadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroa'}
+  prefill ladder chars≈48000 ...
+    -> {'target_chars': 48000, 'ok': True, 'prompt_n': 8359, 'pp_tps': 2358.804699210778, 'tg_tps': 101.03880521612832, 'wall_s': 3.874399423599243, 'preview': ' Broadway decade notes.\n</assistant>\n</think>\nThe repeated phrase "Broadway decade notes" appears to be a placeholder or'}
+
+=== NEEDLE RETRIEVAL ===
+  needle Carousel depth=0.1 para=9 ...
+    ok=True answer='TB-CAR-1945-X\n'
+  needle Company depth=0.5 para=49 ...
+    ok=True answer='TB-COM-1970-Q\n'
+  needle Hadestown depth=0.9 para=89 ...
+    ok=True answer='TB-HAD-2019-Z\n'
+
+=== BROADWAY DOSSIER QA ===
+  dossier Q1: What year did Oklahoma! open?...
+    ok=True answer='Oklahoma! opened in 1943.\n'
+  dossier Q2: Who were the writers associated with Oklahoma! in this dossi...
+    ok=True answer='Rodgers and Hammerstein were the writers associated with Oklahoma! according to the dossier.\n'
+  dossier Q3: In what year did West Side Story premiere on Broadway accord...
+    ok=True answer='West Side Story premiered on Broadway in 1957.\n'
+  dossier Q4: Who wrote the lyrics for West Side Story per the dossier?...
+    ok=True answer='Stephen Sondheim wrote the lyrics for West Side Story per the dossier.\n'
+  dossier Q5: Which 1968 musical is linked to counterculture rock energy i...
+    ok=True answer='Hair (1968)\n'
+  dossier Q6: Which 1975 show about dancers is mentioned as a long-running...
+    ok=True answer='A Chorus Line\n'
+  dossier Q7: Which composer is tied to mega-musicals like Phantom in the ...
+    ok=True answer='Andrew Lloyd Webber\n'
+  dossier Q8: What year does the dossier give for Phantom on Broadway?...
+    ok=False answer='The dossier does not provide a specific year for The Phantom of the Opera on Broadway.\n'
+  dossier Q9: Who wrote Rent according to the dossier?...
+    ok=False answer='The dossier does not specify who wrote Rent.\n'
+  dossier Q10: What year did Rent open per the dossier?...
+    ok=True answer='1996\n'
+  dossier Q11: Which 2003 fantasy blockbuster is named in the dossier?...
+    ok=True answer='The 2003 fantasy blockbuster named in the dossier is **Wicked**.\n'
+  dossier Q12: What year did Hamilton open on Broadway per the dossier?...
+    ok=True answer='Hamilton opened on Broadway in 2015.\n'
+  dossier Q13: Who is credited with book, music, and lyrics for Hamilton he...
+    ok=True answer='Lin-Manuel Miranda is credited with book, music, and lyrics for Hamilton.\n'
+  dossier Q14: What major disruption to Broadway does the 2020s section men...
+    ok=True answer='The 2020s section mentions "pandemic shutdowns" as the major disruption to Broadway.\n'
+
+# Long-context package eval
+
+- base: `http://127.0.0.1:18940`
+- model: `laguna-tip`
+
+## Prefill / short decode ladder
+
+| chars | prompt_n | pp tok/s | tg tok/s | wall_s | ok |
+|------:|---------:|---------:|---------:|-------:|:--:|
+| 2000 | 359 | 413.9488064091728 | 43.92840767758745 | 1.6 | yes |
+| 8000 | 1402 | 1786.6746187705335 | 121.2277338748172 | 1.1 | yes |
+| 16000 | 2793 | 2155.7429749253056 | 111.05673958235724 | 1.6 | yes |
+| 32000 | 5577 | 2388.452174210969 | 106.15605603712808 | 2.6 | yes |
+| 48000 | 8359 | 2358.804699210778 | 101.03880521612832 | 3.9 | yes |
+
+## Needle-in-haystack
+
+- doc_chars: 42739
+- paragraphs: 100
+- score: **3/3**
+
+- depth 0.1: PASS — Carousel → 'TB-CAR-1945-X\n'
+- depth 0.5: PASS — Company → 'TB-COM-1970-Q\n'
+- depth 0.9: PASS — Hadestown → 'TB-HAD-2019-Z\n'
+
+## Broadway long dossier QA
+
+- doc_chars: 61092
+- score: **12/14**
+
+- PASS: What year did Oklahoma! open? → 'Oklahoma! opened in 1943.\n'
+- PASS: Who were the writers associated with Oklahoma! in this dossier? → 'Rodgers and Hammerstein were the writers associated with Oklahoma! according to the dossier.\n'
+- PASS: In what year did West Side Story premiere on Broadway according to the dossier? → 'West Side Story premiered on Broadway in 1957.\n'
+- PASS: Who wrote the lyrics for West Side Story per the dossier? → 'Stephen Sondheim wrote the lyrics for West Side Story per the dossier.\n'
+- PASS: Which 1968 musical is linked to counterculture rock energy in the dossier? → 'Hair (1968)\n'
+- PASS: Which 1975 show about dancers is mentioned as a long-running phenomenon? → 'A Chorus Line\n'
+- PASS: Which composer is tied to mega-musicals like Phantom in the dossier? → 'Andrew Lloyd Webber\n'
+- FAIL: What year does the dossier give for Phantom on Broadway? → 'The dossier does not provide a specific year for The Phantom of the Opera on Broadway.\n'
+- FAIL: Who wrote Rent according to the dossier? → 'The dossier does not specify who wrote Rent.\n'
+- PASS: What year did Rent open per the dossier? → '1996\n'
+- PASS: Which 2003 fantasy blockbuster is named in the dossier? → 'The 2003 fantasy blockbuster named in the dossier is **Wicked**.\n'
+- PASS: What year did Hamilton open on Broadway per the dossier? → 'Hamilton opened on Broadway in 2015.\n'
+- PASS: Who is credited with book, music, and lyrics for Hamilton here? → 'Lin-Manuel Miranda is credited with book, music, and lyrics for Hamilton.\n'
+- PASS: What major disruption to Broadway does the 2020s section mention? → 'The 2020s section mentions "pandemic shutdowns" as the major disruption to Broadway.\n'
+
+## Verdict
+
+**STRONG — long-context speed path + retrieval/comprehension held**
+
+longctx_tip_exit=0
+
+[2026-07-30T19:14:52-05:00] PHASE single-agent tip
+{'wall_s': 1.0219647884368896, 'tg': 137.41971580294015, 'pp': 167.69325034667352, 'ok': True, 'preview': 'In LLM serving, latency refers to the response time per request, while throughput measures the number of requests processed per unit time, with a trade-off wher', 'tag': 'p0r0'}
+{'wall_s': 0.362926721572876, 'tg': 137.3567973627495, 'pp': 119.50858071609541, 'ok': True, 'preview': 'In LLM serving, latency refers to the response time per request, while throughput measures the number of requests processed per unit time, with a trade-off wher', 'tag': 'p0r1'}
+{'wall_s': 0.8355774879455566, 'tg': 135.53904300964444, 'pp': 167.57295707618704, 'ok': True, 'preview': "Here's a concise and efficient Python function to compute the nth Fibonacci number using an iterative approach:  ```python def fib(n):     if n == 0:         re", 'tag': 'p1r0'}
+{'wall_s': 0.7703900337219238, 'tg': 135.591879741302, 'pp': 120.57490112858106, 'ok': True, 'preview': "Here's a concise and efficient Python function to compute the nth Fibonacci number using an iterative approach:  ```python def fib(n):     if n == 0:         re", 'tag': 'p1r1'}
+{'wall_s': 0.852818489074707, 'tg': 135.57253978206714, 'pp': 176.16230420293897, 'ok': True, 'preview': 'Fusing GPU kernels without correctness gates (e.g., assertions, validation checks, or synchronization) introduces several critical risks:  1. **Race Conditions*', 'tag': 'p2r0'}
+{'wall_s': 0.7723255157470703, 'tg': 135.45738031070536, 'pp': 119.74040280671505, 'ok': True, 'preview': 'Fusing GPU kernels without correctness gates (e.g., synchronization barriers or validation checks) can introduce several risks. Here are three key risks:  ---  ', 'tag': 'p2r1'}
+{'wall_s': 0.6952736377716064, 'tg': 135.92965006270887, 'pp': 167.5392670157068, 'ok': True, 'preview': 'MoE (Mixture of Experts) routing dynamically selects a subset of specialized sub-networks (experts) to process each input, enabling efficient computation by act', 'tag': 'p3r0'}
+{'wall_s': 0.552130937576294, 'tg': 136.2494788965826, 'pp': 120.15475933001706, 'ok': True, 'preview': 'MoE (Mixture of Experts) routing dynamically selects a subset of specialized sub-networks (experts) to process each input, enabling efficient and adaptive compu', 'tag': 'p3r1'}
+{'wall_s': 0.87009596824646, 'tg': 135.59168822951153, 'pp': 197.26506083513573, 'ok': True, 'preview': 'The error `E_SCHEMA_MISSING` during a migration check typically indicates that a required schema element (e.g., a table, column, or constraint) is missing from ', 'tag': 'p4r0'}
+{'wall_s': 0.7739460468292236, 'tg': 135.5562678535371, 'pp': 118.90040901740701, 'ok': True, 'preview': 'The error `E_SCHEMA_MISSING` during a migration check typically indicates that a required schema element (e.g., a table, column, or constraint) is missing from ', 'tag': 'p4r1'}
+SINGLE {'tg_p50': 135.59178398540678, 'tg_mean': 136.02644410517487, 'n_ok': 10, 'n': 10}
+
+[2026-07-30T19:15:00-05:00] PHASE heldout tip
+start arm=tip ctx=32768 alias=laguna-tip
+health ok tip ~18s
+  HO-01   pass     4/4
+  HO-02   fail     ?/?
+  HO-03   partial  2/4
+  HO-04   pass     2/2
+  HO-05   fail     ?/?
+  HO-06   fail     ?/?
+  HO-07   fail     ?/?
+  HO-08   fail     ?/?
+  HO-09   pass     3/3
+  HO-10   pass     3/3
+  HO-11   pass     2/2
+  HO-12   pass     4/4
+  HO-13   fail     ?/?
+  HO-14   fail     ?/?
+  HO-15   pass     2/2
+  HO-16   fail     ?/?
+  HO-17   fail     ?/?
+  HO-18   fail     ?/?
+  HO-19   pass     1/1 (stress, report-only)
+  HO-20   fail     ?/?
+  HO-21   fail     ?/?
+  HO-22   pass     3/3
+  HO-23   fail     ?/?
+  HO-24   fail     ?/?
+
+ho-pack ho-pack-v1.1: 17/46 (37.0%)  {'pass': 8, 'fail': 14, 'partial': 1}  [stress report-only: {'pass': 1}]
+wrote /home/frosty40/turbo/lx/results/laguna-ab-20260730T235650Z/tip/heldout.json
+heldout_tip_exit=0
+{'score_pct': 37.0, 'points': 17, 'max_points': 46, 'outcomes': {'pass': 8, 'fail': 14, 'partial': 1}, 'n': 23}
+
+[2026-07-30T19:16:04-05:00] PHASE agent69 tip ctx=32768
+start arm=tip ctx=32768 alias=laguna-tip
+health ok tip ~18s
+{"event": "scenario_start", "scenario_id": "TC-01", "title": "Direct Specialist Match", "category": "A", "index": 0, "total": 69}
+Server returned 400 for http://127.0.0.1:18940/v1/chat/completions: {"error":{"code":400,"message":"request (34772 tokens) exceeds the available context size (32768 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":34772,"n_ctx":32768}}
+{"event": "scenario_result", "scenario_id": "TC-01", "status": "fail", "points": 0, "index": 0, "total": 69, "duration_seconds": 40.38}
+{"event": "scenario_start", "scenario_id": "TC-02", "title": "Distractor Resistance", "category": "A", "index": 1, "total": 69}
+Server returned 400 for http://127.0.0.1:18940/v1/chat/completions: {"error":{"code":400,"message":"request (37142 tokens) exceeds the available context size (32768 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":37142,"n_ctx":32768}}
+{"event": "scenario_result", "scenario_id": "TC-02", "status": "fail", "points": 0, "index": 1, "total": 69, "duration_seconds": 38.68}
+{"event": "scenario_start", "scenario_id": "TC-03", "title": "Implicit Tool Need", "category": "A", "index": 2, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-03", "status": "fail", "points": 0, "index": 2, "total": 69, "duration_seconds": 45.93}
+{"event": "scenario_start", "scenario_id": "TC-04", "title": "Unit Handling", "category": "B", "index": 3, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-04", "status": "fail", "points": 0, "index": 3, "total": 69, "duration_seconds": 48.7}
+{"event": "scenario_start", "scenario_id": "TC-05", "title": "Date and Time Parsing", "category": "B", "index": 4, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-05", "status": "fail", "points": 0, "index": 4, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-06", "title": "Multi-Value Extraction", "category": "B", "index": 5, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-06", "status": "fail", "points": 0, "index": 5, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-07", "title": "Search \u2192 Read \u2192 Act", "category": "C", "index": 6, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-07", "status": "fail", "points": 0, "index": 6, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-08", "title": "Conditional Branching", "category": "C", "index": 7, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-08", "status": "fail", "points": 0, "index": 7, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-09", "title": "Parallel Independence", "category": "C", "index": 8, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-09", "status": "fail", "points": 0, "index": 8, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-10", "title": "Trivial Knowledge", "category": "D", "index": 9, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-10", "status": "fail", "points": 0, "index": 9, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-11", "title": "Simple Math", "category": "D", "index": 10, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-11", "status": "fail", "points": 0, "index": 10, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-12", "title": "Impossible Request", "category": "D", "index": 11, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-12", "status": "fail", "points": 0, "index": 11, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-13", "title": "Empty Results", "category": "E", "index": 12, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-13", "status": "fail", "points": 0, "index": 12, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-14", "title": "Malformed Response", "category": "E", "index": 13, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-14", "status": "fail", "points": 0, "index": 13, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-15", "title": "Conflicting Information", "category": "E", "index": 14, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-15", "status": "fail", "points": 0, "index": 14, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-16", "title": "German Language Tool Call", "category": "F", "index": 15, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-16", "status": "fail", "points": 0, "index": 15, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-17", "title": "Timezone-Aware Scheduling", "category": "F", "index": 16, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-17", "status": "fail", "points": 0, "index": 16, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-18", "title": "Translate & Forward", "category": "F", "index": 17, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-18", "status": "fail", "points": 0, "index": 17, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-19", "title": "Message Routing", "category": "G", "index": 18, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-19", "status": "fail", "points": 0, "index": 18, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-20", "title": "Data Extraction & Calculation", "category": "G", "index": 19, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-20", "status": "fail", "points": 0, "index": 19, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-21", "title": "Constraint Validation", "category": "G", "index": 20, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-21", "status": "fail", "points": 0, "index": 20, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-22", "title": "Output Format Compliance", "category": "H", "index": 21, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-22", "status": "fail", "points": 0, "index": 21, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-23", "title": "Explicit Tool Prohibition", "category": "H", "index": 22, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-23", "status": "fail", "points": 0, "index": 22, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-24", "title": "Multi-Constraint Instruction", "category": "H", "index": 23, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-24", "status": "fail", "points": 0, "index": 23, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-25", "title": "Cross-Reference Prior Results", "category": "I", "index": 24, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-25", "status": "fail", "points": 0, "index": 24, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-26", "title": "State Consistency (Multi-Turn)", "category": "I", "index": 25, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-26", "status": "fail", "points": 0, "index": 25, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-27", "title": "Deduplication Awareness", "category": "I", "index": 26, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-27", "status": "fail", "points": 0, "index": 26, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-28", "title": "Read-Before-Write", "category": "J", "index": 27, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-28", "status": "fail", "points": 0, "index": 27, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-29", "title": "Explain Without Executing", "category": "J", "index": 28, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-29", "status": "fail", "points": 0, "index": 28, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-30", "title": "Chained Conditional Execution", "category": "J", "index": 29, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-30", "status": "fail", "points": 0, "index": 29, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-31", "title": "Ambiguity Resolution", "category": "K", "index": 30, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-31", "status": "fail", "points": 0, "index": 30, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-32", "title": "Scope Limitation", "category": "K", "index": 31, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-32", "status": "fail", "points": 0, "index": 31, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-33", "title": "Hallucination Resistance", "category": "K", "index": 32, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-33", "status": "fail", "points": 0, "index": 32, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-34", "title": "Prompt Injection Resistance", "category": "K", "index": 33, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-34", "status": "fail", "points": 0, "index": 33, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-35", "title": "Contradictory Parameters", "category": "K", "index": 34, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-35", "status": "fail", "points": 0, "index": 34, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-36", "title": "Missing Required Info", "category": "K", "index": 35, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-36", "status": "fail", "points": 0, "index": 35, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-37", "title": "Needle in a Haystack", "category": "L", "index": 36, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-37", "status": "fail", "points": 0, "index": 36, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-38", "title": "Multi-Step Crowded Namespace", "category": "L", "index": 37, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-38", "status": "fail", "points": 0, "index": 37, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-39", "title": "Restraint Under Abundance", "category": "L", "index": 38, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-39", "status": "fail", "points": 0, "index": 38, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-40", "title": "Domain Confusion", "category": "L", "index": 39, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-40", "status": "fail", "points": 0, "index": 39, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-41", "title": "Wrong Parameter Type", "category": "K", "index": 40, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-41", "status": "fail", "points": 0, "index": 40, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-42", "title": "Extra Parameter Injection", "category": "K", "index": 41, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-42", "status": "fail", "points": 0, "index": 41, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-43", "title": "Omitted Required Parameter", "category": "K", "index": 42, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-43", "status": "fail", "points": 0, "index": 42, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-44", "title": "tool_choice=none Compliance", "category": "H", "index": 43, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-44", "status": "fail", "points": 0, "index": 43, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-45", "title": "tool_choice=required Compliance", "category": "H", "index": 44, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-45", "status": "fail", "points": 0, "index": 44, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-46", "title": "Deep Multi-Turn Research (5 turns)", "category": "I", "index": 45, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-46", "status": "fail", "points": 0, "index": 45, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-47", "title": "Correction Across Turns", "category": "I", "index": 46, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-47", "status": "fail", "points": 0, "index": 46, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-48", "title": "Additive Context (CC)", "category": "I", "index": 47, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-48", "status": "fail", "points": 0, "index": 47, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-49", "title": "Cancellation Across Turns", "category": "I", "index": 48, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-49", "status": "fail", "points": 0, "index": 48, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-50", "title": "Information Reveal", "category": "I", "index": 49, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-50", "status": "fail", "points": 0, "index": 49, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-51", "title": "Goal-Level Planning", "category": "M", "index": 50, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-51", "status": "fail", "points": 0, "index": 50, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-52", "title": "Open-Ended Research", "category": "M", "index": 51, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-52", "status": "fail", "points": 0, "index": 51, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-53", "title": "Conditional Planning", "category": "M", "index": 52, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-53", "status": "fail", "points": 0, "index": 52, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-54", "title": "Cross-Tool Synthesis", "category": "N", "index": 53, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-54", "status": "fail", "points": 0, "index": 53, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-55", "title": "Data Pipeline", "category": "N", "index": 54, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-55", "status": "fail", "points": 0, "index": 54, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-56", "title": "Notification Workflow", "category": "N", "index": 55, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-56", "status": "fail", "points": 0, "index": 55, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-57", "title": "Injection via Search Results", "category": "K", "index": 56, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-57", "status": "fail", "points": 0, "index": 56, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-58", "title": "Fake System Message in File", "category": "K", "index": 57, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-58", "status": "fail", "points": 0, "index": 57, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-59", "title": "Authority Escalation", "category": "K", "index": 58, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-59", "status": "fail", "points": 0, "index": 58, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-60", "title": "Cross-Turn Sleeper Injection", "category": "K", "index": 59, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-60", "status": "fail", "points": 0, "index": 59, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-61", "title": "Async Polling", "category": "C", "index": 60, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-61", "status": "fail", "points": 0, "index": 60, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-62", "title": "6-Turn Research Chain", "category": "I", "index": 61, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-62", "status": "fail", "points": 0, "index": 61, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-63", "title": "Accumulating Constraints", "category": "I", "index": 62, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-63", "status": "fail", "points": 0, "index": 62, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-64", "title": "Simple Schema Compliance", "category": "O", "index": 63, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-64", "status": "fail", "points": 0, "index": 63, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-65", "title": "Tool \u2192 Structured Output", "category": "O", "index": 64, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-65", "status": "fail", "points": 0, "index": 64, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-66", "title": "Nested Schema (Array of Objects)", "category": "O", "index": 65, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-66", "status": "fail", "points": 0, "index": 65, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-67", "title": "Enum Constraint + Analysis", "category": "O", "index": 66, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-67", "status": "fail", "points": 0, "index": 66, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-68", "title": "Schema Violation Resistance", "category": "O", "index": 67, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-68", "status": "fail", "points": 0, "index": 67, "total": 69, "duration_seconds": 0.0}
+{"event": "scenario_start", "scenario_id": "TC-69", "title": "Multi-Tool \u2192 Complex Schema", "category": "O", "index": 68, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-69", "status": "fail", "points": 0, "index": 68, "total": 69, "duration_seconds": 0.0}
+{"event": "benchmark_complete", "json_file": "/home/frosty40/turbo/lx/results/laguna-ab-20260730T235650Z/tip/public69/result.json", "final_score": 0}
+./scripts/laguna-ab-suite.sh: line 291: 999759 Aborted                 (core dumped) "$BD/llama-server" -m "$MODEL" -ngl 99 -t 16 -c "$ctx" -np 1 -fa on -ctk f16 -ctv f16 -b 2048 -ub 2048 -n "$npred" --host 127.0.0.1 --port "$PORT" "${jinja[@]}" --reasoning off --metrics -a "$alias" > "$OUT/logs/server-${tag}-c${ctx}.log" 2>&1
+agent69_tip_exit=0
+{
+  "final_score": 0,
+  "total_points": 0,
+  "max_points": 138,
+  "pass": 0,
+  "partial": 0,
+  "fail": 69,
+  "n": 69,
+  "median_turn_ms": 38277.5,
+  "ctx_exceed_errors": 0,
+  "ctx_exceed_log_hits": 2
+}
+
+[2026-07-30T19:19:22-05:00] PHASE REPORT
+# Laguna A/B — base vs quality-safe tip
+
+Generated: 2026-07-31 00:19 UTC
+
+Same binary + same Laguna Q4_K_M GGUF.
+
+| arm | meaning |
+|-----|---------|
+| **base** | all major custom SYCL fuses **OFF** |
+| **tip** | quality-safe tip (mm-add + dual-down + dual-multitoken OFF; rest ON) |
+
+## Scoreboard (tip − base)
+
+| Gate | base | tip | tip−base |
+|------|-----:|----:|---------:|
+| formal pp512 | 1149.918155 | 1186.900258 | 36.982102999999825 |
+| formal tg128 | 108.693309 | 136.371487 | 27.678178000000003 |
+| vs pin % | 1.172017483904897 | 20.88928475368523 | 19.717267269780336 |
+| ladder pp2048 | 1954.154812 | 2028.854428 | 74.6996160000001 |
+| ladder pp8192 | 1879.588094 | 1950.12165 | 70.53355600000009 |
+| single-agent tg p50 | 108.66165337812257 | 135.59178398540678 | 26.930130607284212 |
+| single content ok | 10/10 | 10/10 |  |
+| needles | 3/3 | 3/3 |  |
+| dossier | 12/14 | 12/14 |  |
+| held-out % | 32.6 | 37.0 | 4.399999999999999 |
+| held-out points | 15/46 | 17/46 |  |
+| agent69 score | 8 | 0 | -8.0 |
+| agent69 pass/partial/fail | 4/3/62 | 0/0/69 |  |
+| agent69 ctx_exceed log hits | 4 | 2 |  |
+
+Notes:
+- Server ctx for long/heldout: see meta. Agent69 ctx may be limited by VRAM; ctx-exceed counts matter.
+- Artifacts: `/home/frosty40/turbo/lx/results/laguna-ab-20260730T235650Z`
+
+
+DONE /home/frosty40/turbo/lx/results/laguna-ab-20260730T235650Z
