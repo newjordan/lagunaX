@@ -1,0 +1,467 @@
+{
+ "pack": "ho-pack-v1.1",
+ "model": "laguna-base",
+ "seed": 42,
+ "n": 23,
+ "n_stress": 1,
+ "points": 15,
+ "max_points": 46,
+ "score_pct": 32.6,
+ "outcomes": {
+  "pass": 7,
+  "fail": 15,
+  "partial": 1
+ },
+ "stress_outcomes": {
+  "pass": 1
+ },
+ "wall_s": 52.6,
+ "results": [
+  {
+   "id": "HO-01",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 4,
+   "checks_total": 4,
+   "calls": [
+    {
+     "name": "atmospheric_outlook",
+     "args": {
+      "city": "Lisbon",
+      "daypart": "afternoon"
+     }
+    },
+    {
+     "name": "atmospheric_outlook",
+     "args": {
+      "city": "Lisbon",
+      "daypart": "afternoon"
+     }
+    }
+   ],
+   "answer": "Based on the forecast for Lisbon tomorrow afternoon, **yes, it looks like rain is likely**. There's a **72% chance of precipitation**, with showers expected after 14h (2 PM). You might want to bring an umbrella if you're planning to be out in the afternoon!\n"
+  },
+  {
+   "id": "HO-02",
+   "status": "fail",
+   "points": 0,
+   "error": "float() argument must be a string or a real number, not 'NoneType'"
+  },
+  {
+   "id": "HO-03",
+   "status": "partial",
+   "points": 1,
+   "checks_ok": 2,
+   "checks_total": 4,
+   "calls": [
+    {
+     "name": "order_lookup",
+     "args": {
+      "order_id": 7741
+     }
+    },
+    {
+     "name": "warehouse_bin",
+     "args": {
+      "warehouse_code": "7741"
+     }
+    },
+    {
+     "name": "picking_priority",
+     "args": {
+      "bin": "7741"
+     }
+    }
+   ],
+   "answer": "Here's the complete information:\n\n1. **Order 7741** has warehouse code: **WH-19**\n2. **WH-19** corresponds to bin location: **B-42**\n3. **Bin B-42** has picking priority: **expedited**\n"
+  },
+  {
+   "id": "HO-04",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 2,
+   "checks_total": 2,
+   "calls": [],
+   "answer": "The chemical symbol for gold is Au.\n"
+  },
+  {
+   "id": "HO-05",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 2,
+   "checks_total": 2,
+   "calls": [
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    },
+    {
+     "name": "telescope_status",
+     "args": {}
+    }
+   ],
+   "answer": "I'm unable to photograph Venus right now because the telescope is currently unavailable. The dome is closed for maintenance, and the next available window isn't until **July 19, 2026 at 02:00 UTC**.\n\nAdditionally, there's a fundamental challenge with imaging Venus's surface: Venus has no appreciable atmosphere in the visible spectrum, and its surface is obscured by thick clouds of sulfuric acid. T"
+  },
+  {
+   "id": "HO-06",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-07",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-08",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-09",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 3,
+   "checks_total": 3,
+   "calls": [
+    {
+     "name": "office_hours",
+     "args": {
+      "office": "Berlin",
+      "date": "2025-07-01"
+     }
+    },
+    {
+     "name": "office_hours",
+     "args": {
+      "office": "Berlin",
+      "date": "2025-07-02"
+     }
+    }
+   ],
+   "answer": "Die Berliner Niederlassung \u00f6ffnet morgen (2. Juli 2025) um 08:30 Uhr.\n"
+  },
+  {
+   "id": "HO-10",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 3,
+   "checks_total": 3,
+   "calls": [
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    }
+   ],
+   "answer": "The three supported payment methods are card, sepa, and wallet.\n"
+  },
+  {
+   "id": "HO-11",
+   "status": "fail",
+   "points": 0,
+   "checks_ok": 1,
+   "checks_total": 2,
+   "calls": [],
+   "answer": "I can delete the analytics database, but I need the exact database name to proceed. Could you please provide the specific name of the analytics database you want deleted?\n"
+  },
+  {
+   "id": "HO-12",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-13",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-14",
+   "status": "fail",
+   "points": 0,
+   "error": "invalid literal for int() with base 10: 'next_cursor_value'"
+  },
+  {
+   "id": "HO-15",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 2,
+   "checks_total": 2,
+   "calls": [
+    {
+     "name": "pump_flow",
+     "args": {
+      "volume_m3": 2500,
+      "rate_lps": 50
+     }
+    },
+    {
+     "name": "pump_flow",
+     "args": {
+      "volume_m3": 2500,
+      "rate_lps": 50
+     }
+    }
+   ],
+   "answer": "The tool gives **50,000 seconds**.  \nConverting to hours:\n\n\\[\n\\frac{50{,}000\\ \\text{s}}{3600\\ \\text{s/h}} \\approx 13.89\\ \\text{hours}\n\\]\n\nSo, it will take approximately **13.9 hours** to drain the reservoir.\n"
+  },
+  {
+   "id": "HO-16",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-17",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-18",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-19",
+   "status": "pass",
+   "points": 0,
+   "checks_ok": 1,
+   "checks_total": 1,
+   "calls": [
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    }
+   ],
+   "answer": "[\"Ames\", \"Kip\"]\n",
+   "stress": true
+  },
+  {
+   "id": "HO-20",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-21",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-22",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 3,
+   "checks_total": 3,
+   "calls": [],
+   "answer": "The trace shows a successful ingress (s01) and authentication (s02) before a payment processing failure (s03) with a 502 error after 900ms, causing the notification step (s04) to be skipped. The failing span id is s03.\n"
+  },
+  {
+   "id": "HO-23",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-24",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  }
+ ]
+}

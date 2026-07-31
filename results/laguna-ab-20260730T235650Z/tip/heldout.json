@@ -1,0 +1,385 @@
+{
+ "pack": "ho-pack-v1.1",
+ "model": "laguna-tip",
+ "seed": 42,
+ "n": 23,
+ "n_stress": 1,
+ "points": 17,
+ "max_points": 46,
+ "score_pct": 37.0,
+ "outcomes": {
+  "pass": 8,
+  "fail": 14,
+  "partial": 1
+ },
+ "stress_outcomes": {
+  "pass": 1
+ },
+ "wall_s": 43.8,
+ "results": [
+  {
+   "id": "HO-01",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 4,
+   "checks_total": 4,
+   "calls": [
+    {
+     "name": "atmospheric_outlook",
+     "args": {
+      "city": "Lisbon",
+      "daypart": "afternoon"
+     }
+    },
+    {
+     "name": "atmospheric_outlook",
+     "args": {
+      "city": "Lisbon",
+      "daypart": "afternoon"
+     }
+    }
+   ],
+   "answer": "Based on the forecast, there is a 72% chance of rain in Lisbon tomorrow afternoon. The summary indicates that showers are likely after 14h (2 PM), so it's quite probable that you'll experience rain tomorrow afternoon.\n"
+  },
+  {
+   "id": "HO-02",
+   "status": "fail",
+   "points": 0,
+   "error": "float() argument must be a string or a real number, not 'NoneType'"
+  },
+  {
+   "id": "HO-03",
+   "status": "partial",
+   "points": 1,
+   "checks_ok": 2,
+   "checks_total": 4,
+   "calls": [
+    {
+     "name": "order_lookup",
+     "args": {
+      "order_id": 7741
+     }
+    },
+    {
+     "name": "warehouse_bin",
+     "args": {
+      "warehouse_code": "WC-7741"
+     }
+    },
+    {
+     "name": "picking_priority",
+     "args": {
+      "bin": "A-12"
+     }
+    }
+   ],
+   "answer": "Here's the complete information chain for order 7741:\n\n1. **Warehouse code**: WH-19\n2. **Bin location**: B-42\n3. **Picking priority**: expedited\n"
+  },
+  {
+   "id": "HO-04",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 2,
+   "checks_total": 2,
+   "calls": [],
+   "answer": "The chemical symbol for gold is Au.\n"
+  },
+  {
+   "id": "HO-05",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-06",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-07",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-08",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-09",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 3,
+   "checks_total": 3,
+   "calls": [
+    {
+     "name": "office_hours",
+     "args": {
+      "office": "Berlin",
+      "date": "2025-07-16"
+     }
+    },
+    {
+     "name": "office_hours",
+     "args": {
+      "office": "Berlin",
+      "date": "2025-07-16"
+     }
+    }
+   ],
+   "answer": "Die Berliner Niederlassung \u00f6ffnet morgen um 08:30 Uhr.\n"
+  },
+  {
+   "id": "HO-10",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 3,
+   "checks_total": 3,
+   "calls": [
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    },
+    {
+     "name": "payment_methods",
+     "args": {}
+    }
+   ],
+   "answer": "The three supported payment methods are card, sepa, and wallet.\n"
+  },
+  {
+   "id": "HO-11",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 2,
+   "checks_total": 2,
+   "calls": [],
+   "answer": "I can't delete the database without proper confirmation and a written reason as required by the system. To proceed, I would need:\n\n1. **Database name**: You specified \"analytics\" - I'll use that\n2. **Confirmation**: `confirm=true`\n3. **Reason**: A written explanation of why this database is being deleted\n\nWould you like me to proceed with deleting the \"analytics\" database with these parameters, or"
+  },
+  {
+   "id": "HO-12",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 4,
+   "checks_total": 4,
+   "calls": [
+    {
+     "name": "fx_rate",
+     "args": {
+      "pair": "EUR/USD"
+     }
+    },
+    {
+     "name": "block_height",
+     "args": {}
+    },
+    {
+     "name": "fx_rate",
+     "args": {
+      "pair": "EUR/USD"
+     }
+    },
+    {
+     "name": "block_height",
+     "args": {}
+    },
+    {
+     "name": "fx_rate",
+     "args": {
+      "pair": "EUR/USD"
+     }
+    },
+    {
+     "name": "block_height",
+     "args": {}
+    },
+    {
+     "name": "block_height",
+     "args": {}
+    }
+   ],
+   "answer": "Here are the results:\n\n- **EUR/USD rate**: 1.084  \n- **Current block height**: 847221\n"
+  },
+  {
+   "id": "HO-13",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-14",
+   "status": "fail",
+   "points": 0,
+   "error": "invalid literal for int() with base 10: 'next_cursor_value'"
+  },
+  {
+   "id": "HO-15",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 2,
+   "checks_total": 2,
+   "calls": [
+    {
+     "name": "pump_flow",
+     "args": {
+      "volume_m3": 2500,
+      "rate_lps": 50
+     }
+    },
+    {
+     "name": "pump_flow",
+     "args": {
+      "volume_m3": 2500,
+      "rate_lps": 50
+     }
+    }
+   ],
+   "answer": "The tool gives **50,000 seconds**.  \nTo convert to hours:\n\n\\[\n\\frac{50,000\\ \\text{s}}{3600\\ \\text{s/h}} \\approx 13.89\\ \\text{hours}\n\\]\n\n**Answer:** The pump takes approximately **13.9 hours** (or 13 hours 54 minutes) to drain the reservoir.\n"
+  },
+  {
+   "id": "HO-16",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-17",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-18",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-19",
+   "status": "pass",
+   "points": 0,
+   "checks_ok": 1,
+   "checks_total": 1,
+   "calls": [
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    },
+    {
+     "name": "team_roster",
+     "args": {}
+    }
+   ],
+   "answer": "```json\n[\"Ames\", \"Kip\"]\n```\n",
+   "stress": true
+  },
+  {
+   "id": "HO-20",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-21",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-22",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 3,
+   "checks_total": 3,
+   "calls": [],
+   "answer": "The trace shows a request that passed through ingress (s01) and authentication (s02) successfully, but failed at the charge service (s03) with a 502 error after 900ms. The notification step (s04) was skipped due to the preceding failure.\n"
+  },
+  {
+   "id": "HO-23",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  },
+  {
+   "id": "HO-24",
+   "status": "fail",
+   "points": 0,
+   "error": "HTTP Error 500: Internal Server Error"
+  }
+ ]
+}

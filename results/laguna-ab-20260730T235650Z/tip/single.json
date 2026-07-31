@@ -1,0 +1,82 @@
+[
+  {
+    "wall_s": 1.0219647884368896,
+    "tg": 137.41971580294015,
+    "pp": 167.69325034667352,
+    "ok": true,
+    "preview": "In LLM serving, latency refers to the response time per request, while throughput measures the number of requests processed per unit time, with a trade-off wher",
+    "tag": "p0r0"
+  },
+  {
+    "wall_s": 0.362926721572876,
+    "tg": 137.3567973627495,
+    "pp": 119.50858071609541,
+    "ok": true,
+    "preview": "In LLM serving, latency refers to the response time per request, while throughput measures the number of requests processed per unit time, with a trade-off wher",
+    "tag": "p0r1"
+  },
+  {
+    "wall_s": 0.8355774879455566,
+    "tg": 135.53904300964444,
+    "pp": 167.57295707618704,
+    "ok": true,
+    "preview": "Here's a concise and efficient Python function to compute the nth Fibonacci number using an iterative approach:  ```python def fib(n):     if n == 0:         re",
+    "tag": "p1r0"
+  },
+  {
+    "wall_s": 0.7703900337219238,
+    "tg": 135.591879741302,
+    "pp": 120.57490112858106,
+    "ok": true,
+    "preview": "Here's a concise and efficient Python function to compute the nth Fibonacci number using an iterative approach:  ```python def fib(n):     if n == 0:         re",
+    "tag": "p1r1"
+  },
+  {
+    "wall_s": 0.852818489074707,
+    "tg": 135.57253978206714,
+    "pp": 176.16230420293897,
+    "ok": true,
+    "preview": "Fusing GPU kernels without correctness gates (e.g., assertions, validation checks, or synchronization) introduces several critical risks:  1. **Race Conditions*",
+    "tag": "p2r0"
+  },
+  {
+    "wall_s": 0.7723255157470703,
+    "tg": 135.45738031070536,
+    "pp": 119.74040280671505,
+    "ok": true,
+    "preview": "Fusing GPU kernels without correctness gates (e.g., synchronization barriers or validation checks) can introduce several risks. Here are three key risks:  ---  ",
+    "tag": "p2r1"
+  },
+  {
+    "wall_s": 0.6952736377716064,
+    "tg": 135.92965006270887,
+    "pp": 167.5392670157068,
+    "ok": true,
+    "preview": "MoE (Mixture of Experts) routing dynamically selects a subset of specialized sub-networks (experts) to process each input, enabling efficient computation by act",
+    "tag": "p3r0"
+  },
+  {
+    "wall_s": 0.552130937576294,
+    "tg": 136.2494788965826,
+    "pp": 120.15475933001706,
+    "ok": true,
+    "preview": "MoE (Mixture of Experts) routing dynamically selects a subset of specialized sub-networks (experts) to process each input, enabling efficient and adaptive compu",
+    "tag": "p3r1"
+  },
+  {
+    "wall_s": 0.87009596824646,
+    "tg": 135.59168822951153,
+    "pp": 197.26506083513573,
+    "ok": true,
+    "preview": "The error `E_SCHEMA_MISSING` during a migration check typically indicates that a required schema element (e.g., a table, column, or constraint) is missing from ",
+    "tag": "p4r0"
+  },
+  {
+    "wall_s": 0.7739460468292236,
+    "tg": 135.5562678535371,
+    "pp": 118.90040901740701,
+    "ok": true,
+    "preview": "The error `E_SCHEMA_MISSING` during a migration check typically indicates that a required schema element (e.g., a table, column, or constraint) is missing from ",
+    "tag": "p4r1"
+  }
+]

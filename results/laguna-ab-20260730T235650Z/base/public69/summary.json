@@ -1,0 +1,12 @@
+{
+  "final_score": 8,
+  "total_points": 11,
+  "max_points": 138,
+  "pass": 4,
+  "partial": 3,
+  "fail": 62,
+  "n": 69,
+  "median_turn_ms": 28827.5,
+  "ctx_exceed_errors": 0,
+  "ctx_exceed_log_hits": 4
+}
