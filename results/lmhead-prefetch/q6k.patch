@@ -1,62 +1,76 @@
 --- a/ggml/src/ggml-sycl/mmvq.cpp
 +++ b/ggml/src/ggml-sycl/mmvq.cpp
-@@ -158,3 +158,4 @@
--template <int qk, int qi, typename block_q_t, int vdr, vec_dot_q_sycl_t vec_dot_q_sycl>
-+template <int qk, int qi, typename block_q_t, int vdr, vec_dot_q_sycl_t vec_dot_q_sycl,
-+          bool PREFETCH = false>
- static void mul_mat_vec_q(const void * __restrict__ vx, const void * __restrict__ vy, float * __restrict__ dst,
-                           const int ncols, const int nrows, const sycl::nd_item<3> & item_ct1) {
-@@ -179,10 +179,27 @@
-     for (int i = item_ct1.get_local_id(2) / (qi / vdr); i < blocks_per_row; i += blocks_per_warp) {
-         const int ibx = row * blocks_per_row + i;  // x block index
- 
-         const int iby = i * (qk / QK8_1);          // y block index that aligns with ibx
+@@ -33,2 +33,2 @@
+-template <typename reorder_vec_dot_q_sycl>
++template <typename reorder_vec_dot_q_sycl, bool PREFETCH = false>
+ static void mul_mat_vec_q_reorder(const void * __restrict__ vx, const void * __restrict__ vy, float * __restrict__ dst,
+@@ -65,11 +65,34 @@
+         const int8_t* q8_1_quant_ptr = (const int8_t*)vy + iby * QK8_1;
+         const sycl::half2* q8_1_ds_ptr = (const sycl::half2*)((const char*)vy + ncols + iby * sizeof(sycl::half2));
  
 +        if constexpr (PREFETCH) {
-+            // Software-pipeline: issue the NEXT x/y block base loads before the
-+            // current block's dequant+dot so the DRAM fetch overlaps compute.
-+            // Bit-exact by construction: same bytes, same accumulate order; only
-+            // the load issue point moves. The loads are kept live by a
-+            // never-taken IEEE NaN compare (NaN != NaN), so no arithmetic on
-+            // tmp ever executes and dst is only (re)written by the real result.
-+            const int ibx_next = ibx + blocks_per_warp;
++            // Software-pipeline: hoist the NEXT x/y block loads before the
++            // current block's dot so the DRAM fetch overlaps compute.
++            // Bit-exact by construction: same bytes, same accumulate order;
++            // the loads are kept live by a never-taken IEEE NaN compare
++            // (half2 NaN != NaN is not foldable), so partial_sum arithmetic
++            // never changes and dst is only written by the real result.
++            const int ibx_next = ibx + blocks_per_subgroup;
 +            if (ibx_next < row * blocks_per_row + blocks_per_row) {
-+                const block_q8_1 ynext = y[iby + blocks_per_warp * (qk / QK8_1)];
-+                const block_q_t   xnext = x[ibx_next];
-+                if (ynext.d[0] != ynext.d[0]) { // never true for real scales
-+                    dst[row] = (float) ynext.d[0] * (float) xnext.d;
++                const auto bxo_next = block_type::get_block_offset(ibx_next, nblocks);
++                const auto do_next  = block_type::get_d_offset(nrows, ncols, ibx_next);
++                const int  iby_next = (i + blocks_per_subgroup) * block_type::block_to_q8_1_ratio();
++                const int8_t*   qp_next = (const int8_t*)vy + iby_next * QK8_1;
++                const sycl::half2* dp_next = (const sycl::half2*)((const char*)vy + ncols + iby_next * sizeof(sycl::half2));
++                const float qf = (float) qp_next[0];
++                const float df = (float) dp_next[0].x();
++                if (df != df) { // never true for real scales; keeps both loads live
++                    partial_sum += qf * df;
 +                }
++                (void) bxo_next; (void) do_next;
 +            }
 +        }
 +
-         for (size_t elem = 0; elem < qi / vdr; elem += WARP_SIZE) {
-             const int iqs = elem + vdr * (item_ct1.get_local_id(2) %
-                                           (qi / vdr));  // x block quant index when casting the quants to int
+ #pragma unroll
+         for (int elem = 0; elem < block_elements_per_subgroup; elem += WARP_SIZE) {
+             // x block quant index when casting the quants to int
+             const int iqs = elem + block_traits::vdr_mmvq * (sg.get_local_linear_id() % block_elements_per_subgroup);
  
-             tmp += vec_dot_q_sycl(&x[ibx], &y[iby], iqs);
-@@ -1904,5 +1904,25 @@
- static void mul_mat_vec_q6_K_q8_1_sycl_ncols1_sel(const void * vx, const void * vy, float * dst,
-         const int ncols, const int nrows, dpct::queue_ptr stream) {
+             partial_sum += reorder_vec_dot_q_sycl()(vx, bx_offset, d_offset, q8_1_quant_ptr, q8_1_ds_ptr, iqs);
+         }
+     }
+@@ -1778,19 +1778,29 @@
+-static void reorder_mul_mat_vec_q6_k_q8_1_sycl(const void * vx, const void * vy, float * dst, const int ncols,
+-                                               const int nrows, dpct::queue_ptr stream) {
++template <bool PREFETCH>
++static void reorder_mul_mat_vec_q6_k_q8_1_sycl_impl(const void * vx, const void * vy, float * dst, const int ncols,
++                                                    const int nrows, dpct::queue_ptr stream) {
+     GGML_ASSERT(ncols % QK_K == 0);
+     // Round up to a whole number of subgroup-sized workgroups; out-of-range rows are skipped inside the kernel.
+     constexpr size_t num_subgroups = WARP_SIZE;
+     const int block_num_y = ceil_div(nrows, GGML_SYCL_MMV_Y * (int) num_subgroups);
+     const sycl::range<3> block_nums(1, 1, block_num_y);
+     const sycl::range<3> block_dims(1, GGML_SYCL_MMV_Y, num_subgroups * WARP_SIZE);
+ 
+ 
+         const float * row_addend  = g_mmvq_row_addend;
+     const float * row_addend2 = g_mmvq_row_addend2;
+ stream->submit([&](sycl::handler & cgh) {
+         cgh.parallel_for(sycl::nd_range<3>(block_nums * block_dims, block_dims),
+                          [=](sycl::nd_item<3> nd_item) [[sycl::reqd_sub_group_size(WARP_SIZE)]] {
+-                             mul_mat_vec_q_reorder<reorder_vec_dot_q_sycl<GGML_TYPE_Q6_K>>(vx, vy, dst, ncols, nrows, row_addend, row_addend2, nd_item);
++                             mul_mat_vec_q_reorder<reorder_vec_dot_q_sycl<GGML_TYPE_Q6_K>, PREFETCH>(vx, vy, dst, ncols, nrows, row_addend, row_addend2, nd_item);
+                          });
+     });
+ }
++
++// env-gated dispatcher: GGML_SYCL_LMHEAD_PREFETCH (default OFF) selects the
++// software-pipelined q6_K reorder variant; unset = champion path, bit-exact.
++static void reorder_mul_mat_vec_q6_k_q8_1_sycl(const void * vx, const void * vy, float * dst, const int ncols,
++                                               const int nrows, dpct::queue_ptr stream) {
 +    if (getenv("GGML_SYCL_LMHEAD_PREFETCH") != nullptr) {
-+        // env-gated software-pipeline variant of the ncols==1 fast path.
-+        // DEFAULT OFF: the shipped champion path is byte-identical; only an
-+        // explicit GGML_SYCL_LMHEAD_PREFETCH=1 run exercises PREFETCH=true.
-+        GGML_ASSERT(ncols % QK_K == 0);
-+        const int block_num_y = (nrows + GGML_SYCL_MMV_Y - 1) / GGML_SYCL_MMV_Y;
-+        const sycl::range<3> block_nums(1, 1, block_num_y);
-+        const sycl::range<3> block_dims(1, GGML_SYCL_MMV_Y, WARP_SIZE);
-+        stream->submit([&](sycl::handler &cgh) {
-+            cgh.parallel_for(
-+                sycl::nd_range<3>(block_nums * block_dims, block_dims),
-+                [=](sycl::nd_item<3> item_ct1)
-+                    [[sycl::reqd_sub_group_size(WARP_SIZE)]] {
-+                        mul_mat_vec_q<QK_K, QI6_K, block_q6_K,
-+                                      VDR_Q6_K_Q8_1_MMVQ, vec_dot_q6_K_q8_1, true>(
-+                            vx, vy, dst, ncols, nrows, item_ct1);
-+                    });
-+        });
-+        return;
++        reorder_mul_mat_vec_q6_k_q8_1_sycl_impl<true>(vx, vy, dst, ncols, nrows, stream);
++    } else {
++        reorder_mul_mat_vec_q6_k_q8_1_sycl_impl<false>(vx, vy, dst, ncols, nrows, stream);
 +    }
-     switch (q6k_vdr_depth()) {
-         case 2: mul_mat_vec_q6_K_q8_1_sycl_vdr<2>(vx, vy, dst, ncols, nrows, stream); break;
-         case 4: mul_mat_vec_q6_K_q8_1_sycl_vdr<4>(vx, vy, dst, ncols, nrows, stream); break;
++}
