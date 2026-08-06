@@ -1,0 +1,56 @@
+{
+  "stamp": "20260806T083419Z",
+  "champion_bin": "/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench",
+  "candidate_env": "GGML_SYCL_ENABLE_FUSION=0",
+  "rounds": 2,
+  "note": "graph-on + fa-onednn-off + fusion-off",
+  "runs": [
+    {
+      "seq": 1,
+      "tag": "A",
+      "pp": 1159.687945,
+      "tg": 138.222829,
+      "pp_sd": 10.852493,
+      "tg_sd": 0.194212
+    },
+    {
+      "seq": 1,
+      "tag": "B",
+      "pp": 1134.25941,
+      "tg": 107.794689,
+      "pp_sd": 8.787456,
+      "tg_sd": 0.158014
+    },
+    {
+      "seq": 2,
+      "tag": "A",
+      "pp": 1160.72156,
+      "tg": 138.243437,
+      "pp_sd": 11.766557,
+      "tg_sd": 0.222173
+    },
+    {
+      "seq": 2,
+      "tag": "B",
+      "pp": 1128.452047,
+      "tg": 107.770568,
+      "pp_sd": 11.344344,
+      "tg_sd": 0.150794
+    }
+  ],
+  "champion": {
+    "pp": 1160.205,
+    "tg": 138.233
+  },
+  "candidate": {
+    "pp": 1131.356,
+    "tg": 107.783
+  },
+  "tg_delta_pct": -22.028,
+  "pp_delta_pct": -2.487,
+  "tg_jitter_sd_pct": 12.718,
+  "pp_jitter_sd_pct": 1.451,
+  "tg_signal_over_drift": 32.39,
+  "pp_signal_over_drift": 1.66,
+  "verdict": "REG"
+}

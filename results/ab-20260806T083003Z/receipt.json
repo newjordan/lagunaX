@@ -1,0 +1,56 @@
+{
+  "stamp": "20260806T083003Z",
+  "champion_bin": "/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench",
+  "candidate_env": "GGML_SYCL_ENABLE_GRAPH=1",
+  "rounds": 2,
+  "note": "graph-on + fa-onednn-off + fusion-off",
+  "runs": [
+    {
+      "seq": 1,
+      "tag": "A",
+      "pp": 1159.881485,
+      "tg": 138.211177,
+      "pp_sd": 14.326124,
+      "tg_sd": 0.214315
+    },
+    {
+      "seq": 1,
+      "tag": "B",
+      "pp": 1164.578014,
+      "tg": 138.227644,
+      "pp_sd": 11.153159,
+      "tg_sd": 0.189546
+    },
+    {
+      "seq": 2,
+      "tag": "A",
+      "pp": 1158.5754,
+      "tg": 137.947769,
+      "pp_sd": 13.436287,
+      "tg_sd": 0.191207
+    },
+    {
+      "seq": 2,
+      "tag": "B",
+      "pp": 1167.933709,
+      "tg": 138.001468,
+      "pp_sd": 10.812968,
+      "tg_sd": 0.209499
+    }
+  ],
+  "champion": {
+    "pp": 1159.228,
+    "tg": 138.079
+  },
+  "candidate": {
+    "pp": 1166.256,
+    "tg": 138.115
+  },
+  "tg_delta_pct": 0.025,
+  "pp_delta_pct": 0.606,
+  "tg_jitter_sd_pct": 0.104,
+  "pp_jitter_sd_pct": 0.372,
+  "tg_signal_over_drift": 0.04,
+  "pp_signal_over_drift": 0.4,
+  "verdict": "NOISE"
+}
