@@ -1,10 +1,9 @@
---- a/ggml/src/ggml-sycl/mmvq.cpp	2026-08-06 12:20:11.837737330 -0500
+--- a/ggml/src/ggml-sycl/mmvq.cpp
 +++ b/ggml/src/ggml-sycl/mmvq.cpp
 @@ -29,6 +29,100 @@
      return g_mmvq_row_addend2;
  }
  
-+
 +// --- env-gated q6_K -> q8_0 lm_head pre-convert (probe; OFF by default) ------
 +// The fused lm_head group (mul_mat+add[+add2], wtype=q6_K) decodes its weights
 +// through the reorder MMVQ path whose per-element work is a 6-bit bitfield
@@ -29,8 +28,8 @@
 +// Both planes are row-major over the same row order, so q8 sub-block s of q6
 +// block b is global q8 block b*8+sub.
 +static void lmhead_q6_to_q8_kernel(const char * __restrict__ src, char * __restrict__ dst,
-+                                   const int nblocks, const sycl::nd_item<1> & item) {
-+    const int b = (int) item.get_global_linear_id();
++                                   const int nblocks, const sycl::item<1> & item) {
++    const int b = (int) item.get_linear_id();
 +    if (b >= nblocks) {
 +        return;
 +    }
@@ -90,9 +89,10 @@
 +    if (g_buf == nullptr) {
 +        g_buf = (char *) sycl::malloc_device(bytes, *stream);
 +    }
++    char * const dst_buf = g_buf;  // local const copy: kernels cannot reference non-const statics
 +    stream->submit([&](sycl::handler & cgh) {
 +        cgh.parallel_for(sycl::range<1>((size_t) nblocks6),
-+                         [=](sycl::nd_item<1> item) { lmhead_q6_to_q8_kernel(src0_dd_i, g_buf, (int) nblocks6, item); });
++                         [=](sycl::item<1> item) { lmhead_q6_to_q8_kernel(src0_dd_i, dst_buf, (int) nblocks6, item); });
 +    });
 +    g_key = src0_key;
 +    return g_buf;
