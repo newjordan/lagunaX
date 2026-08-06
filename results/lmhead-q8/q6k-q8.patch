@@ -1,0 +1,5 @@
+--- a/ggml/src/ggml-sycl/mmvq.cpp
++++ b/ggml/src/ggml-sycl/mmvq.cpp
+@@ -1770,1 +1770,1 @@
+-                             mul_mat_vec_q_reorder<reorder_vec_dot_q_sycl<GGML_TYPE_Q6_K>>(vx, vy, dst, ncols, nrows, row_addend, row_addend2, nd_item);
++                             mul_mat_vec_q_reorder<reorder_vec_dot_q_sycl<GGML_TYPE_Q6_K>>(vx, vy, dst, ncols, nrows, row_addend, row_addend2, nd_item);  // GGML_SYCL_LMHEAD_Q8_1 marker: q8_1 pre-convert site
