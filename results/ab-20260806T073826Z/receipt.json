@@ -1,0 +1,56 @@
+{
+  "stamp": "20260806T073826Z",
+  "champion_bin": "/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench",
+  "candidate_env": "GGML_SYCL_ENABLE_MUL_MAT_ADD_ANY_BATCH=1",
+  "rounds": 2,
+  "note": "prefill-path knob probe",
+  "runs": [
+    {
+      "seq": 1,
+      "tag": "A",
+      "pp": 1163.67905,
+      "tg": 138.016882,
+      "pp_sd": 11.191447,
+      "tg_sd": 0.144603
+    },
+    {
+      "seq": 1,
+      "tag": "B",
+      "pp": 1163.446645,
+      "tg": 138.192432,
+      "pp_sd": 14.450905,
+      "tg_sd": 0.216658
+    },
+    {
+      "seq": 2,
+      "tag": "A",
+      "pp": 1171.616904,
+      "tg": 138.169704,
+      "pp_sd": 7.165638,
+      "tg_sd": 0.210853
+    },
+    {
+      "seq": 2,
+      "tag": "B",
+      "pp": 1155.778479,
+      "tg": 138.244115,
+      "pp_sd": 8.771118,
+      "tg_sd": 0.227093
+    }
+  ],
+  "champion": {
+    "pp": 1167.648,
+    "tg": 138.093
+  },
+  "candidate": {
+    "pp": 1159.613,
+    "tg": 138.218
+  },
+  "tg_delta_pct": 0.091,
+  "pp_delta_pct": -0.688,
+  "tg_jitter_sd_pct": 0.071,
+  "pp_jitter_sd_pct": 0.554,
+  "tg_signal_over_drift": 0.13,
+  "pp_signal_over_drift": 0.46,
+  "verdict": "NOISE"
+}
