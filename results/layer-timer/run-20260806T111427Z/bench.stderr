@@ -1,0 +1,226 @@
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=4
+[layer-timer] nm[0] Qcur-0
+[layer-timer] bucket order: 0=attn_o 1=ffn_shexp 2=ffn_out 3=lmhead 4=tok_embd 5=other
+[layer-timer] nm[1] Kcur-0
+[layer-timer] nm[2] Vcur-0
+[layer-timer] nm[3] attn_gate_proj-0
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=4
+[layer-timer] nm[4] attn_o_proj-0
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu)
+[layer-timer] nm[5] ffn_out-0
+[layer-timer] nm[6] Qcur-1
+[layer-timer] nm[7] Kcur-1
+[layer-timer] nm[8] Vcur-1
+[layer-timer] nm[9] attn_gate_proj-1
+[layer-timer] nm[10] attn_o_proj-1
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[layer-timer] nm[11] ffn_moe_logits-1
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=4
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=4
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=4
+[layer-timer] nm[12] ffn_moe_gate-1
+[layer-timer] nm[13] ffn_moe_gate-1
+[layer-timer] nm[14] ffn_moe_gate-1
+[layer-timer] nm[15] ffn_moe_gate-1
+[layer-timer] nm[16] ffn_moe_gate-1
+[layer-timer] nm[17] ffn_moe_gate-1
+[layer-timer] nm[18] ffn_moe_gate-1
+[layer-timer] nm[19] ffn_moe_gate-1
+[layer-timer] nm[20] ffn_moe_gate-1
+[layer-timer] nm[21] ffn_moe_gate-1
+[layer-timer] nm[22] ffn_moe_gate-1
+[layer-timer] nm[23] ffn_moe_gate-1
+[layer-timer] nm[24] ffn_moe_gate-1
+[layer-timer] nm[25] ffn_moe_gate-1
+[layer-timer] nm[26] ffn_moe_gate-1
+[layer-timer] nm[27] ffn_moe_gate-1
+[layer-timer] nm[28] ffn_moe_gate-1
+[layer-timer] nm[29] ffn_moe_gate-1
+[layer-timer] nm[30] ffn_moe_gate-1
+[layer-timer] nm[31] ffn_moe_gate-1
+[layer-timer] nm[32] ffn_moe_gate-1
+[layer-timer] nm[33] ffn_moe_gate-1
+[layer-timer] nm[34] ffn_moe_gate-1
+[layer-timer] nm[35] ffn_moe_gate-1
+[layer-timer] nm[36] ffn_moe_gate-1
+[layer-timer] nm[37] ffn_moe_gate-1
+[layer-timer] nm[38] ffn_moe_gate-1
+[layer-timer] nm[39] ffn_moe_up-1
+[layer-timer] nm[40] ffn_moe_up-1
+[layer-timer] nm[41] ffn_moe_up-1
+[layer-timer] nm[42] ffn_moe_up-1
+[layer-timer] nm[43] ffn_moe_up-1
+[layer-timer] nm[44] ffn_moe_up-1
+[layer-timer] nm[45] ffn_moe_up-1
+[layer-timer] nm[46] ffn_moe_up-1
+[layer-timer] nm[47] ffn_moe_up-1
+[layer-timer] nm[48] ffn_moe_up-1
+[layer-timer] nm[49] ffn_moe_up-1
+[layer-timer] nm[50] ffn_moe_up-1
+[layer-timer] nm[51] ffn_moe_up-1
+[layer-timer] nm[52] ffn_moe_up-1
+[layer-timer] nm[53] ffn_moe_up-1
+[layer-timer] nm[54] ffn_moe_up-1
+[layer-timer] nm[55] ffn_moe_up-1
+[layer-timer] nm[56] ffn_moe_up-1
+[layer-timer] nm[57] ffn_moe_up-1
+[layer-timer] nm[58] ffn_moe_up-1
+[layer-timer] nm[59] ffn_moe_up-1
+[layer-timer] nm[60] ffn_moe_up-1
+[layer-timer] nm[61] ffn_moe_up-1
+[layer-timer] nm[62] ffn_moe_up-1
+[layer-timer] nm[63] ffn_moe_up-1
+[layer-timer] nm[64] ffn_moe_up-1
+[layer-timer] nm[65] ffn_moe_up-1
+[lx-control-moe-down] skip: buffer overlap with dst
+[layer-timer] nm[66] ffn_moe_down-1
+[layer-timer] nm[67] ffn_moe_down-1
+[layer-timer] nm[68] ffn_moe_down-1
+[layer-timer] nm[69] ffn_moe_down-1
+[layer-timer] nm[70] ffn_moe_down-1
+[layer-timer] nm[71] ffn_moe_down-1
+[layer-timer] nm[72] ffn_moe_down-1
+[layer-timer] nm[73] ffn_moe_down-1
+[layer-timer] nm[74] ffn_moe_down-1
+[layer-timer] nm[75] ffn_moe_down-1
+[layer-timer] nm[76] ffn_moe_down-1
+[layer-timer] nm[77] ffn_moe_down-1
+[layer-timer] nm[78] ffn_moe_down-1
+[layer-timer] nm[79] ffn_moe_down-1
+[layer-timer] nm[80] ffn_moe_down-1
+[layer-timer] nm[81] ffn_moe_down-1
+[layer-timer] nm[82] ffn_moe_down-1
+[layer-timer] nm[83] ffn_moe_down-1
+[layer-timer] nm[84] ffn_moe_down-1
+[layer-timer] nm[85] ffn_moe_down-1
+[layer-timer] nm[86] ffn_moe_down-1
+[layer-timer] nm[87] ffn_moe_down-1
+[layer-timer] nm[88] ffn_moe_down-1
+[layer-timer] nm[89] ffn_moe_down-1
+[layer-timer] nm[90] ffn_moe_down-1
+[layer-timer] nm[91] ffn_moe_down-1
+[layer-timer] nm[92] ffn_moe_down-1
+[layer-timer] nm[93] ffn_shexp-1
+[lx-control-add] fuse hit (add+add residual) nelt=8192 ne0=2048 ne1=4
+[layer-timer] nm[94] Qcur-2
+[layer-timer] nm[95] Kcur-2
+[layer-timer] nm[96] Vcur-2
+[layer-timer] nm[97] attn_gate_proj-2
+[layer-timer] nm[98] attn_o_proj-2
+[layer-timer] nm[99] ffn_moe_logits-2
+[layer-timer] nm[100] ffn_moe_gate-2
+[layer-timer] nm[101] ffn_moe_gate-2
+[layer-timer] nm[102] ffn_moe_gate-2
+[layer-timer] nm[103] ffn_moe_gate-2
+[layer-timer] nm[104] ffn_moe_gate-2
+[layer-timer] nm[105] ffn_moe_gate-2
+[layer-timer] nm[106] ffn_moe_gate-2
+[layer-timer] nm[107] ffn_moe_gate-2
+[layer-timer] nm[108] ffn_moe_gate-2
+[layer-timer] nm[109] ffn_moe_gate-2
+[layer-timer] nm[110] ffn_moe_gate-2
+[layer-timer] nm[111] ffn_moe_gate-2
+[layer-timer] nm[112] ffn_moe_gate-2
+[layer-timer] nm[113] ffn_moe_gate-2
+[layer-timer] nm[114] ffn_moe_gate-2
+[layer-timer] nm[115] ffn_moe_gate-2
+[layer-timer] nm[116] ffn_moe_gate-2
+[layer-timer] nm[117] ffn_moe_gate-2
+[layer-timer] nm[118] ffn_moe_gate-2
+[layer-timer] nm[119] ffn_moe_gate-2
+[layer-timer] nm[120] ffn_moe_gate-2
+[layer-timer] nm[121] ffn_moe_gate-2
+[layer-timer] nm[122] ffn_moe_gate-2
+[layer-timer] nm[123] ffn_moe_gate-2
+[layer-timer] nm[124] ffn_moe_gate-2
+[layer-timer] nm[125] ffn_moe_gate-2
+[layer-timer] nm[126] ffn_moe_gate-2
+[layer-timer] nm[127] ffn_moe_up-2
+[layer-timer] nm[128] ffn_moe_up-2
+[layer-timer] nm[129] ffn_moe_up-2
+[layer-timer] nm[130] ffn_moe_up-2
+[layer-timer] nm[131] ffn_moe_up-2
+[layer-timer] nm[132] ffn_moe_up-2
+[layer-timer] nm[133] ffn_moe_up-2
+[layer-timer] nm[134] ffn_moe_up-2
+[layer-timer] nm[135] ffn_moe_up-2
+[layer-timer] nm[136] ffn_moe_up-2
+[layer-timer] nm[137] ffn_moe_up-2
+[layer-timer] nm[138] ffn_moe_up-2
+[layer-timer] nm[139] ffn_moe_up-2
+[layer-timer] nm[140] ffn_moe_up-2
+[layer-timer] nm[141] ffn_moe_up-2
+[layer-timer] nm[142] ffn_moe_up-2
+[layer-timer] nm[143] ffn_moe_up-2
+[layer-timer] nm[144] ffn_moe_up-2
+[layer-timer] nm[145] ffn_moe_up-2
+[layer-timer] nm[146] ffn_moe_up-2
+[layer-timer] nm[147] ffn_moe_up-2
+[layer-timer] nm[148] ffn_moe_up-2
+[layer-timer] nm[149] ffn_moe_up-2
+[layer-timer] nm[150] ffn_moe_up-2
+[layer-timer] nm[151] ffn_moe_up-2
+[layer-timer] nm[152] ffn_moe_up-2
+[layer-timer] nm[153] ffn_moe_up-2
+[layer-timer] nm[154] ffn_moe_down-2
+[layer-timer] nm[155] ffn_moe_down-2
+[layer-timer] nm[156] ffn_moe_down-2
+[layer-timer] nm[157] ffn_moe_down-2
+[layer-timer] nm[158] ffn_moe_down-2
+[layer-timer] nm[159] ffn_moe_down-2
+[layer-timer] nm[160] ffn_moe_down-2
+[layer-timer] nm[161] ffn_moe_down-2
+[layer-timer] nm[162] ffn_moe_down-2
+[layer-timer] nm[163] ffn_moe_down-2
+[layer-timer] nm[164] ffn_moe_down-2
+[layer-timer] nm[165] ffn_moe_down-2
+[layer-timer] nm[166] ffn_moe_down-2
+[layer-timer] nm[167] ffn_moe_down-2
+[layer-timer] nm[168] ffn_moe_down-2
+[layer-timer] nm[169] ffn_moe_down-2
+[layer-timer] nm[170] ffn_moe_down-2
+[layer-timer] nm[171] ffn_moe_down-2
+[layer-timer] nm[172] ffn_moe_down-2
+[layer-timer] nm[173] ffn_moe_down-2
+[layer-timer] nm[174] ffn_moe_down-2
+[layer-timer] nm[175] ffn_moe_down-2
+[layer-timer] nm[176] ffn_moe_down-2
+[layer-timer] nm[177] ffn_moe_down-2
+[layer-timer] nm[178] ffn_moe_down-2
+[layer-timer] nm[179] ffn_moe_down-2
+[layer-timer] nm[180] ffn_moe_down-2
+[layer-timer] nm[181] ffn_shexp-2
+[layer-timer] nm[182] Qcur-3
+[layer-timer] nm[183] Kcur-3
+[layer-timer] nm[184] Vcur-3
+[layer-timer] nm[185] attn_gate_proj-3
+[layer-timer] nm[186] attn_o_proj-3
+[layer-timer] nm[187] ffn_moe_logits-3
+[layer-timer] nm[188] ffn_moe_gate-3
+[layer-timer] nm[189] ffn_moe_gate-3
+[layer-timer] nm[190] ffn_moe_gate-3
+[layer-timer] nm[191] ffn_moe_gate-3
+[layer-timer] nm[192] ffn_moe_gate-3
+[layer-timer] nm[193] ffn_moe_gate-3
+[layer-timer] nm[194] ffn_moe_gate-3
+[layer-timer] nm[195] ffn_moe_gate-3
+[layer-timer] nm[196] ffn_moe_gate-3
+[layer-timer] nm[197] ffn_moe_gate-3
+[layer-timer] nm[198] ffn_moe_gate-3
+[layer-timer] nm[199] ffn_moe_gate-3
+[lx-control-moe-dual] multi-token dual+down EXPERT-LOOP n_tokens=4 k=8 n_experts=256 packed_reduce=1
+[lx-control-moe-dual] fuse hit (dual+down multi-token) tokens=4 k=8
+[lx-control-moe-down] fuse hit (weighted reduce) embd=2048 k=8 tokens=4
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=1 wtype=q6_K alias_res=1 mm='ffn_shexp-39' add='ffn_out-39' add2='l_out-39'
+[lx-control-mm-add] fuse hit (mul_mat+add) ne0=2048 ne1=1 wtype=q4_K alias_res=0 mm='attn_o_proj-0' add='ffn_inp-0' add2='-'
+[layer-timer] FINAL mul_mat dispatch budget by bucket (us, calls, us/call):
+[layer-timer] bucket attn_o:      56159 us        5240 calls     10.72 us/call
+[layer-timer] bucket ffn_shexp:     268658 us        5109 calls     52.59 us/call
+[layer-timer] bucket ffn_out:     659883 us         131 calls   5037.27 us/call
+[layer-timer] bucket other:    2568880 us       27287 calls     94.14 us/call
+[layer-timer] FINAL per-layer mul_mat decode budget (us, calls, us/call):
+[layer-timer] layer 39:    1482287 us         131 calls  11315.17 us/call
+[lmhead-probe] FINAL: 0 lm_head calls, 0 us, -nan us/cycle; max_suffix=39; per-suffix hits: 39:131
