@@ -1,0 +1,56 @@
+{
+  "stamp": "20260806T080742Z",
+  "champion_bin": "/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench",
+  "candidate_env": "GGML_SYCL_MMID_WG_SUBGROUPS=4",
+  "rounds": 2,
+  "note": "MMID WG subgroup sweep (decode/expert-loop)",
+  "runs": [
+    {
+      "seq": 1,
+      "tag": "A",
+      "pp": 1153.061236,
+      "tg": 138.114112,
+      "pp_sd": 11.108783,
+      "tg_sd": 0.210599
+    },
+    {
+      "seq": 1,
+      "tag": "B",
+      "pp": 1170.975294,
+      "tg": 138.115284,
+      "pp_sd": 13.222853,
+      "tg_sd": 0.229287
+    },
+    {
+      "seq": 2,
+      "tag": "A",
+      "pp": 1165.85253,
+      "tg": 138.220063,
+      "pp_sd": 10.920077,
+      "tg_sd": 0.207134
+    },
+    {
+      "seq": 2,
+      "tag": "B",
+      "pp": 1157.048248,
+      "tg": 138.086658,
+      "pp_sd": 12.070205,
+      "tg_sd": 0.225856
+    }
+  ],
+  "champion": {
+    "pp": 1159.457,
+    "tg": 138.167
+  },
+  "candidate": {
+    "pp": 1164.012,
+    "tg": 138.101
+  },
+  "tg_delta_pct": -0.048,
+  "pp_delta_pct": 0.393,
+  "tg_jitter_sd_pct": 0.043,
+  "pp_jitter_sd_pct": 0.703,
+  "tg_signal_over_drift": 0.07,
+  "pp_signal_over_drift": 0.26,
+  "verdict": "NOISE"
+}
