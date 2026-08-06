@@ -1,0 +1,4 @@
+[lx-gpu-lock] REFUSE: other GPU llama process(es) already running:
+  4128611 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-server -m /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf -ngl 99 -t 16 -c 16384 -np 1 -fa on -ctk f16 -ctv f16 -b 2048 -ub 2048 --host 127.0.0.1 --port 18911 --jinja --chat-template-file /home/frosty40/turbo/worktrees/treebeard-pr-private-latest/models/templates/poolside-Laguna-XS-2.1.jinja --metrics -a laguna-tip-proof
+[lx-gpu-lock] Kill them or wait. Concurrent B70 Level-Zero clients wedge the xe driver.
+[lx-gpu-lock] holder meta: pid=4121217 ppid=4119838 user=frosty40 host=Turbo started=2026-08-06T06:44:44Z reason=proof-suite cmd=scripts/proof-suite.sh proof-suite 
