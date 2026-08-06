@@ -1,5 +1,127 @@
---- a/ggml/src/ggml-sycl/mmvq.cpp
+--- a/ggml/src/ggml-sycl/mmvq.cpp	2026-08-06 12:20:11.837737330 -0500
 +++ b/ggml/src/ggml-sycl/mmvq.cpp
-@@ -1770,1 +1770,1 @@
--                             mul_mat_vec_q_reorder<reorder_vec_dot_q_sycl<GGML_TYPE_Q6_K>>(vx, vy, dst, ncols, nrows, row_addend, row_addend2, nd_item);
-+                             mul_mat_vec_q_reorder<reorder_vec_dot_q_sycl<GGML_TYPE_Q6_K>>(vx, vy, dst, ncols, nrows, row_addend, row_addend2, nd_item);  // GGML_SYCL_LMHEAD_Q8_1 marker: q8_1 pre-convert site
+@@ -29,6 +29,100 @@
+     return g_mmvq_row_addend2;
+ }
+ 
++
++// --- env-gated q6_K -> q8_0 lm_head pre-convert (probe; OFF by default) ------
++// The fused lm_head group (mul_mat+add[+add2], wtype=q6_K) decodes its weights
++// through the reorder MMVQ path whose per-element work is a 6-bit bitfield
++// unpack + per-16 scale multiply (reorder_vec_dot_q_sycl<GGML_TYPE_Q6_K>).
++// This probe converts the weight ONCE (first fused-group dispatch) into the
++// reordered Q8_0 layout, whose dot is a pure dp4a int8 product
++// (reorder_vec_dot_q_sycl<GGML_TYPE_Q8_0>) -- no bit unpack, no per-16 scale.
++// Non-bitexact (+~23% VRAM on the lm_head weight only); gated by
++// GGML_SYCL_LMHEAD_Q8=1 AND g_mmvq_row_addend != nullptr (fused path only).
++static bool ggml_sycl_lmhead_q8_enabled() {
++    static const bool en = []() {
++        const char * e = getenv("GGML_SYCL_LMHEAD_Q8");
++        return e != nullptr && std::atoi(e) != 0;
++    }();
++    return en;
++}
++
++// Device kernel: one work-item per 256-quant q6_K block. Decodes the reordered
++// q6_K planes (ql/qh/scales/d) with the canonical dequantize_row_q6_K semantics
++// (value = d * sc[v/16] * (6bit - 32), 16 scales of 16 values each) and writes
++// 8 reordered Q8_0 sub-blocks ([qs plane][d plane]; 32 int8 + 1 half per block).
++// Both planes are row-major over the same row order, so q8 sub-block s of q6
++// block b is global q8 block b*8+sub.
++static void lmhead_q6_to_q8_kernel(const char * __restrict__ src, char * __restrict__ dst,
++                                   const int nblocks, const sycl::nd_item<1> & item) {
++    const int b = (int) item.get_global_linear_id();
++    if (b >= nblocks) {
++        return;
++    }
++    const uint8_t * ql = (const uint8_t *) src + b * (QK_K / QR6_K);
++    const uint8_t * qh = (const uint8_t *) src + nblocks * (QK_K / QR6_K) + b * (QK_K / 4);
++    const int8_t  * sc = (const int8_t  *) src + nblocks * (QK_K / QR6_K) + nblocks * (QK_K / 4) + b * (QK_K / 16);
++    const float d      = (float) (*reinterpret_cast<const ggml_half *>(
++        src + nblocks * (QK_K / QR6_K) + nblocks * (QK_K / 4) + nblocks * (QK_K / 16) + b * sizeof(ggml_half)));
++
++    int8_t *    qs_out = (int8_t *) dst + ((size_t) b * 8) * QK8_0;
++    ggml_half * d_out  = (ggml_half *) (dst + (size_t) nblocks * 8 * QK8_0) + ((size_t) b * 8);
++
++    for (int sub = 0; sub < 8; ++sub) {
++        float w[32];
++        float max_abs = 0.0f;
++        for (int j = 0; j < 32; ++j) {
++            const int v = sub * 32 + j;
++            const int r = v % 64;
++            const int h = v / 64;
++            const uint8_t qlb = ql[(v / 128) * 64 + (h & 1) * 32 + r];
++            const uint8_t qhb = qh[(v / 128) * 32 + r];
++            const int shift = (h % 2) * 2 + (h / 2) * 4;
++            const int six = ((qlb >> ((h < 2) ? 0 : 4)) & 0xF) | (((qhb >> shift) & 3) << 4);
++            const float wv = d * (float) sc[v / 16] * (float) (six - 32);
++            w[j] = wv;
++            const float av = sycl::fabs(wv);
++            if (av > max_abs) {
++                max_abs = av;
++            }
++        }
++        const float d8 = max_abs > 0.0f ? max_abs / 127.0f : 0.0f;
++        for (int j = 0; j < 32; ++j) {
++            int q = d8 > 0.0f ? (int) sycl::round(w[j] / d8) : 0;
++            if (q > 127) { q = 127; } else if (q < -127) { q = -127; }
++            qs_out[sub * QK8_0 + j] = (int8_t) q;
++        }
++        d_out[sub] = (ggml_half) d8;
++    }
++}
++
++// Host side: one-time conversion, cached per src0 (the fused lm_head weight).
++// Returns nullptr when the gate is off (champion path unchanged).
++static const char * ggml_sycl_lmhead_q8_get(const void * src0_key, const char * src0_dd_i,
++                                            const int64_t ne00, const int64_t nrows,
++                                            const dpct::queue_ptr & stream) {
++    if (!ggml_sycl_lmhead_q8_enabled()) {
++        return nullptr;
++    }
++    static const void * g_key = nullptr;
++    static char *       g_buf = nullptr;
++    if (g_key == src0_key && g_buf != nullptr) {
++        return g_buf;
++    }
++    const int64_t nblocks6 = (nrows * ne00) / QK_K;
++    const int64_t nblocks8 = nblocks6 * 8;
++    const size_t  bytes    = (size_t) nblocks8 * QK8_0 + (size_t) nblocks8 * sizeof(ggml_half);
++    if (g_buf == nullptr) {
++        g_buf = (char *) sycl::malloc_device(bytes, *stream);
++    }
++    stream->submit([&](sycl::handler & cgh) {
++        cgh.parallel_for(sycl::range<1>((size_t) nblocks6),
++                         [=](sycl::nd_item<1> item) { lmhead_q6_to_q8_kernel(src0_dd_i, g_buf, (int) nblocks6, item); });
++    });
++    g_key = src0_key;
++    return g_buf;
++}
++
+ template <typename reorder_vec_dot_q_sycl>
+ static void mul_mat_vec_q_reorder(const void * __restrict__ vx, const void * __restrict__ vy, float * __restrict__ dst,
+                                   const int ncols, const int nrows, const float * __restrict__ addend,
+@@ -2403,6 +2497,23 @@
+             case GGML_TYPE_Q6_K:
+                 if ((ggml_tensor_extra_gpu *) dst->src[0]->extra &&
+                     ((ggml_tensor_extra_gpu *) dst->src[0]->extra)->optimized_feature.reorder) {
++                    const char * src0_q8 = (g_mmvq_row_addend != nullptr) ? ggml_sycl_lmhead_q8_get(
++                        src0, src0_dd_i, ne00, row_diff, stream) : nullptr;
++                    if (src0_q8 != nullptr) {
++                        if (i == 0 && src1_ncols > 1 && src1_ncols <= 8) {
++                            const int stride_col_y_bytes = src1_padded_col_size * q8_1_ts / q8_1_bs;
++                            const int stride_col_dst     = dst->ne[0];
++                            GGML_SYCL_DEBUG("Calling reorder_mul_mat_vec_q8_0_q8_1_sycl_switch_ncols (lmhead-q8) ncols=%d\n", (int)src1_ncols);
++                            reorder_mul_mat_vec_q8_0_q8_1_sycl_switch_ncols(
++                                src0_q8, src1_ddq_i, dst_dd_i, ne00, row_diff,
++                                src1_ncols, stride_col_y_bytes, stride_col_dst, stream);
++                            return;
++                        } else {
++                            GGML_SYCL_DEBUG("Calling reorder_mul_mat_vec_q8_0_q8_1_sycl (lmhead-q8)\n");
++                            reorder_mul_mat_vec_q8_0_q8_1_sycl(src0_q8, src1_ddq_i_bs, dst_dd_i_bs, ne00, row_diff, stream);
++                        }
++                        break;
++                    }
+                     if (i == 0 && src1_ncols > 1 && src1_ncols <= 8) {
+                         const int stride_col_y_bytes = src1_padded_col_size * q8_1_ts / q8_1_bs;
+                         const int stride_col_dst     = dst->ne[0];
