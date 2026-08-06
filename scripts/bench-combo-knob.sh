@@ -73,7 +73,11 @@ if [[ -z "$STAMP" ]]; then
 fi
 echo "stamp=$STAMP"
 if [[ -f "$ROOT/results/$STAMP/score.json" ]]; then
-  python3 -c 'import json;d=json.load(open("'"$ROOT"'/results/'"$STAMP"'/score.json"));print(f"score={d[\"score\"]:.6f} inc={d[\"increase_pct\"]:+.2f}% tg={d[\"decode_tok_s\"]:.2f} pp={d[\"prefill_tok_s\"]:.2f}")'
+  python3 - "$ROOT/results/$STAMP/score.json" <<'PY'
+import json, sys
+d = json.load(open(sys.argv[1]))
+print(f"score={d['score']:.6f} inc={d['increase_pct']:+.2f}% tg={d['decode_tok_s']:.2f} pp={d['prefill_tok_s']:.2f}")
+PY
 else
   echo "no score.json at $STAMP (floors failed?) — check $ROOT/results/$STAMP/metrics.json" >&2
   exit 4
