@@ -63,3 +63,16 @@ ctk/ctv f16, GGML_SYCL_DISABLE_GRAPH/DNN=1).
 - No candidate .so built; champion binary untouched (this axis is
   env/runtime-only). Board: results/LATEST_SCORE.json unchanged at
   1.2181469734433867 (no run in this sweep was a scored submission).
+
+## 20260806T180130Z — MMID knob combo follow-up (same-window sandwich)
+Single-knob rows (knob-ab-ledger) showed MMVQ_WIDE_BATCH tg+0.257, ENABLE_MMID_FUSED_SINGLE tg+0.25/pp+0.04,
+MMID_WG_SUBGROUPS=16 tg+0.092/pp+0.083. Combo submissions through bench-combo-knob.sh (official r=5, guard):
+  - 175758Z WIDE_BATCH+FUSED_SINGLE+WG16: tg=137.899 pp=1169.914 score=1.21465 (REJECTED)
+  - 175919Z FUSED_SINGLE+WG16:             tg=137.94  pp=1166.85  score=1.21415 (REJECTED)
+  - 180027Z FUSED_SINGLE:                  tg=137.97  pp=1165.13  score=1.21386 (REJECTED)
+Same-window ctrl|combo|ctrl (mmid-sandwich-20260806T180130Z):
+  - ctrl-a tg=137.83 pp=1168.21 | combo tg=138.04 pp=1166.64 | ctrl-b tg=137.96 pp=1161.60
+  - combo vs ctrl mean: tg +0.11%, pp +0.15% — NULL inside ±0.68% drift.
+The earlier pp "gain" (+0.88% at 175758Z) was inter-session drift: champion env measured pp=1168.21
+in-window today vs board 1159.74 — the card's pp state moves ~0.7% between sessions.
+DECISION: MMID combo axis CLOSED as in-window null. 3 real submissions, all guard-rejected, board intact.
