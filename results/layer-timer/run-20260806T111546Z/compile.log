@@ -1,0 +1,43 @@
+>> compiling /home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp
+/home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp:4407:35: warning: address of array 'dst->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4407 |     const char * nm = dst && dst->name ? dst->name : "";
+      |                           ~~ ~~~~~^~~~
+/home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp:4976:49: warning: address of array 'add2->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4976 |                     (residual2 && add2 && add2->name) ? add2->name : "-");
+      |                                        ~~ ~~~~~~^~~~
+/home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp:4975:53: warning: address of array 'add->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4975 |                     mm->name ? mm->name : "?", add->name ? add->name : "?",
+      |                                                ~~~~~^~~~ ~
+/home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp:4975:25: warning: address of array 'mm->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4975 |                     mm->name ? mm->name : "?", add->name ? add->name : "?",
+      |                     ~~~~^~~~ ~
+/home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp:7418:42: warning: address of array 't->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 7418 |             idx, ggml_op_name(t->op), t->name ? t->name : "(null)", s, mx, n);
+      |                                       ~~~^~~~ ~
+5 warnings generated.
+In file included from /home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp:53:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/../ggml-sycl/add-id.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/../ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/../ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/../ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+/home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp:4407:35: warning: address of array 'dst->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4407 |     const char * nm = dst && dst->name ? dst->name : "";
+      |                           ~~ ~~~~~^~~~
+/home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp:4976:49: warning: address of array 'add2->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4976 |                     (residual2 && add2 && add2->name) ? add2->name : "-");
+      |                                        ~~ ~~~~~~^~~~
+/home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp:4975:53: warning: address of array 'add->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4975 |                     mm->name ? mm->name : "?", add->name ? add->name : "?",
+      |                                                ~~~~~^~~~ ~
+/home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp:4975:25: warning: address of array 'mm->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4975 |                     mm->name ? mm->name : "?", add->name ? add->name : "?",
+      |                     ~~~~^~~~ ~
+/home/frosty40/turbo/lx/src-lmhead/ggml/src/ggml-sycl/ggml-sycl.cpp:7418:42: warning: address of array 't->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 7418 |             idx, ggml_op_name(t->op), t->name ? t->name : "(null)", s, mx, n);
+      |                                       ~~~^~~~ ~
+7 warnings generated.
+>> relinking libggml-sycl.so
