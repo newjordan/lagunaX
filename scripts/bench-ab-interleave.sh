@@ -31,10 +31,19 @@ TABLE="$OUT/table.tsv"
 echo "== [ab] $STAMP champion=$CHAMP_BIN candidate=$CAND_SPEC rounds=$ROUNDS"
 echo "  out: $OUT"
 
-lx_gpu_lock_enter "ab-${STAMP}" || {
-  echo "[ab] lock refused/queued; see .b70-gpu.lock meta" >&2
-  exit 75
-}
+# The lock refuses while foreign GPU procs run (before flock). Retry until the
+# current holder finishes (proof-suite holds the card ~50 min per cycle).
+DEADLINE_S="${LX_AB_DEADLINE_S:-2400}"
+t0="$(date +%s)"
+while ! lx_gpu_lock_enter "ab-${STAMP}"; do
+  now="$(date +%s)"
+  if (( now - t0 >= DEADLINE_S )); then
+    echo "[ab] deadline ${DEADLINE_S}s reached without lock; giving up" >&2
+    exit 75
+  fi
+  echo "[ab] lock busy — retrying in 60s ($(( (now - t0) / 60 ))min of ${DEADLINE_S}s budget)" >&2
+  sleep 60
+done
 trap lx_gpu_lock_leave EXIT
 
 # Exact official flag set (bench-serial.sh COMMON), combined pp+tg in one process.
