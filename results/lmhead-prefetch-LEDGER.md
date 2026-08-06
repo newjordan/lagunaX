@@ -12,3 +12,4 @@ full proof-suite gate). tg in tok/s.
 
 Payload: results/lmhead-prefetch/q6k.patch (marker-anchored, git-apply-checked,
 abort rc=20 on drift; gate never on by default).
+| 20260806T153609Z | 138.204 | 138.193 | 138.267 | -0.031% | 138.236 |

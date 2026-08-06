@@ -133,10 +133,33 @@ mkdir -p "results/lmhead-prefetch-$STAMP"
 python3 - "$STAMP" <<'PY'
 import json, sys
 stamp = sys.argv[1]
+def objs(p):
+    s = open(f"results/lmhead-prefetch-{stamp}/{p}").read()
+    # drop stderr control lines that interleave with the JSON stream
+    s = "\n".join(l for l in s.split("\n")
+                  if not l.startswith("[lx-") and not l.startswith("[lmhead") and not l.startswith("[l-gpu"))
+    out=[]; i=0
+    while True:
+        i=s.find("{", i)
+        if i<0: break
+        dep=0; done=False
+        for k in range(i,len(s)):
+            c=s[k]
+            if c=="{": dep+=1
+            elif c=="}":
+                dep-=1
+                if dep==0:
+                    try: out.append(json.loads(s[i:k+1]))
+                    except Exception: pass
+                    i=k+1; done=True
+                    break
+        if not done: break
+    return out
 def tg(p):
-    d = json.load(open(f"results/lmhead-prefetch-{stamp}/{p}"))
-    r = d["results"][0]
-    return r["tg_avg"]
+    for o in objs(p):
+        if o.get("n_gen") == 128:   # official-geometry decode test object
+            return o["avg_ts"]
+    raise SystemExit(f"no tg object in {p}")
 a, c, b = tg("ctrl-a.log"), tg("cand.log"), tg("ctrl-b.log")
 mean = (a + b) / 2
 delta = (c - mean) / mean * 100
