@@ -1,0 +1,56 @@
+{
+  "stamp": "20260806T084248Z",
+  "champion_bin": "/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench",
+  "candidate_env": "GGML_SYCL_ENABLE_MMID_FUSED_SINGLE=1",
+  "rounds": 2,
+  "note": "wide-batch mmvq / 12col / single-launch probes on shipped champion binary",
+  "runs": [
+    {
+      "seq": 1,
+      "tag": "A",
+      "pp": 1164.608169,
+      "tg": 138.150687,
+      "pp_sd": 11.693055,
+      "tg_sd": 0.201338
+    },
+    {
+      "seq": 1,
+      "tag": "B",
+      "pp": 1160.618218,
+      "tg": 138.150989,
+      "pp_sd": 11.698264,
+      "tg_sd": 0.229564
+    },
+    {
+      "seq": 2,
+      "tag": "A",
+      "pp": 1158.038664,
+      "tg": 137.59656,
+      "pp_sd": 11.743795,
+      "tg_sd": 0.184841
+    },
+    {
+      "seq": 2,
+      "tag": "B",
+      "pp": 1162.962251,
+      "tg": 138.286269,
+      "pp_sd": 10.914518,
+      "tg_sd": 0.190849
+    }
+  ],
+  "champion": {
+    "pp": 1161.323,
+    "tg": 137.874
+  },
+  "candidate": {
+    "pp": 1161.79,
+    "tg": 138.219
+  },
+  "tg_delta_pct": 0.25,
+  "pp_delta_pct": 0.04,
+  "tg_jitter_sd_pct": 0.222,
+  "pp_jitter_sd_pct": 0.246,
+  "tg_signal_over_drift": 0.37,
+  "pp_signal_over_drift": 0.03,
+  "verdict": "NOISE"
+}
