@@ -5,3 +5,5 @@
 | 20260806T111333Z | USM_DEVICE_RESIDENT | tg=137.771867 | pp=1162.071903 | pin device allocations device-resident (USM_RESIDENT_DEVICE=1) |
 | 20260806T111412Z | USM_ALLOCATOR | tg=137.890587 | pp=1158.908869 | plugin-managed USM allocator (USE_USM_ALLOCATOR=1) |
 | 20260806T111603Z | POLL_0 | tg=137.908336 | pp=1152.237488 | host submission busy-poll (LX_POLL=0 vs default 50) |
+| 20260806T111744Z | CTRL | tg=137.964498 | pp=1166.261643 | same-window control (no extra env) — bounds ambient drift |
+| 20260806T111823Z | USM_RESIDENT | tg=137.910978 | pp=1166.950329 | pin ALL USM device-resident (USM_RESIDENT=1, adapter-read) |

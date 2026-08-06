@@ -82,7 +82,7 @@ run_arm() {
       echo "  [usm-$arm] GPU lock busy (rc 75) — retry $try/10 in 90 s" >&2
       sleep 90
     else
-      echo "[usm-$arm] bench failed rc=$rc" >&2
+      echo "[usm-$arm] bench failed rc=$rc — likely driver wedge; aborting sweep (do not bench into a wedged card)" >&2
       break
     fi
   done
