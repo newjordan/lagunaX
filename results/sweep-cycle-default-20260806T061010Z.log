@@ -1,0 +1,15 @@
+== [cycle] candidate binary: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin
+== [cycle] gates: golden-smoke
+[lx-gpu-lock] ACQUIRED pid=4026936 reason=golden-smoke
+starting server on :18901 ...
+used /completion
+ The function should take an integer n as input and return the nth Fibonacci number. The Fibonacci sequence is defined as follows:
+F(0) = 0
+F(1) = 1
+F(n) = F(n-1) + F(n-2) for n > 1
+Your function
+GOLDEN OK (greedy smoke match)
+== [cycle] golden-smoke OK
+== [cycle] proof-suite skipped (not present or --skip-proof)
+== [cycle] official bench
+== [cycle] cooldown 300s before scored bench (proof-suite heat)

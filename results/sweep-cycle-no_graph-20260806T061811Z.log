@@ -1,0 +1,5 @@
+== [cycle] candidate binary: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin
+== [cycle] gates: golden-smoke
+[lx-gpu-lock] ACQUIRED pid=4048716 reason=golden-smoke
+starting server on :18901 ...
+Terminated
