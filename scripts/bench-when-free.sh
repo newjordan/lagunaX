@@ -7,7 +7,22 @@ cd "$(dirname "$0")/.."
 MAX_MIN=${1:-600}
 DEADLINE=$(( $(date +%s) + MAX_MIN*60 ))
 
-while pgrep -f 'llama-(server|bench|cli)' >/dev/null 2>&1; do
+# Busy only if a llama process actually holds the GPU: CPU-only servers
+# (-ngl 0, e.g. the embedding daemon on :8091) must not block the queue.
+llama_gpu_busy() {
+  local pid
+  for pid in $(pgrep -f 'llama-(server|bench|cli)' 2>/dev/null); do
+    if ls -l "/proc/$pid/fd" 2>/dev/null | grep -q '/dev/dri'; then
+      return 0
+    fi
+    if ! tr '\0' ' ' < "/proc/$pid/cmdline" 2>/dev/null | grep -q -- '-ngl 0'; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+while llama_gpu_busy; do
   now=$(date +%s)
   if [ "$now" -ge "$DEADLINE" ]; then
     echo "[bench-when-free] give up after ${MAX_MIN}m — GPU still busy" >&2
