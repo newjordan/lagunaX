@@ -1,0 +1,25 @@
+[lx-gpu-lock] waiting up to 900s for exclusive B70 lock (ubatch-ub2048-1)...
+[lx-gpu-lock] ACQUIRED pid=1786045 reason=ubatch-ub2048-1
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=512
+[lx-control-fattn] kernel=ONEDNN Q=[128,512,48] K=[128,512]
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=512
+[lx-control-dense-dual] multi-col GEMM dual ncols_dst=512 nrows=8192
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu) ncols_dst=512
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=512
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=512
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=512
+[lx-control-mmid] device counting-sort+prefix+ev n_tokens=512 k=8 n_experts=256
+[lx-control-moe-down] two-step scratch experts=0 weights=1 tokens=512
+[lx-control-moe-down] fuse hit (weighted reduce) embd=2048 k=8 tokens=512
+[lx-control-moe-down] multi-token two-step weighted reduce embd=2048 k=8 tokens=512
+[lx-control-add] fuse hit (add+add residual) nelt=1048576 ne0=2048 ne1=512
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 sgs=1 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[lx-control-dense-dual] mmvq dual n_rows=512 ncols=2048 ncols_dst=1 sgs=1 (first entry)
+[lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=1 wtype=q6_K alias_res=1 mm='ffn_shexp-39' add='ffn_out-39' add2='l_out-39'
+[lx-control-mm-add] fuse hit (mul_mat+add) ne0=2048 ne1=1 wtype=q4_K alias_res=0 mm='attn_o_proj-0' add='ffn_inp-0' add2='-'
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+rc=0
