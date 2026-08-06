@@ -1,0 +1,27 @@
+thermal-gate: hwmon=/sys/class/drm/card0/device/hwmon/hwmon6 max_temp=58.0C
+thermal-gate: 0s/300s idle, waiting (cur=58C)
+thermal-gate: 15s/300s idle, waiting (cur=58C)
+thermal-gate: 30s/300s idle, waiting (cur=58C)
+thermal-gate: 46s/300s idle, waiting (cur=58C)
+thermal-gate: 61s/300s idle, waiting (cur=58C)
+thermal-gate: 76s/300s idle, waiting (cur=58C)
+thermal-gate: 91s/300s idle, waiting (cur=58C)
+thermal-gate: 106s/300s idle, waiting (cur=58C)
+thermal-gate: 121s/300s idle, waiting (cur=58C)
+thermal-gate: 136s/300s idle, waiting (cur=58C)
+thermal-gate: 151s/300s idle, waiting (cur=58C)
+thermal-gate: 166s/300s idle, waiting (cur=58C)
+thermal-gate: 181s/300s idle, waiting (cur=58C)
+thermal-gate: 196s/300s idle, waiting (cur=58C)
+thermal-gate: 211s/300s idle, waiting (cur=58C)
+thermal-gate: 226s/300s idle, waiting (cur=58C)
+thermal-gate: 241s/300s idle, waiting (cur=58C)
+thermal-gate: 256s/300s idle, waiting (cur=58C)
+thermal-gate: 271s/300s idle, waiting (cur=58C)
+thermal-gate: 286s/300s idle, waiting (cur=51C)
+thermal-gate: OK after 301s idle (cur=52C)
+bench-cold: card cold, running official bench
+[lx-gpu-lock] REFUSE: other GPU llama process(es) already running:
+  846546 /home/frosty40/turbo/lx/src-lmhead-build/bin/llama-bench -m /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf -ngl 99 --n-cpu-moe 0 --split-mode layer --main-gpu 0 --tensor-split 0 --device auto -t 16 --cpu-mask 0x0 --cpu-strict 0 -b 2048 -ub 2048 -ctk f16 -ctv f16 --no-kv-offload 0 --no-op-offload 0 --no-host 0 -r 5 -d 0 --prio 0 --load-mode mmap --poll 50 --delay 0 -o json -p 0 -n 128
+[lx-gpu-lock] Kill them or wait. Concurrent B70 Level-Zero clients wedge the xe driver.
+[lx-gpu-lock] holder meta: pid=830290 ppid=753647 user=frosty40 host=Turbo started=2026-08-06T12:13:53Z reason=bench-serial:lmhead-kpath-kp-mmq cmd=scripts/bench-serial.sh bench-serial:lmhead-kpath-kp-mmq 
