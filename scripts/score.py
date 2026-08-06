@@ -25,11 +25,29 @@ def speedup(cand: float, base: float) -> float:
     return cand / base
 
 
-def score_pair(pp_c: float, tg_c: float, pp_b: float, tg_b: float) -> dict:
+def score_pair(pp_c: float, tg_c: float, pp_b: float, tg_b: float,
+               pp_samples=None, tg_samples=None) -> dict:
     d = speedup(tg_c, tg_b)
     p = speedup(pp_c, pp_b)
     floors_ok = d >= DECODE_FLOOR and p >= PREFILL_FLOOR
     s = (d ** DECODE_EXP) * (p ** PREFILL_EXP) if floors_ok else None
+    # Measurement noise: SE of the mean from the per-rep samples llama-bench
+    # already logs (stddev/sqrt(n)); propagated RSS through the 0.75/0.25
+    # weights. Absent samples → null (legacy artifacts).
+    def se_rel(samples):
+        if not samples:
+            return None
+        n = len(samples)
+        if n < 2:
+            return None
+        m = sum(samples) / n
+        var = sum((x - m) ** 2 for x in samples) / (n - 1)
+        sd = var ** 0.5
+        return (sd / m) / (n ** 0.5) if m else None
+    rel_tg, rel_pp = se_rel(tg_samples), se_rel(pp_samples)
+    score_se_rel = None
+    if rel_tg is not None and rel_pp is not None:
+        score_se_rel = ((DECODE_EXP * rel_tg) ** 2 + (PREFILL_EXP * rel_pp) ** 2) ** 0.5
     return {
         "decode_tok_s": tg_c,
         "prefill_tok_s": pp_c,
@@ -41,6 +59,9 @@ def score_pair(pp_c: float, tg_c: float, pp_b: float, tg_b: float) -> dict:
         "prefill_floor": PREFILL_FLOOR,
         "floors_ok": floors_ok,
         "score": s,
+        "score_se_rel": score_se_rel,
+        "score_se": None if (s is None or score_se_rel is None) else s * score_se_rel,
+        "gain_distinguishable": None if (s is None or score_se_rel is None) else (abs(s - 1.0) / (s * score_se_rel) if score_se_rel else None),
         "increase_pct": None if s is None else (s - 1.0) * 100.0,
         "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
         "track": "serial",
@@ -64,6 +85,8 @@ def main() -> int:
             tg_c=float(cand["tg128"]),
             pp_b=float(base["pp512"]),
             tg_b=float(base["tg128"]),
+            pp_samples=cand.get("pp_samples", {}).get("samples_ts") if isinstance(cand.get("pp_samples"), dict) else None,
+            tg_samples=cand.get("tg_samples", {}).get("samples_ts") if isinstance(cand.get("tg_samples"), dict) else None,
         )
     except (KeyError, ValueError) as e:
         print(f"score error: {e}", file=sys.stderr)

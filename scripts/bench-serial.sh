@@ -200,6 +200,39 @@ PY
 PP_TS="$(parse_ts "$PP_JSON" "pp${LX_PP}")"
 TG_TS="$(parse_ts "$TG_JSON" "tg${LX_TG}")"
 
+# Retain per-rep samples + stddev (llama-bench -o json carries them; the legacy
+# mean-only parse dropped them). Lets score.py report measurement noise so a
+# candidate win is distinguishable from run variance.
+parse_meta() {
+  local blob="$1" want="$2"
+  python3 - "$blob" "$want" <<'PY'
+import json, sys
+blob, want = sys.argv[1], sys.argv[2]
+data = json.loads(blob)
+rows = data["results"] if isinstance(data, dict) and "results" in data else (data if isinstance(data, list) else [data])
+for r in rows:
+    name = str(r.get("test") or r.get("name") or "")
+    n_prompt = r.get("n_prompt", r.get("ps", None))
+    n_gen = r.get("n_gen", r.get("tg", None))
+    if "avg_ts" not in r:
+        continue
+    if want.startswith("pp") and (name.startswith("pp") or (n_gen in (0, "0", None) and n_prompt)):
+        pass
+    elif want.startswith("tg") and (name.startswith("tg") or (n_prompt in (0, "0", None) and n_gen)):
+        pass
+    elif len(rows) == 1:
+        pass
+    else:
+        continue
+    print(json.dumps({"stddev_ts": r.get("stddev_ts"), "samples_ts": r.get("samples_ts")}))
+    sys.exit(0)
+print("row not found", file=sys.stderr)
+sys.exit(1)
+PY
+}
+PP_META="$(parse_meta "$PP_JSON" "pp${LX_PP}")" || PP_META='{}'
+TG_META="$(parse_meta "$TG_JSON" "tg${LX_TG}")" || TG_META='{}'
+
 python3 - "$METRICS_JSON" <<PY
 import json, os, sys
 from pathlib import Path
@@ -210,6 +243,8 @@ payload = {
     "mode": "$MODE",
     "pp512": float("$PP_TS"),
     "tg128": float("$TG_TS"),
+    "pp_samples": $PP_META,
+    "tg_samples": $TG_META,
     "window": {"pp": int("$LX_PP"), "tg": int("$LX_TG"), "reps": int("$LX_REPS"), "depth": int("$LX_DEPTH")},
       "combined_bench": bool(int("$LX_COMBINED_BENCH")),
     "binary": "$LX_LLAMA_BENCH",
