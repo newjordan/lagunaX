@@ -1,0 +1,62 @@
+--- a/ggml/src/ggml-sycl/mmvq.cpp
++++ b/ggml/src/ggml-sycl/mmvq.cpp
+@@ -158,3 +158,4 @@
+-template <int qk, int qi, typename block_q_t, int vdr, vec_dot_q_sycl_t vec_dot_q_sycl>
++template <int qk, int qi, typename block_q_t, int vdr, vec_dot_q_sycl_t vec_dot_q_sycl,
++          bool PREFETCH = false>
+ static void mul_mat_vec_q(const void * __restrict__ vx, const void * __restrict__ vy, float * __restrict__ dst,
+                           const int ncols, const int nrows, const sycl::nd_item<3> & item_ct1) {
+@@ -179,10 +179,27 @@
+     for (int i = item_ct1.get_local_id(2) / (qi / vdr); i < blocks_per_row; i += blocks_per_warp) {
+         const int ibx = row * blocks_per_row + i;  // x block index
+ 
+         const int iby = i * (qk / QK8_1);          // y block index that aligns with ibx
+ 
++        if constexpr (PREFETCH) {
++            // Software-pipeline: issue the NEXT x/y block base loads before the
++            // current block's dequant+dot so the DRAM fetch overlaps compute.
++            // Bit-exact by construction: same bytes, same accumulate order; only
++            // the load issue point moves. The loads are kept live by a
++            // never-taken IEEE NaN compare (NaN != NaN), so no arithmetic on
++            // tmp ever executes and dst is only (re)written by the real result.
++            const int ibx_next = ibx + blocks_per_warp;
++            if (ibx_next < row * blocks_per_row + blocks_per_row) {
++                const block_q8_1 ynext = y[iby + blocks_per_warp * (qk / QK8_1)];
++                const block_q_t   xnext = x[ibx_next];
++                if (ynext.d[0] != ynext.d[0]) { // never true for real scales
++                    dst[row] = (float) ynext.d[0] * (float) xnext.d;
++                }
++            }
++        }
++
+         for (size_t elem = 0; elem < qi / vdr; elem += WARP_SIZE) {
+             const int iqs = elem + vdr * (item_ct1.get_local_id(2) %
+                                           (qi / vdr));  // x block quant index when casting the quants to int
+ 
+             tmp += vec_dot_q_sycl(&x[ibx], &y[iby], iqs);
+@@ -1904,5 +1904,25 @@
+ static void mul_mat_vec_q6_K_q8_1_sycl_ncols1_sel(const void * vx, const void * vy, float * dst,
+         const int ncols, const int nrows, dpct::queue_ptr stream) {
++    if (getenv("GGML_SYCL_LMHEAD_PREFETCH") != nullptr) {
++        // env-gated software-pipeline variant of the ncols==1 fast path.
++        // DEFAULT OFF: the shipped champion path is byte-identical; only an
++        // explicit GGML_SYCL_LMHEAD_PREFETCH=1 run exercises PREFETCH=true.
++        GGML_ASSERT(ncols % QK_K == 0);
++        const int block_num_y = (nrows + GGML_SYCL_MMV_Y - 1) / GGML_SYCL_MMV_Y;
++        const sycl::range<3> block_nums(1, 1, block_num_y);
++        const sycl::range<3> block_dims(1, GGML_SYCL_MMV_Y, WARP_SIZE);
++        stream->submit([&](sycl::handler &cgh) {
++            cgh.parallel_for(
++                sycl::nd_range<3>(block_nums * block_dims, block_dims),
++                [=](sycl::nd_item<3> item_ct1)
++                    [[sycl::reqd_sub_group_size(WARP_SIZE)]] {
++                        mul_mat_vec_q<QK_K, QI6_K, block_q6_K,
++                                      VDR_Q6_K_Q8_1_MMVQ, vec_dot_q6_K_q8_1, true>(
++                            vx, vy, dst, ncols, nrows, item_ct1);
++                    });
++        });
++        return;
++    }
+     switch (q6k_vdr_depth()) {
+         case 2: mul_mat_vec_q6_K_q8_1_sycl_vdr<2>(vx, vy, dst, ncols, nrows, stream); break;
+         case 4: mul_mat_vec_q6_K_q8_1_sycl_vdr<4>(vx, vy, dst, ncols, nrows, stream); break;
