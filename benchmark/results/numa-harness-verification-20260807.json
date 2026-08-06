@@ -1,0 +1,13 @@
+{
+  "verifier": "bash -n plus exact wiring assertions and installed CLI inspection",
+  "syntax_ok": true,
+  "default": "disabled",
+  "supported_modes": [
+    "distribute",
+    "isolate",
+    "numactl"
+  ],
+  "invalid_values_rejected": true,
+  "forwarded_to_llama_bench": true,
+  "recorded_in_metrics": true
+}

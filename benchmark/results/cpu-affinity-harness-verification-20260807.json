@@ -1,0 +1,16 @@
+{
+  "verification": "passed",
+  "llama_bench_support": {
+    "cpu_mask": true,
+    "cpu_strict": true
+  },
+  "defaults": {
+    "LX_CPU_MASK": "0x0",
+    "LX_CPU_STRICT": 0
+  },
+  "harness": {
+    "forwards_both": true,
+    "records_both": true
+  },
+  "scope": "wiring verification only; no performance or quality claim"
+}

@@ -1,0 +1,9 @@
+{
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "executable_default_repetitions": 5,
+  "laguna_configured_repetitions": 5,
+  "laguna_passes_repetitions": true,
+  "laguna_records_repetition_count": true,
+  "laguna_retains_per_repetition_samples": false,
+  "laguna_parser_extracts_only_mean_avg_ts": true
+}

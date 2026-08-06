@@ -1,0 +1,17 @@
+{
+  "policy": "multi_device_tensor_split",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "supported_split_modes": [
+    "none",
+    "layer",
+    "row",
+    "tensor"
+  ],
+  "default_split_mode": "layer",
+  "default_main_gpu": 0,
+  "default_tensor_split": "0",
+  "active_source_override": false,
+  "process_environment_override_keys": [],
+  "historical_json_artifacts_parsed": 584,
+  "historical_artifacts_mentioning_split_controls": 36
+}

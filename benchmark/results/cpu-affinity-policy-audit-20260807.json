@@ -1,0 +1,9 @@
+{
+  "angle": "CPU core affinity binding (distinct from NUMA mode and process priority)",
+  "supported": true,
+  "executable_default_cpu_mask": "0x0",
+  "executable_default_threads": 16,
+  "canonical_threads": 16,
+  "canonical_cpu_mask_override": false,
+  "effective_policy": "OS-scheduled across allowed CPUs"
+}

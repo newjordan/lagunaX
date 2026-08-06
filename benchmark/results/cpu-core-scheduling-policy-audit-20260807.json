@@ -1,0 +1,19 @@
+{
+  "angle": "linux-cpu-core-scheduling-policy-and-provenance",
+  "boot_overrides": [],
+  "pr_sched_core_get": {
+    "calling_thread_cookie": 0,
+    "errno": 0,
+    "error": null,
+    "return_code": 0,
+    "supported": true
+  },
+  "provenance": {
+    "env_controls_core_scheduling": false,
+    "serial_harness_records_core_scheduling": false
+  },
+  "smt": {
+    "active": "1",
+    "control": "on"
+  }
+}

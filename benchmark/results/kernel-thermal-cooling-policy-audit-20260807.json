@@ -1,0 +1,317 @@
+{
+  "angle": "kernel-thermal-cooling-policy",
+  "generated_at": "2026-08-01T20:53:03.761905+00:00",
+  "laguna": {
+    "bench_policy_hits": [],
+    "env_policy_hits": [],
+    "metrics_record_policy": false
+  },
+  "live": {
+    "cooling_devices": [
+      {
+        "current_state": "1",
+        "max_state": "3",
+        "name": "cooling_device0",
+        "type": "PCIe_Port_Link_Speed_0000:00:01.1"
+      },
+      {
+        "current_state": "0",
+        "max_state": "3",
+        "name": "cooling_device1",
+        "type": "PCIe_Port_Link_Speed_0000:00:01.2"
+      },
+      {
+        "current_state": "0",
+        "max_state": "3",
+        "name": "cooling_device10",
+        "type": "PCIe_Port_Link_Speed_0000:03:09.0"
+      },
+      {
+        "current_state": "0",
+        "max_state": "3",
+        "name": "cooling_device11",
+        "type": "PCIe_Port_Link_Speed_0000:03:0a.0"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device12",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device13",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device14",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device15",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device16",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device17",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device18",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device19",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "3",
+        "name": "cooling_device2",
+        "type": "PCIe_Port_Link_Speed_0000:00:03.1"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device20",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device21",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device22",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device23",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device24",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device25",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device26",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device27",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device28",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device29",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "3",
+        "name": "cooling_device3",
+        "type": "PCIe_Port_Link_Speed_0000:00:07.1"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device30",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device31",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device32",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device33",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device34",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device35",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device36",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device37",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device38",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device39",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "3",
+        "name": "cooling_device4",
+        "type": "PCIe_Port_Link_Speed_0000:00:08.1"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device40",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device41",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device42",
+        "type": "Processor"
+      },
+      {
+        "current_state": "0",
+        "max_state": "10",
+        "name": "cooling_device43",
+        "type": "Processor"
+      },
+      {
+        "current_state": "1",
+        "max_state": "3",
+        "name": "cooling_device5",
+        "type": "PCIe_Port_Link_Speed_0000:03:01.0"
+      },
+      {
+        "current_state": "2",
+        "max_state": "3",
+        "name": "cooling_device6",
+        "type": "PCIe_Port_Link_Speed_0000:03:03.0"
+      },
+      {
+        "current_state": "3",
+        "max_state": "3",
+        "name": "cooling_device7",
+        "type": "PCIe_Port_Link_Speed_0000:03:05.0"
+      },
+      {
+        "current_state": "2",
+        "max_state": "3",
+        "name": "cooling_device8",
+        "type": "PCIe_Port_Link_Speed_0000:03:06.0"
+      },
+      {
+        "current_state": "0",
+        "max_state": "3",
+        "name": "cooling_device9",
+        "type": "PCIe_Port_Link_Speed_0000:03:08.0"
+      }
+    ],
+    "nonzero_cooling_devices": [
+      {
+        "current_state": "1",
+        "max_state": "3",
+        "name": "cooling_device0",
+        "type": "PCIe_Port_Link_Speed_0000:00:01.1"
+      },
+      {
+        "current_state": "1",
+        "max_state": "3",
+        "name": "cooling_device5",
+        "type": "PCIe_Port_Link_Speed_0000:03:01.0"
+      },
+      {
+        "current_state": "2",
+        "max_state": "3",
+        "name": "cooling_device6",
+        "type": "PCIe_Port_Link_Speed_0000:03:03.0"
+      },
+      {
+        "current_state": "3",
+        "max_state": "3",
+        "name": "cooling_device7",
+        "type": "PCIe_Port_Link_Speed_0000:03:05.0"
+      },
+      {
+        "current_state": "2",
+        "max_state": "3",
+        "name": "cooling_device8",
+        "type": "PCIe_Port_Link_Speed_0000:03:06.0"
+      }
+    ],
+    "thermal_zones": [
+      {
+        "name": "thermal_zone0",
+        "policy": "step_wise",
+        "temp_millicelsius": "55000",
+        "type": "iwlwifi_1"
+      }
+    ]
+  }
+}

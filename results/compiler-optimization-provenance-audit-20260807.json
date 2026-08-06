@@ -1,0 +1,13 @@
+{
+  "active_source_explicit_control_count": 0,
+  "active_source_mentions": {
+    "env.sh": [],
+    "scripts/bench-serial.sh": []
+  },
+  "adjacent_cmake_cache_exists": false,
+  "direction": "compiler optimization and binary build provenance",
+  "llama_bench_exists": true,
+  "llama_bench_path": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "process_environment": {},
+  "quality_result": "not measured by this provenance audit"
+}

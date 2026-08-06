@@ -1,0 +1,19 @@
+{
+  "source": "/home/frosty40/turbo/lx/results/LATEST_SCORE.json",
+  "track": "serial",
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
+  "quality_guard_available": false,
+  "target_speedup": 2.0,
+  "current_speedup": 1.2147193009304396,
+  "target_increase_pct": 100.0,
+  "current_increase_pct": 21.471930093043955,
+  "absolute_speedup_gap": 0.7852806990695604,
+  "additional_gain_required_over_current_pct": 64.64709159293496,
+  "decode_speedup": 1.2856398096857555,
+  "prefill_speedup": 1.0245798087244227,
+  "decode_gap_to_2x": 0.7143601903142445,
+  "prefill_gap_to_2x": 0.9754201912755773,
+  "target_met": false,
+  "reconciled_candidate": "/home/frosty40/turbo/lx/results/20260731T172351Z/metrics.json",
+  "reconciled_baseline": "/home/frosty40/turbo/lx/baseline/baseline.json"
+}

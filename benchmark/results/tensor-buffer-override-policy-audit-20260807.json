@@ -1,0 +1,10 @@
+{
+  "audit": "tensor-buffer-override-policy",
+  "llama_bench": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "cli_support": true,
+  "cli_evidence": "-ot --override-tensor <tensor name pattern>=<buffer type>;...",
+  "env_controls_override_tensor": false,
+  "harness_forwards_override_tensor": false,
+  "harness_records_override_tensor": false,
+  "conclusion": "supported-but-uncontrolled"
+}

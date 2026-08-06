@@ -1,0 +1,5 @@
+Laguna process-priority audit 2026-08-05
+logs_scanned=160
+priority_records=0 {}
+benchmark_common_has_priority=false
+  --prio <-1|0|1|2|3>                         process/thread priority (default: 0)

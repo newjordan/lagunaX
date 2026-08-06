@@ -1,0 +1,12 @@
+{
+  "active_default_repetitions": 5,
+  "latest_verified_score": 1.2147193009304396,
+  "literal_target_delta": 0.7852806990695604,
+  "literal_target_score": 2.0,
+  "parsed_artifact_files": 579,
+  "records_with_repetition_depth": 175,
+  "repetition_depth_counts": {
+    "5": 175
+  },
+  "serial_harness_passes_repetitions": true
+}

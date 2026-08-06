@@ -1,0 +1,9 @@
+{
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "executable_default_no_host": false,
+  "source_override": false,
+  "effective_no_host": false,
+  "meaning": "host-buffer fallback remains permitted",
+  "parsed_json_artifacts": 574,
+  "artifacts_mentioning_control": 34
+}

@@ -1,0 +1,61 @@
+     1	usage: /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench [options]
+     2	
+     3	options:
+     4	  -h, --help
+     5	  --numa <distribute|isolate|numactl>         numa mode (default: disabled)
+     6	  -r, --repetitions <n>                       number of times to repeat each test (default: 5)
+     7	  --prio <-1|0|1|2|3>                         process/thread priority (default: 0)
+     8	  --delay <0...N> (seconds)                   delay between each test (default: 0)
+     9	  -o, --output <csv|json|jsonl|md|sql>        output format printed to stdout (default: md)
+    10	  -oe, --output-err <csv|json|jsonl|md|sql>   output format printed to stderr (default: none)
+    11	  --list-devices                              list available devices and exit
+    12	  -v, --verbose                               verbose output
+    13	  --progress                                  print test progress indicators
+    14	  --no-warmup                                 skip warmup runs before benchmarking
+    15	  -fitt, --fit-target <MiB>                   fit model to device memory with this margin per device in MiB (default: off)
+    16	  -fitc, --fit-ctx <n>                        minimum ctx size for --fit-target (default: 4096)
+    17	
+    18	test parameters:
+    19	  -m, --model <filename>                            (default: models/7B/ggml-model-q4_0.gguf)
+    20	  -hf, -hfr, --hf-repo <user>/<model>[:quant]       Hugging Face model repository; quant is optional, case-insensitive
+    21	                                                    default to Q4_K_M, or falls back to the first file in the repo if Q4_K_M doesn't exist.
+    22	                                                    example: ggml-org/GLM-4.7-Flash-GGUF:Q4_K_M
+    23	                                                    (default: unused)
+    24	  -hff, --hf-file <file>                            Hugging Face model file. If specified, it will override the quant in --hf-repo
+    25	                                                    (default: unused)
+    26	  -hft, --hf-token <token>                          Hugging Face access token
+    27	                                                    (default: value from HF_TOKEN environment variable)
+    28	  --offline                                         Offline mode: forces use of cache, prevents network access
+    29	                                                    (default: disabled)
+    30	  -p, --n-prompt <n>                                (default: 512)
+    31	  -n, --n-gen <n>                                   (default: 128)
+    32	  -pg <pp,tg>                                       (default: )
+    33	  -d, --n-depth <n>                                 (default: 0)
+    34	  -b, --batch-size <n>                              (default: 2048)
+    35	  -ub, --ubatch-size <n>                            (default: 512)
+    36	  -ctk, --cache-type-k <t>                          (default: f16)
+    37	  -ctv, --cache-type-v <t>                          (default: f16)
+    38	  -t, --threads <n>                                 (default: 16)
+    39	  -C, --cpu-mask <hex,hex>                          (default: 0x0)
+    40	  --cpu-strict <0|1>                                (default: 0)
+    41	  --poll <0...100>                                  (default: 50)
+    42	  -ngl, --n-gpu-layers <n>                          (default: -1)
+    43	  -ncmoe, --n-cpu-moe <n>                           (default: 0)
+    44	  -sm, --split-mode <none|layer|row|tensor>         (default: layer)
+    45	  -mg, --main-gpu <i>                               (default: 0)
+    46	  -nkvo, --no-kv-offload <0|1>                      (default: 0)
+    47	  -fa, --flash-attn <on|off|auto>                   (default: auto)
+    48	  -dev, --device <dev0/dev1/...>                    (default: auto)
+    49	  -lm, --load-mode <none|mmap|mlock|mmap+mlock|dio> (default: mmap)
+    50	  -mmp, --mmap <0|1>                                (DEPRECATED IN FAVOUR OF --load-mode)
+    51	  -dio, --direct-io <0|1>                           (DEPRECATED IN FAVOUR OF --load-mode)
+    52	  -embd, --embeddings <0|1>                         (default: 0)
+    53	  -ts, --tensor-split <ts0/ts1/..>                  (default: 0)
+    54	  -ot --override-tensor <tensor name pattern>=<buffer type>;...
+    55	                                                    (default: disabled)
+    56	  -nopo, --no-op-offload <0|1>                      (default: 0)
+    57	  --no-host <0|1>                                   (default: 0)
+    58	
+    59	Multiple values can be given for each parameter by separating them with ','
+    60	or by specifying the parameter multiple times. Ranges can be given as
+    61	'first-last' or 'first-last+step' or 'first-last*mult'.

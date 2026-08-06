@@ -1,0 +1,36 @@
+stamp=20260801T064045Z
+device=Intel Arc Pro B70
+sysfs_current_link_speed=2.5 GT/s PCIe
+sysfs_current_link_width=1
+sysfs_max_link_speed=2.5 GT/s PCIe
+sysfs_max_link_width=1
+sysfs_power_state=D0
+parent_0b_speed=16.0 GT/s PCIe
+parent_0b_width=16
+parent_0b_max_speed=32.0 GT/s PCIe
+parent_0b_max_width=16
+gt0_engines=bcs,ccs,rcs,
+gt1_engines=vcs,vecs,
+gt0_name=gt0-rc
+gt1_name=gt1-mc
+name=Intel(R) Arc(TM) Pro B70 Graphics
+vendor=Intel(R) Corporation
+driver=1.15.38308+1
+global_mem=34242297856
+local_mem=131072
+max_compute_units=256
+max_clock_MHz=2800
+memory_clock_rate=2800
+memory_bus_width=64
+naive_peak_GBps_if_DDR=44.8
+usm_device=1
+usm_host=1
+usm_shared=1
+usm_atomic_shared=0
+backend=2
+--- bw ---
+device: Intel(R) Arc(TM) Pro B70 Graphics
+mem_clock_MHz=2800 bus_width=64
+H2D: 14.829 GB/s (18.102 ms for 256MiB)
+D2H: 7.584 GB/s (35.393 ms for 256MiB)
+logits-sized D2H 401408B: 0.118 ms/call (3.396 GB/s)

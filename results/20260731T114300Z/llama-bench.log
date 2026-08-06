@@ -1,0 +1,69 @@
+-- pp512 --
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=512
+[lx-control-rope] fuse hit (rope+view+set_rows) mode=2 ne0=128 ne1=8 type=f16
+[lx-control-fattn] kernel=ONEDNN Q=[128,512,48] K=[128,512]
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=512
+[lx-control-dense-dual] multi-col GEMM dual ncols_dst=512 nrows=8192
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu) ncols_dst=512
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=512
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=512
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=512
+[lx-control-mmid] device counting-sort+prefix+ev n_tokens=512 k=8 n_experts=256
+[lx-control-moe-down] two-step scratch experts=0 weights=1 tokens=512
+[lx-control-moe-down] fuse hit (weighted reduce) embd=2048 k=8 tokens=512
+[lx-control-moe-down] multi-token two-step weighted reduce embd=2048 k=8 tokens=512
+[lx-control-add] fuse hit (add+add residual) nelt=1048576 ne0=2048 ne1=512
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 sgs=1 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[lx-control-dense-dual] mmvq dual n_rows=512 ncols=2048 ncols_dst=1 sgs=1 (first entry)
+[lx-control-dense-dual] fuse hit (dual+down+residual) ncols_dst=1 embd=2048
+[
+  {
+    "build_commit": "7e1e28cae",
+    "build_number": 10170,
+    "cpu_info": "AMD Ryzen 9 5950X 16-Core Processor",
+    "gpu_info": "Intel(R) Arc(TM) Pro B70 Graphics",
+    "backends": "SYCL",
+    "model_filename": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "model_type": "laguna 30B.A3B Q4_K - Medium",
+    "model_size": 20270574592,
+    "model_n_params": 33442617088,
+    "n_batch": 2048,
+    "n_ubatch": 2048,
+    "n_threads": 16,
+    "cpu_mask": "0x0",
+    "cpu_strict": false,
+    "poll": 50,
+    "type_k": "f16",
+    "type_v": "f16",
+    "n_gpu_layers": 99,
+    "n_cpu_moe": 0,
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "no_kv_offload": false,
+    "flash_attn": -1,
+    "devices": "auto",
+    "tensor_split": "0.00",
+    "tensor_buft_overrides": "none",
+    "load_mode": "mmap",
+    "embeddings": false,
+    "no_op_offload": 0,
+    "no_host": false,
+    "fit_target": 0,
+    "fit_min_ctx": 0,
+    "n_prompt": 512,
+    "n_gen": 0,
+    "n_depth": 0,
+    "test_time": "2026-07-31T11:43:13Z",
+    "avg_ns": 432826788,
+    "stddev_ns": 4965184,
+    "avg_ts": 1183.046339,
+    "stddev_ts": 13.632336,
+    "samples_ns": [ 435758805, 437874148, 435222913, 426062627, 429215450 ],
+    "samples_ts": [ 1174.96, 1169.29, 1176.41, 1201.7, 1192.87 ]
+  }
+]
+-- tg128 --

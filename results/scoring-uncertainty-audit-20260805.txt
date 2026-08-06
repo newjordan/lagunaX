@@ -1,0 +1,5 @@
+source=results/20260731T172351Z/llama-bench.log
+phase avg_ts median_ts stddev_ts cv_pct range_pct
+pp512 1167.151085 1164.220000 12.464396 1.067933 2.591779
+tg128 138.018337 138.000000 0.078110 0.056594 0.155052
+assertions: two phases; 5 samples each; reported avg_ts agrees with sample arithmetic mean within 0.01 tok/s

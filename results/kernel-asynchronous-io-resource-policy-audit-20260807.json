@@ -1,0 +1,13 @@
+{
+  "aio_capacity_headroom": 65536,
+  "angle": "kernel-asynchronous-io-resource-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_async_io": [],
+    "metrics_record_async_io": []
+  },
+  "generated_utc": "2026-08-01T21:38:23.565125+00:00",
+  "live_policy": {
+    "aio_max_nr": 65536,
+    "aio_nr": 0
+  }
+}

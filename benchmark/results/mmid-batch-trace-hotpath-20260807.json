@@ -1,0 +1,11 @@
+{
+  "date": "2026-08-01",
+  "iterations_per_trial": 100000000,
+  "trials": 9,
+  "old_atomic_check_ns_median": 1.58277158,
+  "new_trace_disabled_ns_median": 0.10121244,
+  "removed_ns_per_multi_token_fused_op": 1.4815591399999999,
+  "speedup_of_diagnostic_check": 15.638113061991193,
+  "patch_integrity": "passed",
+  "scope": "synthetic host control-path benchmark; not end-to-end inference"
+}

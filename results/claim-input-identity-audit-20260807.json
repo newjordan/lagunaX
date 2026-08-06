@@ -1,0 +1,44 @@
+{
+  "audit": "claim_input_cryptographic_identity",
+  "primary_record_sha256": {
+    "/home/frosty40/turbo/lx/baseline/baseline.json": "712ea06767eaf7d4d6b0f6a4cee808fbbc76c0beced126ee8eccd7b47f622258",
+    "/home/frosty40/turbo/lx/results/LATEST_SCORE.json": "9c3a5c2d2491a78fcbed809f5f222a8efa9b80333dcb7503dbe8b6684972e59b",
+    "/home/frosty40/turbo/lx/results/20260731T141436Z/metrics.json": "5f03dcc8c1359527dd7dedecac0dc39079223b87ae715c5699786a3441cdc0e2"
+  },
+  "required_input_hash_fields": [
+    "binary_sha256",
+    "model_sha256"
+  ],
+  "missing_input_hash_fields": {
+    "baseline": [
+      "binary_sha256",
+      "model_sha256"
+    ],
+    "latest": [
+      "binary_sha256",
+      "model_sha256"
+    ],
+    "champion": [
+      "binary_sha256",
+      "model_sha256"
+    ]
+  },
+  "all_claim_inputs_cryptographically_identified": false,
+  "path_strings_agree": {
+    "model_across_all_records": true,
+    "candidate_binary_latest_vs_champion": true
+  },
+  "latest_score": 1.2147193009304396,
+  "recomputed_champion_score": 1.2274239323072529,
+  "records_agree": false,
+  "literal_target": 2.0,
+  "best_active_score": 1.2274239323072529,
+  "absolute_delta_to_literal_target": 0.7725760676927471,
+  "relative_improvement_required_pct": 62.942887730769236,
+  "measured_negative_results": [
+    "baseline, latest candidate, and champion records omit binary_sha256 and model_sha256",
+    "LATEST_SCORE.json does not identify the best active score",
+    "the recomputed champion remains below the literal 2.0 objective"
+  ],
+  "completion_supported": false
+}

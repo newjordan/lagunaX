@@ -1,0 +1,36 @@
+{
+  "stamp": "20260731T163552Z",
+  "track": "serial",
+  "mode": "candidate",
+  "pp512": 1170.253932,
+  "tg128": 138.51143,
+  "window": {
+    "pp": 512,
+    "tg": 128,
+    "reps": 5
+  },
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "flags": {
+    "ngl": 99,
+    "threads": 32,
+    "ubatch": 2048,
+    "bbatch": 2048,
+    "ctx": 8192,
+    "ctk": "f16",
+    "ctv": "f16"
+  },
+  "env": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0",
+    "GGML_SYCL_DISABLE_GRAPH": "1",
+    "GGML_SYCL_DISABLE_DNN": null
+  },
+  "note": "wave2:threads32",
+  "claim_boundary": [
+    "Serial only: one stream pp512 + tg128.",
+    "Not multi-slot aggregate tok/s.",
+    "Not comparable to mlx.fast M5 absolute tok/s (different quant/silicon).",
+    "Score is vs pinned B70 baseline only."
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "llama_bench_logs": 160,
+  "benchmark_rows": 312,
+  "rows_with_stddev_ts": 312,
+  "rows_with_samples_ts": 312,
+  "metrics_artifacts": 191,
+  "metrics_with_any_uncertainty": 0,
+  "scored_metrics_retain_only_means": true
+}

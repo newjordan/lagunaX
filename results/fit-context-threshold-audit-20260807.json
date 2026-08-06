@@ -1,0 +1,8 @@
+{
+  "active_source_explicit": false,
+  "control": "--fit-ctx",
+  "effective_active_policy": 4096,
+  "help_default": 4096,
+  "process_environment_explicit": false,
+  "semantics": "minimum ctx size for --fit-target"
+}

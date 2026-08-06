@@ -1,0 +1,26 @@
+{
+  "angle": "kernel-lockup-watchdog-policy",
+  "generated_at": "2026-08-01T21:57:17.021076+00:00",
+  "interfaces": {
+    "hardlockup_panic_enabled": "/proc/sys/kernel/hardlockup_panic",
+    "nmi_watchdog_enabled": "/proc/sys/kernel/nmi_watchdog",
+    "soft_watchdog_enabled": "/proc/sys/kernel/soft_watchdog",
+    "softlockup_panic_enabled": "/proc/sys/kernel/softlockup_panic",
+    "watchdog_enabled": "/proc/sys/kernel/watchdog",
+    "watchdog_threshold_seconds": "/proc/sys/kernel/watchdog_thresh"
+  },
+  "interpretation": "Kernel lockup watchdogs periodically inspect CPU progress and may use performance-monitoring interrupts. This audit records their live policy and Laguna's control/provenance coverage.",
+  "kernel_command_line_watchdog_overrides": [],
+  "laguna": {
+    "env_or_harness_controls_watchdogs": false,
+    "serial_harness_records_watchdog_policy": false
+  },
+  "live": {
+    "hardlockup_panic_enabled": 0,
+    "nmi_watchdog_enabled": 1,
+    "soft_watchdog_enabled": 1,
+    "softlockup_panic_enabled": 0,
+    "watchdog_enabled": 1,
+    "watchdog_threshold_seconds": 10
+  }
+}

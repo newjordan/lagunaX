@@ -1,0 +1,14 @@
+{
+  "historical_coverage": {
+    "artifacts_recording_order_field": 0,
+    "json_artifacts_parsed": 579
+  },
+  "policy": {
+    "decode_source_offset": 2330,
+    "fixed_order": "prefill_then_decode",
+    "matching_source_lines": [],
+    "order_randomized_or_counterbalanced": false,
+    "prefill_source_offset": 2095,
+    "separate_processes": true
+  }
+}

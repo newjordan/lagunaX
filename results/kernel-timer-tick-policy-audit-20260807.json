@@ -1,0 +1,31 @@
+{
+  "schema": "laguna.kernel-timer-tick-policy-audit.v1",
+  "kernel_cmdline": "BOOT_IMAGE=/boot/vmlinuz-7.0.0-28-generic root=UUID=9e57cf7d-de45-490b-9bd8-c900f7bfdae7 ro quiet splash idle=nomwait processor.max_cstate=1 pcie_aspm=off amd_iommu=on iommu=pt vt.handoff=7",
+  "clocksource": {
+    "current": "tsc",
+    "available": [
+      "tsc",
+      "hpet",
+      "acpi_pm"
+    ]
+  },
+  "tick_isolation": {
+    "nohz_full_sysfs": "",
+    "isolated_cpus_sysfs": "",
+    "cmdline_nohz_full": false,
+    "cmdline_isolcpus": false,
+    "cmdline_rcu_nocbs": false
+  },
+  "laguna": {
+    "controls_present": {
+      "nohz_full": false,
+      "isolcpus": false,
+      "rcu_nocbs": false,
+      "clocksource": false,
+      "tsc": false,
+      "hpet": false
+    },
+    "explicit_policy_configured": false,
+    "metrics_record_effective_policy": false
+  }
+}

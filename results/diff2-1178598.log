@@ -1,0 +1,61 @@
+[lx-gpu-lock] ACQUIRED pid=1179128 reason=diff
+0.00.275.126 W load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=2
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=2
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu)
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=2
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=2
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=2
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0004 mean|ref|=0.0004
+[lx-control-moe-down] fuse hit (integrated weighted-mmvq) embd=2048 k=8 tokens=2
+[lx-control-add] fuse hit (add+add residual) nelt=4096 ne0=2048 ne1=2
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0006 mean|ref|=0.0006
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0004 mean|ref|=0.0004
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0005 mean|ref|=0.0005
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0003 mean|ref|=0.0003
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0008 mean|ref|=0.0008
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0005 mean|ref|=0.0005
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0009 mean|ref|=0.0009
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0007 mean|ref|=0.0007
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0007 mean|ref|=0.0007
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0153 mean|ref|=0.0153
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0385 mean|ref|=0.0385
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0040 mean|ref|=0.0040
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0160 mean|ref|=0.0160
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.3997 mean|ref|=0.3997
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.3591 mean|ref|=0.3591
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.4833 mean|ref|=0.4833
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.2476 mean|ref|=0.2476
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.3896 mean|ref|=0.3896
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.3677 mean|ref|=0.3677
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0520 mean|ref|=0.0520
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.4576 mean|ref|=0.4576
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.1159 mean|ref|=0.1159
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.4367 mean|ref|=0.4367
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0086 mean|ref|=0.0086
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=2.2283 mean|ref|=2.2283
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0726 mean|ref|=0.0726
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=2.7907 mean|ref|=2.7907
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0180 mean|ref|=0.0180
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=6.3034 mean|ref|=6.3034
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.2462 mean|ref|=0.2462
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0195 mean|ref|=0.0195
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0151 mean|ref|=0.0151
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.1104 mean|ref|=0.1104
+[lx-debug-moe-down-diff] n_tokens=2 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=0.0181 mean|ref|=0.0181
+[lx-control-moe-down] skip: buffer overlap with dst
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-debug-moe-down-diff] n_tokens=1 k=8 embd=2048  max_diff=0.000000 @ tok=0 row=0  (integ=0.00000 ref=0.00000)  mean|integ|=4.3763 mean|ref|=4.3763
+[lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=1 wtype=q6_K alias_res=1 mm='ffn_shexp-39' add='ffn_out-39' add2='l_out-39'
+0.15.357.154 I 
+0.15.357.225 I system_info: n_threads = 16 (n_threads_batch = 16) / 32 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.15.357.235 I perplexity: tokenizing the input ..
+0.15.791.847 I perplexity: tokenization took 434.605 ms
+0.15.792.013 I perplexity: calculating perplexity over 1 chunks, n_ctx=512, batch_size=32, n_seq=1
+0.18.812.134 I perplexity: 3.02 seconds per pass - ETA 0.05 minutes
+[1]8.5607,
+0.18.817.632 I Final estimate: PPL = 8.5607 +/- 2.00638
+

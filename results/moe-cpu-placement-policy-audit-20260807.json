@@ -1,0 +1,13 @@
+{
+  "angle": "MoE expert CPU placement",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "live_contract": {
+    "flag": "--n-cpu-moe",
+    "default": 0
+  },
+  "laguna": {
+    "explicitly_configured": false,
+    "recorded_in_metrics": false
+  },
+  "interpretation": "Zero keeps all MoE expert layers out of explicit CPU placement."
+}

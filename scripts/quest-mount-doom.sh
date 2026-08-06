@@ -7,6 +7,8 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # shellcheck disable=SC1091
 source "$ROOT/env.sh"
+# shellcheck disable=SC1091
+source "$ROOT/scripts/lib-gpu-lock.sh"
 
 QUEST_DIR="${QUEST_DIR:-$LX_RESULTS/quest-mount-doom}"
 mkdir -p "$QUEST_DIR/cycles" "$QUEST_DIR/logs"
@@ -27,12 +29,21 @@ while true; do
   mkdir -p "$CDIR"
   log "======== CYCLE $CYCLE → $CDIR ========"
 
-  # free GPU of stray benches
+  # free GPU of stray benches (only if we can take the exclusive lock next)
   for p in $(pgrep -x llama-bench 2>/dev/null || true); do
     # don't kill ourselves if somehow named that
     kill -9 "$p" 2>/dev/null || true
   done
   sleep 2
+
+  # Wait up to 15m for the card (agents may still be finishing).
+  export LX_GPU_LOCK_WAIT="${LX_GPU_LOCK_WAIT:-900}"
+  if ! lx_gpu_lock_enter "quest-mount-doom-c${CYCLE}"; then
+    log "WARN: could not acquire B70 lock — sleeping and retrying cycle"
+    sleep 60
+    continue
+  fi
+  # Release at end of cycle body (before long sleep).
 
   # --- serial rebench (ship flags) ---
   export LD_LIBRARY_PATH="$LX_BIN:${LD_LIBRARY_PATH:-}"
@@ -43,11 +54,13 @@ while true; do
 
   PP_JSON="$("$LX_LLAMA_BENCH" -m "$LX_MODEL" -ngl 99 -t 16 -ub 4096 -b 8192 \
     -ctk f16 -ctv f16 -fa on -r 5 -p 512 -n 0 -o json 2>"$CDIR/pp.err")" || {
-    log "CYCLE $CYCLE pp FAIL"; echo fail >"$CDIR/status"; sleep 60; continue
+    log "CYCLE $CYCLE pp FAIL"; echo fail >"$CDIR/status"
+    lx_gpu_lock_leave; sleep 60; continue
   }
   TG_JSON="$("$LX_LLAMA_BENCH" -m "$LX_MODEL" -ngl 99 -t 16 -ub 4096 -b 8192 \
     -ctk f16 -ctv f16 -fa on -r 5 -p 0 -n 128 -o json 2>"$CDIR/tg.err")" || {
-    log "CYCLE $CYCLE tg FAIL"; echo fail >"$CDIR/status"; sleep 60; continue
+    log "CYCLE $CYCLE tg FAIL"; echo fail >"$CDIR/status"
+    lx_gpu_lock_leave; sleep 60; continue
   }
 
   python3 - "$CDIR/metrics.json" "$PP_JSON" "$TG_JSON" "$CYCLE" <<'PY'
@@ -145,6 +158,9 @@ if rows:
     best=rows[0]
     print(f"board n={len(rows)} best_tg={best.get('tg128')} best_pp={best.get('pp512')}")
 PY
+
+  # Drop exclusive lock before idle sleep so other harness jobs can use the card.
+  lx_gpu_lock_leave
 
   # pause between cycles (keep GPU from thermal soak / leave room for kernel builds)
   SLEEP_S="${QUEST_SLEEP_S:-120}"

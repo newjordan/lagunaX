@@ -1,7 +1,9 @@
 # QUEST: Mount Doom — Laguna serial absolute limit on B70
 
-**Status:** ACTIVE (multi-day)  
-**Mission:** max serial pp512 / tg128. Kernel path. No multi-slot cosplay.
+**Status:** PAUSED afternoon 2026-07-31 — handoff `notes/HANDOFF_20260731_afternoon.md`  
+**Mission:** max serial pp512 / tg128. Kernel path. No multi-slot cosplay.  
+**2-day goal:** formal score **≥ 1.250** by **2026-08-02 14:00 UTC** (stretch 1.300).  
+**Loop:** paused; relaunch `bash scripts/quest-2day-launch.sh` when ready
 
 ## Live infrastructure
 
@@ -33,10 +35,14 @@
 8. **Frontier map** — `notes/FRONTIER_20260729.md` (superseded live tip below)
    - Full **vocab=100352 lm_head** every token (~116 MB Q4 traffic) — still open
    - Prefill multi-token dual golden still hard
-9. **LIVE TIP (2026-07-30)** — **topk full-norm** + router GEMV decode + FA VEC GQA + mm-add+add + packed reduce
-   - Formal: **pp~3735 / tg~139.4 / +63.67%** vs pin; golden re-captured OK
-   - Kill full-norm: `GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK_NORM=1` · Kill GEMV: `GGML_SYCL_DISABLE_ROUTER_GEMV_FUSE=1`
-   - See `notes/SHIP_20260730_router_true_topk_norm_default.md` · `results/MOUNT_DOOM_STATUS.md`
+9. **LIVE TIP (2026-07-31, post-brownout reconfirm)** — **quality-safe** tip + **decode-only mm-add**
+   - Formal: **pp~1183 / tg~139.3 / score 1.227 (+22.74%)** vs pin (`results/20260731T141436Z/`)
+   - Golden OK · wikitext PPL ~12.6 (not 1e5+)
+   - Binary: `build-mmadd-decode` (patched tip lib, `ne11==1` only for mm-add)
+   - Still **killed**: `MOE_DUAL_DOWN`, `MOE_DUAL_MULTITOKEN` (PPL/neg-logprob breaks)
+   - Invalid claim: full-default +63% (prefill dual multitoken wrecked quality)
+   - See `notes/SHIP_20260731_mmadd_decode_only.md` · `notes/SHIP_20260730_quality_safe_tip.md`
+10. **Post-brownout (2026-07-31 ~reboot)** — sycl B70 up, lock free, golden OK, formal rebench OK
 
 ## Loop (autonomous)
 
@@ -72,3 +78,4 @@ bash ~/.claude/skills/b70-kernel-trace/ktrace.sh --mode onednn \
 - Re-pin baseline to invent wins
 - Claim multi-slot 513 as serial score
 - Ship FA-off or graph-on (measured losses)
+- **Run two GPU jobs at once** (bench+PPL, dual benches, …) — wedges xe; see `notes/B70_NO_CONCURRENT_GPU.md`

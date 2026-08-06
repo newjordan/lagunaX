@@ -1,0 +1,22 @@
+{
+  "laguna": {
+    "canonical_environment": "env.sh",
+    "configures_huge_page_policy": false,
+    "records_huge_page_state": false,
+    "serial_harness": "scripts/bench-serial.sh"
+  },
+  "live": {
+    "meminfo": {
+      "AnonHugePages": "0 kB",
+      "FileHugePages": "108544 kB",
+      "HugePages_Free": "0",
+      "HugePages_Total": "0",
+      "Hugepagesize": "2048 kB",
+      "ShmemHugePages": "0 kB"
+    },
+    "transparent_hugepage_defrag": "always defer defer+madvise [madvise] never",
+    "transparent_hugepage_enabled": "always [madvise] never",
+    "transparent_hugepage_shmem_enabled": "always within_size advise [never] deny force"
+  },
+  "scope": "host huge-page policy and benchmark provenance"
+}

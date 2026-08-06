@@ -1,0 +1,164 @@
+=== LAGUNA A/B base vs quality-safe tip 20260730T235446Z ===
+OUT=/home/frosty40/turbo/lx/results/laguna-ab-20260730T235446Z
+stamp=20260730T235446Z
+binary=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
+a6281386770d3b8c6f15fe7a4f12ea21  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0.17.0
+model_sha256=771a73e1249b9bc08e17d3fca59f5c49b7b9c8a6a47b5a6ac82f95c6e76923c4
+SRV_CTX=32768 AGENT_CTX=32768
+base_arm=all major custom fuses DISABLED
+tip_arm=quality-safe (only mm-add + dual-down + dual-multitoken disabled)
+=== ARM base env ===
+GGML_SYCL_DISABLE_ADD_ADD_FUSE=1
+GGML_SYCL_DISABLE_DENSE_DUAL_GEMM=1
+GGML_SYCL_DISABLE_DENSE_DUAL_SWIGLU=1
+GGML_SYCL_DISABLE_GRAPH=1
+GGML_SYCL_DISABLE_MOE_DOWN_INTEGRATED=1
+GGML_SYCL_DISABLE_MOE_DOWN_WEIGHTED=1
+GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
+GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
+GGML_SYCL_DISABLE_MOE_DUAL_SWIGLU=1
+GGML_SYCL_DISABLE_MOE_PACKED_REDUCE=1
+GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
+GGML_SYCL_DISABLE_QKV_SHARED_QUANT=1
+GGML_SYCL_DISABLE_RMS_NORM_FUSE=1
+GGML_SYCL_DISABLE_ROPE_SET_ROWS_FUSE=1
+GGML_SYCL_DISABLE_ROUTER_GEMV_FUSE=1
+GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD=1
+GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1
+GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK_NORM=1
+GGML_SYCL_DISABLE_SOFTPLUS_MUL_FUSE=1
+GGML_SYCL_DISABLE_TOPK_MOE=1
+
+[2026-07-30T18:54:56-05:00] PHASE formal base
+GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
+GGML_SYCL_DISABLE_DENSE_DUAL_SWIGLU=1
+GGML_SYCL_DISABLE_TOPK_MOE=1
+GGML_SYCL_DISABLE_MOE_DUAL_SWIGLU=1
+GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
+GGML_SYCL_DISABLE_ADD_ADD_FUSE=1
+GGML_SYCL_DISABLE_ROUTER_SIGMOID_ADD=1
+GGML_SYCL_DISABLE_ROUTER_GEMV_FUSE=1
+GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK_NORM=1
+GGML_SYCL_DISABLE_MOE_DOWN_INTEGRATED=1
+GGML_SYCL_DISABLE_ROPE_SET_ROWS_FUSE=1
+GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
+GGML_SYCL_DISABLE_DENSE_DUAL_GEMM=1
+GGML_SYCL_DISABLE_SOFTPLUS_MUL_FUSE=1
+GGML_SYCL_DISABLE_QKV_SHARED_QUANT=1
+GGML_SYCL_DISABLE_GRAPH=1
+GGML_SYCL_DISABLE_MOE_PACKED_REDUCE=1
+GGML_SYCL_DISABLE_ROUTER_TRUE_TOPK=1
+GGML_SYCL_DISABLE_MOE_DOWN_WEIGHTED=1
+GGML_SYCL_DISABLE_RMS_NORM_FUSE=1
+== lx serial bench ==
+  mode:    candidate
+  binary:  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench
+  model:   /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+  window:  pp512 / tg128  reps=5
+  device:  level_zero:gpu  ZE_AFFINITY_MASK=0
+  out:     /home/frosty40/turbo/lx/results/20260730T235456Z/metrics.json
+-- pp512 --
+-- tg128 --
+{
+  "stamp": "20260730T235456Z",
+  "track": "serial",
+  "mode": "candidate",
+  "pp512": 1145.279334,
+  "tg128": 108.247039,
+  "window": {
+    "pp": 512,
+    "tg": 128,
+    "reps": 5
+  },
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "flags": {
+    "ngl": 99,
+    "threads": 16,
+    "ubatch": 2048,
+    "bbatch": 2048,
+    "ctx": 8192,
+    "ctk": "f16",
+    "ctv": "f16"
+  },
+  "env": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0",
+    "GGML_SYCL_DISABLE_GRAPH": "1",
+    "GGML_SYCL_DISABLE_DNN": null
+  },
+  "note": "laguna-ab base",
+  "claim_boundary": [
+    "Serial only: one stream pp512 + tg128.",
+    "Not multi-slot aggregate tok/s.",
+    "Not comparable to mlx.fast M5 absolute tok/s (different quant/silicon).",
+    "Score is vs pinned B70 baseline only."
+  ]
+}
+
+wrote /home/frosty40/turbo/lx/results/20260730T235456Z/metrics.json
+  pp512=1145.279334  tg128=108.247039
+score=1.007584  increase=+0.76%  dec=1.0083x  pre=1.0054x
+{
+  "decode_tok_s": 108.247039,
+  "prefill_tok_s": 1145.279334,
+  "baseline_decode_tok_s": 107.353814,
+  "baseline_prefill_tok_s": 1139.150972,
+  "decode_speedup": 1.00832038440665,
+  "prefill_speedup": 1.0053797627800296,
+  "decode_floor": 0.95,
+  "prefill_floor": 0.95,
+  "floors_ok": true,
+  "score": 1.007584423638795,
+  "increase_pct": 0.7584423638794968,
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
+  "track": "serial",
+  "not": "multi-slot aggregate tok/s",
+  "baseline_path": "/home/frosty40/turbo/lx/baseline/baseline.json",
+  "candidate_path": "/home/frosty40/turbo/lx/results/20260730T235456Z/metrics.json",
+  "candidate_meta": {
+    "stamp": "20260730T235456Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "laguna-ab base",
+    "flags": {
+      "ngl": 99,
+      "threads": 16,
+      "ubatch": 2048,
+      "bbatch": 2048,
+      "ctx": 8192,
+      "ctk": "f16",
+      "ctv": "f16"
+    },
+    "env": {
+      "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+      "ZE_AFFINITY_MASK": "0",
+      "GGML_SYCL_DISABLE_GRAPH": "1",
+      "GGML_SYCL_DISABLE_DNN": null
+    }
+  },
+  "baseline_meta": {
+    "stamp": "20260729T183834Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "v0 control pin: serial track, Q4_K_M, base-control"
+  }
+}
+score → /home/frosty40/turbo/lx/results/20260730T235456Z/score.json
+formal_base_exit=0
+
+[2026-07-30T18:55:36-05:00] PHASE ladder base
+./scripts/laguna-ab-suite.sh: line 155: 953668 Aborted                 (core dumped) "$BD/llama-bench" -m "$MODEL" -ngl 99 -t 16 -ctk f16 -ctv f16 -fa on -b 2048 -ub 2048 -p 512,2048,4096,8192 -n 128 -r 3 -o json > "$OUT/$tag/ladder.json" 2> "$OUT/$tag/ladder.err"
+ladder_base_exit=134
+Traceback (most recent call last):
+  File "<stdin>", line 6, in <module>
+  File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 133 column 4 (char 3814)

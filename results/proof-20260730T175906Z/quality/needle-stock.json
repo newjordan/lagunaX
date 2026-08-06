@@ -1,0 +1,14 @@
+{
+  "ans": "variable\n\n**Inter\n\nQuestion**Context\n\nestin\n\n Waste\n\nUME:\n  \n\n**##\n\n##:\\\n\nAng\n**```\n**\n\n",
+  "timings": {
+    "cache_n": 1,
+    "prompt_n": 394,
+    "prompt_ms": 525.913,
+    "prompt_per_token_ms": 1.3348045685279188,
+    "prompt_per_second": 749.1733423589072,
+    "predicted_n": 32,
+    "predicted_ms": 266.128,
+    "predicted_per_token_ms": 8.3165,
+    "predicted_per_second": 120.24289063909097
+  }
+}

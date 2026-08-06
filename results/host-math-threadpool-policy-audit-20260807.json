@@ -1,0 +1,51 @@
+{
+  "artifact_json_files_parsed": 545,
+  "artifact_mentions": {
+    "DNNL_MAX_CPU_ISA": 0,
+    "KMP_BLOCKTIME": 0,
+    "KMP_LIBRARY": 0,
+    "MKL_DYNAMIC": 0,
+    "MKL_NUM_THREADS": 0,
+    "OMP_DYNAMIC": 0,
+    "OMP_NUM_THREADS": 0
+  },
+  "controls": [
+    "OMP_NUM_THREADS",
+    "OMP_DYNAMIC",
+    "MKL_NUM_THREADS",
+    "MKL_DYNAMIC",
+    "DNNL_MAX_CPU_ISA",
+    "KMP_BLOCKTIME",
+    "KMP_LIBRARY"
+  ],
+  "environment": {
+    "DNNL_MAX_CPU_ISA": null,
+    "KMP_BLOCKTIME": null,
+    "KMP_LIBRARY": null,
+    "MKL_DYNAMIC": null,
+    "MKL_NUM_THREADS": null,
+    "OMP_DYNAMIC": null,
+    "OMP_NUM_THREADS": null
+  },
+  "policy": "host_math_threadpool",
+  "source_mentions": {
+    "env.sh": {
+      "DNNL_MAX_CPU_ISA": false,
+      "KMP_BLOCKTIME": false,
+      "KMP_LIBRARY": false,
+      "MKL_DYNAMIC": false,
+      "MKL_NUM_THREADS": false,
+      "OMP_DYNAMIC": false,
+      "OMP_NUM_THREADS": false
+    },
+    "scripts/bench-serial.sh": {
+      "DNNL_MAX_CPU_ISA": false,
+      "KMP_BLOCKTIME": false,
+      "KMP_LIBRARY": false,
+      "MKL_DYNAMIC": false,
+      "MKL_NUM_THREADS": false,
+      "OMP_DYNAMIC": false,
+      "OMP_NUM_THREADS": false
+    }
+  }
+}

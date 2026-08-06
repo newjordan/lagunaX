@@ -1,0 +1,14 @@
+{
+  "angle": "process-address-space-randomization-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_aslr": false,
+    "metrics_record_aslr_state": false
+  },
+  "generated_utc": "2026-08-01T20:43:49.923460+00:00",
+  "live_state": {
+    "audit_process_addr_no_randomize": false,
+    "audit_process_personality_hex": "00000000",
+    "kernel_mode": "full",
+    "kernel_randomize_va_space": 2
+  }
+}

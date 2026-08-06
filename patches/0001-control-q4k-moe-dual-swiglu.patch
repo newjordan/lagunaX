@@ -154,9 +154,15 @@ index 3b807c7cb..87db45be9 100644
 +    ggml_tensor * gate = glu->src[0];
 +    ggml_tensor * up   = glu->src[1];
 +    if (ggml_sycl_mul_mat_id_dual_swiglu_fused(ctx, gate, up, glu)) {
-+        static std::atomic<int> once{0};
-+        if (once.fetch_add(1) == 0) {
-+            fprintf(stderr, "[lx-control-moe-dual] fuse hit (gate+up+swiglu)\n");
++        static const bool trace = []() {
++            const char * env = getenv("GGML_SYCL_TRACE_MOE_DUAL_SWIGLU");
++            return env != nullptr && std::atoi(env) != 0;
++        }();
++        if (trace) {
++            static std::atomic<int> once{0};
++            if (once.fetch_add(1) == 0) {
++                fprintf(stderr, "[lx-control-moe-dual] fuse hit (gate+up+swiglu)\n");
++            }
 +        }
 +        return 2;
 +    }
@@ -292,9 +298,15 @@ index 3b807c7cb..87db45be9 100644
 +    ggml_tensor * gate = glu->src[0];
 +    ggml_tensor * up   = glu->src[1];
 +    if (ggml_sycl_mul_mat_dense_dual_swiglu_fused(ctx, gate, up, glu)) {
-+        static std::atomic<int> once{0};
-+        if (once.fetch_add(1) == 0) {
-+            fprintf(stderr, "[lx-control-dense-dual] fuse hit (shared gate+up+swiglu)\n");
++        static const bool trace = []() {
++            const char * env = getenv("GGML_SYCL_TRACE_DENSE_DUAL_SWIGLU");
++            return env != nullptr && std::atoi(env) != 0;
++        }();
++        if (trace) {
++            static std::atomic<int> once{0};
++            if (once.fetch_add(1, std::memory_order_relaxed) == 0) {
++                fprintf(stderr, "[lx-control-dense-dual] fuse hit (shared gate+up+swiglu)\n");
++            }
 +        }
 +        return 2;
 +    }
@@ -410,21 +422,21 @@ index 3b807c7cb..87db45be9 100644
 -            /*expert_weight_stride=*/ src0->nb[2],
 -            /*dst_row_stride=*/ dst->nb[1],
 -            src1_row_stride, stream);
-+    {
-+        static std::atomic<int> once{0};
-+        if (ne12 > 1 && once.fetch_add(1) == 0) {
-+            fprintf(stderr,
-+                    "[lx-control-mmid] multi-token fused (per-token) n_tokens=%" PRId64
-+                    " k=%d reorder=%d\n",
-+                    ne12, n_experts_used, (int) use_reorder);
++    if (ne12 > 1) {
++        static const bool trace = [] {
++            const char * env = std::getenv("GGML_SYCL_TRACE_MMID_BATCH");
++            return env != nullptr && std::atoi(env) != 0;
++        }();
++        if (trace) {
++            static std::atomic<int> once{0};
++            if (once.fetch_add(1, std::memory_order_relaxed) == 0) {
++                fprintf(stderr,
++                        "[lx-control-mmid] multi-token fused (per-token) n_tokens=%" PRId64
++                        " k=%d reorder=%d\n",
++                        ne12, n_experts_used, (int) use_reorder);
++            }
 +        }
-     }
--    return ggml_sycl_mul_mat_vec_q_id(
--        src0->type, src0->data, src1_ddq, (const int32_t *) ids->data,
--        (float *) dst->data, (int) ne10, nrows, n_experts_used,
--        /*expert_weight_stride=*/ src0->nb[2],
--        /*dst_row_stride=*/ dst->nb[1],
--        src1_row_stride, stream);
++    }
 +    return true;
  }
  
@@ -610,9 +622,15 @@ index 3b807c7cb..87db45be9 100644
 +    if (ggml_sycl_tensor_buf_overlap(weights, dst) ||
 +        ggml_sycl_tensor_buf_overlap(mmid, dst) ||
 +        ggml_sycl_tensor_buf_overlap(mul, dst)) {
-+        static std::atomic<int> once{0};
-+        if (once.fetch_add(1) == 0) {
-+            fprintf(stderr, "[lx-control-moe-down] skip: buffer overlap with dst\n");
++        static const bool trace_moe_down_skip = [] {
++            const char * env = std::getenv("GGML_SYCL_TRACE_MOE_DOWN");
++            return env != nullptr && std::atoi(env) != 0;
++        }();
++        if (trace_moe_down_skip) {
++            static std::atomic<int> once{0};
++            if (once.fetch_add(1, std::memory_order_relaxed) == 0) {
++                fprintf(stderr, "[lx-control-moe-down] skip: buffer overlap with dst\n");
++            }
 +        }
 +        return 0;
 +    }
@@ -683,8 +701,12 @@ index 3b807c7cb..87db45be9 100644
 +            n_embd, n_experts_used, n_tokens);
 +    }
 +
++    static const bool trace_moe_down = []() {
++        const char * env = std::getenv("GGML_SYCL_TRACE_MOE_DOWN");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
 +    static std::atomic<int> once{0};
-+    if (once.fetch_add(1) == 0) {
++    if (trace_moe_down && once.fetch_add(1) == 0) {
 +        fprintf(stderr,
 +                "[lx-control-moe-down] fuse hit (%s) embd=%" PRId64
 +                " k=%" PRId64 " tokens=%" PRId64 "\n",
@@ -1048,9 +1070,13 @@ index 7b1b3d467..60bf6151f 100644
 +    const int            block_num_y = (nrows + GGML_SYCL_MMV_Y - 1) / GGML_SYCL_MMV_Y;
 +    const sycl::range<3> block_nums(1, (unsigned) n_experts_used, (unsigned) block_num_y);
 +    const sycl::range<3> block_dims(1, GGML_SYCL_MMV_Y, WARP_SIZE);
-+    {
++    static const bool trace_launch = [] {
++        const char * env = std::getenv("GGML_SYCL_TRACE_MOE_DUAL_SWIGLU");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
++    if (trace_launch) {
 +        static std::atomic<int> once{0};
-+        if (once.fetch_add(1) == 0) {
++        if (once.fetch_add(1, std::memory_order_relaxed) == 0) {
 +            fprintf(stderr,
 +                    "[lx-control-moe-dual] n_experts=%d nrows=%d ncols=%d (first entry)\n",
 +                    n_experts_used, nrows, ncols);
@@ -1799,10 +1825,16 @@ index 78574c4b5..e47780655 100644
 +                    dst[idx] = src[idx] * s + b;
 +                }
 +            });
-+        static std::atomic<int> once{0};
-+        if (once.fetch_add(1) == 0) {
-+            fprintf(stderr, "[lx-control-topk-moe] mode=5 stock-div+fused-scale nelt=%" PRId64 " s=%g same=%d\n",
-+                    nelt, (double) s, (int) (src == dst));
++        static const bool trace = []() {
++            const char * env = getenv("GGML_SYCL_TRACE_TOPK_MOE");
++            return env != nullptr && std::atoi(env) != 0;
++        }();
++        if (trace) {
++            static std::atomic<int> once{0};
++            if (once.fetch_add(1) == 0) {
++                fprintf(stderr, "[lx-control-topk-moe] mode=5 stock-div+fused-scale nelt=%" PRId64 " s=%g same=%d\n",
++                        nelt, (double) s, (int) (src == dst));
++            }
 +        }
 +        return;
 +    }
@@ -1866,7 +1898,11 @@ index 78574c4b5..e47780655 100644
 +                }
 +            });
 +    }
-+    {
++    static const bool trace = []() {
++        const char * env = getenv("GGML_SYCL_TRACE_TOPK_MOE");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
++    if (trace) {
 +        static std::atomic<int> once{0};
 +        if (once.fetch_add(1) == 0) {
 +            fprintf(stderr, "[lx-control-topk-moe] hybrid mode=2 gather+stock-div+fused-scale\n");
@@ -2153,12 +2189,18 @@ index 78574c4b5..e47780655 100644
 +                                                                     /*is_topk_moe=*/true);
 +            if (can_sub && can_use && bias_ok && can_mem && node->data && add->data && argsort->data &&
 +                getrows->data && weights->data) {
-+                static std::atomic<int> once{0};
-+                if (once.fetch_add(1) == 0) {
-+                    const int m = ggml_sycl_topk_moe_hybrid_mode();
-+                    fprintf(stderr,
-+                            "[lx-control-topk-moe] laguna bias fuse HIT (hybrid mode=%d: 0=stock 1=gather 2=gather-norm)\n",
-+                            m);
++                static const bool trace = []() {
++                    const char * env = getenv("GGML_SYCL_TRACE_TOPK_MOE");
++                    return env != nullptr && std::atoi(env) != 0;
++                }();
++                if (trace) {
++                    static std::atomic<int> once{0};
++                    if (once.fetch_add(1) == 0) {
++                        const int m = ggml_sycl_topk_moe_hybrid_mode();
++                        fprintf(stderr,
++                                "[lx-control-topk-moe] laguna bias fuse HIT (hybrid mode=%d: 0=stock 1=gather 2=gather-norm)\n",
++                                m);
++                    }
 +                }
 +                GGML_UNUSED(logits);
 +                GGML_UNUSED(ids);

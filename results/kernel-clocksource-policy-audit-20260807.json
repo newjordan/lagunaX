@@ -1,0 +1,17 @@
+{
+  "captured_at_utc": "2026-08-01T22:05:10.075828+00:00",
+  "angle": "kernel timekeeping clocksource selection and benchmark provenance",
+  "kernel": {
+    "current_clocksource": "tsc",
+    "available_clocksources": [
+      "tsc",
+      "hpet",
+      "acpi_pm"
+    ],
+    "command_line_overrides": []
+  },
+  "laguna": {
+    "configures_clocksource": false,
+    "records_clocksource": false
+  }
+}

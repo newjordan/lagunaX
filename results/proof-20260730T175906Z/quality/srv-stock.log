@@ -1,0 +1,38 @@
+0.00.114.212 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.114.625 W srv  llama_server: -----------------
+0.00.114.628 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set
+0.00.114.628 W srv  llama_server: this can be a security risk (cross-origin attacks)
+0.00.114.628 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655
+0.00.114.628 W srv  llama_server: -----------------
+0.00.115.852 I srv    load_model: loading model '/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf'
+0.00.303.626 W load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=2
+[lx-control-rope] fuse hit (rope+view+set_rows) mode=2 ne0=128 ne1=8 type=f16
+[lx-control-fattn] kernel=TILE Q=[128,2,48] K=[128,256]
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=2
+[lx-control-mm-add] fuse hit (mul_mat+add) ne0=2048 ne1=2 wtype=q4_K alias_res=0 mm='attn_o_proj-0' add='ffn_inp-0' add2='-'
+[lx-control-mmid] device counting-sort+prefix+ev n_tokens=2 k=8 n_experts=256
+[lx-control-moe-down] fuse hit (weighted reduce) embd=2048 k=8 tokens=2
+[lx-control-moe-down] multi-token two-step weighted reduce embd=2048 k=8 tokens=2
+[lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=2 wtype=q6_K alias_res=1 mm='ffn_shexp-1' add='ffn_out-1' add2='l_out-1'
+[lx-control-moe-down] two-step scratch experts=0 weights=1 tokens=1
+0.15.292.878 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 4096, kv_unified = 'false'
+0.15.300.882 I srv          init: chat template supports preserving reasoning, consider enabling it via --reasoning-preserve
+0.15.300.923 I srv  llama_server: model loaded
+0.15.300.929 I srv  llama_server: listening on http://127.0.0.1:18913
+0.15.583.433 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.15.583.504 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+0.16.875.544 I slot print_timing: id  0 | task 0 | prompt eval time =    1050.52 ms /    28 tokens (   37.52 ms per token,    26.65 tokens per second)
+0.16.875.548 I slot print_timing: id  0 | task 0 |        eval time =     241.49 ms /    30 tokens (    8.05 ms per token,   124.23 tokens per second)
+0.16.875.549 I slot print_timing: id  0 | task 0 |       total time =    1292.01 ms /    58 tokens
+0.16.875.551 I slot print_timing: id  0 | task 0 |    graphs reused =         29
+0.16.875.582 I slot      release: id  0 | task 0 | stop processing: n_tokens = 57, truncated = 0
+0.16.930.676 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 5884480331
+0.16.933.720 I slot launch_slot_: id  0 | task 33 | processing task, is_child = 0
+0.17.725.774 I slot print_timing: id  0 | task 33 | prompt eval time =     525.91 ms /   394 tokens (    1.33 ms per token,   749.17 tokens per second)
+0.17.725.778 I slot print_timing: id  0 | task 33 |        eval time =     266.13 ms /    32 tokens (    8.32 ms per token,   120.24 tokens per second)
+0.17.725.779 I slot print_timing: id  0 | task 33 |       total time =     792.04 ms /   426 tokens
+0.17.725.779 I slot print_timing: id  0 | task 33 |    graphs reused =         59
+0.17.725.808 I slot      release: id  0 | task 33 | stop processing: n_tokens = 426, truncated = 0

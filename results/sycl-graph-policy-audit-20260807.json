@@ -1,0 +1,22 @@
+{
+  "active_default_disables_graph": true,
+  "active_env_mentions": {
+    "GGML_SYCL_DISABLE_GRAPH": true,
+    "GGML_SYCL_GRAPH": false
+  },
+  "benchmark_invocations_covered": 2,
+  "effective_policy": "runtime auto-select",
+  "parsed_json_artifacts": 572,
+  "quality_result": "not measured by this policy-coverage audit",
+  "recorded_values": {
+    "GGML_SYCL_DISABLE_GRAPH": {
+      "0": 2,
+      "1": 356
+    },
+    "GGML_SYCL_GRAPH": {}
+  },
+  "serial_harness_mentions": {
+    "GGML_SYCL_DISABLE_GRAPH": true,
+    "GGML_SYCL_GRAPH": false
+  }
+}

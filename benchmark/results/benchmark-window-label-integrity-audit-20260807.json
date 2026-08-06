@@ -1,0 +1,11 @@
+{
+  "policy": {
+    "window_is_environment_configurable": true,
+    "invocations_use_configurable_window": true,
+    "metrics_window_records_configured_values": true,
+    "throughput_keys_are_hardcoded": true,
+    "score_consumes_hardcoded_keys": true,
+    "window_key_consistency_guard": false
+  },
+  "risk": "Overriding LX_PP or LX_TG runs a different workload but stores throughput under pp512/tg128 keys consumed by score.py."
+}

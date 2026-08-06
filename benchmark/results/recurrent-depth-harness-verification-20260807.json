@@ -1,0 +1,12 @@
+{
+  "direction": "expose recurrent-state depth control",
+  "verified": true,
+  "checks": {
+    "repository_shell_syntax": "passed",
+    "installed_llama_bench_n_depth_support": true,
+    "argument_forwarding": "-d $LX_DEPTH",
+    "metrics_provenance": "window.depth",
+    "default_depth": 0
+  },
+  "performance_or_quality_claim": false
+}

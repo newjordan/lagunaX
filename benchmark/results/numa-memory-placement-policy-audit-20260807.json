@@ -1,0 +1,26 @@
+{
+  "audit": "numa-memory-placement-policy",
+  "executable_contract": {
+    "help_line": "--numa <distribute|isolate|numactl>         numa mode (default: disabled)",
+    "supports_numa": true,
+    "modes": [
+      "distribute",
+      "isolate",
+      "numactl"
+    ],
+    "default": "disabled"
+  },
+  "host_topology": {
+    "numa_node_count": 1,
+    "node_cpulists": {
+      "node0": "0-31"
+    }
+  },
+  "canonical_policy": {
+    "passes_numa": false,
+    "records_numa": false
+  },
+  "process_environment": {
+    "LX_NUMA": null
+  }
+}

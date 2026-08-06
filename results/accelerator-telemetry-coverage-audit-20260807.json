@@ -1,0 +1,14 @@
+{
+  "audit": "accelerator-utilization-bandwidth-telemetry",
+  "benchmark_source": "scripts/bench-serial.sh",
+  "active_capture_controls": {
+    "xpu_smi": false,
+    "intel_gpu_top": false,
+    "sysfs_busy_percent": false,
+    "memory_bandwidth_counter": false
+  },
+  "active_capture_enabled": false,
+  "result_json_artifacts_parsed": 579,
+  "artifacts_with_utilization_or_bandwidth_fields": 0,
+  "conclusion": "Canonical serial runs do not capture accelerator occupancy or memory-bandwidth counters alongside throughput."
+}

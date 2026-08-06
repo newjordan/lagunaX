@@ -1,0 +1,21 @@
+{
+  "active_policy": {
+    "level_zero_tracing": false,
+    "progress": false,
+    "sycl_pi_trace": false,
+    "verbose": false
+  },
+  "angle": "benchmark diagnostic output and accelerator tracing overhead",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "executable_controls_observed": {
+    "progress": "--progress",
+    "verbose": "-v, --verbose"
+  },
+  "historical_mentions": {
+    "level_zero_tracing": 2,
+    "progress": 0,
+    "sycl_pi_trace": 2,
+    "verbose": 0
+  },
+  "parsed_json_artifacts": 582
+}

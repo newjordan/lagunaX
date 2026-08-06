@@ -1,0 +1,26 @@
+{
+  "angle": "automatic-numa-balancing-policy",
+  "finding": "Laguna neither configures nor records automatic NUMA balancing policy or the host NUMA node topology.",
+  "generated_at": "2026-08-01T21:22:17.341518+00:00",
+  "laguna": {
+    "bench_policy_hits": [],
+    "env_policy_hits": [],
+    "records_numa_balancing": false
+  },
+  "live": {
+    "controls": {
+      "numa_balancing": "0",
+      "numa_balancing_promote_rate_limit_MBps": "65536",
+      "numa_balancing_scan_delay_ms": null,
+      "numa_balancing_scan_period_max_ms": null,
+      "numa_balancing_scan_period_min_ms": null,
+      "numa_balancing_scan_size_mb": null
+    },
+    "kernel_cmdline_numa_balancing": [],
+    "node_cpulists": {
+      "node0": "0-31"
+    },
+    "online_nodes": "0",
+    "possible_nodes": "0"
+  }
+}

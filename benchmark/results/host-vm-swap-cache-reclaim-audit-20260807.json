@@ -1,0 +1,24 @@
+{
+  "derived": {
+    "swap_configured": true,
+    "swap_used_kib": 40684
+  },
+  "laguna": {
+    "env_or_harness_controls_policy": false,
+    "serial_metrics_record_policy": false,
+    "serial_metrics_record_swap_state": false
+  },
+  "live": {
+    "page_cluster": 3,
+    "swappiness": 60,
+    "vfs_cache_pressure": 100,
+    "watermark_scale_factor": 10
+  },
+  "memory_kib": {
+    "cached": 52194832,
+    "s_reclaimable": 1210732,
+    "swap_cached": 3952,
+    "swap_free": 8347920,
+    "swap_total": 8388604
+  }
+}

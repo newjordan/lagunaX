@@ -1,0 +1,10 @@
+{
+  "artifacts_with_model_path": 413,
+  "artifacts_with_model_sha256": 0,
+  "json_artifacts_scanned": 529,
+  "model_exists": true,
+  "model_path": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "model_sha256": "771a73e1249b9bc08e17d3fca59f5c49b7b9c8a6a47b5a6ac82f95c6e76923c4",
+  "serial_harness_passes_model_path": true,
+  "serial_harness_records_model_sha256": false
+}

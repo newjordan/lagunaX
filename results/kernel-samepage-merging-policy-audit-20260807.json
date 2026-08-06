@@ -1,0 +1,22 @@
+{
+  "angle": "kernel-samepage-merging-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_ksm": [],
+    "metrics_record_ksm": []
+  },
+  "generated_utc": "2026-08-01T21:41:53.362324+00:00",
+  "ksm_interface_present": true,
+  "live_policy_and_activity": {
+    "full_scans": 0,
+    "merge_across_nodes": 1,
+    "pages_shared": 0,
+    "pages_sharing": 0,
+    "pages_to_scan": 100,
+    "pages_unshared": 0,
+    "pages_volatile": 0,
+    "run": 0,
+    "sleep_millisecs": 20,
+    "smart_scan": 1,
+    "use_zero_pages": 0
+  }
+}

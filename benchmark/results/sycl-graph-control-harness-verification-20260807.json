@@ -1,0 +1,11 @@
+{
+  "control": "SYCL graph capture",
+  "checks": {
+    "shell_syntax": true,
+    "default_disabled": true,
+    "forwarded_to_backend_env": true,
+    "boolean_validation": true,
+    "metrics_recorded": true
+  },
+  "finding": "The serial harness exposes, validates, forwards, and records SYCL graph-capture disablement; compatibility default remains disabled (1)."
+}

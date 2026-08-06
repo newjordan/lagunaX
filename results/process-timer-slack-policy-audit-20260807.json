@@ -1,0 +1,14 @@
+{
+  "angle": "process-timer-slack-policy",
+  "generated_at": "2026-08-01T21:51:15.899717+00:00",
+  "interpretation": "Timer slack permits the kernel to coalesce process timer wakeups within the configured window. The audit records the inherited value and whether Laguna controls or records it.",
+  "laguna": {
+    "env_or_harness_controls_timer_slack": false,
+    "serial_harness_records_timer_slack": false
+  },
+  "live": {
+    "audit_process_timer_slack_ns": 50000,
+    "audit_process_timer_slack_us": 50.0,
+    "proc_interface": "/proc/self/timerslack_ns"
+  }
+}

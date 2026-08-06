@@ -1,0 +1,10 @@
+{
+  "ctx_passed_in_serial_common_args": false,
+  "declared_ctx_default": 8192,
+  "historical_decode_prompt_token_counts": {
+    "0": 18
+  },
+  "historical_decode_records_with_nonzero_prompt": 0,
+  "json_files_parsed": 519,
+  "serial_decode_explicit_prompt_tokens": 0
+}

@@ -1,0 +1,9 @@
+KV-cache precision audit
+logs_scanned=160
+logs_with_kv_metadata=158
+type_k_records=312
+type_v_records=312
+type_k_values={"f16": 312}
+type_v_values={"f16": 312}
+assert_all_k_f16=True
+assert_all_v_f16=True

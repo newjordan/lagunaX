@@ -1,0 +1,13 @@
+[2026-07-31T16:46:44Z] QUEST-2DAY START pid=518583
+[2026-07-31T16:46:44Z] deadline=2026-08-02T14:00:00Z goal_score=1.250 stretch=1.300 sleep=1200s
+[2026-07-31T16:46:44Z] baseline=/home/frosty40/turbo/lx/baseline/baseline.json bin=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+[2026-07-31T16:46:44Z] env: mm-add=0 dual_down=1 dual_mt=1
+[2026-07-31T16:46:44Z] time_left_s=162796
+[2026-07-31T16:46:44Z] ======== CYCLE 1 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c1-20260731T164644Z ========
+[lx-gpu-lock] ACQUIRED pid=518583 reason=quest-2day-c1
+[2026-07-31T16:46:44Z] CYCLE 1 golden-smoke
+[2026-07-31T16:47:02Z] CYCLE 1 GOLDEN OK
+[2026-07-31T16:47:40Z] CYCLE 1 RESULT pp512=1165.456267 tg128=138.253662 score=1.2158305397159528 increase=21.583053971595277%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+board n=13 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T16:47:40Z] CYCLE 1 sleep 1200s

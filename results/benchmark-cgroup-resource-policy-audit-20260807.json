@@ -1,0 +1,42 @@
+{
+  "audit": "benchmark-cgroup-resource-policy",
+  "laguna": {
+    "configured_controls": {
+      "cgroup": false,
+      "cpu.max": false,
+      "cpu.weight": false,
+      "cpuset.cpus": false,
+      "cpuset.mems": false,
+      "memory.max": false,
+      "pids.max": false
+    },
+    "metrics_record_policy": false
+  },
+  "live": {
+    "effective_cgroup_path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/tmux-spawn-ca7da514-0055-44fb-ace9-9dc0b08dabcb.scope",
+    "effective_constraints": {
+      "cgroup.controllers": "cpu memory pids",
+      "cgroup.subtree_control": "",
+      "cpu.max": "max 100000",
+      "cpu.weight": "100",
+      "cpuset.cpus": null,
+      "cpuset.cpus.effective": null,
+      "cpuset.mems": null,
+      "cpuset.mems.effective": null,
+      "memory.high": "max",
+      "memory.max": "max",
+      "memory.swap.max": "max",
+      "pids.max": "70937"
+    },
+    "membership": [
+      {
+        "controllers": "",
+        "hierarchy": "0",
+        "path": "/user.slice/user-1000.slice/user@1000.service/tmux-spawn-ca7da514-0055-44fb-ace9-9dc0b08dabcb.scope"
+      }
+    ],
+    "mountinfo_cgroup2": [
+      "36 27 0:30 / /sys/fs/cgroup rw,nosuid,nodev,noexec,relatime shared:9 - cgroup2 cgroup2 rw,nsdelegate,memory_recursiveprot"
+    ]
+  }
+}

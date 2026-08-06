@@ -1,0 +1,15 @@
+{
+  "batch_records": 411,
+  "batch_values": {
+    "2048": 385,
+    "8192": 26
+  },
+  "distinct_batch_values": 2,
+  "distinct_ubatch_values": 2,
+  "json_artifacts_parsed": 511,
+  "ubatch_records": 411,
+  "ubatch_values": {
+    "2048": 383,
+    "4096": 28
+  }
+}

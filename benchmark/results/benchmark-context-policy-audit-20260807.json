@@ -1,0 +1,9 @@
+{
+  "audit": "benchmark-context-policy",
+  "active_ctx_environment": 8192,
+  "executable_supports_ctx_option": false,
+  "common_args_pass_ctx": false,
+  "active_invocation_count": 2,
+  "active_invocations_pass_ctx": false,
+  "recorded_metrics_ctx_without_execution_override": true
+}

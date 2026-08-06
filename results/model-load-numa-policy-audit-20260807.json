@@ -1,0 +1,13 @@
+{
+  "timestamp_utc": "2026-08-01T16:58:53.249990+00:00",
+  "load_mode_help": "-lm, --load-mode <none|mmap|mlock|mmap+mlock|dio> (default: mmap)",
+  "numa_help": "--numa <distribute|isolate|numactl>         numa mode (default: disabled)",
+  "default_load_mode": "mmap",
+  "default_numa_mode": "disabled",
+  "env_load_override": false,
+  "harness_load_override": false,
+  "env_numa_override": false,
+  "harness_numa_override": false,
+  "historical_json_artifacts_parsed": 592,
+  "historical_policy_mentions": 41
+}

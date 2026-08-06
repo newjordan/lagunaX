@@ -1,0 +1,30 @@
+{
+  "source": "/home/frosty40/turbo/lx/results/LATEST_SCORE.json",
+  "target_speedup": 2.0,
+  "current_speedup": 1.2147193009304396,
+  "absolute_speedup_gap": 0.7852806990695604,
+  "additional_gain_required_over_current_pct": 64.64709159293496,
+  "target_met": false,
+  "records": {
+    "baseline": {
+      "metrics_path": "/home/frosty40/turbo/lx/baseline/baseline.json",
+      "recorded_binary_path": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+      "binary_exists_now": true,
+      "current_binary_sha256": "45e07d098300d6ffaf5fdc211c1cfe58d263083aa31c18c7ffa109ebd78c0ac1",
+      "recorded_binary_sha256": null,
+      "quality_evidence_keys": []
+    },
+    "candidate": {
+      "metrics_path": "/home/frosty40/turbo/lx/results/20260731T172351Z/metrics.json",
+      "recorded_binary_path": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+      "binary_exists_now": true,
+      "current_binary_sha256": "45e07d098300d6ffaf5fdc211c1cfe58d263083aa31c18c7ffa109ebd78c0ac1",
+      "recorded_binary_sha256": null,
+      "quality_evidence_keys": []
+    }
+  },
+  "recorded_paths_differ": true,
+  "current_binary_hashes_equal": true,
+  "both_metrics_omit_binary_hash": true,
+  "both_metrics_omit_quality_evidence": true
+}

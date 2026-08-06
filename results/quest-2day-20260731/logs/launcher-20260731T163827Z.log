@@ -1,0 +1,9 @@
+[2026-07-31T16:38:29Z] QUEST-2DAY START pid=480967
+[2026-07-31T16:38:29Z] deadline=2026-08-02T14:00:00Z goal_score=1.250 stretch=1.300 sleep=1200s
+[2026-07-31T16:38:29Z] baseline=/home/frosty40/turbo/lx/baseline/baseline.json bin=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+[2026-07-31T16:38:29Z] env: mm-add=0 dual_down=1 dual_mt=1
+[2026-07-31T16:38:29Z] time_left_s=163291
+[2026-07-31T16:38:29Z] ======== CYCLE 1 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c1-20260731T163829Z ========
+[lx-gpu-lock] ACQUIRED pid=480967 reason=quest-2day-c1
+[2026-07-31T16:38:29Z] CYCLE 1 golden-smoke
+[2026-07-31T16:38:47Z] CYCLE 1 GOLDEN OK

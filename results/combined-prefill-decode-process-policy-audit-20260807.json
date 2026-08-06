@@ -1,0 +1,15 @@
+{
+  "generated_utc": "2026-08-01T20:05:29.474164+00:00",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "live_contract": {
+    "flag": "-pg",
+    "syntax": "<pp,tg>",
+    "default": ""
+  },
+  "active_harness": {
+    "llama_bench_timed_invocations": 2,
+    "passes_combined_pg": false,
+    "prefill_and_decode_are_separate_processes": true
+  },
+  "consequence": "separate processes repeat executable startup and model loading; -pg can run both test shapes in one process"
+}

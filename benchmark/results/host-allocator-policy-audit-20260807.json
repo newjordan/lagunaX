@@ -1,0 +1,20 @@
+{
+  "active_explicit_controls": 0,
+  "active_source_hits": {
+    "glibc_malloc_tuning": [],
+    "jemalloc": [],
+    "ld_preload": [],
+    "mimalloc": [],
+    "tcmalloc": []
+  },
+  "audit": "host-allocator-policy",
+  "historical_allocator_keys": {},
+  "historical_allocator_records": 0,
+  "json_artifacts_parsed": 529,
+  "process_environment": {
+    "GLIBC_TUNABLES": null,
+    "LD_PRELOAD": null,
+    "MALLOC_ARENA_MAX": null,
+    "MALLOC_CONF": null
+  }
+}

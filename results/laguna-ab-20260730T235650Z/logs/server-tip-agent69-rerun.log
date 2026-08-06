@@ -1,0 +1,191 @@
+0.00.079.369 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.079.772 W srv  llama_server: -----------------
+0.00.079.774 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set
+0.00.079.775 W srv  llama_server: this can be a security risk (cross-origin attacks)
+0.00.079.775 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655
+0.00.079.775 W srv  llama_server: -----------------
+0.00.080.993 I srv    load_model: loading model '/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf'
+0.00.267.654 W load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=2
+[lx-control-rope] fuse hit (rope+view+set_rows) mode=2 ne0=128 ne1=8 type=f16
+[lx-control-fattn] kernel=TILE Q=[128,2,48] K=[128,256]
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=2
+[lx-control-dense-dual] mmvq dual n_rows=8192 ncols=2048 ncols_dst=2 sgs=1 (first entry)
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu) ncols_dst=2
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=2
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=2
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=2
+[lx-control-mmid] device counting-sort+prefix+ev n_tokens=2 k=8 n_experts=256
+[lx-control-moe-down] fuse hit (weighted reduce) embd=2048 k=8 tokens=2
+[lx-control-moe-down] multi-token two-step weighted reduce embd=2048 k=8 tokens=2
+[lx-control-add] fuse hit (add+add residual) nelt=4096 ne0=2048 ne1=2
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 sgs=1 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-control-moe-down] two-step scratch experts=0 weights=1 tokens=1
+0.15.428.989 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 32768, kv_unified = 'false'
+0.15.437.017 I srv          init: chat template supports preserving reasoning, consider enabling it via --reasoning-preserve
+0.15.437.055 I srv  llama_server: model loaded
+0.15.437.060 I srv  llama_server: listening on http://127.0.0.1:18940
+0.16.198.261 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.16.198.303 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+0.16.804.832 I slot print_timing: id  0 | task 0 | prompt eval time =     606.50 ms /    31 tokens (   19.56 ms per token,    51.11 tokens per second)
+0.16.804.836 I slot print_timing: id  0 | task 0 |        eval time =       0.00 ms /     1 tokens (    0.00 ms per token, 1000000.00 tokens per second)
+0.16.804.837 I slot print_timing: id  0 | task 0 |       total time =     606.51 ms /    32 tokens
+0.16.804.838 I slot print_timing: id  0 | task 0 |    graphs reused =          1
+0.16.804.862 I slot      release: id  0 | task 0 | stop processing: n_tokens = 31, truncated = 0
+0.16.867.238 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 27510314325
+0.16.870.090 I slot launch_slot_: id  0 | task 4 | processing task, is_child = 0
+[lx-control-dense-dual] multi-col GEMM dual ncols_dst=1313 nrows=8192
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+0.21.081.693 I slot print_timing: id  0 | task 4 | n_decoded =    284, tg =  94.51 t/s, tg_3s =  94.51 t/s
+0.24.082.623 I slot print_timing: id  0 | task 4 | n_decoded =    620, tg = 103.23 t/s, tg_3s = 111.97 t/s
+0.27.084.029 I slot print_timing: id  0 | task 4 | n_decoded =    941, tg = 104.47 t/s, tg_3s = 106.95 t/s
+0.30.090.600 I slot print_timing: id  0 | task 4 | n_decoded =   1256, tg = 104.55 t/s, tg_3s = 104.77 t/s
+0.33.091.900 I slot print_timing: id  0 | task 4 | n_decoded =   1569, tg = 104.50 t/s, tg_3s = 104.29 t/s
+0.36.099.256 I slot print_timing: id  0 | task 4 | n_decoded =   1882, tg = 104.43 t/s, tg_3s = 104.08 t/s
+0.39.104.898 I slot print_timing: id  0 | task 4 | n_decoded =   2193, tg = 104.29 t/s, tg_3s = 103.47 t/s
+0.42.110.859 I slot print_timing: id  0 | task 4 | n_decoded =   2505, tg = 104.23 t/s, tg_3s = 103.79 t/s
+0.45.113.315 I slot print_timing: id  0 | task 4 | n_decoded =   2817, tg = 104.19 t/s, tg_3s = 103.91 t/s
+0.48.113.761 I slot print_timing: id  0 | task 4 | n_decoded =   3125, tg = 104.04 t/s, tg_3s = 102.65 t/s
+0.51.123.405 I slot print_timing: id  0 | task 4 | n_decoded =   3433, tg = 103.88 t/s, tg_3s = 102.34 t/s
+0.54.126.220 I slot print_timing: id  0 | task 4 | n_decoded =   3738, tg = 103.69 t/s, tg_3s = 101.57 t/s
+0.57.128.109 I slot print_timing: id  0 | task 4 | n_decoded =   4044, tg = 103.56 t/s, tg_3s = 101.94 t/s
+0.57.634.632 I slot print_timing: id  0 | task 4 | prompt eval time =    1206.76 ms /  1335 tokens (    0.90 ms per token,  1106.27 tokens per second)
+0.57.634.634 I slot print_timing: id  0 | task 4 |        eval time =   39557.77 ms /  4096 tokens (    9.66 ms per token,   103.54 tokens per second)
+0.57.634.634 I slot print_timing: id  0 | task 4 |       total time =   40764.53 ms /  5431 tokens
+0.57.634.635 I slot print_timing: id  0 | task 4 |    graphs reused =       4079
+0.57.634.709 I slot      release: id  0 | task 4 | stop processing: n_tokens = 5430, truncated = 0
+0.57.735.473 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, sim_best = 0.156 (> 0.100 thold), f_keep = 1.000
+0.57.735.996 I slot launch_slot_: id  0 | task 4103 | processing task, is_child = 0
+0.57.736.003 E srv    send_error: task id = 4103, error: request (34772 tokens) exceeds the available context size (32768 tokens), try increasing it
+0.57.736.005 I slot      release: id  0 | task 4103 | stop processing: n_tokens = 5430, truncated = 0
+0.57.736.012 W srv          stop: cancel task, id_task = 4103
+0.57.752.942 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, sim_best = 0.987 (> 0.100 thold), f_keep = 0.243
+0.57.988.911 I slot launch_slot_: id  0 | task 4106 | processing task, is_child = 0
+1.01.263.667 I slot print_timing: id  0 | task 4106 | n_decoded =    360, tg = 119.93 t/s, tg_3s = 119.93 t/s
+1.04.267.150 I slot print_timing: id  0 | task 4106 | n_decoded =    702, tg = 116.90 t/s, tg_3s = 113.87 t/s
+1.07.271.904 I slot print_timing: id  0 | task 4106 | n_decoded =   1037, tg = 115.09 t/s, tg_3s = 111.49 t/s
+1.10.273.296 I slot print_timing: id  0 | task 4106 | n_decoded =   1371, tg = 114.14 t/s, tg_3s = 111.28 t/s
+1.13.279.371 I slot print_timing: id  0 | task 4106 | n_decoded =   1696, tg = 112.94 t/s, tg_3s = 108.11 t/s
+1.16.283.166 I slot print_timing: id  0 | task 4106 | n_decoded =   2015, tg = 111.81 t/s, tg_3s = 106.20 t/s
+1.19.287.472 I slot print_timing: id  0 | task 4106 | n_decoded =   2333, tg = 110.96 t/s, tg_3s = 105.85 t/s
+1.22.290.093 I slot print_timing: id  0 | task 4106 | n_decoded =   2649, tg = 110.25 t/s, tg_3s = 105.24 t/s
+1.25.293.294 I slot print_timing: id  0 | task 4106 | n_decoded =   2963, tg = 109.61 t/s, tg_3s = 104.56 t/s
+1.28.298.298 I slot print_timing: id  0 | task 4106 | n_decoded =   3276, tg = 109.07 t/s, tg_3s = 104.16 t/s
+1.31.305.062 I slot print_timing: id  0 | task 4106 | n_decoded =   3587, tg = 108.56 t/s, tg_3s = 103.43 t/s
+1.34.305.355 I slot print_timing: id  0 | task 4106 | n_decoded =   3896, tg = 108.09 t/s, tg_3s = 102.99 t/s
+1.36.260.016 I slot print_timing: id  0 | task 4106 | prompt eval time =     273.00 ms /    23 tokens (   11.87 ms per token,    84.25 tokens per second)
+1.36.260.019 I slot print_timing: id  0 | task 4106 |        eval time =   37998.08 ms /  4096 tokens (    9.28 ms per token,   107.79 tokens per second)
+1.36.260.019 I slot print_timing: id  0 | task 4106 |       total time =   38271.08 ms /  4119 tokens
+1.36.260.019 I slot print_timing: id  0 | task 4106 |    graphs reused =       8150
+1.36.260.093 I slot      release: id  0 | task 4106 | stop processing: n_tokens = 5430, truncated = 0
+1.36.351.890 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, sim_best = 0.146 (> 0.100 thold), f_keep = 0.999
+1.36.352.404 I slot launch_slot_: id  0 | task 8205 | processing task, is_child = 0
+1.36.352.409 E srv    send_error: task id = 8205, error: request (37142 tokens) exceeds the available context size (32768 tokens), try increasing it
+1.36.352.410 I slot      release: id  0 | task 8205 | stop processing: n_tokens = 5430, truncated = 0
+1.36.352.418 W srv          stop: cancel task, id_task = 8205
+1.36.369.419 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, sim_best = 0.984 (> 0.100 thold), f_keep = 0.243
+1.36.664.896 I slot launch_slot_: id  0 | task 8208 | processing task, is_child = 0
+1.39.960.527 I slot print_timing: id  0 | task 8208 | n_decoded =    368, tg = 122.43 t/s, tg_3s = 122.43 t/s
+1.42.968.665 I slot print_timing: id  0 | task 8208 | n_decoded =    715, tg = 118.89 t/s, tg_3s = 115.35 t/s
+1.45.974.484 I slot print_timing: id  0 | task 8208 | n_decoded =   1055, tg = 116.97 t/s, tg_3s = 113.11 t/s
+1.48.974.809 I slot print_timing: id  0 | task 8208 | n_decoded =   1389, tg = 115.56 t/s, tg_3s = 111.32 t/s
+1.51.979.256 I slot print_timing: id  0 | task 8208 | n_decoded =   1712, tg = 113.95 t/s, tg_3s = 107.51 t/s
+1.54.982.678 I slot print_timing: id  0 | task 8208 | n_decoded =   2026, tg = 112.38 t/s, tg_3s = 104.55 t/s
+1.57.991.361 I slot print_timing: id  0 | task 8208 | n_decoded =   2340, tg = 111.23 t/s, tg_3s = 104.36 t/s
+2.00.996.945 I slot print_timing: id  0 | task 8208 | n_decoded =   2652, tg = 110.31 t/s, tg_3s = 103.81 t/s
+2.03.998.354 I slot print_timing: id  0 | task 8208 | n_decoded =   2961, tg = 109.49 t/s, tg_3s = 102.95 t/s
+2.06.999.201 I slot print_timing: id  0 | task 8208 | n_decoded =   3270, tg = 108.84 t/s, tg_3s = 102.97 t/s
+2.10.006.901 I slot print_timing: id  0 | task 8208 | n_decoded =   3577, tg = 108.22 t/s, tg_3s = 102.07 t/s
+2.13.007.706 I slot print_timing: id  0 | task 8208 | n_decoded =   3882, tg = 107.67 t/s, tg_3s = 101.64 t/s
+2.15.126.181 I slot print_timing: id  0 | task 8208 | prompt eval time =     289.78 ms /    27 tokens (   10.73 ms per token,    93.17 tokens per second)
+2.15.126.184 I slot print_timing: id  0 | task 8208 |        eval time =   38171.48 ms /  4096 tokens (    9.32 ms per token,   107.31 tokens per second)
+2.15.126.185 I slot print_timing: id  0 | task 8208 |       total time =   38461.26 ms /  4123 tokens
+2.15.126.185 I slot print_timing: id  0 | task 8208 |    graphs reused =      12221
+2.15.126.267 I slot      release: id  0 | task 8208 | stop processing: n_tokens = 5434, truncated = 0
+2.15.190.479 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, sim_best = 0.374 (> 0.100 thold), f_keep = 0.999
+2.15.190.906 I slot launch_slot_: id  0 | task 12307 | processing task, is_child = 0
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:6451: GGML_ASSERT(expert_row_offsets[n_as] == n_routed_rows) failed
+[New LWP 1008908]
+[New LWP 1008303]
+[New LWP 1008302]
+[New LWP 1008301]
+[New LWP 1008300]
+[New LWP 1008299]
+[New LWP 1008298]
+[New LWP 1008297]
+[New LWP 1008296]
+[New LWP 1008295]
+[New LWP 1008294]
+[New LWP 1008293]
+[New LWP 1008292]
+[New LWP 1008291]
+[New LWP 1008290]
+[New LWP 1008289]
+[New LWP 1008288]
+[New LWP 1008287]
+[New LWP 1008286]
+[New LWP 1008285]
+[New LWP 1008284]
+[New LWP 1008283]
+[New LWP 1008282]
+[New LWP 1008281]
+[New LWP 1008280]
+[New LWP 1008279]
+[New LWP 1008278]
+[New LWP 1008277]
+[New LWP 1008276]
+[New LWP 1008275]
+[New LWP 1008274]
+[New LWP 1008273]
+[New LWP 1008272]
+[New LWP 1008271]
+[New LWP 1008263]
+[New LWP 1008262]
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+warning: File "/opt/intel/oneapi/compiler/2026.0/lib/libsycl.so.9.0.0-gdb.py" auto-loading has been declined by your `auto-load safe-path' set to "$debugdir:$datadir/auto-load".
+To enable execution of this file add
+	add-auto-load-safe-path /opt/intel/oneapi/compiler/2026.0/lib/libsycl.so.9.0.0-gdb.py
+line to your configuration file "/home/frosty40/.config/gdb/gdbinit".
+To completely disable this security protection add
+	set auto-load safe-path /
+line to your configuration file "/home/frosty40/.config/gdb/gdbinit".
+For more information about this security protection see the
+"Auto-loading safe path" section in the GDB manual.  E.g., run from the shell:
+	info "(gdb)Auto-loading safe path"
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007d6f61310913 in __GI___wait4 (pid=1013136, stat_loc=0x0, options=0, usage=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:30
+warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+#0  0x00007d6f61310913 in __GI___wait4 (pid=1013136, stat_loc=0x0, options=0, usage=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:30
+30	in ../sysdeps/unix/sysv/linux/wait4.c
+#1  0x00007d6f66c4cbea in ggml_print_backtrace () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-base.so.0
+#2  0x00007d6f66c4bd59 in ggml_abort () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-base.so.0
+#3  0x00007d6f61c2e35f in ggml_sycl_mul_mat_id(ggml_backend_sycl_context&, ggml_tensor*) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0
+#4  0x00007d6f61c2f224 in ggml_sycl_compute_forward(ggml_backend_sycl_context&, ggml_tensor*) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0
+#5  0x00007d6f61c64b25 in ggml_backend_sycl_graph_compute_impl(ggml_backend_sycl_context*, ggml_cgraph*) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0
+#6  0x00007d6f61c63597 in ggml_backend_sycl_graph_compute(ggml_backend*, ggml_cgraph*) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0
+#7  0x00007d6f66c73efc in ggml_backend_sched_graph_compute_async () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-base.so.0
+#8  0x00007d6f65cc1a81 in llama_context::graph_compute(ggml_cgraph*, bool) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama.so.0
+#9  0x00007d6f65cc12cb in llama_context::process_ubatch(llama_ubatch const&, llm_graph_type, llama_memory_context_i*, ggml_status&) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama.so.0
+#10 0x00007d6f65cc3295 in llama_context::decode(llama_batch const&) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama.so.0
+#11 0x00007d6f65cc85fb in llama_decode () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama.so.0
+#12 0x00007d6f66773355 in server_context_impl::decode(int&, int, llama_batch&) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-server-impl.so
+#13 0x00007d6f6677277f in server_context_impl::update_slots() () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-server-impl.so
+#14 0x00007d6f6671528c in server_queue::start_loop(long) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-server-impl.so
+#15 0x00007d6f666a65d4 in llama_server(common_params&, int, char**) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-server-impl.so
+#16 0x00007d6f66696b7f in llama_server(int, char**) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-server-impl.so
+#17 0x00007d6f6122a1ca in __libc_start_call_main (main=main@entry=0x4064e0 <main>, argc=argc@entry=35, argv=argv@entry=0x7ffd256d5de8) at ../sysdeps/nptl/libc_start_call_main.h:58
+warning: 58	../sysdeps/nptl/libc_start_call_main.h: No such file or directory
+#18 0x00007d6f6122a28b in __libc_start_main_impl (main=0x4064e0 <main>, argc=35, argv=0x7ffd256d5de8, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7ffd256d5dd8) at ../csu/libc-start.c:360
+warning: 360	../csu/libc-start.c: No such file or directory
+#19 0x0000000000406415 in _start ()
+[Inferior 1 (process 1008254) detached]

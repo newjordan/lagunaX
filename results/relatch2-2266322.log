@@ -1,0 +1,11 @@
+  window:  pp512 / tg128  reps=5 combined_bench=0 delay=0 warmup_disabled=0 threads=16 threads_batch=16 cpu_moe_layers=0 no_kv_offload=0 no_op_offload=0 no_host=0 sycl_disable_graph=1 sycl_disable_dnn=backend-default priority=0 load=mmap poll=50 numa=disabled cpu_mask=0x0 cpu_strict=0 split=layer main_gpu=0 tensor_split=0 device=auto
+-- pp512 --
+-- tg128 --
+  "pp512": 1139.059442,
+  "tg128": 137.590633,
+    "Serial only: one stream pp512 + tg128.",
+  pp512=1139.059442  tg128=137.590633
+score=1.204536  increase=+20.45%  dec=1.2817x  pre=0.9999x
+  "score": 1.2045360949833799,
+  "increase_pct": 20.45360949833799,
+score → /home/frosty40/turbo/lx/results/20260802T032241Z/score.json

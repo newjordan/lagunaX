@@ -1,0 +1,3608 @@
+{
+  "edac_controllers": [],
+  "machine_check_banks": [
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank10",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank11",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank12",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank13",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank14",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank15",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank16",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank17",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank18",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank19",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank20",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank22",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank24",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank25",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank26",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank27",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank7",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank8",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck0/bank9",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck1/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck10/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck11/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck12/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck13/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck14/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck15/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck16/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck17/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck18/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck19/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck2/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck20/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck21/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck22/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck23/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck24/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck25/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck26/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck27/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck28/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck29/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck3/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck30/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck31/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck4/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck5/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck6/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck7/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck8/bank9",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank0",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank1",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank10",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank11",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank12",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank13",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank14",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank15",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank16",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank17",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank18",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank19",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank2",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank20",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank21",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank22",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank23",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank24",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank25",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank26",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank27",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank3",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank4",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank5",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank6",
+      "ctl": "ffffffffffffffff"
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank7",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank8",
+      "ctl": null
+    },
+    {
+      "path": "/sys/devices/system/machinecheck/machinecheck9/bank9",
+      "ctl": null
+    }
+  ],
+  "laguna_source_mentions": {
+    "env.sh": {
+      "ce_count": false,
+      "ue_count": false,
+      "EDAC": false,
+      "machinecheck": false,
+      "rasdaemon": false,
+      "mcelog": false
+    },
+    "scripts/bench-serial.sh": {
+      "ce_count": false,
+      "ue_count": false,
+      "EDAC": false,
+      "machinecheck": false,
+      "rasdaemon": false,
+      "mcelog": false
+    }
+  },
+  "conclusion": "Laguna's canonical serial path neither records EDAC/MCE state nor rejects runs when corrected or uncorrected hardware-error counters change."
+}

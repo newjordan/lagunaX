@@ -1,0 +1,19 @@
+{
+  "collected_utc": "2026-08-01T19:29:42.867526+00:00",
+  "executable": "/home/frosty40/turbo/lx/baseline/tip-binary-backup-20260730T141542Z/llama-bench",
+  "live_contract": {
+    "option": "--prio",
+    "allowed": [
+      -1,
+      0,
+      1,
+      2,
+      3
+    ],
+    "default": 0
+  },
+  "laguna": {
+    "configured": false,
+    "recorded_in_metrics": false
+  }
+}

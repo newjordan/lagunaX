@@ -1,0 +1,23 @@
+{
+  "audit": "combined-prompt-generation-workload-coverage",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "executable_supports_combined_pg": true,
+  "combined_pg_help": "-pg <pp,tg>                                       (default: )",
+  "benchmark_invocations": [
+    {
+      "line": 80,
+      "prompt_argument": "\"$LX_PP\"",
+      "generation_argument": "0",
+      "uses_combined_pg_flag": false
+    },
+    {
+      "line": 88,
+      "prompt_argument": "0",
+      "generation_argument": "\"$LX_TG\"",
+      "uses_combined_pg_flag": false
+    }
+  ],
+  "invocation_count": 2,
+  "combined_invocation_count": 0,
+  "separate_only_policy": true
+}

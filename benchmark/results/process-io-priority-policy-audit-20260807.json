@@ -1,0 +1,14 @@
+{
+  "angle": "process-io-priority-policy",
+  "laguna": {
+    "env_or_serial_harness_controls_io_priority": false,
+    "serial_harness_records_io_priority": false
+  },
+  "process_policy": {
+    "class_data": 0,
+    "class_id": 0,
+    "class_name": "none",
+    "effective_semantics": "inherits scheduler-derived best-effort priority",
+    "raw_ioprio": 0
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "active_source_hits": {
+    "env.sh": [],
+    "scripts/bench-serial.sh": []
+  },
+  "artifact_mentions": [],
+  "executable_help": {
+    "default": "disabled",
+    "flag": "-ot/--override-tensor",
+    "syntax": "<tensor name pattern>=<buffer type>;..."
+  },
+  "parsed_json_artifacts": 538,
+  "policy": "tensor placement override",
+  "process_environment": {}
+}

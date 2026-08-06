@@ -1,0 +1,7 @@
+NUMA policy audit — 2026-08-07
+logs_scanned=160
+benchmark_records=312
+records_with_explicit_numa_field=0
+bench_serial_explicit_numa=false
+active_binary_help=  --numa <distribute|isolate|numactl>         numa mode (default: disabled)
+conclusion=The benchmark leaves NUMA mode disabled by binary default and its JSON records do not preserve a NUMA field.

@@ -1,0 +1,11 @@
+{
+  "control": "LX_NO_HOST",
+  "semantics": "llama-bench host-buffer allocation prohibition",
+  "checks": {
+    "shell_syntax": true,
+    "cli_support": true,
+    "default_zero": true,
+    "forwarded": true,
+    "recorded": true
+  }
+}

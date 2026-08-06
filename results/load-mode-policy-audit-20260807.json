@@ -1,0 +1,14 @@
+{
+  "executable": "resolved through env.sh",
+  "supported_modes": [
+    "none",
+    "mmap",
+    "mlock",
+    "mmap+mlock",
+    "dio"
+  ],
+  "default": "mmap",
+  "canonical_harness_configures_load_mode": false,
+  "metrics_record_load_mode": false,
+  "env_mentions_load_mode": false
+}

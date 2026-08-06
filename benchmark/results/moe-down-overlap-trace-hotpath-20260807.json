@@ -1,0 +1,11 @@
+{
+  "date": "2026-08-01",
+  "iterations_per_trial": 100000000,
+  "trials": 9,
+  "old_atomic_check_ns_median": 1.57968889,
+  "new_trace_disabled_ns_median": 0.100883,
+  "removed_ns_per_overlap_rejection": 1.4788058899999998,
+  "speedup_of_diagnostic_check": 15.658623256643834,
+  "patch_integrity": "passed",
+  "scope": "synthetic host overlap-rejection control-path benchmark; not end-to-end inference"
+}

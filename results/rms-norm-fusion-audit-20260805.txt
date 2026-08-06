@@ -1,0 +1,3 @@
+source=results/ktrace-tip-20260730/decode-ggml/trace.log
+RMS_NORM_support_queries=38640
+MUL_support_queries=57600

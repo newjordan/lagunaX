@@ -1,0 +1,10 @@
+{
+  "verified": true,
+  "control": "LX_NO_KV_OFFLOAD",
+  "default": 0,
+  "accepted_values": [0, 1],
+  "installed_cli_support": "--no-kv-offload <0|1>",
+  "forwarded": true,
+  "recorded_in_metrics": true,
+  "verifier": "bash -n env.sh scripts/bench-serial.sh plus exact CLI/wiring assertions"
+}

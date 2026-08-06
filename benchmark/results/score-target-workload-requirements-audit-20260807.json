@@ -1,0 +1,30 @@
+{
+  "audit": "score-target-workload-requirements",
+  "target_score": 2.0,
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
+  "baseline": {
+    "decode_tok_s": 107.353814,
+    "prefill_tok_s": 1139.150972
+  },
+  "requirements": {
+    "balanced_speedup_each": 2.0,
+    "balanced_decode_tok_s": 214.707628,
+    "balanced_prefill_tok_s": 2278.301944,
+    "decode_speedup_if_prefill_unchanged": 2.5198420997897464,
+    "decode_tok_s_if_prefill_unchanged": 270.5146600901979,
+    "prefill_speedup_if_decode_unchanged": 16.0,
+    "prefill_tok_s_if_decode_unchanged": 18226.415552,
+    "decode_speedup_if_prefill_at_floor": 2.563296192678797,
+    "decode_tok_s_if_prefill_at_floor": 275.17962269574775
+  },
+  "sensitivity": {
+    "score_elasticity_to_decode": 0.75,
+    "score_elasticity_to_prefill": 0.25,
+    "decode_to_prefill_elasticity_ratio": 3.0
+  },
+  "source_checks": {
+    "formula_present": true,
+    "decode_floor_present": true,
+    "prefill_floor_present": true
+  }
+}

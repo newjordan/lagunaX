@@ -1,0 +1,35 @@
+{
+  "device": "/sys/devices/pci0000:00/0000:00:03.1/0000:0b:00.0/0000:0c:01.0/0000:0d:00.0",
+  "runtime_power": {
+    "control": "auto",
+    "status": "active",
+    "autosuspend_delay_ms": "1000"
+  },
+  "energy_telemetry": [
+    {
+      "path": "/sys/devices/pci0000:00/0000:00:03.1/0000:0b:00.0/0000:0c:01.0/0000:0d:00.0/hwmon/hwmon6/energy1_input",
+      "label": "card",
+      "microjoules": 7392571197143
+    },
+    {
+      "path": "/sys/devices/pci0000:00/0000:00:03.1/0000:0b:00.0/0000:0c:01.0/0000:0d:00.0/hwmon/hwmon6/energy2_input",
+      "label": "pkg",
+      "microjoules": 522639521301
+    }
+  ],
+  "laguna_source_mentions": {
+    "env.sh": {
+      "power/control": false,
+      "runtime_status": false,
+      "energy1_input": false,
+      "energy2_input": false
+    },
+    "scripts/bench-serial.sh": {
+      "power/control": false,
+      "runtime_status": false,
+      "energy1_input": false,
+      "energy2_input": false
+    }
+  },
+  "conclusion": "Accelerator runtime PM state and hardware energy counters are available but neither controlled nor recorded by Laguna's canonical serial path."
+}

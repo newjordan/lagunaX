@@ -1,0 +1,13 @@
+{
+  "angle": "linux-real-time-scheduler-throttling-policy-and-provenance",
+  "live": {
+    "global_rt_bandwidth_fraction": 0.95,
+    "rt_throttling_disabled": false,
+    "sched_rt_period_us": 1000000,
+    "sched_rt_runtime_us": 950000
+  },
+  "provenance": {
+    "env_controls_rt_throttling": false,
+    "serial_harness_records_rt_throttling": false
+  }
+}

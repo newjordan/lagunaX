@@ -1,0 +1,12 @@
+{
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "executable_supports_gpu_layer_offload": true,
+  "configured_ngl": 99,
+  "serial_harness_passes_ngl": true,
+  "effective_policy": "request up to 99 model layers on accelerator",
+  "parsed_json_artifacts": 576,
+  "historical_recorded_values": [
+    99
+  ],
+  "historical_value_count": 55
+}

@@ -1,0 +1,10 @@
+{
+  "benchmark": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "delay_supported": true,
+  "delay_default_seconds": 0,
+  "harness_delay_override": false,
+  "separate_benchmark_processes": 2,
+  "inter_process_stabilization_sleep": false,
+  "effective_inter_test_delay_seconds": 0,
+  "thermal_stabilization_policy_recorded": false
+}

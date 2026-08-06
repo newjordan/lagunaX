@@ -1,0 +1,17 @@
+EVIDENCE_RECONCILIATION_V1
+baseline_decode_tok_s=107.353814
+baseline_prefill_tok_s=1139.150972
+latest_decode_tok_s=138.018337
+latest_prefill_tok_s=1167.151085
+latest_score=1.2147193009304396
+latest_increase_pct=21.471930093043955
+target_score=2.0
+literal_target_delta_score=0.785280699070
+additional_multiplicative_gain_required=1.646470915929
+additional_percent_over_latest_required=64.647092
+decode_speedup=1.285639809686
+prefill_speedup=1.024579808724
+contradiction_latest_score_is_not_100_percent_better=true
+negative_result_runtime_knobs_within_noise_and_FA_off_tg_minus_33pct=true
+source_latest=results/LATEST_SCORE.json
+source_negative=ABSOLUTE_LIMIT.md:29-35

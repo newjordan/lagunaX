@@ -1,0 +1,33 @@
+{
+  "angle": "model-storage-io-policy",
+  "generated_at": "2026-08-01T21:11:34.840672+00:00",
+  "laguna": {
+    "bench_policy_hits": [],
+    "env_policy_hits": [],
+    "metrics_record_policy": false
+  },
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "model_exists": true,
+  "storage": {
+    "block_device": "nvme1n1",
+    "fstype": "ext4",
+    "major_minor": "259:3",
+    "mount_options": [
+      "rw",
+      "noatime"
+    ],
+    "mountpoint": "/mnt/data2tb",
+    "queue": {
+      "nomerges": "0",
+      "nr_requests": "1023",
+      "read_ahead_kb": "128",
+      "rotational": "0",
+      "rq_affinity": "1",
+      "scheduler": "[none] mq-deadline"
+    },
+    "source": "/dev/nvme1n1p1",
+    "super_options": [
+      "rw"
+    ]
+  }
+}

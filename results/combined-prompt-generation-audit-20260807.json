@@ -1,0 +1,14 @@
+{
+  "active_benchmark": "scripts/bench-serial.sh",
+  "llama_bench_process_invocations": 2,
+  "active_uses_combined_pg_flag": false,
+  "active_prefill_and_decode_are_separate_processes": true,
+  "json_artifacts_parsed": 543,
+  "artifacts_with_nonzero_prompt_and_generation_fields": [
+    "results/laguna-ab-20260730T235650Z/base/ladder.json",
+    "results/laguna-ab-20260730T235650Z/tip/ladder.json",
+    "results/proof-20260730T175906Z/bench/ladder.json",
+    "results/treebeard-parity-20260730T214536Z/bench/ladder.json"
+  ],
+  "artifacts_with_nonzero_prompt_and_generation_count": 4
+}

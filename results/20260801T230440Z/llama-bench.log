@@ -1,0 +1,3 @@
+-- pp512 --
+llama_bench: error: failed to set process priority
+cmn  set_process_: failed to set process priority 2 : Inappropriate ioctl for device (25)

@@ -1,0 +1,15 @@
+{
+  "audit": "kernel-driver-provenance",
+  "kernel_release": "7.0.0-28-generic",
+  "kernel_version": "#28~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 15:50:57 UTC 2",
+  "os_pretty_name": "Ubuntu 24.04.4 LTS",
+  "serial_metrics_records_kernel_release": false,
+  "serial_metrics_records_kernel_version": false,
+  "serial_metrics_records_os_release": false,
+  "serial_metrics_records_xe_driver": false,
+  "xe_driver_loaded": true,
+  "xe_driver_parameters": {
+    "force_execlist": "N",
+    "probe_display": "Y"
+  }
+}

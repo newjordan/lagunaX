@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# Run a command under the exclusive B70 GPU lock.
+# Usage:
+#   ./scripts/with-gpu-lock [--wait SECS] [--reason TAG] -- cmd [args...]
+#   ./scripts/with-gpu-lock --status
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# shellcheck disable=SC1091
+source "$ROOT/env.sh"
+# shellcheck disable=SC1091
+source "$ROOT/scripts/lib-gpu-lock.sh"
+
+REASON="with-gpu-lock"
+WAIT_SET=0
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --status)
+      lx_gpu_lock_status
+      exit 0
+      ;;
+    --wait)
+      export LX_GPU_LOCK_WAIT="${2:?}"
+      WAIT_SET=1
+      shift 2
+      ;;
+    --reason)
+      REASON="${2:?}"
+      shift 2
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -h|--help)
+      sed -n '2,5p' "$0"
+      exit 0
+      ;;
+    *)
+      # bare command without --
+      break
+      ;;
+  esac
+done
+
+if [[ $# -eq 0 ]]; then
+  echo "usage: $0 [--wait SECS] [--reason TAG] -- cmd [args...]" >&2
+  echo "       $0 --status" >&2
+  exit 2
+fi
+
+lx_gpu_lock_enter "$REASON" || exit $?
+trap 'lx_gpu_lock_leave' EXIT
+"$@"

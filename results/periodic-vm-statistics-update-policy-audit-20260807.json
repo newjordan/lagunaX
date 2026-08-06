@@ -1,0 +1,13 @@
+{
+  "angle": "periodic-vm-statistics-update-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_vm_stat_updates": [],
+    "metrics_record_vm_stat_update_policy": []
+  },
+  "generated_utc": "2026-08-01T21:53:37.991865+00:00",
+  "interpretation": "The kernel refreshes VM statistics on a one-second interval and exports NUMA statistics; Laguna neither controls nor records this periodic policy.",
+  "live_kernel_policy": {
+    "numa_stat_enabled": 1,
+    "stat_interval_seconds": 1
+  }
+}

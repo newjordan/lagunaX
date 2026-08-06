@@ -1,0 +1,6 @@
+poll-policy-audit 2026-08-07
+binary_help=  --poll <0...100>                                  (default: 50)
+logs_scanned=162
+poll_records=314
+poll_value_counts=50:314
+common_explicit_poll=False

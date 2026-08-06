@@ -1,0 +1,8 @@
+=== RUN 1: integrated OFF, dump ===
+[lx-dump] wrote /tmp/opencode/moe_down_dst_OFF_034.bin (embd=2048 tok=2)
+[lx-dump] wrote /tmp/opencode/moe_down_dst_OFF_035.bin (embd=2048 tok=1)
+0.18.863.455 I Final estimate: PPL = 8.5565 +/- 2.00575
+=== RUN 2: integrated ON, dump ===
+[lx-dump] wrote /tmp/opencode/moe_down_dst_ON_034.bin (embd=2048 tok=2)
+[lx-dump] wrote /tmp/opencode/moe_down_dst_ON_035.bin (embd=2048 tok=1)
+0.18.844.209 I Final estimate: PPL = 8.2366 +/- 1.91699

@@ -1,0 +1,17 @@
+{
+  "laguna": {
+    "env_or_harness_controls_policy": false,
+    "serial_metrics_record_policy": false
+  },
+  "live": {
+    "enabled_features": {
+      "clear_refs_working_set": true,
+      "main_switch": true,
+      "non_leaf_young_accessed": true
+    },
+    "enabled_mask": 7,
+    "enabled_raw": "0x0007",
+    "interface_present": true,
+    "minimum_generation_ttl_ms": 0
+  }
+}

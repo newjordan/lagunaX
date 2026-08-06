@@ -1,0 +1,6 @@
+flash-attention policy audit
+logs_with_explicit_policy=0
+records_with_explicit_policy=0
+
+serial_harness_control=FA passed via -fa
+sweep_status=no dedicated FA sweep harness found in current scripts

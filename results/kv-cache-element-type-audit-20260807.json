@@ -1,0 +1,21 @@
+{
+  "policy": "kv_cache_element_types",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "executable_defaults": {
+    "ctk": "f16",
+    "ctv": "f16"
+  },
+  "active": {
+    "ctk": "f16",
+    "ctv": "f16"
+  },
+  "harness_passes": {
+    "ctk": true,
+    "ctv": true
+  },
+  "precision_reduction_active": false,
+  "historical_json": {
+    "parsed": 560,
+    "with_type_mentions": 357
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "angle": "cpu-speculation-mitigation-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_mitigations": [],
+    "metrics_record_mitigation_state": []
+  },
+  "generated_utc": "2026-08-01T20:51:09.609181+00:00",
+  "live_policy": {
+    "kernel_cmdline_mitigation_controls": [],
+    "vulnerabilities": {
+      "gather_data_sampling": "Not affected",
+      "ghostwrite": "Not affected",
+      "indirect_target_selection": "Not affected",
+      "itlb_multihit": "Not affected",
+      "l1tf": "Not affected",
+      "mds": "Not affected",
+      "meltdown": "Not affected",
+      "mmio_stale_data": "Not affected",
+      "old_microcode": "Not affected",
+      "reg_file_data_sampling": "Not affected",
+      "retbleed": "Not affected",
+      "spec_rstack_overflow": "Mitigation: Safe RET",
+      "spec_store_bypass": "Mitigation: Speculative Store Bypass disabled via prctl",
+      "spectre_v1": "Mitigation: usercopy/swapgs barriers and __user pointer sanitization",
+      "spectre_v2": "Mitigation: Retpolines; IBPB: conditional; IBRS_FW; STIBP: always-on; RSB filling; PBRSB-eIBRS: Not affected; BHI: Not affected",
+      "srbds": "Not affected",
+      "tsa": "Mitigation: Clear CPU buffers",
+      "tsx_async_abort": "Not affected",
+      "vmscape": "Mitigation: IBPB before exit to userspace"
+    }
+  }
+}

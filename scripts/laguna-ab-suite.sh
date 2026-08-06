@@ -6,6 +6,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # shellcheck disable=SC1091
 source "$ROOT/env.sh"
+# shellcheck disable=SC1091
+source "$ROOT/scripts/lib-gpu-lock.sh"
 
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 OUT="${OUT:-$LX_RESULTS/laguna-ab-$STAMP}"
@@ -22,6 +24,9 @@ LONGCTX_PY="${LONGCTX_PY:-/home/frosty40/turbo/treebeard-work/research/treebeard
 SRV_CTX="${SRV_CTX:-32768}"
 # Agent69: same ctx (64k OOM on this box)
 AGENT_CTX="${AGENT_CTX:-32768}"
+
+lx_gpu_lock_enter "laguna-ab-suite" || exit $?
+trap 'lx_gpu_lock_leave' EXIT
 
 mkdir -p "$OUT"/{logs,bench,meta,base,tip}
 exec > >(tee -a "$OUT/run.log") 2>&1

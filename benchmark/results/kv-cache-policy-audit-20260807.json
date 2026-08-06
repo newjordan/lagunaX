@@ -1,0 +1,22 @@
+{
+  "active_policy": {
+    "cache_type_k": "f16",
+    "cache_type_v": "f16",
+    "harness_passes_cache_types": true,
+    "kv_offload_enabled": true
+  },
+  "angle": "kv-cache-datatype-and-offload-policy",
+  "executable_defaults": {
+    "cache_type_k": "f16",
+    "cache_type_v": "f16",
+    "no_kv_offload": "0"
+  },
+  "historical_json": {
+    "files_parsed": 588,
+    "records": 360,
+    "type_pairs": {
+      "True/True": 1,
+      "f16/f16": 359
+    }
+  }
+}

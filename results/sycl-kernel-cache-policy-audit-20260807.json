@@ -1,0 +1,31 @@
+{
+  "angle": "SYCL persistent kernel compilation cache policy",
+  "controls": [
+    "SYCL_CACHE_PERSISTENT",
+    "SYCL_CACHE_DIR",
+    "SYCL_CACHE_THRESHOLD",
+    "SYCL_CACHE_MAX_SIZE"
+  ],
+  "active_environment": {
+    "SYCL_CACHE_PERSISTENT": null,
+    "SYCL_CACHE_DIR": null,
+    "SYCL_CACHE_THRESHOLD": null,
+    "SYCL_CACHE_MAX_SIZE": null
+  },
+  "active_source_mentions": {
+    "SYCL_CACHE_PERSISTENT": false,
+    "SYCL_CACHE_DIR": false,
+    "SYCL_CACHE_THRESHOLD": false,
+    "SYCL_CACHE_MAX_SIZE": false
+  },
+  "parsed_result_json": 574,
+  "artifact_mentions": {
+    "SYCL_CACHE_PERSISTENT": 3,
+    "SYCL_CACHE_DIR": 3,
+    "SYCL_CACHE_THRESHOLD": 0,
+    "SYCL_CACHE_MAX_SIZE": 3
+  },
+  "explicit_active_controls": 0,
+  "source_control_count": 0,
+  "artifact_control_mentions": 9
+}

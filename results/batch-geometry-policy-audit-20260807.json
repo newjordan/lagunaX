@@ -1,0 +1,17 @@
+{
+  "collected_at": "2026-08-01T19:33:03.261092+00:00",
+  "binary": "/home/frosty40/turbo/lx/baseline/tip-binary-backup-20260730T141542Z/llama-bench",
+  "live_contract": {
+    "batch_size_default": 2048,
+    "ubatch_size_default": 512
+  },
+  "laguna_policy": {
+    "BBATCH": 2048,
+    "UBATCH": 2048,
+    "passes_batch_size": true,
+    "passes_ubatch_size": true,
+    "records_batch_size": true,
+    "records_ubatch_size": true
+  },
+  "finding": "Laguna raises physical ubatch from the executable default 512 to 2048, equal to its logical batch size."
+}

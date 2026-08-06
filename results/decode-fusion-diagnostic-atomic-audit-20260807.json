@@ -1,0 +1,7 @@
+{
+  "direction": "remove recurring atomic read-modify-write from decode fusion diagnostic guard",
+  "prior_fetch_add_occurrences": 0,
+  "relaxed_exchange_occurrences": 1,
+  "relaxed_load_occurrences": 1,
+  "semantic_scope": "diagnostic emits at most once per single/double fusion path; inference arithmetic unchanged"
+}

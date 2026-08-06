@@ -1,0 +1,21 @@
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=1
+[lx-control-fattn] kernel=VEC Q=[128,1,48] K=[128,256]
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=1
+[lx-control-mm-add] fuse hit (mul_mat+add) ne0=2048 ne1=1 wtype=q4_K alias_res=0 mm='attn_o_proj-0' add='ffn_inp-0' add2='-'
+[lx-control-dense-dual] mmvq dual n_rows=8192 ncols=2048 ncols_dst=1 sgs=1 (first entry)
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu) ncols_dst=1
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=1
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 sgs=1 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[lx-control-moe-down] fuse hit (integrated weighted-mmvq) embd=2048 k=8 tokens=1
+[lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=1 wtype=q6_K alias_res=1 mm='ffn_shexp-1' add='ffn_out-1' add2='l_out-1'
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+| model                          |       size |     params | backend    | ngl | n_batch | n_ubatch |  fa |            test |                  t/s |
+| ------------------------------ | ---------: | ---------: | ---------- | --: | ------: | -------: | --: | --------------: | -------------------: |
+| laguna 30B.A3B Q4_K - Medium   |  18.88 GiB |    33.44 B | SYCL       |  99 |    8192 |     4096 |   1 |           tg256 |        138.47 ± 0.21 |
+
+build: 7e1e28cae (10170)

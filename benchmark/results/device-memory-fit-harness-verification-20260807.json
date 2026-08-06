@@ -1,0 +1,11 @@
+{
+  "direction": "Expose automatic device-memory fitting controls",
+  "checks": {
+    "shell_syntax": true,
+    "fit_target_supported": true,
+    "fit_ctx_supported": true,
+    "compatibility_defaults": true,
+    "conditional_forwarding": true
+  },
+  "passed": true
+}

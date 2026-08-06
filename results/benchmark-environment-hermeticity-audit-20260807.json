@@ -1,0 +1,64 @@
+{
+  "active_runtime_variables": {
+    "GGML_SYCL_DISABLE_GRAPH": "1",
+    "GGML_SYCL_DISABLE_MOE_DUAL_DOWN": "1",
+    "GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN": "1",
+    "GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE": "0",
+    "GGML_SYCL_DISABLE_QKV_SHARED_QUANT": "1",
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ONEAPI_ROOT": "/opt/intel/oneapi",
+    "ZE_AFFINITY_MASK": "0"
+  },
+  "assertions": {
+    "bench_inherits_process_environment": true,
+    "metrics_do_not_capture_complete_runtime_environment": true
+  },
+  "audit": "serial-benchmark-environment-hermeticity",
+  "counts": {
+    "active": 8,
+    "managed": 7,
+    "recorded": 3,
+    "unmanaged": 1,
+    "unrecorded": 5
+  },
+  "managed_by_env_sh": [
+    "GGML_SYCL_DISABLE_GRAPH",
+    "GGML_SYCL_DISABLE_MOE_DUAL_DOWN",
+    "GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN",
+    "GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE",
+    "GGML_SYCL_DISABLE_QKV_SHARED_QUANT",
+    "ONEAPI_DEVICE_SELECTOR",
+    "ZE_AFFINITY_MASK"
+  ],
+  "recorded_by_metrics": [
+    "GGML_SYCL_DISABLE_GRAPH",
+    "ONEAPI_DEVICE_SELECTOR",
+    "ZE_AFFINITY_MASK"
+  ],
+  "runtime_variable_families": [
+    "GGML_SYCL_",
+    "SYCL_",
+    "ZE_",
+    "ONEAPI_",
+    "UR_",
+    "DNNL_",
+    "MKL_",
+    "OMP_",
+    "KMP_"
+  ],
+  "sources": [
+    "env.sh",
+    "scripts/bench-serial.sh"
+  ],
+  "timestamp_utc": "2026-08-01T16:51:17.857927+00:00",
+  "unmanaged_active_variables": [
+    "ONEAPI_ROOT"
+  ],
+  "unrecorded_active_variables": [
+    "GGML_SYCL_DISABLE_MOE_DUAL_DOWN",
+    "GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN",
+    "GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE",
+    "GGML_SYCL_DISABLE_QKV_SHARED_QUANT",
+    "ONEAPI_ROOT"
+  ]
+}

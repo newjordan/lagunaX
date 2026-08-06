@@ -1,0 +1,18 @@
+{
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "mixed_project_build_provenance": true,
+  "project_libraries": {
+    "libggml-base.so.0": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-base.so.0",
+    "libggml-cpu.so.0": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-cpu.so.0",
+    "libggml-sycl.so.0": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-sycl.so.0",
+    "libggml.so.0": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml.so.0",
+    "libllama-bench-impl.so": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-bench-impl.so",
+    "libllama-common.so.0": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-common.so.0",
+    "libllama.so.0": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama.so.0"
+  },
+  "project_library_build_dirs": [
+    "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin",
+    "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin"
+  ],
+  "schema": "laguna.dynamic-library-provenance.v1"
+}

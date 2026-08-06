@@ -1,0 +1,14 @@
+{
+  "angle": "tensor-specific buffer placement override",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "live_contract": {
+    "flag": "--override-tensor",
+    "value_syntax": "<tensor name pattern>=<buffer type>;...",
+    "default": "disabled"
+  },
+  "laguna": {
+    "explicitly_configured": false,
+    "recorded_in_metrics": false
+  },
+  "interpretation": "Laguna relies on automatic buffer placement for every tensor; no tensor-pattern placement exceptions are requested or preserved."
+}

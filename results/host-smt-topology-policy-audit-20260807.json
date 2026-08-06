@@ -1,0 +1,69 @@
+{
+  "angle": "host-smt-topology-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_smt": [],
+    "metrics_record_smt": []
+  },
+  "generated_utc": "2026-08-01T21:07:55.840197+00:00",
+  "live_policy": {
+    "kernel_cmdline_nosmt": false,
+    "logical_cpus_per_core": [
+      2
+    ],
+    "online_logical_cpu_count": 32,
+    "smt_active": "1",
+    "smt_control": "on",
+    "thread_siblings_by_cpu": {
+      "cpu0": "0,16",
+      "cpu1": "1,17",
+      "cpu10": "10,26",
+      "cpu11": "11,27",
+      "cpu12": "12,28",
+      "cpu13": "13,29",
+      "cpu14": "14,30",
+      "cpu15": "15,31",
+      "cpu16": "0,16",
+      "cpu17": "1,17",
+      "cpu18": "2,18",
+      "cpu19": "3,19",
+      "cpu2": "2,18",
+      "cpu20": "4,20",
+      "cpu21": "5,21",
+      "cpu22": "6,22",
+      "cpu23": "7,23",
+      "cpu24": "8,24",
+      "cpu25": "9,25",
+      "cpu26": "10,26",
+      "cpu27": "11,27",
+      "cpu28": "12,28",
+      "cpu29": "13,29",
+      "cpu3": "3,19",
+      "cpu30": "14,30",
+      "cpu31": "15,31",
+      "cpu4": "4,20",
+      "cpu5": "5,21",
+      "cpu6": "6,22",
+      "cpu7": "7,23",
+      "cpu8": "8,24",
+      "cpu9": "9,25"
+    },
+    "unique_thread_sibling_groups": [
+      "0,16",
+      "1,17",
+      "10,26",
+      "11,27",
+      "12,28",
+      "13,29",
+      "14,30",
+      "15,31",
+      "2,18",
+      "3,19",
+      "4,20",
+      "5,21",
+      "6,22",
+      "7,23",
+      "8,24",
+      "9,25"
+    ]
+  }
+}

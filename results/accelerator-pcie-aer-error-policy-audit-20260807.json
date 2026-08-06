@@ -1,0 +1,55 @@
+{
+  "angle": "accelerator-pcie-aer-error-policy",
+  "generated_utc": "2026-08-01T21:02:39.376298+00:00",
+  "laguna": {
+    "configures_or_rejects_aer_error_state": false,
+    "records_aer_error_counters": false
+  },
+  "live": {
+    "device": "0000:0d:00.0",
+    "pcie_hierarchy": [
+      {
+        "bdf": "0000:0d:00.0",
+        "counters": {}
+      },
+      {
+        "bdf": "0000:0c:01.0",
+        "counters": {
+          "aer_dev_correctable": {
+            "raw": "RxErr 0\nBadTLP 0\nBadDLLP 0\nRollover 0\nTimeout 0\nNonFatalErr 0\nCorrIntErr 0\nHeaderOF 0\nTOTAL_ERR_COR 0",
+            "total": 0
+          },
+          "aer_dev_fatal": {
+            "raw": "Undefined 0\nDLP 0\nSDES 0\nTLP 0\nFCP 0\nCmpltTO 0\nCmpltAbrt 0\nUnxCmplt 0\nRxOF 0\nMalfTLP 0\nECRC 0\nUnsupReq 0\nACSViol 0\nUncorrIntErr 0\nBlockedTLP 0\nAtomicOpBlocked 0\nTLPBlockedErr 0\nPoisonTLPBlocked 0\nDMWrReqBlocked 0\nIDECheck 0\nMisIDETLP 0\nPCRC_CHECK 0\nTLPXlatBlocked 0\nTOTAL_ERR_FATAL 0",
+            "total": 0
+          },
+          "aer_dev_nonfatal": {
+            "raw": "Undefined 0\nDLP 0\nSDES 0\nTLP 0\nFCP 0\nCmpltTO 0\nCmpltAbrt 0\nUnxCmplt 0\nRxOF 0\nMalfTLP 0\nECRC 0\nUnsupReq 0\nACSViol 0\nUncorrIntErr 0\nBlockedTLP 0\nAtomicOpBlocked 0\nTLPBlockedErr 0\nPoisonTLPBlocked 0\nDMWrReqBlocked 0\nIDECheck 0\nMisIDETLP 0\nPCRC_CHECK 0\nTLPXlatBlocked 0\nTOTAL_ERR_NONFATAL 0",
+            "total": 0
+          }
+        }
+      },
+      {
+        "bdf": "0000:0b:00.0",
+        "counters": {
+          "aer_dev_correctable": {
+            "raw": "RxErr 0\nBadTLP 0\nBadDLLP 0\nRollover 0\nTimeout 0\nNonFatalErr 0\nCorrIntErr 0\nHeaderOF 0\nTOTAL_ERR_COR 0",
+            "total": 0
+          },
+          "aer_dev_fatal": {
+            "raw": "Undefined 0\nDLP 0\nSDES 0\nTLP 0\nFCP 0\nCmpltTO 0\nCmpltAbrt 0\nUnxCmplt 0\nRxOF 0\nMalfTLP 0\nECRC 0\nUnsupReq 0\nACSViol 0\nUncorrIntErr 0\nBlockedTLP 0\nAtomicOpBlocked 0\nTLPBlockedErr 0\nPoisonTLPBlocked 0\nDMWrReqBlocked 0\nIDECheck 0\nMisIDETLP 0\nPCRC_CHECK 0\nTLPXlatBlocked 0\nTOTAL_ERR_FATAL 0",
+            "total": 0
+          },
+          "aer_dev_nonfatal": {
+            "raw": "Undefined 0\nDLP 0\nSDES 0\nTLP 0\nFCP 0\nCmpltTO 0\nCmpltAbrt 0\nUnxCmplt 0\nRxOF 0\nMalfTLP 0\nECRC 0\nUnsupReq 0\nACSViol 0\nUncorrIntErr 0\nBlockedTLP 0\nAtomicOpBlocked 0\nTLPBlockedErr 0\nPoisonTLPBlocked 0\nDMWrReqBlocked 0\nIDECheck 0\nMisIDETLP 0\nPCRC_CHECK 0\nTLPXlatBlocked 0\nTOTAL_ERR_NONFATAL 0",
+            "total": 0
+          }
+        }
+      },
+      {
+        "bdf": "0000:00:03.1",
+        "counters": {}
+      }
+    ]
+  }
+}

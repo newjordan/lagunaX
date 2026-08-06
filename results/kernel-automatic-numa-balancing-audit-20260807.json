@@ -1,0 +1,27 @@
+{
+  "angle": "kernel-automatic-numa-balancing",
+  "generated_at": "2026-08-01T22:14:44.732382+00:00",
+  "interpretation": "Automatic NUMA balancing can introduce hint faults and page migrations. This audit records the live policy and counters and whether Laguna controls or records them.",
+  "laguna": {
+    "env_or_harness_controls_numa_policy": false,
+    "serial_harness_records_numa_activity": false
+  },
+  "live": {
+    "automatic_numa_balancing_enabled": false,
+    "numa_balancing": 0,
+    "promote_rate_limit_MBps": 65536,
+    "vmstat_numa_activity": {
+      "numa_foreign": 0,
+      "numa_hint_faults": 0,
+      "numa_hint_faults_local": 0,
+      "numa_hit": 1318921390,
+      "numa_huge_pte_updates": 0,
+      "numa_interleave": 148,
+      "numa_local": 1318921390,
+      "numa_miss": 0,
+      "numa_other": 0,
+      "numa_pages_migrated": 0,
+      "numa_pte_updates": 0
+    }
+  }
+}

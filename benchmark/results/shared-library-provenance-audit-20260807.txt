@@ -1,0 +1,5 @@
+binary=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench
+resolved_shared_libraries=19
+json_artifacts_parsed=509
+artifacts_with_shared_library_identity=0
+shared_library_identity_recorded=false

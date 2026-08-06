@@ -1,0 +1,92 @@
+{
+  "device_pci": "0000:0d:00.0",
+  "generated_utc": "2026-08-01T19:17:39.168974+00:00",
+  "hwmon_name": "xe",
+  "laguna_configures_power_cap": false,
+  "laguna_records_power_or_temperature": false,
+  "power_cap_interval_ms": 15,
+  "power_cap_microwatts": 230000000,
+  "power_critical_microwatts": 460000000,
+  "temperatures": {
+    "mctrl": {
+      "critical_millicelsius": 100000,
+      "input_millicelsius": 37000
+    },
+    "pcie": {
+      "critical_millicelsius": 100000,
+      "input_millicelsius": 52000
+    },
+    "pkg": {
+      "critical_millicelsius": 100000,
+      "input_millicelsius": 49000
+    },
+    "vram": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 50000
+    },
+    "vram_ch_0": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 48000
+    },
+    "vram_ch_1": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 48000
+    },
+    "vram_ch_10": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 44000
+    },
+    "vram_ch_11": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 44000
+    },
+    "vram_ch_12": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 48000
+    },
+    "vram_ch_13": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 48000
+    },
+    "vram_ch_14": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 48000
+    },
+    "vram_ch_15": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 44000
+    },
+    "vram_ch_2": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 48000
+    },
+    "vram_ch_3": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 50000
+    },
+    "vram_ch_4": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 48000
+    },
+    "vram_ch_5": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 44000
+    },
+    "vram_ch_6": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 46000
+    },
+    "vram_ch_7": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 44000
+    },
+    "vram_ch_8": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 48000
+    },
+    "vram_ch_9": {
+      "critical_millicelsius": 105000,
+      "input_millicelsius": 50000
+    }
+  }
+}

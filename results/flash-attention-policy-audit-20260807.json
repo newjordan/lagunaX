@@ -1,0 +1,12 @@
+{
+  "binary": "/home/frosty40/turbo/lx/baseline/tip-binary-backup-20260730T141542Z/llama-bench",
+  "supported_values": [
+    "on",
+    "off",
+    "auto"
+  ],
+  "executable_default": "auto",
+  "laguna_env_default": "-1",
+  "passed_to_benchmark": true,
+  "recorded_in_metrics": true
+}

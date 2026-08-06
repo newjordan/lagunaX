@@ -1,0 +1,9 @@
+{
+  "binary_default_repetitions": 5,
+  "active_environment_repetitions": 5,
+  "serial_harness_passes_repetitions": true,
+  "binary_exposes_no_warmup": true,
+  "serial_harness_disables_warmup": false,
+  "effective_warmup": "enabled",
+  "interpretation": "Each separately launched prefill and decode process performs an unrecorded warmup before its measured repetitions."
+}

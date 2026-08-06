@@ -1,0 +1,26 @@
+{
+  "artifact_explicit_counts": {
+    "SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS": 0,
+    "UR_L0_USE_IMMEDIATE_COMMANDLISTS": 0,
+    "ZE_ENABLE_IMMEDIATE_COMMANDLISTS": 0
+  },
+  "artifact_policy_preserved": false,
+  "artifacts_scanned": 1029,
+  "knobs": [
+    "SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS",
+    "UR_L0_USE_IMMEDIATE_COMMANDLISTS",
+    "ZE_ENABLE_IMMEDIATE_COMMANDLISTS"
+  ],
+  "policy": "level_zero_immediate_command_lists",
+  "process_environment": {
+    "SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS": null,
+    "UR_L0_USE_IMMEDIATE_COMMANDLISTS": null,
+    "ZE_ENABLE_IMMEDIATE_COMMANDLISTS": null
+  },
+  "serial_policy_explicit": false,
+  "source_explicit": {
+    "SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS": [],
+    "UR_L0_USE_IMMEDIATE_COMMANDLISTS": [],
+    "ZE_ENABLE_IMMEDIATE_COMMANDLISTS": []
+  }
+}

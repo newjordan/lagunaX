@@ -1,0 +1,43 @@
+{
+  "audit": "build-toolchain-and-active-evidence-reconciliation",
+  "champion": {
+    "metrics_path": "results/20260731T141436Z/metrics.json",
+    "score_path": "results/20260731T141436Z/score.json",
+    "score": 1.2274239323072529,
+    "missing_build_provenance": [
+      "source_commit",
+      "source_dirty",
+      "compiler",
+      "compiler_version",
+      "cmake_build_type",
+      "cmake_cache_sha256",
+      "build_flags",
+      "linked_libraries"
+    ]
+  },
+  "active_latest": {
+    "metrics_path": "results/20260731T172351Z/metrics.json",
+    "score": 1.2147193009304396,
+    "missing_build_provenance": [
+      "source_commit",
+      "source_dirty",
+      "compiler",
+      "compiler_version",
+      "cmake_build_type",
+      "cmake_cache_sha256",
+      "build_flags",
+      "linked_libraries"
+    ]
+  },
+  "reconciliation": {
+    "latest_is_champion": false,
+    "latest_regression_vs_champion_pct": -1.0350646620464476,
+    "literal_target_score": 2.0,
+    "champion_absolute_target_gap": 0.7725760676927471,
+    "champion_multiplicative_improvement_needed_pct": 62.942887730769236,
+    "active_absolute_target_gap": 0.7852806990695604,
+    "active_multiplicative_improvement_needed_pct": 64.64709159293496,
+    "artifact_bound_quality_guard_in_champion_metrics": false,
+    "artifact_bound_quality_guard_in_latest_metrics": false
+  }
+}

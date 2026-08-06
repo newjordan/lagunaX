@@ -1,0 +1,57 @@
+[  0%] Building CXX object common/CMakeFiles/llama-common-base.dir/build-info.cpp.o
+[  0%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-backend.cpp.o
+[  0%] Building C object ggml/src/CMakeFiles/ggml-base.dir/ggml.c.o
+[  0%] Building C object ggml/src/CMakeFiles/ggml-base.dir/ggml-alloc.c.o
+[  0%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-backend-meta.cpp.o
+[  0%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-opt.cpp.o
+[  0%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-threading.cpp.o
+[  1%] Building C object ggml/src/CMakeFiles/ggml-base.dir/ggml-quants.c.o
+[  1%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/gguf.cpp.o
+[  1%] Building CXX object vendor/cpp-httplib/CMakeFiles/cpp-httplib.dir/httplib.cpp.o
+[  3%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml.cpp.o
+[  3%] Linking CXX static library libllama-common-base.a
+[  3%] Built target llama-common-base
+[  3%] Linking CXX shared library ../../bin/libggml-base.so
+[  3%] Built target ggml-base
+[  3%] Building C object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.c.o
+[  5%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/repack.cpp.o
+[  5%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/ggml-sycl.cpp.o
+[  5%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/add-id.cpp.o
+[  5%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/amx.cpp.o
+[  5%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/col2im-1d.cpp.o
+[  7%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/concat.cpp.o
+[  7%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/common.cpp.o
+[  7%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/binary-ops.cpp.o
+[  7%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.cpp.o
+[  7%] Building C object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/quants.c.o
+[  7%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/mmq.cpp.o
+[  7%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/binbcast.cpp.o
+[  7%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/traits.cpp.o
+[  7%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/hbm.cpp.o
+c++: error: unrecognized command-line option ‘-fsycl’
+c++: error: unrecognized command-line option ‘-fsycl’
+gmake[3]: *** [ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/build.make:76: ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/ggml-sycl.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[3]: *** [ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/build.make:90: ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/add-id.cpp.o] Error 1
+c++: error: unrecognized command-line option ‘-fsycl’
+c++: error: unrecognized command-line option ‘-fsycl’
+c++: error: unrecognized command-line option ‘-fsycl’
+gmake[3]: *** [ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/build.make:118: ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/col2im-1d.cpp.o] Error 1
+gmake[3]: *** [ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/build.make:132: ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/common.cpp.o] Error 1
+c++: error: unrecognized command-line option ‘-fsycl’
+gmake[3]: *** [ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/build.make:146: ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/concat.cpp.o] Error 1
+gmake[3]: *** [ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/build.make:104: ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/binbcast.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:1975: ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/all] Error 2
+gmake[2]: *** Waiting for unfinished jobs....
+[  7%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/llamafile/sgemm.cpp.o
+[  7%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ops.cpp.o
+[  7%] Building C object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/quants.c.o
+[  9%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/vec.cpp.o
+[  9%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/unary-ops.cpp.o
+[  9%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/repack.cpp.o
+[  9%] Linking CXX shared library ../../bin/libggml-cpu.so
+[  9%] Built target ggml-cpu
+[  9%] Linking CXX static library libcpp-httplib.a
+[  9%] Built target cpp-httplib
+gmake[1]: *** [CMakeFiles/Makefile2:4506: tools/llama-bench/CMakeFiles/llama-bench.dir/rule] Error 2
+gmake: *** [Makefile:1622: llama-bench] Error 2

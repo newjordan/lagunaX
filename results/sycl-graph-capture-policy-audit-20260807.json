@@ -1,0 +1,13 @@
+{
+  "audit": "sycl-graph-capture-policy",
+  "source_default": 1,
+  "effective_value": 1,
+  "graph_capture_enabled": false,
+  "serial_harness_passes_policy_to_cli": false,
+  "serial_metrics_record_policy": true,
+  "historical_json_artifacts_parsed": 590,
+  "historical_policy_mentions": {
+    "0": 2,
+    "1": 357
+  }
+}

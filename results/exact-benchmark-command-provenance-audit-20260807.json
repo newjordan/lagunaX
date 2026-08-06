@@ -1,0 +1,9 @@
+{
+  "audit": "exact-benchmark-command-provenance",
+  "executable_help_probed": true,
+  "harness_constructs_common_argv_array": true,
+  "metrics_records_binary_hash": true,
+  "metrics_records_exact_argv": false,
+  "risk": "saved metrics cannot reconstruct or mechanically compare the exact effective benchmark command lines",
+  "separate_prefill_and_decode_invocations": true
+}

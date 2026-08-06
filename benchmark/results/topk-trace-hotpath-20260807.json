@@ -1,0 +1,10 @@
+{
+  "date": "2026-08-01",
+  "iterations_per_trial": 100000000,
+  "trials": 9,
+  "old_fetch_add_ns_median": 1.46702042,
+  "new_trace_disabled_ns_median": 0.10014691,
+  "removed_ns_per_topk_event": 1.36687351,
+  "speedup_of_diagnostic_check": 14.648683818602091,
+  "scope": "synthetic host control-path benchmark; not end-to-end inference"
+}

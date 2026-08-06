@@ -1,0 +1,18 @@
+{
+  "audit": "accelerator-device-split-policy",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "executable_defaults": {
+    "device": "auto",
+    "split_mode": "layer",
+    "main_gpu": "0",
+    "tensor_split": "0"
+  },
+  "active_policy": {
+    "oneapi_device_selector": "level_zero:gpu",
+    "ze_affinity_mask": "0",
+    "harness_passes_device": false,
+    "harness_passes_split_mode": false,
+    "harness_passes_main_gpu": false,
+    "harness_passes_tensor_split": false
+  }
+}

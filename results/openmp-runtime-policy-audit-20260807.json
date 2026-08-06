@@ -1,0 +1,46 @@
+{
+  "audit": "openmp-runtime-policy",
+  "canonical_configured": {
+    "GOMP_SPINCOUNT": false,
+    "KMP_BLOCKTIME": false,
+    "OMP_DYNAMIC": false,
+    "OMP_MAX_ACTIVE_LEVELS": false,
+    "OMP_NESTED": false,
+    "OMP_SCHEDULE": false,
+    "OMP_THREAD_LIMIT": false,
+    "OMP_WAIT_POLICY": false
+  },
+  "canonical_controls_any": false,
+  "controls": [
+    "OMP_DYNAMIC",
+    "OMP_MAX_ACTIVE_LEVELS",
+    "OMP_NESTED",
+    "OMP_SCHEDULE",
+    "OMP_THREAD_LIMIT",
+    "OMP_WAIT_POLICY",
+    "GOMP_SPINCOUNT",
+    "KMP_BLOCKTIME"
+  ],
+  "effective_environment": {
+    "GOMP_SPINCOUNT": null,
+    "KMP_BLOCKTIME": null,
+    "OMP_DYNAMIC": null,
+    "OMP_MAX_ACTIVE_LEVELS": null,
+    "OMP_NESTED": null,
+    "OMP_SCHEDULE": null,
+    "OMP_THREAD_LIMIT": null,
+    "OMP_WAIT_POLICY": null
+  },
+  "effective_overrides_any": false,
+  "metrics_record_any": false,
+  "metrics_recorded": {
+    "GOMP_SPINCOUNT": false,
+    "KMP_BLOCKTIME": false,
+    "OMP_DYNAMIC": false,
+    "OMP_MAX_ACTIVE_LEVELS": false,
+    "OMP_NESTED": false,
+    "OMP_SCHEDULE": false,
+    "OMP_THREAD_LIMIT": false,
+    "OMP_WAIT_POLICY": false
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "active_explicit_controls": 0,
+  "active_source_hits": {
+    "GOMP_CPU_AFFINITY": [],
+    "KMP_AFFINITY": [],
+    "OMP_PLACES": [],
+    "OMP_PROC_BIND": [],
+    "numactl --physcpubind": [],
+    "taskset": []
+  },
+  "artifact_affinity_keys": {
+    "host_cpu_affinity_explicit": 1,
+    "numactl_physcpubind": 1,
+    "omp_places": 1
+  },
+  "artifact_affinity_records": 3,
+  "parsed_artifact_files": 582,
+  "scope": "CPU execution affinity and OpenMP thread binding (not thread count or NUMA memory policy)"
+}

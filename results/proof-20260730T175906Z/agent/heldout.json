@@ -1,0 +1,164 @@
+{
+ "pack": "ho-pack-v1.1",
+ "model": "laguna-tip-proof",
+ "seed": 42,
+ "n": 23,
+ "n_stress": 1,
+ "points": 0,
+ "max_points": 46,
+ "score_pct": 0.0,
+ "outcomes": {
+  "fail": 23
+ },
+ "stress_outcomes": {
+  "fail": 1
+ },
+ "wall_s": 698.8,
+ "results": [
+  {
+   "id": "HO-01",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-02",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-03",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-04",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-05",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-06",
+   "status": "fail",
+   "points": 0,
+   "error": "Remote end closed connection without response"
+  },
+  {
+   "id": "HO-07",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-08",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-09",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-10",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-11",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-12",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-13",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-14",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-15",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-16",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-17",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-18",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-19",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>",
+   "stress": true
+  },
+  {
+   "id": "HO-20",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-21",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-22",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-23",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  {
+   "id": "HO-24",
+   "status": "fail",
+   "points": 0,
+   "error": "<urlopen error [Errno 111] Connection refused>"
+  }
+ ]
+}

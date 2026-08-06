@@ -1,0 +1,12 @@
+{
+  "angle": "inter_test_delay_policy",
+  "live_help": {
+    "delay_supported": true,
+    "delay_unit": "seconds",
+    "default_delay_seconds": 0
+  },
+  "canonical_sources": {
+    "configures_delay": false,
+    "metrics_record_delay": false
+  }
+}

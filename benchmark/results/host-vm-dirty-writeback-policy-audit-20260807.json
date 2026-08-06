@@ -1,0 +1,25 @@
+{
+  "laguna": {
+    "env_or_harness_controls_policy": false,
+    "serial_metrics_record_policy_or_dirty_state": false
+  },
+  "live": {
+    "effective_threshold_mode": {
+      "background": "ratio",
+      "foreground": "ratio"
+    },
+    "memory_kib": {
+      "Dirty": 6312,
+      "Writeback": 0,
+      "WritebackTmp": 0
+    },
+    "policy": {
+      "dirty_background_bytes": 0,
+      "dirty_background_ratio": 10,
+      "dirty_bytes": 0,
+      "dirty_expire_centisecs": 3000,
+      "dirty_ratio": 20,
+      "dirty_writeback_centisecs": 500
+    }
+  }
+}

@@ -1,0 +1,16 @@
+>> GPU hwmon: /sys/class/drm/card0/device/hwmon/hwmon6 (xe)   power cap: 230 W
+>> workload: /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench -m /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf -ngl 99 -fa 1 -ub 4096 -b 8192 -p 0    -n 256 -r 2
+
+================== B70 POWER PROFILE ==================
+  idle power      : 45.5 W
+  avg power (load): 88.3 W   (38% of 230 W cap)
+  peak power      : 218.2 W
+  energy / duration: 1567.0 J over 17.74 s
+  throughput      : 138.49 tok/s (llama-bench)
+  EFFICIENCY      : 1.57 tok/joule  (637.59 J/1k-tok)
+------------------------------------------------------
+  READ: avg≈cap -> power/thermal-bound (the GPU is the wall; tune for J/tok).
+        avg well below cap + low tok/s -> under-utilized (overhead/CPU-side stall, partial offload).
+        compare tok/joule across quant/KV/-ub/build configs to pick the efficient one.
+======================================================
+samples: /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c3-20260731T144505Z/profile-decode/energy.samples   workload log: /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c3-20260731T144505Z/profile-decode/workload.log

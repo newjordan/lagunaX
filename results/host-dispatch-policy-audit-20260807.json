@@ -1,0 +1,26 @@
+{
+  "active_source_mentions": {
+    "env.sh": {
+      "poll": 0,
+      "priority": 0
+    },
+    "scripts/bench-serial.sh": {
+      "poll": 0,
+      "priority": 0
+    }
+  },
+  "artifacts_with_control": {
+    "poll": 1,
+    "priority": 0
+  },
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "defaults": {
+    "poll": 50,
+    "priority": 0
+  },
+  "environment": {
+    "LX_POLL": null,
+    "LX_PRIO": null
+  },
+  "parsed_json_artifacts": 556
+}

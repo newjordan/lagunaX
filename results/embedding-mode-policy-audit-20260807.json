@@ -1,0 +1,16 @@
+{
+  "collected_at": "2026-08-01T19:58:26.747585+00:00",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "control": "--embeddings",
+  "supported": true,
+  "accepted_values": [
+    0,
+    1
+  ],
+  "default": 0,
+  "laguna": {
+    "environment_configures_control": false,
+    "serial_harness_passes_control": false,
+    "serial_metrics_record_control": false
+  }
+}

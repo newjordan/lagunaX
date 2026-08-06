@@ -1,0 +1,8 @@
+prompt_definitions=1
+default_tokens=64
+temperature_zero=1
+top_k_one=1
+exact_text_comparison=1
+logprob_request_fields=0
+perplexity_commands=0
+verdict=PASS

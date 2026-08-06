@@ -1,0 +1,20 @@
+{
+  "angle": "host-vm-reclaim-overcommit-policy",
+  "finding": "Laguna neither configures nor records the audited host virtual-memory overcommit, reclaim-watermark, or compaction policy.",
+  "generated_at": "2026-08-01T20:34:55.832278+00:00",
+  "laguna": {
+    "bench_policy_hits": [],
+    "env_policy_hits": [],
+    "metrics_record_policy": false
+  },
+  "live": {
+    "compaction_proactiveness": 20,
+    "extfrag_threshold": 500,
+    "overcommit_kbytes": 0,
+    "overcommit_memory": 0,
+    "overcommit_ratio": 50,
+    "watermark_boost_factor": 15000,
+    "watermark_scale_factor": 10,
+    "zone_reclaim_mode": 0
+  }
+}

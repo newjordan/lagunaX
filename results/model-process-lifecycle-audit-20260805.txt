@@ -1,0 +1,12 @@
+MODEL PROCESS LIFECYCLE AUDIT
+llogs_scanned=160
+logs_with_pp_and_tg=158
+logs_with_exactly_two_mmap_records=154
+logs_with_zero_mmap_records=0
+logs_with_other_mmap_record_count=4
+script_invocations=2
+pp_invocation=scripts/bench-serial.sh:78
+tg_invocation=scripts/bench-serial.sh:86
+assertions:
+  two_separate_llama_bench_commands=true
+  all_mmap-reporting_comparable_logs_have_two_records=false

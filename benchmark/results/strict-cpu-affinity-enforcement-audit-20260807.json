@@ -1,0 +1,9 @@
+{
+  "audit": "strict-cpu-affinity-enforcement-policy",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "supported": true,
+  "default": 0,
+  "active_source_override": false,
+  "effective_policy": "advisory/non-strict",
+  "canonical_metrics_record_policy": false
+}

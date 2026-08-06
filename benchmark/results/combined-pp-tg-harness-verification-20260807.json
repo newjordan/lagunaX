@@ -1,0 +1,9 @@
+{
+  "verification": "combined pp/tg single-process harness control",
+  "shell_syntax": "passed",
+  "installed_llama_bench_pg_support": true,
+  "default_combined_bench": 0,
+  "combined_invocation": "-pg ${LX_PP},${LX_TG}",
+  "legacy_two_process_path_preserved": true,
+  "quality_effect": "inference parameters unchanged; output parity not yet measured"
+}

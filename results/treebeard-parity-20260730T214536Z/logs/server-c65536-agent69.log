@@ -1,0 +1,121 @@
+0.00.078.010 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.078.402 W srv  llama_server: -----------------
+0.00.078.404 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set
+0.00.078.404 W srv  llama_server: this can be a security risk (cross-origin attacks)
+0.00.078.404 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655
+0.00.078.405 W srv  llama_server: -----------------
+0.00.079.643 I srv    load_model: loading model '/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf'
+0.00.267.527 W load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=2
+[lx-control-rope] fuse hit (rope+view+set_rows) mode=2 ne0=128 ne1=8 type=f16
+[lx-control-fattn] kernel=TILE Q=[128,2,48] K=[128,256]
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=2
+[lx-control-dense-dual] mmvq dual n_rows=8192 ncols=2048 ncols_dst=2 sgs=1 (first entry)
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu) ncols_dst=2
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=2
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=2
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=2
+[lx-control-mmid] device counting-sort+prefix+ev n_tokens=2 k=8 n_experts=256
+[lx-control-moe-down] fuse hit (weighted reduce) embd=2048 k=8 tokens=2
+[lx-control-moe-down] multi-token two-step weighted reduce embd=2048 k=8 tokens=2
+[lx-control-add] fuse hit (add+add residual) nelt=4096 ne0=2048 ne1=2
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 sgs=1 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-control-moe-down] two-step scratch experts=0 weights=1 tokens=1
+0.15.251.106 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 65536, kv_unified = 'false'
+0.15.259.070 I srv          init: chat template supports preserving reasoning, consider enabling it via --reasoning-preserve
+0.15.259.114 I srv  llama_server: model loaded
+0.15.259.121 I srv  llama_server: listening on http://127.0.0.1:18930
+0.16.181.959 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.16.182.010 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+0.16.789.801 I slot print_timing: id  0 | task 0 | prompt eval time =     607.76 ms /    31 tokens (   19.61 ms per token,    51.01 tokens per second)
+0.16.789.807 I slot print_timing: id  0 | task 0 |        eval time =       0.00 ms /     1 tokens (    0.00 ms per token, 1000000.00 tokens per second)
+0.16.789.807 I slot print_timing: id  0 | task 0 |       total time =     607.76 ms /    32 tokens
+0.16.789.809 I slot print_timing: id  0 | task 0 |    graphs reused =          1
+0.16.789.839 I slot      release: id  0 | task 0 | stop processing: n_tokens = 31, truncated = 0
+0.16.853.120 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 19249313083
+0.16.856.016 I slot launch_slot_: id  0 | task 4 | processing task, is_child = 0
+[lx-control-dense-dual] multi-col GEMM dual ncols_dst=1313 nrows=8192
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:6451: GGML_ASSERT(expert_row_offsets[n_as] == n_routed_rows) failed
+[New LWP 714473]
+[New LWP 713970]
+[New LWP 713969]
+[New LWP 713968]
+[New LWP 713967]
+[New LWP 713966]
+[New LWP 713965]
+[New LWP 713964]
+[New LWP 713963]
+[New LWP 713962]
+[New LWP 713961]
+[New LWP 713960]
+[New LWP 713959]
+[New LWP 713958]
+[New LWP 713957]
+[New LWP 713956]
+[New LWP 713955]
+[New LWP 713954]
+[New LWP 713953]
+[New LWP 713952]
+[New LWP 713951]
+[New LWP 713950]
+[New LWP 713949]
+[New LWP 713948]
+[New LWP 713947]
+[New LWP 713946]
+[New LWP 713945]
+[New LWP 713944]
+[New LWP 713943]
+[New LWP 713942]
+[New LWP 713941]
+[New LWP 713940]
+[New LWP 713939]
+[New LWP 713938]
+[New LWP 713930]
+[New LWP 713929]
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+warning: File "/opt/intel/oneapi/compiler/2026.0/lib/libsycl.so.9.0.0-gdb.py" auto-loading has been declined by your `auto-load safe-path' set to "$debugdir:$datadir/auto-load".
+To enable execution of this file add
+	add-auto-load-safe-path /opt/intel/oneapi/compiler/2026.0/lib/libsycl.so.9.0.0-gdb.py
+line to your configuration file "/home/frosty40/.config/gdb/gdbinit".
+To completely disable this security protection add
+	set auto-load safe-path /
+line to your configuration file "/home/frosty40/.config/gdb/gdbinit".
+For more information about this security protection see the
+"Auto-loading safe path" section in the GDB manual.  E.g., run from the shell:
+	info "(gdb)Auto-loading safe path"
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007cc44eb10913 in __GI___wait4 (pid=714629, stat_loc=0x0, options=0, usage=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:30
+warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+#0  0x00007cc44eb10913 in __GI___wait4 (pid=714629, stat_loc=0x0, options=0, usage=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:30
+30	in ../sysdeps/unix/sysv/linux/wait4.c
+#1  0x00007cc453d28bea in ggml_print_backtrace () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-base.so.0
+#2  0x00007cc453d27d59 in ggml_abort () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-base.so.0
+#3  0x00007cc44f42e35f in ggml_sycl_mul_mat_id(ggml_backend_sycl_context&, ggml_tensor*) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0
+#4  0x00007cc44f42f224 in ggml_sycl_compute_forward(ggml_backend_sycl_context&, ggml_tensor*) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0
+#5  0x00007cc44f464b25 in ggml_backend_sycl_graph_compute_impl(ggml_backend_sycl_context*, ggml_cgraph*) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0
+#6  0x00007cc44f463597 in ggml_backend_sycl_graph_compute(ggml_backend*, ggml_cgraph*) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0
+#7  0x00007cc453d4fefc in ggml_backend_sched_graph_compute_async () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-base.so.0
+#8  0x00007cc4534c1a81 in llama_context::graph_compute(ggml_cgraph*, bool) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama.so.0
+#9  0x00007cc4534c12cb in llama_context::process_ubatch(llama_ubatch const&, llm_graph_type, llama_memory_context_i*, ggml_status&) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama.so.0
+#10 0x00007cc4534c3295 in llama_context::decode(llama_batch const&) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama.so.0
+#11 0x00007cc4534c85fb in llama_decode () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama.so.0
+#12 0x00007cc453f73355 in server_context_impl::decode(int&, int, llama_batch&) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-server-impl.so
+#13 0x00007cc453f7277f in server_context_impl::update_slots() () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-server-impl.so
+#14 0x00007cc453f1528c in server_queue::start_loop(long) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-server-impl.so
+#15 0x00007cc453ea65d4 in llama_server(common_params&, int, char**) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-server-impl.so
+#16 0x00007cc453e96b7f in llama_server(int, char**) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libllama-server-impl.so
+#17 0x00007cc44ea2a1ca in __libc_start_call_main (main=main@entry=0x4064e0 <main>, argc=argc@entry=35, argv=argv@entry=0x7ffebfc99478) at ../sysdeps/nptl/libc_start_call_main.h:58
+warning: 58	../sysdeps/nptl/libc_start_call_main.h: No such file or directory
+#18 0x00007cc44ea2a28b in __libc_start_main_impl (main=0x4064e0 <main>, argc=35, argv=0x7ffebfc99478, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7ffebfc99468) at ../csu/libc-start.c:360
+warning: 360	../csu/libc-start.c: No such file or directory
+#19 0x0000000000406415 in _start ()
+[Inferior 1 (process 713919) detached]

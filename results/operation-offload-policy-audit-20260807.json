@@ -1,0 +1,11 @@
+{
+  "policy": "operation_offload",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "supports_no_op_offload": true,
+  "no_op_offload_default": 0,
+  "effective_operation_offload": "enabled",
+  "active_source_override": false,
+  "process_environment_override": false,
+  "historical_json_artifacts_parsed": 575,
+  "historical_artifacts_mentioning_no_op_offload": 33
+}

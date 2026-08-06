@@ -1,0 +1,31 @@
+{
+  "devices": [
+    {
+      "hwmon": "/sys/class/drm/card0/device/hwmon/hwmon6",
+      "name": "xe",
+      "energy_counters": [
+        {
+          "channel": "energy1",
+          "label": "card",
+          "microjoules": 6883855059020
+        },
+        {
+          "channel": "energy2",
+          "label": "pkg",
+          "microjoules": 225478193542
+        }
+      ],
+      "power_caps": [
+        {
+          "channel": "power1",
+          "label": "card",
+          "cap_microwatts": 230000000,
+          "critical_microwatts": 460000000,
+          "interval_microseconds": 15
+        }
+      ]
+    }
+  ],
+  "explicit_power_policy_in_active_sources": [],
+  "explicit_power_policy_in_environment": {}
+}

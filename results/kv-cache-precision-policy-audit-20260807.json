@@ -1,0 +1,14 @@
+{
+  "live_defaults": {
+    "cache_type_k": "f16",
+    "cache_type_v": "f16"
+  },
+  "canonical_values": {
+    "cache_type_k": "f16",
+    "cache_type_v": "f16"
+  },
+  "canonical_harness_passes_cache_type_k": true,
+  "canonical_harness_passes_cache_type_v": true,
+  "metrics_record_cache_type_k": true,
+  "metrics_record_cache_type_v": true
+}

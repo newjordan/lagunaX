@@ -1,0 +1,12 @@
+{
+  "control": "--no-op-offload",
+  "supported_values": [
+    0,
+    1
+  ],
+  "default": 0,
+  "laguna_configures": false,
+  "laguna_records": false,
+  "semantic_note": "0 leaves operation offload enabled; 1 disables it",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench"
+}

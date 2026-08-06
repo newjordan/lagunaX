@@ -1,0 +1,24 @@
+=== GOLDEN-SMOKE (champion) ===
+[lx-gpu-lock] ACQUIRED pid=1041474 reason=golden-smoke
+starting server on :18901 ...
+used /completion
+ The function should take an integer n as input and return the nth Fibonacci number. The Fibonacci sequence is defined as follows:
+F(0) = 0
+F(1) = 1
+F(n) = F(n-1) + F(n-2) for n > 1
+Your function
+GOLDEN OK (greedy smoke match)
+golden rc=0
+=== BENCH-SERIAL (champion) ===
+[lx-gpu-lock] ACQUIRED pid=1042888 reason=bench-serial:verify-champion-session-anchor
+== lx serial bench ==
+  mode:    candidate
+  binary:  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench
+  bin sha: 45e07d098300d6ffaf5fdc211c1cfe58d263083aa31c18c7ffa109ebd78c0ac1
+  model:   /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+  window:  pp512 / tg128  reps=5 combined_bench=0 delay=0 warmup_disabled=0 threads=16 threads_batch=16 cpu_moe_layers=0 no_kv_offload=0 no_op_offload=0 no_host=0 sycl_disable_graph=1 sycl_disable_dnn=backend-default priority=0 load=mmap poll=50 numa=disabled cpu_mask=0x0 cpu_strict=0 split=layer main_gpu=0 tensor_split=0 device=auto
+  device:  level_zero:gpu  ZE_AFFINITY_MASK=0
+  out:     /home/frosty40/turbo/lx/results/20260802T014227Z/metrics.json
+-- pp512 --
+pp bench failed
+bench rc=1

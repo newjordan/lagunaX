@@ -1,0 +1,140 @@
+{
+  "audit": "host-virtualization-steal-time-policy",
+  "detected_virtualization": "none",
+  "cpuinfo_hypervisor_flag": false,
+  "logical_cpu_count": 32,
+  "per_cpu_steal_ticks": [
+    {
+      "cpu": "cpu0",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu1",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu2",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu3",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu4",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu5",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu6",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu7",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu8",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu9",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu10",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu11",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu12",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu13",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu14",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu15",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu16",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu17",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu18",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu19",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu20",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu21",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu22",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu23",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu24",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu25",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu26",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu27",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu28",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu29",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu30",
+      "steal_ticks": 0
+    },
+    {
+      "cpu": "cpu31",
+      "steal_ticks": 0
+    }
+  ],
+  "total_steal_ticks": 0,
+  "laguna_rejects_virtualized_hosts": false,
+  "laguna_records_virtualization": false,
+  "laguna_records_cpu_steal": false
+}

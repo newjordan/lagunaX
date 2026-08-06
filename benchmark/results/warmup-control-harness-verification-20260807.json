@@ -1,0 +1,6 @@
+{
+  "shell_syntax": "passed",
+  "invalid_boolean_rejected": true,
+  "installed_cli_supports_no_warmup": true,
+  "default_no_warmup": 0
+}

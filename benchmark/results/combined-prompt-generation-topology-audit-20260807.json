@@ -1,0 +1,18 @@
+{
+  "audit": "combined-prompt-generation-process-topology",
+  "effective": {
+    "prompt_tokens": 512,
+    "generation_tokens": 128
+  },
+  "capability": {
+    "combined_pg_supported": true,
+    "combined_pg_default": ""
+  },
+  "harness": {
+    "llama_bench_invocation_count": 2,
+    "passes_combined_pg": false,
+    "prefill_invocation": true,
+    "decode_invocation": true
+  },
+  "conclusion": "The harness uses two processes and does not exercise the supported combined prompt+generation benchmark path."
+}

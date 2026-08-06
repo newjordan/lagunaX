@@ -1,0 +1,656 @@
+{
+  "angle": "cpu-idle-state-policy",
+  "canonical_policy": {
+    "env.sh": [],
+    "scripts/bench-serial.sh": []
+  },
+  "generated_utc": "2026-08-01T21:44:37.474864+00:00",
+  "live_policy": {
+    "cpu_count": 32,
+    "driver": "acpi_idle",
+    "governor": "menu",
+    "governor_read_only": "menu",
+    "states": {
+      "cpu0": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "1296048",
+          "usage": "31093"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116039119051",
+          "usage": "25653612"
+        }
+      },
+      "cpu1": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "2371098",
+          "usage": "50388"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "115788814677",
+          "usage": "32871719"
+        }
+      },
+      "cpu10": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "523918",
+          "usage": "11272"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116407901700",
+          "usage": "6120197"
+        }
+      },
+      "cpu11": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "399189",
+          "usage": "9183"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116394249824",
+          "usage": "5908627"
+        }
+      },
+      "cpu12": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "463456",
+          "usage": "10092"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116363371533",
+          "usage": "6672344"
+        }
+      },
+      "cpu13": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "318562",
+          "usage": "7366"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116459025426",
+          "usage": "4680327"
+        }
+      },
+      "cpu14": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "284692",
+          "usage": "6644"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116445073100",
+          "usage": "4668667"
+        }
+      },
+      "cpu15": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "217479",
+          "usage": "5286"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116483855388",
+          "usage": "3789251"
+        }
+      },
+      "cpu16": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "581278",
+          "usage": "13087"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116345462791",
+          "usage": "8803505"
+        }
+      },
+      "cpu17": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "920643",
+          "usage": "19704"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116344780946",
+          "usage": "11486369"
+        }
+      },
+      "cpu18": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "522366",
+          "usage": "11774"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116441740276",
+          "usage": "7084181"
+        }
+      },
+      "cpu19": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "1143550",
+          "usage": "24226"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "112691091041",
+          "usage": "11759553"
+        }
+      },
+      "cpu2": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "1222137",
+          "usage": "26654"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116105054256",
+          "usage": "20176142"
+        }
+      },
+      "cpu20": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "440424",
+          "usage": "10150"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116491294722",
+          "usage": "5243409"
+        }
+      },
+      "cpu21": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "368116",
+          "usage": "8456"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116529925210",
+          "usage": "3775834"
+        }
+      },
+      "cpu22": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "920085",
+          "usage": "19167"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "114238748698",
+          "usage": "8492160"
+        }
+      },
+      "cpu23": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "330514",
+          "usage": "7562"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116511973638",
+          "usage": "3762233"
+        }
+      },
+      "cpu24": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "256282",
+          "usage": "5644"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116488558626",
+          "usage": "3213079"
+        }
+      },
+      "cpu25": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "307624",
+          "usage": "6866"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116217593670",
+          "usage": "12364604"
+        }
+      },
+      "cpu26": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "279619",
+          "usage": "6445"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116250229386",
+          "usage": "10125593"
+        }
+      },
+      "cpu27": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "1613029",
+          "usage": "13068"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116348631649",
+          "usage": "27356453"
+        }
+      },
+      "cpu28": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "450891",
+          "usage": "10002"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116414511782",
+          "usage": "7336950"
+        }
+      },
+      "cpu29": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "297348",
+          "usage": "6894"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116473213084",
+          "usage": "5057268"
+        }
+      },
+      "cpu3": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "2048923",
+          "usage": "44620"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "106912004743",
+          "usage": "28463749"
+        }
+      },
+      "cpu30": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "250214",
+          "usage": "5837"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116479433797",
+          "usage": "4091886"
+        }
+      },
+      "cpu31": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "204758",
+          "usage": "4806"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116502734339",
+          "usage": "3469327"
+        }
+      },
+      "cpu4": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "1004809",
+          "usage": "21550"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116197381004",
+          "usage": "16378326"
+        }
+      },
+      "cpu5": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "549642",
+          "usage": "13100"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116305256827",
+          "usage": "11743299"
+        }
+      },
+      "cpu6": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "1648978",
+          "usage": "35565"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "109178927030",
+          "usage": "24483271"
+        }
+      },
+      "cpu7": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "763752",
+          "usage": "16866"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116208339546",
+          "usage": "14475884"
+        }
+      },
+      "cpu8": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "623399",
+          "usage": "13039"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116041757472",
+          "usage": "10628974"
+        }
+      },
+      "cpu9": {
+        "state0": {
+          "desc": "CPUIDLE CORE POLL IDLE",
+          "disable": "0",
+          "latency": "0",
+          "name": "POLL",
+          "residency": "0",
+          "time": "865244",
+          "usage": "17226"
+        },
+        "state1": {
+          "desc": "ACPI HLT",
+          "disable": "0",
+          "latency": "1",
+          "name": "C1",
+          "residency": "2",
+          "time": "116221699016",
+          "usage": "9388554"
+        }
+      }
+    }
+  }
+}

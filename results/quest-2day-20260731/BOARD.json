@@ -1,0 +1,153 @@
+{
+  "updated_utc": "2026-07-31T17:24:28Z",
+  "deadline_utc": "2026-08-02T14:00:00Z",
+  "goal_score": 1.25,
+  "n_cycles": 15,
+  "champion": {
+    "pp512": 1183.321539,
+    "tg128": 139.305982,
+    "score": 1.2274239323072529,
+    "increase_pct": 22.742393230725288,
+    "source": "seed-LATEST_SCORE",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+    "note": "post-brownout tip reclaim rebench"
+  },
+  "goal_gap": 0.022576067692747115,
+  "top": [
+    {
+      "dir": "c5-20260731T145241Z",
+      "pp512": 1181.361091,
+      "tg128": 138.946835,
+      "score": 1.2245421248603447,
+      "increase_pct": 22.454212486034475,
+      "floors_ok": true,
+      "golden": "ok"
+    },
+    {
+      "dir": "c4-20260731T144903Z",
+      "pp512": 1174.613125,
+      "tg128": 138.599303,
+      "score": 1.220495175300179,
+      "increase_pct": 22.049517530017894,
+      "floors_ok": true,
+      "golden": null
+    },
+    {
+      "dir": "c2-20260731T153129Z",
+      "pp512": 1178.873787,
+      "tg128": 138.413685,
+      "score": 1.2203732259401658,
+      "increase_pct": 22.037322594016583,
+      "floors_ok": true,
+      "golden": null
+    },
+    {
+      "dir": "c3-20260731T144505Z",
+      "pp512": 1172.523905,
+      "tg128": 138.570461,
+      "score": 1.2197617003921968,
+      "increase_pct": 21.976170039219678,
+      "floors_ok": true,
+      "golden": null
+    },
+    {
+      "dir": "c8-20260731T150444Z",
+      "pp512": 1172.551773,
+      "tg128": 138.4585,
+      "score": 1.219029719311335,
+      "increase_pct": 21.902971931133507,
+      "floors_ok": true,
+      "golden": null
+    },
+    {
+      "dir": "c3-20260731T155207Z",
+      "pp512": 1173.009178,
+      "tg128": 138.405151,
+      "score": 1.2187962592212194,
+      "increase_pct": 21.87962592212194,
+      "floors_ok": true,
+      "golden": null
+    },
+    {
+      "dir": "c9-20260731T150822Z",
+      "pp512": 1167.781713,
+      "tg128": 138.440154,
+      "score": 1.2176670178859954,
+      "increase_pct": 21.76670178859954,
+      "floors_ok": true,
+      "golden": "ok"
+    },
+    {
+      "dir": "c1-20260731T151033Z",
+      "pp512": 1165.472401,
+      "tg128": 138.502025,
+      "score": 1.217472501302015,
+      "increase_pct": 21.74725013020149,
+      "floors_ok": true,
+      "golden": "ok"
+    },
+    {
+      "dir": "c6-20260731T145637Z",
+      "pp512": 1176.09918,
+      "tg128": 137.980588,
+      "score": 1.2167911721620683,
+      "increase_pct": 21.679117216206834,
+      "floors_ok": true,
+      "golden": null
+    },
+    {
+      "dir": "c7-20260731T150106Z",
+      "pp512": 1165.176669,
+      "tg128": 138.281381,
+      "score": 1.2159404217061687,
+      "increase_pct": 21.594042170616866,
+      "floors_ok": true,
+      "golden": null
+    },
+    {
+      "dir": "c1-20260731T164644Z",
+      "pp512": 1165.456267,
+      "tg128": 138.253662,
+      "score": 1.2158305397159528,
+      "increase_pct": 21.583053971595277,
+      "floors_ok": true,
+      "golden": "ok"
+    },
+    {
+      "dir": "c1-20260731T143731Z",
+      "pp512": 1170.200062,
+      "tg128": 137.995871,
+      "score": 1.2153634404646343,
+      "increase_pct": 21.53634404646343,
+      "floors_ok": true,
+      "golden": "ok"
+    },
+    {
+      "dir": "c2-20260731T172350Z",
+      "pp512": 1167.151085,
+      "tg128": 138.018337,
+      "score": 1.2147193009304396,
+      "increase_pct": 21.471930093043955,
+      "floors_ok": true,
+      "golden": null
+    },
+    {
+      "dir": "c1-20260731T170254Z",
+      "pp512": 1164.168194,
+      "tg128": 137.869298,
+      "score": 1.2129591517888907,
+      "increase_pct": 21.295915178889068,
+      "floors_ok": true,
+      "golden": "ok"
+    },
+    {
+      "dir": "c2-20260731T144127Z",
+      "pp512": 1163.417295,
+      "tg128": 137.693827,
+      "score": 1.2116056833978532,
+      "increase_pct": 21.160568339785325,
+      "floors_ok": true,
+      "golden": null
+    }
+  ]
+}

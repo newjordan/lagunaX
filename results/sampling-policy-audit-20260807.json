@@ -1,0 +1,31 @@
+{
+  "angle": "generation sampling-policy provenance",
+  "artifact_field_occurrences": {
+    "min_p": 1,
+    "samplers": 1,
+    "seed": 13,
+    "temperature": 9,
+    "top_k": 1,
+    "top_p": 1
+  },
+  "artifact_json_files": 522,
+  "finding": "temperature and seed are explicit in proof paths; the rest of the sampling chain is not fully pinned or preserved",
+  "sources": {
+    "scripts/laguna-ab-suite.sh": {
+      "min_p": 0,
+      "samplers": 0,
+      "seed": 3,
+      "temperature": 4,
+      "top_k": 0,
+      "top_p": 0
+    },
+    "scripts/proof-suite.sh": {
+      "min_p": 0,
+      "samplers": 0,
+      "seed": 3,
+      "temperature": 4,
+      "top_k": 0,
+      "top_p": 0
+    }
+  }
+}

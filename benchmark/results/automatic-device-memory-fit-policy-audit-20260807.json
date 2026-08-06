@@ -1,0 +1,15 @@
+{
+  "angle": "automatic_device_memory_fit_policy",
+  "live_help": {
+    "fit_target_supported": true,
+    "fit_target_default": "off",
+    "fit_target_unit": "MiB margin per device",
+    "fit_ctx_supported": true,
+    "fit_ctx_default": 4096
+  },
+  "canonical_sources": {
+    "configures_fit_target": false,
+    "configures_fit_ctx": false,
+    "metrics_record_fit_policy": false
+  }
+}

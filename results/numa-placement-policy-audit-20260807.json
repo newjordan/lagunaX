@@ -1,0 +1,30 @@
+{
+  "audit": "numa-placement-policy",
+  "topology": {
+    "node_count": 1,
+    "node_cpus": {
+      "NUMA node0 CPU(s)": "0-31"
+    }
+  },
+  "effective_process_policy": [
+    "policy: default",
+    "preferred node: current",
+    "physcpubind: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 ",
+    "cpubind: 0 ",
+    "nodebind: 0 ",
+    "membind: 0 ",
+    "preferred:"
+  ],
+  "laguna": {
+    "controls_present": {
+      "numactl": false,
+      "--membind": false,
+      "--cpunodebind": false,
+      "--interleave": false,
+      "--preferred": false
+    },
+    "explicit_policy_configured": false,
+    "metrics_record_effective_policy": false
+  },
+  "finding": "The host has one NUMA node spanning CPUs 0-31 and the current default policy binds memory to node 0; Laguna neither explicitly configures nor records NUMA placement."
+}

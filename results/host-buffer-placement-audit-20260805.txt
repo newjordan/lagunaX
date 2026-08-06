@@ -1,0 +1,11 @@
+Host-buffer placement audit
+===========================
+logs_scanned=160
+records_with_no_host=312
+no_host_counts={'false': 312}
+bench_serial_explicit_no_host=false
+
+Assertions:
+PASS: metadata corpus nonempty
+PASS: all records use host buffers
+PASS: harness does not control no-host mode

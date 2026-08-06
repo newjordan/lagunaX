@@ -1,0 +1,18 @@
+{
+  "angle": "kernel-printk-console-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_printk": [],
+    "metrics_record_printk_policy": []
+  },
+  "generated_utc": "2026-08-01T21:20:32.113130+00:00",
+  "live_policy": {
+    "cmdline_loglevel": false,
+    "cmdline_quiet": true,
+    "console_loglevel": 4,
+    "default_console_loglevel": 7,
+    "default_message_loglevel": 4,
+    "kernel_cmdline": "BOOT_IMAGE=/boot/vmlinuz-7.0.0-28-generic root=UUID=9e57cf7d-de45-490b-9bd8-c900f7bfdae7 ro quiet splash idle=nomwait processor.max_cstate=1 pcie_aspm=off amd_iommu=on iommu=pt vt.handoff=7",
+    "minimum_console_loglevel": 1,
+    "printk_raw": "4\t4\t1\t7"
+  }
+}

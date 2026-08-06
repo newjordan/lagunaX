@@ -1,0 +1,22 @@
+{
+  "audit": "flash-attention-and-target-reconciliation",
+  "active_policy": {
+    "flash_attention_value": -1,
+    "flash_attention_semantics": "auto",
+    "harness_passes_flash_attention_explicitly": true
+  },
+  "evidence_reconciliation": {
+    "latest_floors_ok": true,
+    "latest_score": 1.2147193009304396,
+    "literal_target": 2.0,
+    "absolute_score_delta": 0.7852806990695604,
+    "relative_improvement_required_from_current_pct": 64.64709159293496,
+    "latest_decode_speedup": 1.2856398096857555,
+    "latest_prefill_speedup": 1.0245798087244227,
+    "ctx_exported_but_not_consumed_by_serial_harness": true,
+    "known_negative_results": [
+      "any-batch MUL_MAT_ADD prefill wrecks wikitext perplexity",
+      "QKV shared quant produced a device-lost probe"
+    ]
+  }
+}

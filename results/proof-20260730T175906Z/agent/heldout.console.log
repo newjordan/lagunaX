@@ -1,0 +1,27 @@
+  HO-01   fail     ?/?
+  HO-02   fail     ?/?
+  HO-03   fail     ?/?
+  HO-04   fail     ?/?
+  HO-05   fail     ?/?
+  HO-06   fail     ?/?
+  HO-07   fail     ?/?
+  HO-08   fail     ?/?
+  HO-09   fail     ?/?
+  HO-10   fail     ?/?
+  HO-11   fail     ?/?
+  HO-12   fail     ?/?
+  HO-13   fail     ?/?
+  HO-14   fail     ?/?
+  HO-15   fail     ?/?
+  HO-16   fail     ?/?
+  HO-17   fail     ?/?
+  HO-18   fail     ?/?
+  HO-19   fail     ?/? (stress, report-only)
+  HO-20   fail     ?/?
+  HO-21   fail     ?/?
+  HO-22   fail     ?/?
+  HO-23   fail     ?/?
+  HO-24   fail     ?/?
+
+ho-pack ho-pack-v1.1: 0/46 (0.0%)  {'fail': 23}  [stress report-only: {'fail': 1}]
+wrote /home/frosty40/turbo/lx/results/proof-20260730T175906Z/agent/heldout.json

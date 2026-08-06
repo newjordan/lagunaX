@@ -1,0 +1,28 @@
+{
+  "active_controls_omitted_from_serial_metrics": {
+    "GGML_SYCL_DISABLE_MOE_DUAL_DOWN": "1",
+    "GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN": "1",
+    "GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE": "0",
+    "GGML_SYCL_DISABLE_QKV_SHARED_QUANT": "1",
+    "ONEAPI_ROOT": "/opt/intel/oneapi"
+  },
+  "active_count": 8,
+  "active_prefixed_controls": {
+    "GGML_SYCL_DISABLE_GRAPH": "1",
+    "GGML_SYCL_DISABLE_MOE_DUAL_DOWN": "1",
+    "GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN": "1",
+    "GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE": "0",
+    "GGML_SYCL_DISABLE_QKV_SHARED_QUANT": "1",
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ONEAPI_ROOT": "/opt/intel/oneapi",
+    "ZE_AFFINITY_MASK": "0"
+  },
+  "audit": "runtime-environment-metrics-provenance",
+  "controls_recorded_by_serial_metrics": {
+    "GGML_SYCL_DISABLE_GRAPH": "1",
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0"
+  },
+  "omitted_count": 5,
+  "recorded_count": 3
+}

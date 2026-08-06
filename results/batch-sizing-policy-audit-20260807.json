@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-08-01T15:53:38.894869+00:00",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "executable_defaults": {
+    "batch_size": 2048,
+    "ubatch_size": 512
+  },
+  "active_policy": {
+    "batch_size": 2048,
+    "ubatch_size": 2048
+  },
+  "overrides_executable_ubatch_default": true,
+  "ubatch_multiplier_vs_default": 4.0,
+  "logical_to_physical_batch_ratio": 1.0
+}

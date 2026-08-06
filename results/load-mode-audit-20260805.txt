@@ -1,0 +1,10 @@
+Laguna load-mode audit
+
+llama-bench logs scanned: 160
+records with load_mode: 312
+mode counts: {"mmap": 312}
+
+Binary help:
+  --load-mode <none|mmap|mlock|mmap+mlock|dio> (default: mmap)
+
+bench-serial COMMON has no --load-mode/-lm argument.

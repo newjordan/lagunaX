@@ -1,0 +1,16 @@
+{
+  "collected_utc": "2026-08-01T19:26:27.287196+00:00",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "live_contract": {
+    "option": "--poll",
+    "range": [
+      0,
+      100
+    ],
+    "default": 50
+  },
+  "laguna": {
+    "configured": false,
+    "recorded_in_metrics": false
+  }
+}

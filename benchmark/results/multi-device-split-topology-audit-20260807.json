@@ -1,0 +1,12 @@
+{
+  "policy": "multi_device_split_topology",
+  "split_mode_supported": true,
+  "split_mode_default": "layer",
+  "main_gpu_default": 0,
+  "tensor_split_default": "0",
+  "active_split_mode_override": false,
+  "active_main_gpu_override": false,
+  "active_tensor_split_override": false,
+  "effective_device_selector": null,
+  "interpretation": "default layer splitting remains selected; main GPU is ordinal 0; no tensor proportions are supplied"
+}

@@ -3,6 +3,9 @@
 **Mission:** max serial tok/s on this GPU.  
 mlx.fast score is a yardstick only.
 
+**Ops:** one Level-Zero client at a time on this card. Concurrent bench/PPL wedges
+xe (`xe_validation_lock` → reboot). See `notes/B70_NO_CONCURRENT_GPU.md`.
+
 ## Current ceiling (serial, 2026-07-29)
 
 | Config | pp512 | tg128 | Notes |

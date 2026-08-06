@@ -1,0 +1,10 @@
+DEVICE MEMORY FIT AUDIT
+logs_scanned=160
+fit_records=312
+fit_target_zero_records=312
+fit_min_ctx_zero_records=312
+active_binary_supports_fit_target=true
+fit_target_default=off
+active_binary_supports_fit_ctx=true
+serial_common_passes_fit_target=false
+serial_common_passes_fit_ctx=false

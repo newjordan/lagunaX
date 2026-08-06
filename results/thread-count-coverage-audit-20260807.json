@@ -1,0 +1,14 @@
+{
+  "dictionary_records_scanned": 2949,
+  "distinct_recorded_thread_counts": 3,
+  "explicit_thread_fields": 412,
+  "json_files_scanned": 516,
+  "serial_default_threads": 16,
+  "serial_passes_thread_flag": true,
+  "serial_thread_control": "THREADS",
+  "thread_values": {
+    "8": 2,
+    "16": 408,
+    "32": 2
+  }
+}

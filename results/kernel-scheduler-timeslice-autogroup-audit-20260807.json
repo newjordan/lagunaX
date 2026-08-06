@@ -1,0 +1,14 @@
+{
+  "angle": "kernel-scheduler-timeslice-autogroup-policy",
+  "generated_at": "2026-08-01T21:54:43.607826+00:00",
+  "interpretation": "Autogrouping changes fair-scheduler task grouping; the CFS bandwidth slice controls quota transfer granularity; and the RR timeslice controls SCHED_RR quantum length.",
+  "laguna": {
+    "env_or_harness_controls_audited_scheduler_policy": false,
+    "serial_harness_records_audited_scheduler_policy": false
+  },
+  "live": {
+    "sched_autogroup_enabled": 1,
+    "sched_cfs_bandwidth_slice_us": 5000,
+    "sched_rr_timeslice_ms": 100
+  }
+}

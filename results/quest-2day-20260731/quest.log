@@ -1,0 +1,129 @@
+[2026-07-31T14:37:31Z] QUEST-2DAY START pid=182152
+[2026-07-31T14:37:31Z] deadline=2026-08-02T14:00:00Z goal_score=1.250 stretch=1.300 sleep=180s
+[2026-07-31T14:37:31Z] baseline=/home/frosty40/turbo/lx/baseline/baseline.json bin=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+[2026-07-31T14:37:31Z] env: mm-add=0 dual_down=1 dual_mt=1
+[2026-07-31T14:37:31Z] time_left_s=170549
+[2026-07-31T14:37:31Z] ======== CYCLE 1 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c1-20260731T143731Z ========
+[2026-07-31T14:37:31Z] CYCLE 1 golden-smoke
+[2026-07-31T14:37:49Z] CYCLE 1 GOLDEN OK
+[2026-07-31T14:38:27Z] CYCLE 1 RESULT pp512=1170.200062 tg128=137.995871 score=1.2153634404646343 increase=21.53634404646343%
+[2026-07-31T14:38:27Z] CYCLE 1 sleep 180s
+[2026-07-31T14:41:27Z] time_left_s=170313
+[2026-07-31T14:41:27Z] ======== CYCLE 2 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c2-20260731T144127Z ========
+[2026-07-31T14:42:05Z] CYCLE 2 RESULT pp512=1163.417295 tg128=137.693827 score=1.2116056833978532 increase=21.160568339785325%
+[2026-07-31T14:42:05Z] CYCLE 2 sleep 180s
+[2026-07-31T14:45:05Z] time_left_s=170095
+[2026-07-31T14:45:05Z] ======== CYCLE 3 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c3-20260731T144505Z ========
+[2026-07-31T14:45:43Z] CYCLE 3 RESULT pp512=1172.523905 tg128=138.570461 score=1.2197617003921968 increase=21.976170039219678%
+[2026-07-31T14:45:43Z] CYCLE 3 power profile decode
+[2026-07-31T14:46:03Z] CYCLE 3 sleep 180s
+[2026-07-31T14:49:03Z] time_left_s=169857
+[2026-07-31T14:49:03Z] ======== CYCLE 4 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c4-20260731T144903Z ========
+[2026-07-31T14:49:41Z] CYCLE 4 RESULT pp512=1174.613125 tg128=138.599303 score=1.220495175300179 increase=22.049517530017894%
+[2026-07-31T14:49:41Z] CYCLE 4 sleep 180s
+[2026-07-31T14:52:41Z] time_left_s=169639
+[2026-07-31T14:52:41Z] ======== CYCLE 5 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c5-20260731T145241Z ========
+[2026-07-31T14:52:41Z] CYCLE 5 golden-smoke
+[2026-07-31T14:52:59Z] CYCLE 5 GOLDEN OK
+[2026-07-31T14:53:37Z] CYCLE 5 RESULT pp512=1181.361091 tg128=138.946835 score=1.2245421248603447 increase=22.454212486034475%
+[2026-07-31T14:53:37Z] CYCLE 5 sleep 180s
+[2026-07-31T14:56:37Z] time_left_s=169403
+[2026-07-31T14:56:37Z] ======== CYCLE 6 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c6-20260731T145637Z ========
+[2026-07-31T14:57:15Z] CYCLE 6 RESULT pp512=1176.09918 tg128=137.980588 score=1.2167911721620683 increase=21.679117216206834%
+[2026-07-31T14:57:15Z] CYCLE 6 power profile decode
+[2026-07-31T14:57:35Z] CYCLE 6 ktrace onednn decode
+[2026-07-31T14:58:06Z] CYCLE 6 sleep 180s
+[2026-07-31T15:01:06Z] time_left_s=169134
+[2026-07-31T15:01:06Z] ======== CYCLE 7 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c7-20260731T150106Z ========
+[2026-07-31T15:01:44Z] CYCLE 7 RESULT pp512=1165.176669 tg128=138.281381 score=1.2159404217061687 increase=21.594042170616866%
+[2026-07-31T15:01:44Z] CYCLE 7 sleep 180s
+[2026-07-31T15:04:44Z] time_left_s=168916
+[2026-07-31T15:04:45Z] ======== CYCLE 8 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c8-20260731T150444Z ========
+[2026-07-31T15:05:22Z] CYCLE 8 RESULT pp512=1172.551773 tg128=138.4585 score=1.219029719311335 increase=21.902971931133507%
+[2026-07-31T15:05:22Z] CYCLE 8 sleep 180s
+[2026-07-31T15:08:22Z] time_left_s=168698
+[2026-07-31T15:08:22Z] ======== CYCLE 9 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c9-20260731T150822Z ========
+[2026-07-31T15:08:23Z] CYCLE 9 golden-smoke
+[2026-07-31T15:08:41Z] CYCLE 9 GOLDEN OK
+[2026-07-31T15:09:18Z] CYCLE 9 RESULT pp512=1167.781713 tg128=138.440154 score=1.2176670178859954 increase=21.76670178859954%
+[2026-07-31T15:09:18Z] CYCLE 9 power profile decode
+[2026-07-31T15:09:39Z] CYCLE 9 sleep 180s
+[2026-07-31T15:10:33Z] QUEST-2DAY START pid=263807
+[2026-07-31T15:10:33Z] deadline=2026-08-02T14:00:00Z goal_score=1.250 stretch=1.300 sleep=1200s
+[2026-07-31T15:10:33Z] baseline=/home/frosty40/turbo/lx/baseline/baseline.json bin=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+[2026-07-31T15:10:33Z] env: mm-add=0 dual_down=1 dual_mt=1
+[2026-07-31T15:10:33Z] time_left_s=168567
+[2026-07-31T15:10:33Z] ======== CYCLE 1 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c1-20260731T151033Z ========
+[2026-07-31T15:10:33Z] CYCLE 1 golden-smoke
+[2026-07-31T15:10:51Z] CYCLE 1 GOLDEN OK
+[2026-07-31T15:11:29Z] CYCLE 1 RESULT pp512=1165.472401 tg128=138.502025 score=1.217472501302015 increase=21.74725013020149%
+[2026-07-31T15:11:29Z] CYCLE 1 sleep 1200s
+[2026-07-31T15:31:29Z] time_left_s=167311
+[2026-07-31T15:31:29Z] ======== CYCLE 2 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c2-20260731T153129Z ========
+[2026-07-31T15:32:07Z] CYCLE 2 RESULT pp512=1178.873787 tg128=138.413685 score=1.2203732259401658 increase=22.037322594016583%
+[2026-07-31T15:32:07Z] CYCLE 2 sleep 1200s
+[2026-07-31T15:52:07Z] time_left_s=166073
+[2026-07-31T15:52:07Z] ======== CYCLE 3 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c3-20260731T155207Z ========
+[2026-07-31T15:52:45Z] CYCLE 3 RESULT pp512=1173.009178 tg128=138.405151 score=1.2187962592212194 increase=21.87962592212194%
+[2026-07-31T15:52:45Z] CYCLE 3 power profile decode
+[2026-07-31T15:53:05Z] CYCLE 3 sleep 1200s
+[2026-07-31T16:13:05Z] time_left_s=164815
+[2026-07-31T16:13:05Z] ======== CYCLE 4 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c4-20260731T161305Z ========
+[2026-07-31T16:13:05Z] WARN: lock busy — sleep 60s
+[2026-07-31T16:14:05Z] time_left_s=164755
+[2026-07-31T16:14:05Z] ======== CYCLE 5 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c5-20260731T161405Z ========
+[2026-07-31T16:14:05Z] WARN: lock busy — sleep 60s
+[2026-07-31T16:15:05Z] time_left_s=164695
+[2026-07-31T16:15:05Z] ======== CYCLE 6 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c6-20260731T161505Z ========
+[2026-07-31T16:15:05Z] WARN: lock busy — sleep 60s
+[2026-07-31T16:16:05Z] time_left_s=164635
+[2026-07-31T16:16:05Z] ======== CYCLE 7 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c7-20260731T161605Z ========
+[2026-07-31T16:16:05Z] WARN: lock busy — sleep 60s
+[2026-07-31T16:17:05Z] time_left_s=164575
+[2026-07-31T16:17:05Z] ======== CYCLE 8 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c8-20260731T161705Z ========
+[2026-07-31T16:17:06Z] WARN: lock busy — sleep 60s
+[2026-07-31T16:18:06Z] time_left_s=164514
+[2026-07-31T16:18:06Z] ======== CYCLE 9 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c9-20260731T161806Z ========
+[2026-07-31T16:18:06Z] WARN: lock busy — sleep 60s
+[2026-07-31T16:19:06Z] time_left_s=164454
+[2026-07-31T16:19:06Z] ======== CYCLE 10 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c10-20260731T161906Z ========
+[2026-07-31T16:19:06Z] WARN: lock busy — sleep 60s
+[2026-07-31T16:20:06Z] time_left_s=164394
+[2026-07-31T16:20:06Z] ======== CYCLE 11 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c11-20260731T162006Z ========
+[2026-07-31T16:20:06Z] WARN: lock busy — sleep 60s
+[2026-07-31T16:21:06Z] time_left_s=164334
+[2026-07-31T16:21:06Z] ======== CYCLE 12 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c12-20260731T162106Z ========
+quest paused for agent push 2026-07-31T16:21:29Z
+[2026-07-31T16:38:29Z] QUEST-2DAY START pid=480967
+[2026-07-31T16:38:29Z] deadline=2026-08-02T14:00:00Z goal_score=1.250 stretch=1.300 sleep=1200s
+[2026-07-31T16:38:29Z] baseline=/home/frosty40/turbo/lx/baseline/baseline.json bin=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+[2026-07-31T16:38:29Z] env: mm-add=0 dual_down=1 dual_mt=1
+[2026-07-31T16:38:29Z] time_left_s=163291
+[2026-07-31T16:38:29Z] ======== CYCLE 1 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c1-20260731T163829Z ========
+[2026-07-31T16:38:29Z] CYCLE 1 golden-smoke
+[2026-07-31T16:38:47Z] CYCLE 1 GOLDEN OK
+[2026-07-31T16:46:44Z] QUEST-2DAY START pid=518583
+[2026-07-31T16:46:44Z] deadline=2026-08-02T14:00:00Z goal_score=1.250 stretch=1.300 sleep=1200s
+[2026-07-31T16:46:44Z] baseline=/home/frosty40/turbo/lx/baseline/baseline.json bin=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+[2026-07-31T16:46:44Z] env: mm-add=0 dual_down=1 dual_mt=1
+[2026-07-31T16:46:44Z] time_left_s=162796
+[2026-07-31T16:46:44Z] ======== CYCLE 1 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c1-20260731T164644Z ========
+[2026-07-31T16:46:44Z] CYCLE 1 golden-smoke
+[2026-07-31T16:47:02Z] CYCLE 1 GOLDEN OK
+[2026-07-31T16:47:40Z] CYCLE 1 RESULT pp512=1165.456267 tg128=138.253662 score=1.2158305397159528 increase=21.583053971595277%
+[2026-07-31T16:47:40Z] CYCLE 1 sleep 1200s
+[2026-07-31T17:02:54Z] QUEST-2DAY START pid=576455
+[2026-07-31T17:02:54Z] deadline=2026-08-02T14:00:00Z goal_score=1.250 stretch=1.300 sleep=1200s
+[2026-07-31T17:02:54Z] baseline=/home/frosty40/turbo/lx/baseline/baseline.json bin=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+[2026-07-31T17:02:54Z] env: mm-add=0 dual_down=1 dual_mt=1
+[2026-07-31T17:02:54Z] time_left_s=161826
+[2026-07-31T17:02:54Z] ======== CYCLE 1 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c1-20260731T170254Z ========
+[2026-07-31T17:02:54Z] CYCLE 1 golden-smoke
+[2026-07-31T17:03:12Z] CYCLE 1 GOLDEN OK
+[2026-07-31T17:03:50Z] CYCLE 1 RESULT pp512=1164.168194 tg128=137.869298 score=1.2129591517888907 increase=21.295915178889068%
+[2026-07-31T17:03:50Z] CYCLE 1 sleep 1200s
+[2026-07-31T17:23:50Z] time_left_s=160570
+[2026-07-31T17:23:50Z] ======== CYCLE 2 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c2-20260731T172350Z ========
+[2026-07-31T17:24:28Z] CYCLE 2 RESULT pp512=1167.151085 tg128=138.018337 score=1.2147193009304396 increase=21.471930093043955%
+[2026-07-31T17:24:28Z] CYCLE 2 sleep 1200s
+[2026-07-31T173445Z] QUEST PAUSED for afternoon wind-down

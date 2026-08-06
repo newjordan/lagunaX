@@ -1,0 +1,13 @@
+{
+  "angle": "process-transparent-hugepage-disable-policy",
+  "generated_utc": "2026-08-01T22:50:36.587006+00:00",
+  "live": {
+    "pr_get_thp_disable": 0,
+    "proc_status_thp_enabled": "1",
+    "transparent_hugepages_disabled_for_auditor": false
+  },
+  "provenance": {
+    "env_controls_or_records_process_thp": false,
+    "serial_harness_controls_or_records_process_thp": false
+  }
+}

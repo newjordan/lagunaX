@@ -1,0 +1,18 @@
+{
+  "audit": "host-thread-count-geometry",
+  "topology": {
+    "logical_cpus": 32,
+    "physical_cores": 16,
+    "threads_per_core": 2.0,
+    "sockets": 1,
+    "numa_nodes": 1
+  },
+  "policy": {
+    "env_default_threads": 16,
+    "effective_threads": 16,
+    "serial_harness_passes_threads": true,
+    "equals_physical_core_count": true,
+    "uses_all_logical_cpus": false,
+    "explicit_batch_thread_count": false
+  }
+}

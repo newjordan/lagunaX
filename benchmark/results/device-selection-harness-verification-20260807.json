@@ -1,0 +1,8 @@
+{
+  "verifier": "bash -n env.sh scripts/bench-serial.sh plus installed CLI/wiring checks",
+  "passed": true,
+  "default": "auto",
+  "cli_option": "-dev, --device <dev0/dev1/...>",
+  "forwarded": "--device \"$LX_DEVICE\"",
+  "metrics_recorded": true
+}

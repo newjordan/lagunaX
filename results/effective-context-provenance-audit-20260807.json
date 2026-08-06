@@ -1,0 +1,13 @@
+{
+  "active_executable_exposes_ctx_option": false,
+  "benchmark_invocation_count": 2,
+  "ctx_passed_in_benchmark_invocations": false,
+  "ctx_passed_in_common_args": false,
+  "ctx_recorded_in_metrics": true,
+  "direction": "effective context-size provenance",
+  "effective_window_controls": {
+    "decode": "-p 0 -n $LX_TG",
+    "prefill": "-p $LX_PP -n 0"
+  },
+  "recorded_ctx_default": 8192
+}

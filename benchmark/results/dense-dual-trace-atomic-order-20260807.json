@@ -1,0 +1,6 @@
+{
+  "target": "patches/0001-control-q4k-moe-dual-swiglu.patch",
+  "exact_relaxed_dense_dual_trace_blocks": 1,
+  "git_diff_check": "pass",
+  "semantic_scope": "opt-in first-hit diagnostic counter only; fusion selection, launch, return value, and trace-disabled behavior unchanged"
+}

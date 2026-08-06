@@ -1,0 +1,14 @@
+{
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "help_contract": "-sm, --split-mode <none|layer|row|tensor>         (default: layer)",
+  "supported": true,
+  "allowed_values": [
+    "none",
+    "layer",
+    "row",
+    "tensor"
+  ],
+  "default": "layer",
+  "canonical_configuration_present": false,
+  "metrics_provenance_present": false
+}

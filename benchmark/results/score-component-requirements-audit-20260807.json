@@ -1,0 +1,13 @@
+{
+  "audit": "score-component-requirements",
+  "target_score": 2.0,
+  "current_score": 1.2147193009304396,
+  "current_decode_speedup": 1.2856398096857555,
+  "current_prefill_speedup": 1.0245798087244227,
+  "required_decode_speedup_if_prefill_fixed": 2.4995283284873238,
+  "required_decode_tok_s_if_prefill_fixed": 268.3338992641591,
+  "required_prefill_speedup_if_decode_fixed": 7.529429082123315,
+  "required_prefill_tok_s_if_decode_fixed": 8577.156457505842,
+  "required_equal_multiplier_on_both_current_components": 1.6464709159293496,
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25"
+}

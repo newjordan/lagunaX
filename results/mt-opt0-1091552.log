@@ -1,0 +1,21 @@
+=== GOLDEN (multitoken ON + OPT=0) ===
+Your function
+--- got (first 400) ---
+~(1 in..) changing consect consect consect1 consect-V lasting forforfor
+golden rc=1
+=== BENCH (multitoken ON + OPT=0) ===
+  window:  pp512 / tg128  reps=5 combined_bench=0 delay=0 warmup_disabled=0 threads=16 threads_batch=16 cpu_moe_layers=0 no_kv_offload=0 no_op_offload=0 no_host=0 sycl_disable_graph=1 sycl_disable_dnn=backend-default priority=0 load=mmap poll=50 numa=disabled cpu_mask=0x0 cpu_strict=0 split=layer main_gpu=0 tensor_split=0 device=auto
+-- pp512 --
+-- tg128 --
+  "pp512": 1128.281289,
+  "tg128": 99.156173,
+    "Serial only: one stream pp512 + tg128.",
+  pp512=1128.281289  tg128=99.156173
+  "score": null,
+  "increase_pct": null,
+score → /home/frosty40/turbo/lx/results/20260802T020047Z/score.json
+bench rc=0
+=== PPL (multitoken ON + OPT=0) ===
+[lx-gpu-lock] ACQUIRED pid=1095451 reason=ppl
+0.17.382.107 I Final estimate: PPL = 12.7671 +/- 2.21346
+ppl rc=0

@@ -1,0 +1,33 @@
+=== GOLDEN (multitoken ON) ===
+F(1) = 1
+F(n) = F(n-1) + F(n-2) for n > 1
+Your function
+GOLDEN OK (greedy smoke match)
+golden rc=0
+=== PPL wikitext-2 ctx=512 chunks=2 (multitoken ON) ===
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=2
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=2
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu)
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=2
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=2
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=2
+[lx-control-moe-down] fuse hit (weighted reduce) embd=2048 k=8 tokens=2
+[lx-control-add] fuse hit (add+add residual) nelt=4096 ne0=2048 ne1=2
+[lx-control-moe-dual] multi-token dual+down EXPERT-LOOP n_tokens=2 k=8 n_experts=256 packed_reduce=1
+[lx-control-moe-dual] fuse hit (dual+down multi-token) tokens=2 k=8
+[lx-control-moe-down] skip: buffer overlap with dst
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=1 wtype=q6_K alias_res=1 mm='ffn_shexp-39' add='ffn_out-39' add2='l_out-39'
+0.15.091.920 I 
+0.15.091.985 I system_info: n_threads = 16 (n_threads_batch = 16) / 32 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.15.091.995 I perplexity: tokenizing the input ..
+0.15.535.897 I perplexity: tokenization took 443.896 ms
+0.15.536.086 I perplexity: calculating perplexity over 2 chunks, n_ctx=512, batch_size=2048, n_seq=4
+0.18.760.888 I perplexity: 3.22 seconds per pass - ETA 0.02 minutes
+[1]8.7795,[2]13.1109,
+0.18.776.867 I Final estimate: PPL = 13.1109 +/- 2.28869
+
+ppl rc=0

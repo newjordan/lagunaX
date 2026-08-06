@@ -1,0 +1,23 @@
+{
+  "direction": "prompt-prefix cache reuse policy",
+  "explicit_false_total": 3,
+  "explicit_true_total": 0,
+  "files": [
+    {
+      "cache_prompt_false": 1,
+      "cache_prompt_true": 0,
+      "path": "scripts/golden-smoke.sh"
+    },
+    {
+      "cache_prompt_false": 1,
+      "cache_prompt_true": 0,
+      "path": "scripts/proof-suite.sh"
+    },
+    {
+      "cache_prompt_false": 1,
+      "cache_prompt_true": 0,
+      "path": "scripts/treebeard-parity-suite.sh"
+    }
+  ],
+  "quality_result": "not measured; provenance audit only"
+}

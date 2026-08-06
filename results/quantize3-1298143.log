@@ -1,0 +1,4 @@
+llama_model_loader: - type q8_0:  439 tensors
+[   1/ 678] output.weight                        - [  2048, 100352,      1,      1], type =   q8_0, llama_model_quantize: failed to quantize: requantizing from type q8_0 is disabled
+llama_quantize: failed to quantize model from '/mnt/data2tb/laguna/Laguna-XS-2.1-GGUF-community/Laguna-XS-2.1-Q8_0.gguf'
+rc=1

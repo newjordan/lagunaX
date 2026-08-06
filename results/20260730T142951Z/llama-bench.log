@@ -1,0 +1,130 @@
+-- pp512 --
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=512
+[lx-control-rope] fuse hit (rope+view+set_rows) mode=2 ne0=128 ne1=8 type=f16
+[lx-control-fattn] kernel=ONEDNN Q=[128,512,48] K=[128,512]
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=512
+[lx-control-mm-add] fuse hit (mul_mat+add) ne0=2048 ne1=512 wtype=q4_K alias_res=0 mm='attn_o_proj-0' add='ffn_inp-0' add2='-'
+[lx-control-dense-dual] multi-col GEMM dual ncols_dst=512 nrows=8192
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu) ncols_dst=512
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=512
+[lx-control-topk-moe] true top-k+gather+sum n_experts=256 k=8 n_rows=512
+[lx-control-topk-moe] hybrid mode=8 topk-sum+fused-clamp+div-scale nelt=4096 skip_div_store=1
+[lx-control-moe-dual] multi-token dual+down EXPERT-LOOP n_tokens=512 k=8 n_experts=256 packed_reduce=1
+[lx-control-moe-dual] fuse hit (dual+down multi-token) tokens=512 k=8
+[lx-control-topk-moe] fused gemv+sigmoid+add (expert-outer) n_experts=256 ncols=2048 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 sgs=1 (first entry)
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[lx-control-moe-dual] dual+down compose n_tokens=1 k=8 integrated=1
+[lx-control-dense-dual] mmvq dual n_rows=512 ncols=2048 ncols_dst=1 sgs=1 (first entry)
+[lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=1 wtype=q6_K alias_res=1 mm='ffn_shexp-39' add='ffn_out-39' add2='l_out-39'
+[
+  {
+    "build_commit": "7e1e28cae",
+    "build_number": 10170,
+    "cpu_info": "AMD Ryzen 9 5950X 16-Core Processor",
+    "gpu_info": "Intel(R) Arc(TM) Pro B70 Graphics",
+    "backends": "SYCL",
+    "model_filename": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "model_type": "laguna 30B.A3B Q4_K - Medium",
+    "model_size": 20270574592,
+    "model_n_params": 33442617088,
+    "n_batch": 2048,
+    "n_ubatch": 2048,
+    "n_threads": 16,
+    "cpu_mask": "0x0",
+    "cpu_strict": false,
+    "poll": 50,
+    "type_k": "f16",
+    "type_v": "f16",
+    "n_gpu_layers": 99,
+    "n_cpu_moe": 0,
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "no_kv_offload": false,
+    "flash_attn": -1,
+    "devices": "auto",
+    "tensor_split": "0.00",
+    "tensor_buft_overrides": "none",
+    "load_mode": "mmap",
+    "embeddings": false,
+    "no_op_offload": 0,
+    "no_host": false,
+    "fit_target": 0,
+    "fit_min_ctx": 0,
+    "n_prompt": 512,
+    "n_gen": 0,
+    "n_depth": 0,
+    "test_time": "2026-07-30T14:30:04Z",
+    "avg_ns": 137041838,
+    "stddev_ns": 1031548,
+    "avg_ts": 3736.255141,
+    "stddev_ts": 28.204170,
+    "samples_ns": [ 137699779, 138196497, 136588069, 137187221, 135537626 ],
+    "samples_ts": [ 3718.23, 3704.87, 3748.5, 3732.13, 3777.55 ]
+  }
+]
+-- tg128 --
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=1
+[lx-control-rope] fuse hit (rope+view+set_rows) mode=2 ne0=128 ne1=8 type=f16
+[lx-control-fattn] kernel=VEC Q=[128,1,48] K=[128,256]
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=1
+[lx-control-mm-add] fuse hit (mul_mat+add) ne0=2048 ne1=1 wtype=q4_K alias_res=0 mm='attn_o_proj-0' add='ffn_inp-0' add2='-'
+[lx-control-dense-dual] mmvq dual n_rows=8192 ncols=2048 ncols_dst=1 sgs=1 (first entry)
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu) ncols_dst=1
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused gemv+sigmoid+add (expert-outer) n_experts=256 ncols=2048 n_rows=1
+[lx-control-topk-moe] true top-k+gather+sum n_experts=256 k=8 n_rows=1
+[lx-control-topk-moe] hybrid mode=8 topk-sum+fused-clamp+div-scale nelt=8 skip_div_store=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 sgs=1 (first entry)
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[lx-control-moe-dual] dual+down compose n_tokens=1 k=8 integrated=1
+[lx-control-moe-dual] fuse hit (dual+down multi-token) tokens=1 k=8
+[lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=1 wtype=q6_K alias_res=1 mm='ffn_shexp-1' add='ffn_out-1' add2='l_out-1'
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[
+  {
+    "build_commit": "7e1e28cae",
+    "build_number": 10170,
+    "cpu_info": "AMD Ryzen 9 5950X 16-Core Processor",
+    "gpu_info": "Intel(R) Arc(TM) Pro B70 Graphics",
+    "backends": "SYCL",
+    "model_filename": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "model_type": "laguna 30B.A3B Q4_K - Medium",
+    "model_size": 20270574592,
+    "model_n_params": 33442617088,
+    "n_batch": 2048,
+    "n_ubatch": 2048,
+    "n_threads": 16,
+    "cpu_mask": "0x0",
+    "cpu_strict": false,
+    "poll": 50,
+    "type_k": "f16",
+    "type_v": "f16",
+    "n_gpu_layers": 99,
+    "n_cpu_moe": 0,
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "no_kv_offload": false,
+    "flash_attn": -1,
+    "devices": "auto",
+    "tensor_split": "0.00",
+    "tensor_buft_overrides": "none",
+    "load_mode": "mmap",
+    "embeddings": false,
+    "no_op_offload": 0,
+    "no_host": false,
+    "fit_target": 0,
+    "fit_min_ctx": 0,
+    "n_prompt": 0,
+    "n_gen": 128,
+    "n_depth": 0,
+    "test_time": "2026-07-30T14:30:20Z",
+    "avg_ns": 925354167,
+    "stddev_ns": 601589,
+    "avg_ts": 138.325462,
+    "stddev_ts": 0.089818,
+    "samples_ns": [ 924326131, 925813419, 925548588, 925723619, 925359081 ],
+    "samples_ts": [ 138.479, 138.257, 138.296, 138.27, 138.325 ]
+  }
+]

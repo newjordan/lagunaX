@@ -1,0 +1,1337 @@
+[  1%] Building C object ggml/src/CMakeFiles/ggml-base.dir/ggml.c.o
+[  1%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml.cpp.o
+[  1%] Building CXX object common/CMakeFiles/llama-common-base.dir/build-info.cpp.o
+[  1%] Building CXX object vendor/cpp-httplib/CMakeFiles/cpp-httplib.dir/httplib.cpp.o
+[  1%] Building C object ggml/src/CMakeFiles/ggml-base.dir/ggml-alloc.c.o
+[  1%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-backend.cpp.o
+[  1%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-backend-meta.cpp.o
+[  1%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-threading.cpp.o
+[  1%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/ggml-opt.cpp.o
+[  3%] Building C object ggml/src/CMakeFiles/ggml-base.dir/ggml-quants.c.o
+[  3%] Building CXX object ggml/src/CMakeFiles/ggml-base.dir/gguf.cpp.o
+[  3%] Linking CXX static library libllama-common-base.a
+[  3%] Built target llama-common-base
+[  3%] Linking CXX shared library ../../bin/libggml-base.so
+[  3%] Built target ggml-base
+[  3%] Building C object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.c.o
+[  3%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.cpp.o
+[  3%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/traits.cpp.o
+[  3%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/mmq.cpp.o
+[  5%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/binary-ops.cpp.o
+[  5%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/amx.cpp.o
+[  5%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/hbm.cpp.o
+[  5%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/repack.cpp.o
+[  5%] Building C object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/quants.c.o
+[  5%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/unary-ops.cpp.o
+[  5%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ops.cpp.o
+[  7%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/vec.cpp.o
+[  7%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/llamafile/sgemm.cpp.o
+[  7%] Building C object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/quants.c.o
+[  9%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/ggml-sycl.cpp.o
+[  9%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/repack.cpp.o
+[  9%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/add-id.cpp.o
+[  9%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/binbcast.cpp.o
+[  9%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/col2im-1d.cpp.o
+[  9%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/common.cpp.o
+[  9%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/concat.cpp.o
+[  9%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/conv.cpp.o
+[ 11%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/conv2d-dw.cpp.o
+[ 11%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/conv2d-transpose.cpp.o
+[ 11%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/conv2d.cpp.o
+[ 11%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/conv3d.cpp.o
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:4797:49: warning: address of array 'add2->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4797 |                     (residual2 && add2 && add2->name) ? add2->name : "-");
+      |                                        ~~ ~~~~~~^~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:4796:53: warning: address of array 'add->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4796 |                     mm->name ? mm->name : "?", add->name ? add->name : "?",
+      |                                                ~~~~~^~~~ ~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:4796:25: warning: address of array 'mm->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4796 |                     mm->name ? mm->name : "?", add->name ? add->name : "?",
+      |                     ~~~~^~~~ ~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:7239:42: warning: address of array 't->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 7239 |             idx, ggml_op_name(t->op), t->name ? t->name : "(null)", s, mx, n);
+      |                                       ~~~^~~~ ~
+[ 11%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/convert.cpp.o
+[ 11%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/count-equal.cpp.o
+4 warnings generated.
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/add-id.cpp:2:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/col2im-1d.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/col2im-1d.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.cpp:13:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/conv.cpp:13:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/conv.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/conv2d-dw.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/conv2d-dw.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/concat.cpp:15:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/concat.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/binbcast.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/binbcast.hpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:53:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/../ggml-sycl/add-id.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/../ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/../ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/conv2d.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/conv2d.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/../ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/conv2d-transpose.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/conv2d-transpose.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+[ 13%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/cpy.cpp.o
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/conv3d.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/conv3d.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:4797:49: warning: address of array 'add2->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4797 |                     (residual2 && add2 && add2->name) ? add2->name : "-");
+      |                                        ~~ ~~~~~~^~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:4796:53: warning: address of array 'add->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4796 |                     mm->name ? mm->name : "?", add->name ? add->name : "?",
+      |                                                ~~~~~^~~~ ~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:4796:25: warning: address of array 'mm->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 4796 |                     mm->name ? mm->name : "?", add->name ? add->name : "?",
+      |                     ~~~~^~~~ ~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:7239:42: warning: address of array 't->name' will always evaluate to 'true' [-Wpointer-bool-conversion]
+ 7239 |             idx, ggml_op_name(t->op), t->name ? t->name : "(null)", s, mx, n);
+      |                                       ~~~^~~~ ~
+2 warnings generated.
+[ 13%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/cross_entropy_loss.cpp.o
+2 warnings generated.
+2 warnings generated.
+[ 13%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/cumsum.cpp.o
+2 warnings generated.
+[ 13%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/diag.cpp.o
+[ 13%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/dmmv.cpp.o
+2 warnings generated.
+[ 13%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/element_wise.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/count-equal.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/count-equal.hpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+2 warnings generated.
+[ 13%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/fattn-buffers.cpp.o
+[ 15%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/fattn-onednn.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/convert.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/convert.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 15%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/fattn-tile.cpp.o
+[ 15%] Linking CXX static library libcpp-httplib.a
+[ 15%] Built target cpp-httplib
+[ 15%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/fattn.cpp.o
+2 warnings generated.
+[ 15%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/fill.cpp.o
+[ 15%] Linking CXX shared library ../../bin/libggml-cpu.so
+[ 15%] Built target ggml-cpu
+[ 15%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/gated_delta_net.cpp.o
+2 warnings generated.
+[ 15%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/getrows.cpp.o
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/element_wise.cpp:13:76: warning: unused parameter 'ne3' [-Wunused-parameter]
+   13 |     const int64_t ne0, const int64_t ne1, const int64_t ne2, const int64_t ne3,
+      |                                                                            ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/element_wise.cpp:87:23: warning: unused variable 'ver' [-Wunused-variable]
+   87 |         constexpr int ver = __INTEL_LLVM_COMPILER;
+      |                       ^~~
+2 warnings generated.
+[ 17%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/gla.cpp.o
+2 warnings generated.
+[ 17%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/im2col.cpp.o
+2 warnings generated.
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/cross_entropy_loss.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/cross_entropy_loss.hpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/cpy.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/cpy.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/diag.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/diag.hpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/cumsum.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/cumsum.hpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dmmv.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/convert.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/fattn-buffers.cpp:13:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/element_wise.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/im2col.cpp:88:47: warning: unused parameter 'item_ct1' [-Wunused-parameter]
+   88 |                          [=](sycl::nd_item<3> item_ct1) {
+      |                                               ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/im2col.cpp:274:47: warning: unused parameter 'item_ct1' [-Wunused-parameter]
+  274 |                          [=](sycl::nd_item<3> item_ct1) {
+      |                                               ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/fattn-tile.cpp:3:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/fattn-onednn.cpp:8:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/fattn-onednn.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/fill.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/fill.hpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/fattn.cpp:15:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/element_wise.cpp:13:76: warning: unused parameter 'ne3' [-Wunused-parameter]
+   13 |     const int64_t ne0, const int64_t ne1, const int64_t ne2, const int64_t ne3,
+      |                                                                            ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/element_wise.cpp:87:23: warning: unused variable 'ver' [-Wunused-variable]
+   87 |         constexpr int ver = __INTEL_LLVM_COMPILER;
+      |                       ^~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+2 warnings generated.
+[ 17%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/mmq.cpp.o
+[ 17%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/mmvq.cpp.o
+2 warnings generated.
+2 warnings generated.
+[ 17%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/norm.cpp.o
+2 warnings generated.
+[ 17%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/outprod.cpp.o
+2 warnings generated.
+[ 19%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/pad.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/gated_delta_net.cpp:2:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 19%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/pad_reflect_1d.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/getrows.cpp:14:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 19%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/pool.cpp.o
+2 warnings generated.
+[ 19%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/repeat_back.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/gla.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/im2col.cpp:13:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/im2col.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+[ 19%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/roll.cpp.o
+2 warnings generated.
+[ 19%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/rope.cpp.o
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/im2col.cpp:88:47: warning: unused parameter 'item_ct1' [-Wunused-parameter]
+   88 |                          [=](sycl::nd_item<3> item_ct1) {
+      |                                               ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/im2col.cpp:274:47: warning: unused parameter 'item_ct1' [-Wunused-parameter]
+  274 |                          [=](sycl::nd_item<3> item_ct1) {
+      |                                               ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:10:15: warning: unused variable 'nrows' [-Wunused-variable]
+   10 |     const int nrows = item_ct1.get_group_range(2);
+      |               ^~~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:11:15: warning: unused variable 'nchannels' [-Wunused-variable]
+   11 |     const int nchannels = item_ct1.get_group_range(1);
+      |               ^~~~~~~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:162:15: warning: unused variable 'nrows' [-Wunused-variable]
+  162 |     const int nrows = item_ct1.get_group_range(2);
+      |               ^~~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:163:15: warning: unused variable 'nchannels' [-Wunused-variable]
+  163 |     const int nchannels = item_ct1.get_group_range(1);
+      |               ^~~~~~~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:243:15: warning: unused variable 'nrows' [-Wunused-variable]
+  243 |     const int nrows     = item_ct1.get_group_range(2);
+      |               ^~~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:244:15: warning: unused variable 'nchannels' [-Wunused-variable]
+  244 |     const int nchannels = item_ct1.get_group_range(1);
+      |               ^~~~~~~~~
+2 warnings generated.
+[ 19%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/set.cpp.o
+6 warnings generated.
+[ 21%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/set_rows.cpp.o
+6 warnings generated.
+2 warnings generated.
+[ 21%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/softmax.cpp.o
+2 warnings generated.
+[ 21%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/solve_tri.cpp.o
+4 warnings generated.
+[ 21%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/ssm_conv.cpp.o
+4 warnings generated.
+[ 21%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/ssm_scan.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/outprod.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/outprod.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/pad.cpp:14:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/pad.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/mmq.cpp:13:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/mmq.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/set_rows.cpp:138:42: warning: attribute 'intel::reqd_sub_group_size' is deprecated [-Wdeprecated-attributes]
+  138 |         [=](sycl::nd_item<1> item_ct1) [[intel::reqd_sub_group_size(WARP_SIZE)]] {
+      |                                          ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/set_rows.cpp:138:42: note: did you mean to use 'sycl::reqd_sub_group_size' instead?
+  138 |         [=](sycl::nd_item<1> item_ct1) [[intel::reqd_sub_group_size(WARP_SIZE)]] {
+      |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                          sycl::reqd_sub_group_size
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:10:15: warning: unused variable 'nrows' [-Wunused-variable]
+   10 |     const int nrows = item_ct1.get_group_range(2);
+      |               ^~~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:11:15: warning: unused variable 'nchannels' [-Wunused-variable]
+   11 |     const int nchannels = item_ct1.get_group_range(1);
+      |               ^~~~~~~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:162:15: warning: unused variable 'nrows' [-Wunused-variable]
+  162 |     const int nrows = item_ct1.get_group_range(2);
+      |               ^~~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:163:15: warning: unused variable 'nchannels' [-Wunused-variable]
+  163 |     const int nchannels = item_ct1.get_group_range(1);
+      |               ^~~~~~~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:243:15: warning: unused variable 'nrows' [-Wunused-variable]
+  243 |     const int nrows     = item_ct1.get_group_range(2);
+      |               ^~~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/norm.cpp:244:15: warning: unused variable 'nchannels' [-Wunused-variable]
+  244 |     const int nchannels = item_ct1.get_group_range(1);
+      |               ^~~~~~~~~
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/pad_reflect_1d.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/pad_reflect_1d.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/pool.cpp:13:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/pool.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+1 warning generated.
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/repeat_back.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/repeat_back.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 21%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/sycl_hw.cpp.o
+2 warnings generated.
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/roll.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/roll.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+[ 23%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/topk-moe.cpp.o
+8 warnings generated.
+[ 23%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/tsembd.cpp.o
+2 warnings generated.
+[ 23%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/upscale.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/mmvq.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/mmvq.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/rope.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/rope.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/set.cpp:2:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 23%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/wkv.cpp.o
+2 warnings generated.
+[ 23%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-tile-instance-dkq112-dv112.cpp.o
+2 warnings generated.
+[ 23%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-tile-instance-dkq128-dv128.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/set_rows.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/set_rows.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 25%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-tile-instance-dkq256-dv256.cpp.o
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/set_rows.cpp:138:42: warning: attribute 'intel::reqd_sub_group_size' is deprecated [-Wdeprecated-attributes]
+  138 |         [=](sycl::nd_item<1> item_ct1) [[intel::reqd_sub_group_size(WARP_SIZE)]] {
+      |                                          ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/set_rows.cpp:138:42: note: did you mean to use 'sycl::reqd_sub_group_size' instead?
+  138 |         [=](sycl::nd_item<1> item_ct1) [[intel::reqd_sub_group_size(WARP_SIZE)]] {
+      |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                          sycl::reqd_sub_group_size
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ssm_conv.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ssm_conv.hpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/softmax.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/softmax.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/solve_tri.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/solve_tri.hpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ssm_scan.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ssm_scan.hpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+2 warnings generated.
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+[ 25%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-tile-instance-dkq40-dv40.cpp.o
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/topk-moe.cpp:865:10: warning: unused variable 'launch_norm' [-Wunused-variable]
+  865 |     auto launch_norm = [&]() {
+      |          ^~~~~~~~~~~
+[ 25%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-tile-instance-dkq512-dv512.cpp.o
+1 warning generated.
+2 warnings generated.
+2 warnings generated.
+[ 25%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-tile-instance-dkq576-dv512.cpp.o
+[ 25%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-tile-instance-dkq64-dv64.cpp.o
+2 warnings generated.
+[ 25%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-tile-instance-dkq72-dv72.cpp.o
+3 warnings generated.
+[ 25%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-tile-instance-dkq80-dv80.cpp.o
+2 warnings generated.
+[ 26%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-tile-instance-dkq96-dv96.cpp.o
+2 warnings generated.
+[ 26%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-f16-f16.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/tsembd.cpp:13:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/tsembd.hpp:16:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/topk-moe.cpp:11:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/topk-moe.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/upscale.cpp:1:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/upscale.hpp:4:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/topk-moe.cpp:865:10: warning: unused variable 'launch_norm' [-Wunused-variable]
+  865 |     auto launch_norm = [&]() {
+      |          ^~~~~~~~~~~
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/wkv.cpp:2:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/wkv.hpp:4:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/common.hpp:21:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 26%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-f16-q4_0.cpp.o
+2 warnings generated.
+[ 26%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-f16-q4_1.cpp.o
+2 warnings generated.
+[ 26%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-f16-q5_0.cpp.o
+3 warnings generated.
+[ 26%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-f16-q5_1.cpp.o
+2 warnings generated.
+[ 28%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-f16-q8_0.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-tile-instance-dkq112-dv112.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-tile.hpp:3:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-tile-instance-dkq128-dv128.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-tile.hpp:3:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-tile-instance-dkq576-dv512.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-tile.hpp:3:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-tile-instance-dkq256-dv256.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-tile.hpp:3:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-tile-instance-dkq40-dv40.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-tile.hpp:3:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-tile-instance-dkq512-dv512.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-tile.hpp:3:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-tile-instance-dkq64-dv64.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-tile.hpp:3:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-tile-instance-dkq72-dv72.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-tile.hpp:3:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-tile-instance-dkq80-dv80.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-tile.hpp:3:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-f16-f16.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-tile-instance-dkq96-dv96.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-tile.hpp:3:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 28%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_0-f16.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-f16-q4_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-f16-q4_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-f16-q5_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-f16-q8_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-f16-q5_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 28%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_0-q4_0.cpp.o
+2 warnings generated.
+[ 28%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_0-q4_1.cpp.o
+2 warnings generated.
+[ 28%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_0-q5_0.cpp.o
+2 warnings generated.
+2 warnings generated.
+[ 28%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_0-q5_1.cpp.o
+[ 28%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_0-q8_0.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_0-f16.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 30%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_1-f16.cpp.o
+2 warnings generated.
+[ 30%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_1-q4_0.cpp.o
+2 warnings generated.
+[ 30%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_1-q4_1.cpp.o
+2 warnings generated.
+2 warnings generated.
+[ 30%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_1-q5_0.cpp.o
+[ 30%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_1-q5_1.cpp.o
+2 warnings generated.
+[ 30%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q4_1-q8_0.cpp.o
+2 warnings generated.
+2 warnings generated.
+[ 32%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_0-f16.cpp.o
+[ 32%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_0-q4_0.cpp.o
+2 warnings generated.
+[ 32%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_0-q4_1.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_0-q4_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 32%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_0-q5_0.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_0-q4_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_0-q5_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_0-q5_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_0-q8_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_1-f16.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_1-q4_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_1-q4_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_1-q5_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_1-q5_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 32%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_0-q5_1.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q4_1-q8_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_0-q4_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_0-f16.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_0-q4_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_0-q5_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 32%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_0-q8_0.cpp.o
+2 warnings generated.
+[ 34%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_1-f16.cpp.o
+2 warnings generated.
+[ 34%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_1-q4_0.cpp.o
+2 warnings generated.
+[ 34%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_1-q4_1.cpp.o
+2 warnings generated.
+[ 34%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_1-q5_0.cpp.o
+2 warnings generated.
+[ 34%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_1-q5_1.cpp.o
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_0-q5_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+[ 34%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q5_1-q8_0.cpp.o
+2 warnings generated.
+[ 34%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q8_0-f16.cpp.o
+2 warnings generated.
+2 warnings generated.
+[ 36%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q8_0-q4_0.cpp.o
+[ 36%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q8_0-q4_1.cpp.o
+2 warnings generated.
+[ 36%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q8_0-q5_0.cpp.o
+2 warnings generated.
+[ 36%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q8_0-q5_1.cpp.o
+2 warnings generated.
+[ 36%] Building CXX object ggml/src/ggml-sycl/CMakeFiles/ggml-sycl.dir/template-instances/fattn-vec-instance-q8_0-q8_0.cpp.o
+2 warnings generated.
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_0-q8_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_1-f16.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_1-q4_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_1-q4_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_1-q5_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_1-q5_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q5_1-q8_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q8_0-f16.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q8_0-q4_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q8_0-q4_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q8_0-q5_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q8_0-q5_1.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/fattn-vec-instance-q8_0-q8_0.cpp:3:
+In file included from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../fattn-vec.hpp:9:
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:65:38: warning: function '_abort' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   65 | inline void _abort(const char * str) {
+      |                                      ^
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/template-instances/../dpct/helper.hpp:1029:9: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+ 1029 |         }
+      |         ^
+2 warnings generated.
+2 warnings generated.
+2 warnings generated.
+2 warnings generated.
+2 warnings generated.
+2 warnings generated.
+2 warnings generated.
+2 warnings generated.
+2 warnings generated.
+2 warnings generated.
+2 warnings generated.
+2 warnings generated.
+2 warnings generated.
+[ 36%] Linking CXX shared library ../../../bin/libggml-sycl.so
+[ 36%] Built target ggml-sycl
+[ 36%] Building CXX object ggml/src/CMakeFiles/ggml.dir/ggml-backend-dl.cpp.o
+[ 36%] Building CXX object ggml/src/CMakeFiles/ggml.dir/ggml-backend-reg.cpp.o
+[ 36%] Linking CXX shared library ../../bin/libggml.so
+[ 36%] Built target ggml
+[ 38%] Building CXX object src/CMakeFiles/llama.dir/llama.cpp.o
+[ 38%] Building CXX object src/CMakeFiles/llama.dir/llama-adapter.cpp.o
+[ 38%] Building CXX object src/CMakeFiles/llama.dir/llama-batch.cpp.o
+[ 38%] Building CXX object src/CMakeFiles/llama.dir/llama-arch.cpp.o
+[ 38%] Building CXX object src/CMakeFiles/llama.dir/llama-chat.cpp.o
+[ 38%] Building CXX object src/CMakeFiles/llama.dir/llama-context.cpp.o
+[ 40%] Building CXX object src/CMakeFiles/llama.dir/llama-grammar.cpp.o
+[ 40%] Building CXX object src/CMakeFiles/llama.dir/llama-cparams.cpp.o
+[ 40%] Building CXX object src/CMakeFiles/llama.dir/llama-graph.cpp.o
+[ 40%] Building CXX object src/CMakeFiles/llama.dir/llama-hparams.cpp.o
+[ 40%] Building CXX object src/CMakeFiles/llama.dir/llama-impl.cpp.o
+[ 40%] Building CXX object src/CMakeFiles/llama.dir/llama-kv-cache.cpp.o
+[ 42%] Building CXX object src/CMakeFiles/llama.dir/llama-kv-cache-iswa.cpp.o
+[ 42%] Building CXX object src/CMakeFiles/llama.dir/llama-kv-cache-dsv4.cpp.o
+[ 42%] Building CXX object src/CMakeFiles/llama.dir/llama-kv-cache-dsa.cpp.o
+[ 42%] Building CXX object src/CMakeFiles/llama.dir/llama-io.cpp.o
+[ 42%] Building CXX object src/CMakeFiles/llama.dir/llama-memory.cpp.o
+[ 42%] Building CXX object src/CMakeFiles/llama.dir/llama-memory-hybrid.cpp.o
+[ 42%] Building CXX object src/CMakeFiles/llama.dir/llama-memory-hybrid-iswa.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/llama.dir/llama-memory-recurrent.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/llama.dir/llama-mmap.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/llama.dir/llama-model-loader.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/llama.dir/llama-model-saver.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/llama.dir/llama-model.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/llama.dir/llama-quant.cpp.o
+[ 44%] Building CXX object src/CMakeFiles/llama.dir/llama-sampler.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/llama.dir/llama-vocab.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/llama.dir/unicode-data.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/llama.dir/unicode.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/llama.dir/models/afmoe.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/llama.dir/models/apertus.cpp.o
+[ 46%] Building CXX object src/CMakeFiles/llama.dir/models/arcee.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/llama.dir/models/arctic.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/llama.dir/models/arwkv7.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/llama.dir/models/baichuan.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/llama.dir/models/bailingmoe.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/llama.dir/models/bailingmoe2.cpp.o
+[ 48%] Building CXX object src/CMakeFiles/llama.dir/models/bert.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/llama.dir/models/bitnet.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/llama.dir/models/bloom.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/llama.dir/models/chameleon.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/llama.dir/models/chatglm.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/llama.dir/models/codeshell.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/llama.dir/models/cogvlm.cpp.o
+[ 50%] Building CXX object src/CMakeFiles/llama.dir/models/cohere2.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/llama.dir/models/cohere2moe.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/llama.dir/models/command-r.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/llama.dir/models/dbrx.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/llama.dir/models/deci.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/llama.dir/models/deepseek.cpp.o
+[ 51%] Building CXX object src/CMakeFiles/llama.dir/models/deepseek2.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/llama.dir/models/deepseek2ocr.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/llama.dir/models/deepseek32.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/llama.dir/models/deepseek4.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/llama.dir/models/delta-net-base.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/llama.dir/models/dflash.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/llama.dir/models/dots1.cpp.o
+[ 53%] Building CXX object src/CMakeFiles/llama.dir/models/dream.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/llama.dir/models/eagle3.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/llama.dir/models/ernie4-5-moe.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/llama.dir/models/ernie4-5.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/llama.dir/models/eurobert.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/llama.dir/models/exaone-moe.cpp.o
+[ 55%] Building CXX object src/CMakeFiles/llama.dir/models/exaone.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/llama.dir/models/exaone4.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/llama.dir/models/falcon-h1.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/llama.dir/models/falcon.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/llama.dir/models/gemma-embedding.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/llama.dir/models/gemma.cpp.o
+[ 57%] Building CXX object src/CMakeFiles/llama.dir/models/gemma2.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/llama.dir/models/gemma3.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/llama.dir/models/gemma3n.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/llama.dir/models/gemma4-assistant.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/llama.dir/models/gemma4.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/llama.dir/models/glm-dsa.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/llama.dir/models/glm4-moe.cpp.o
+[ 59%] Building CXX object src/CMakeFiles/llama.dir/models/glm4.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/llama.dir/models/gpt2.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/llama.dir/models/gptneox.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/llama.dir/models/granite-hybrid.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/llama.dir/models/granite-moe.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/llama.dir/models/granite.cpp.o
+[ 61%] Building CXX object src/CMakeFiles/llama.dir/models/grok.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/llama.dir/models/grovemoe.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/llama.dir/models/hunyuan-dense.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/llama.dir/models/hunyuan-moe.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/llama.dir/models/hunyuan-vl.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/llama.dir/models/hy-v3.cpp.o
+[ 63%] Building CXX object src/CMakeFiles/llama.dir/models/internlm2.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/llama.dir/models/jais.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/llama.dir/models/jais2.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/llama.dir/models/jamba.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/llama.dir/models/jina-bert-v2.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/llama.dir/models/jina-bert-v3.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/llama.dir/models/kimi-linear.cpp.o
+[ 65%] Building CXX object src/CMakeFiles/llama.dir/models/laguna.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/llama.dir/models/lfm2.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/llama.dir/models/lfm2moe.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/llama.dir/models/llada-moe.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/llama.dir/models/llada.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/llama.dir/models/llama-embed.cpp.o
+[ 67%] Building CXX object src/CMakeFiles/llama.dir/models/llama.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/llama.dir/models/llama4.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/llama.dir/models/maincoder.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/llama.dir/models/mamba-base.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/llama.dir/models/mamba.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/llama.dir/models/mamba2.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/llama.dir/models/mellum.cpp.o
+[ 69%] Building CXX object src/CMakeFiles/llama.dir/models/mimo2.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/llama.dir/models/minicpm.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/llama.dir/models/minicpm3.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/llama.dir/models/minimax-m2.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/llama.dir/models/minimax-m3.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/llama.dir/models/mistral3.cpp.o
+[ 71%] Building CXX object src/CMakeFiles/llama.dir/models/mistral4.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/llama.dir/models/modern-bert.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/llama.dir/models/mpt.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/llama.dir/models/nemotron-h-moe.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/llama.dir/models/nanbeige.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/llama.dir/models/nemotron-h.cpp.o
+[ 73%] Building CXX object src/CMakeFiles/llama.dir/models/nemotron.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/llama.dir/models/neo-bert.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/llama.dir/models/nomic-bert-moe.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/llama.dir/models/nomic-bert.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/llama.dir/models/olmo.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/llama.dir/models/olmo2.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/llama.dir/models/olmoe.cpp.o
+[ 75%] Building CXX object src/CMakeFiles/llama.dir/models/openai-moe.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/llama.dir/models/openelm.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/llama.dir/models/orion.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/llama.dir/models/paddleocr.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/llama.dir/models/pangu-embed.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/llama.dir/models/phi2.cpp.o
+[ 76%] Building CXX object src/CMakeFiles/llama.dir/models/phi3.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/llama.dir/models/phimoe.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/llama.dir/models/plamo.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/llama.dir/models/plamo2.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/llama.dir/models/plamo3.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/llama.dir/models/plm.cpp.o
+[ 78%] Building CXX object src/CMakeFiles/llama.dir/models/qwen.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/llama.dir/models/qwen2.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/llama.dir/models/qwen2moe.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/llama.dir/models/qwen2vl.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/llama.dir/models/qwen3.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/llama.dir/models/qwen35.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/llama.dir/models/qwen35moe.cpp.o
+[ 80%] Building CXX object src/CMakeFiles/llama.dir/models/qwen3moe.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/llama.dir/models/qwen3next.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/llama.dir/models/qwen3vl.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/llama.dir/models/qwen3vlmoe.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/llama.dir/models/refact.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/llama.dir/models/rnd1.cpp.o
+[ 82%] Building CXX object src/CMakeFiles/llama.dir/models/rwkv6-base.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/llama.dir/models/rwkv6.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/llama.dir/models/rwkv6qwen2.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/llama.dir/models/rwkv7-base.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/llama.dir/models/rwkv7.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/llama.dir/models/seed-oss.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/llama.dir/models/smallthinker.cpp.o
+[ 84%] Building CXX object src/CMakeFiles/llama.dir/models/smollm3.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/llama.dir/models/stablelm.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/llama.dir/models/starcoder.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/llama.dir/models/starcoder2.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/llama.dir/models/step35.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/llama.dir/models/t5.cpp.o
+[ 86%] Building CXX object src/CMakeFiles/llama.dir/models/t5encoder.cpp.o
+[ 88%] Building CXX object src/CMakeFiles/llama.dir/models/talkie.cpp.o
+[ 88%] Building CXX object src/CMakeFiles/llama.dir/models/wavtokenizer-dec.cpp.o
+[ 88%] Building CXX object src/CMakeFiles/llama.dir/models/xverse.cpp.o
+[ 88%] Linking CXX shared library ../bin/libllama.so
+[ 88%] Built target llama
+[ 88%] Building CXX object common/CMakeFiles/llama-common.dir/chat-auto-parser-helpers.cpp.o
+[ 88%] Building CXX object common/CMakeFiles/llama-common.dir/arg.cpp.o
+[ 90%] Building CXX object common/CMakeFiles/llama-common.dir/chat-auto-parser-generator.cpp.o
+[ 90%] Building CXX object common/CMakeFiles/llama-common.dir/chat-diff-analyzer.cpp.o
+[ 90%] Building CXX object common/CMakeFiles/llama-common.dir/chat-peg-parser.cpp.o
+[ 90%] Building CXX object common/CMakeFiles/llama-common.dir/chat.cpp.o
+[ 90%] Building CXX object common/CMakeFiles/llama-common.dir/common.cpp.o
+[ 90%] Building CXX object common/CMakeFiles/llama-common.dir/console.cpp.o
+[ 90%] Building CXX object common/CMakeFiles/llama-common.dir/download.cpp.o
+[ 92%] Building CXX object common/CMakeFiles/llama-common.dir/debug.cpp.o
+[ 92%] Building CXX object common/CMakeFiles/llama-common.dir/hf-cache.cpp.o
+[ 92%] Building CXX object common/CMakeFiles/llama-common.dir/json-schema-to-grammar.cpp.o
+[ 92%] Building CXX object common/CMakeFiles/llama-common.dir/imatrix-loader.cpp.o
+[ 92%] Building CXX object common/CMakeFiles/llama-common.dir/fit.cpp.o
+[ 94%] Building CXX object common/CMakeFiles/llama-common.dir/llguidance.cpp.o
+[ 94%] Building CXX object common/CMakeFiles/llama-common.dir/log.cpp.o
+[ 94%] Building CXX object common/CMakeFiles/llama-common.dir/ngram-cache.cpp.o
+[ 94%] Building CXX object common/CMakeFiles/llama-common.dir/ngram-map.cpp.o
+[ 94%] Building CXX object common/CMakeFiles/llama-common.dir/ngram-mod.cpp.o
+[ 94%] Building CXX object common/CMakeFiles/llama-common.dir/peg-parser.cpp.o
+[ 94%] Building CXX object common/CMakeFiles/llama-common.dir/preset.cpp.o
+[ 96%] Building CXX object common/CMakeFiles/llama-common.dir/reasoning-budget.cpp.o
+[ 96%] Building CXX object common/CMakeFiles/llama-common.dir/sampling.cpp.o
+[ 96%] Building CXX object common/CMakeFiles/llama-common.dir/speculative.cpp.o
+[ 96%] Building CXX object common/CMakeFiles/llama-common.dir/subproc.cpp.o
+[ 96%] Building CXX object common/CMakeFiles/llama-common.dir/trie.cpp.o
+[ 96%] Building CXX object common/CMakeFiles/llama-common.dir/unicode.cpp.o
+[ 98%] Building CXX object common/CMakeFiles/llama-common.dir/jinja/lexer.cpp.o
+[ 98%] Building CXX object common/CMakeFiles/llama-common.dir/jinja/parser.cpp.o
+[ 98%] Building CXX object common/CMakeFiles/llama-common.dir/jinja/runtime.cpp.o
+[ 98%] Building CXX object common/CMakeFiles/llama-common.dir/jinja/value.cpp.o
+[ 98%] Building CXX object common/CMakeFiles/llama-common.dir/jinja/string.cpp.o
+[ 98%] Building CXX object common/CMakeFiles/llama-common.dir/jinja/caps.cpp.o
+[100%] Linking CXX shared library ../bin/libllama-common.so
+[100%] Built target llama-common
+[100%] Building CXX object tools/llama-bench/CMakeFiles/llama-bench-impl.dir/llama-bench.cpp.o
+[100%] Linking CXX shared library ../../bin/libllama-bench-impl.so
+[100%] Built target llama-bench-impl
+[100%] Building CXX object tools/llama-bench/CMakeFiles/llama-bench.dir/main.cpp.o
+[100%] Linking CXX executable ../../bin/llama-bench
+[100%] Built target llama-bench

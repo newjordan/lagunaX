@@ -6,6 +6,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # shellcheck disable=SC1091
 source "$ROOT/env.sh"
+# shellcheck disable=SC1091
+source "$ROOT/scripts/lib-gpu-lock.sh"
 
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 OUT="${OUT:-$LX_RESULTS/proof-$STAMP}"
@@ -30,6 +32,10 @@ SKIP_PPL="${SKIP_PPL:-0}"
 SKIP_LADDER="${SKIP_LADDER:-0}"
 SKIP_LONGCTX="${SKIP_LONGCTX:-0}"
 SKIP_AGENT_TPUT="${SKIP_AGENT_TPUT:-0}"
+
+# Whole suite holds the card — never interleave with other B70 jobs.
+lx_gpu_lock_enter "proof-suite" || exit $?
+trap 'lx_gpu_lock_leave' EXIT
 
 mkdir -p "$OUT"/{logs,bench,ppl,longctx,agent,meta}
 exec > >(tee -a "$OUT/run.log") 2>&1

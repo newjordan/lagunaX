@@ -1,0 +1,13 @@
+{
+  "audit": "model-load-mode-policy",
+  "supported_modes": [
+    "none",
+    "mmap",
+    "mlock",
+    "mmap+mlock",
+    "dio"
+  ],
+  "default_mode": "mmap",
+  "active_source_override": false,
+  "harness_records_load_mode": false
+}

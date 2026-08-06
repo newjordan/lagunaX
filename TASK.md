@@ -82,6 +82,9 @@ source env.sh
 ./scripts/golden-smoke.sh              # greedy match gate
 ```
 
+**B70:** one GPU client at a time. Concurrent Level-Zero jobs wedge the driver.
+See `notes/B70_NO_CONCURRENT_GPU.md`. Harness scripts take `results/.b70-gpu.lock`.
+
 ## Scoring detail
 
 ```

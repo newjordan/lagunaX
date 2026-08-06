@@ -1,0 +1,6 @@
+json_artifacts_parsed=512
+gpu_layer_records=411
+gpu_layer_value_counts={"99": 411}
+active_ngl_default=99
+serial_harness_passes_ngl=true
+distinct_gpu_layer_values=1

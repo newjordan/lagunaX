@@ -1,0 +1,11 @@
+{
+  "active_binary_help_default": 50,
+  "artifact_poll_records": 55,
+  "artifact_poll_value_counts": {
+    "50": 55
+  },
+  "control": "llama-bench --poll <0...100>",
+  "env_declares_poll": false,
+  "parsed_artifact_files": 583,
+  "serial_harness_passes_poll": false
+}

@@ -1,0 +1,23 @@
+{
+  "generated_utc": "2026-08-01T21:17:10.193943+00:00",
+  "scope": "resctrl cache allocation and memory-bandwidth control/monitoring",
+  "live": {
+    "cpu_resctrl_flags": [
+      "cat_l3",
+      "cqm_llc",
+      "cqm_mbm_local",
+      "cqm_mbm_total",
+      "mba"
+    ],
+    "kernel_cmdline": "BOOT_IMAGE=/boot/vmlinuz-7.0.0-28-generic root=UUID=9e57cf7d-de45-490b-9bd8-c900f7bfdae7 ro quiet splash idle=nomwait processor.max_cstate=1 pcie_aspm=off amd_iommu=on iommu=pt vt.handoff=7",
+    "resctrl_mounts": [],
+    "resctrl_info_directory_exists": false,
+    "resctrl_info": {}
+  },
+  "laguna": {
+    "canonical_environment": "env.sh",
+    "serial_harness": "scripts/bench-serial.sh",
+    "configures_resctrl": false,
+    "records_resctrl": false
+  }
+}

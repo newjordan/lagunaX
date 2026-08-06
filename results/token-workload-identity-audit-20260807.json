@@ -1,0 +1,19 @@
+{
+  "policy": "token_workload_identity",
+  "canonical_harness": "scripts/bench-serial.sh",
+  "controls": {
+    "prompt_length": true,
+    "generation_length": true,
+    "prompt_text_or_file": false,
+    "token_ids": false,
+    "rng_seed": false,
+    "workload_digest": false
+  },
+  "reproducible_token_workload_bound": false,
+  "metrics_workload_lines": [
+    "\"pp512\": float(\"$PP_TS\"),",
+    "\"tg128\": float(\"$TG_TS\"),",
+    "\"window\": {\"pp\": int(\"$LX_PP\"), \"tg\": int(\"$LX_TG\"), \"reps\": int(\"$LX_REPS\")},"
+  ],
+  "conclusion": "lengths are bound, token content and seed are not"
+}

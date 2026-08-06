@@ -1,0 +1,12 @@
+{
+  "active_explicit_override": false,
+  "effective_active_load_mode": "mmap",
+  "executable_default": "mmap",
+  "help_line": "-lm, --load-mode <none|mmap|mlock|mmap+mlock|dio> (default: mmap)",
+  "llama_bench": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "policy": "model_load_mode",
+  "source_overrides": {
+    "deprecated_mmap": [],
+    "load_mode": []
+  }
+}

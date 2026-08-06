@@ -1,0 +1,20 @@
+{
+  "verifier": "bash -n env.sh scripts/bench-serial.sh + installed llama-bench CLI + wiring inspection",
+  "passed": true,
+  "supported_split_modes": [
+    "none",
+    "layer",
+    "row",
+    "tensor"
+  ],
+  "defaults": {
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "tensor_split": "0"
+  },
+  "forwarded_and_recorded": [
+    "split_mode",
+    "main_gpu",
+    "tensor_split"
+  ]
+}

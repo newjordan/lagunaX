@@ -1,0 +1,53 @@
+0.00.114.815 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.115.203 W srv  llama_server: -----------------
+0.00.115.205 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set
+0.00.115.206 W srv  llama_server: this can be a security risk (cross-origin attacks)
+0.00.115.206 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655
+0.00.115.206 W srv  llama_server: -----------------
+0.00.116.438 I srv    load_model: loading model '/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf'
+0.00.302.061 W load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=2
+[lx-control-rope] fuse hit (rope+view+set_rows) mode=2 ne0=128 ne1=8 type=f16
+[lx-control-fattn] kernel=TILE Q=[128,2,48] K=[128,256]
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=2
+[lx-control-mm-add] fuse hit (mul_mat+add) ne0=2048 ne1=2 wtype=q4_K alias_res=0 mm='attn_o_proj-0' add='ffn_inp-0' add2='-'
+[lx-control-dense-dual] mmvq dual n_rows=8192 ncols=2048 ncols_dst=2 sgs=1 (first entry)
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu) ncols_dst=2
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=2
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=2
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=2
+[lx-control-moe-dual] multi-token dual+down EXPERT-LOOP n_tokens=2 k=8 n_experts=256 packed_reduce=1
+[lx-control-moe-dual] fuse hit (dual+down multi-token) tokens=2 k=8
+[lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=2 wtype=q6_K alias_res=1 mm='ffn_shexp-1' add='ffn_out-1' add2='l_out-1'
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 sgs=1 (first entry)
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[lx-control-moe-dual] dual+down compose n_tokens=1 k=8 integrated=1
+0.14.512.354 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8192, kv_unified = 'false'
+0.14.520.303 I srv          init: chat template supports preserving reasoning, consider enabling it via --reasoning-preserve
+0.14.520.341 I srv  llama_server: model loaded
+0.14.520.346 I srv  llama_server: listening on http://127.0.0.1:18915
+0.14.900.773 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.14.900.812 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+0.16.351.104 I slot print_timing: id  0 | task 0 | prompt eval time =     498.48 ms /    13 tokens (   38.34 ms per token,    26.08 tokens per second)
+0.16.351.108 I slot print_timing: id  0 | task 0 |        eval time =     951.79 ms /    64 tokens (   14.87 ms per token,    67.24 tokens per second)
+0.16.351.108 I slot print_timing: id  0 | task 0 |       total time =    1450.28 ms /    77 tokens
+0.16.351.110 I slot print_timing: id  0 | task 0 |    graphs reused =         63
+0.16.351.133 I slot      release: id  0 | task 0 | stop processing: n_tokens = 76, truncated = 0
+0.16.402.463 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 6062519552
+0.16.406.429 I slot launch_slot_: id  0 | task 66 | processing task, is_child = 0
+[lx-control-dense-dual] multi-col GEMM dual ncols_dst=1399 nrows=8192
+0.17.278.153 I slot print_timing: id  0 | task 66 | prompt eval time =     678.22 ms /  1403 tokens (    0.48 ms per token,  2068.66 tokens per second)
+0.17.278.156 I slot print_timing: id  0 | task 66 |        eval time =     193.50 ms /    24 tokens (    8.06 ms per token,   124.03 tokens per second)
+0.17.278.157 I slot print_timing: id  0 | task 66 |       total time =     871.71 ms /  1427 tokens
+0.17.278.157 I slot print_timing: id  0 | task 66 |    graphs reused =         85
+0.17.278.188 I slot      release: id  0 | task 66 | stop processing: n_tokens = 1426, truncated = 0
+0.17.331.985 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 6063446607
+0.17.438.796 I slot launch_slot_: id  0 | task 92 | processing task, is_child = 0
+0.18.077.245 I slot print_timing: id  0 | task 92 | prompt eval time =     510.92 ms /  1609 tokens (    0.32 ms per token,  3149.21 tokens per second)
+0.18.077.249 I slot print_timing: id  0 | task 92 |        eval time =     127.51 ms /    16 tokens (    7.97 ms per token,   125.48 tokens per second)
+0.18.077.249 I slot print_timing: id  0 | task 92 |       total time =     638.43 ms /  1625 tokens
+0.18.077.250 I slot print_timing: id  0 | task 92 |    graphs reused =         99
+0.18.077.287 I slot      release: id  0 | task 92 | stop processing: n_tokens = 1624, truncated = 0

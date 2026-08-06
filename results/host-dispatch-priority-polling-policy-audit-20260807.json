@@ -1,0 +1,21 @@
+{
+  "audit": "host-dispatch-priority-polling-policy",
+  "canonical_configured": {
+    "poll": false,
+    "priority": false
+  },
+  "executable_contract": {
+    "poll": {
+      "accepted": "0...100",
+      "default": 50
+    },
+    "priority": {
+      "accepted": "-1|0|1|2|3",
+      "default": 0
+    }
+  },
+  "metrics_recorded": {
+    "poll": false,
+    "priority": false
+  }
+}

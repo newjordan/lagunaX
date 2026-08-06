@@ -1,0 +1,26 @@
+{
+  "laguna": {
+    "env_or_harness_controls_policy": false,
+    "serial_metrics_record_policy": false
+  },
+  "live": {
+    "defrag_raw": "always defer defer+madvise [madvise] never",
+    "defrag_selected": "madvise",
+    "enabled_raw": "always [madvise] never",
+    "enabled_selected": "madvise",
+    "interface_present": true,
+    "khugepaged": {
+      "alloc_sleep_millisecs": "60000",
+      "defrag": "1",
+      "full_scans": "0",
+      "max_ptes_none": "511",
+      "max_ptes_shared": "256",
+      "max_ptes_swap": "64",
+      "pages_collapsed": "0",
+      "pages_to_scan": "4096",
+      "scan_sleep_millisecs": "10000"
+    },
+    "shmem_enabled_raw": "always within_size advise [never] deny force",
+    "shmem_enabled_selected": "never"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "angle": "benchmark_warmup_run_policy",
+  "live_help": {
+    "no_warmup_supported": true,
+    "default_warmup_enabled": true
+  },
+  "canonical_sources": {
+    "disables_warmup": false,
+    "metrics_record_warmup_policy": false,
+    "llama_bench_invocations": 2,
+    "effective_warmup_sequences_per_serial_run": 2
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "binary_exposes_mmap_control": false,
+  "binary_exposes_mlock_control": false,
+  "serial_harness_explicit_mmap": false,
+  "serial_harness_explicit_mlock": false,
+  "parsed_json_artifacts": 511,
+  "artifacts_recording_mmap_policy": 32,
+  "artifacts_recording_mlock_policy": 0
+}

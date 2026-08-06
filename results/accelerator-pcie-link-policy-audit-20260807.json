@@ -1,0 +1,29 @@
+{
+  "generated_utc": "2026-08-01T20:36:11.043445+00:00",
+  "scope": "accelerator PCIe negotiated link geometry and ASPM policy",
+  "live": {
+    "device": "0000:0d:00.0",
+    "device_link": {
+      "current_link_speed": "2.5 GT/s PCIe",
+      "current_link_width": "1",
+      "max_link_speed": "2.5 GT/s PCIe",
+      "max_link_width": "1"
+    },
+    "upstream_bridge": "0000:0c:01.0",
+    "upstream_link": {
+      "current_link_speed": "2.5 GT/s PCIe",
+      "current_link_width": "1",
+      "max_link_speed": "2.5 GT/s PCIe",
+      "max_link_width": "1"
+    },
+    "kernel_cmdline": "BOOT_IMAGE=/boot/vmlinuz-7.0.0-28-generic root=UUID=9e57cf7d-de45-490b-9bd8-c900f7bfdae7 ro quiet splash idle=nomwait processor.max_cstate=1 pcie_aspm=off amd_iommu=on iommu=pt vt.handoff=7",
+    "aspm_policy": "[default] performance powersave powersupersave",
+    "kernel_aspm_disabled": true
+  },
+  "laguna": {
+    "canonical_environment": "env.sh",
+    "serial_harness": "scripts/bench-serial.sh",
+    "configures_pcie_link_or_aspm": false,
+    "records_pcie_link_or_aspm": false
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "supported": {
+    "split_modes": [
+      "none",
+      "layer",
+      "row",
+      "tensor"
+    ]
+  },
+  "defaults": {
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "tensor_split": "0"
+  },
+  "active_overrides": {
+    "split_mode": false,
+    "main_gpu": false,
+    "tensor_split": false
+  },
+  "effective": {
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "tensor_split": "0"
+  },
+  "device_constraints": {
+    "oneapi_device_selector": "level_zero:gpu",
+    "ze_affinity_mask": "0"
+  }
+}

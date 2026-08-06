@@ -1,0 +1,9 @@
+{
+  "pp512": 1183.321539,
+  "tg128": 139.305982,
+  "score": 1.2274239323072529,
+  "increase_pct": 22.742393230725288,
+  "source": "seed-LATEST_SCORE",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "note": "post-brownout tip reclaim rebench"
+}

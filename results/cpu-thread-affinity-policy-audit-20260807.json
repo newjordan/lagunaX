@@ -1,0 +1,26 @@
+{
+  "audit": "cpu-thread-affinity-policy",
+  "sources": {
+    "thread_default": 16,
+    "bench_passes_threads": true,
+    "explicit_affinity_controls": {
+      "taskset": false,
+      "numactl": false,
+      "GOMP_CPU_AFFINITY": false,
+      "KMP_AFFINITY": false,
+      "OMP_PROC_BIND": false,
+      "OMP_PLACES": false
+    },
+    "logical_cpu_count": 32
+  },
+  "target_reconciliation": {
+    "literal_target_score": 2.0,
+    "latest_score": 1.2147193009304396,
+    "score_delta_remaining": 0.7852806990695604,
+    "latest_increase_pct": 21.471930093043955,
+    "target_increase_pct": 100.0,
+    "percentage_point_delta_remaining": 78.52806990695605,
+    "floors_ok": true
+  },
+  "benchmark_launched": false
+}

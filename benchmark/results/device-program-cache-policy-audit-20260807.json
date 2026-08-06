@@ -1,0 +1,42 @@
+{
+  "active_policy": {
+    "SYCL_CACHE_DIR": null,
+    "SYCL_CACHE_PERSISTENT": null,
+    "SYCL_CACHE_THRESHOLD": null,
+    "UR_L0_ENABLE_PROGRAM_CACHE": null
+  },
+  "angle": "persistent-device-program-cache-policy",
+  "cache_directories": [
+    {
+      "exists": false,
+      "files": 0,
+      "path": "/home/frosty40/.cache/libsycl_cache"
+    },
+    {
+      "exists": false,
+      "files": 0,
+      "path": "/home/frosty40/.cache/oneapi"
+    }
+  ],
+  "provenance": {
+    "serial_harness_records_any_cache_control": false
+  },
+  "source_mentions": {
+    "SYCL_CACHE_DIR": {
+      "env_sh": false,
+      "serial_harness": false
+    },
+    "SYCL_CACHE_PERSISTENT": {
+      "env_sh": false,
+      "serial_harness": false
+    },
+    "SYCL_CACHE_THRESHOLD": {
+      "env_sh": false,
+      "serial_harness": false
+    },
+    "UR_L0_ENABLE_PROGRAM_CACHE": {
+      "env_sh": false,
+      "serial_harness": false
+    }
+  }
+}

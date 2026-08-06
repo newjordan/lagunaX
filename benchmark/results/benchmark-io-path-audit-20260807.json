@@ -1,0 +1,8 @@
+{
+  "benchmark_invocation_count": 2,
+  "raw_json_appended_after_each_run_count": 2,
+  "raw_log_candidate_location": "$LX_RESULTS/<UTC stamp>/llama-bench.log",
+  "stderr_appended_to_raw_log_count": 2,
+  "stdout_output_format": "json",
+  "timing_contamination_assessment": "stderr writes occur during benchmark processes; stdout JSON is appended only after each process exits"
+}

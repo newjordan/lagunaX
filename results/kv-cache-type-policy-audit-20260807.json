@@ -1,0 +1,27 @@
+{
+  "audit": "kv-cache-type-policy",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "executable_defaults": {
+    "cache_type_k": "f16",
+    "cache_type_v": "f16"
+  },
+  "environment_defaults": {
+    "CTK": "f16",
+    "CTV": "f16"
+  },
+  "serial_harness": {
+    "passes_ctk": true,
+    "passes_ctv": true,
+    "records_ctk": true,
+    "records_ctv": true
+  },
+  "history": {
+    "json_files_scanned": 598,
+    "policy_mentions": 357
+  },
+  "effective_policy": {
+    "cache_type_k": "f16",
+    "cache_type_v": "f16",
+    "quantized": false
+  }
+}

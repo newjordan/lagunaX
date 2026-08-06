@@ -1,0 +1,16 @@
+{
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "supported_load_modes": [
+    "none",
+    "mmap",
+    "mlock",
+    "mmap+mlock",
+    "dio"
+  ],
+  "executable_default": "mmap",
+  "active_source_override": false,
+  "active_environment_override": false,
+  "effective_policy": "mmap",
+  "parsed_json_artifacts": 575,
+  "artifacts_recording_load_policy": 33
+}

@@ -1,0 +1,27 @@
+{
+  "artifact_mentions": {
+    "SYCL_PI_LEVEL_ZERO_DEVICE_SCOPE_EVENTS": 0,
+    "UR_L0_USE_COPY_ENGINE": 4,
+    "UR_L0_USE_DRIVER_INORDER_LISTS": 0,
+    "UR_L0_USE_IMMEDIATE_COMMANDLISTS": 4
+  },
+  "controls": [
+    "SYCL_PI_LEVEL_ZERO_DEVICE_SCOPE_EVENTS",
+    "UR_L0_USE_IMMEDIATE_COMMANDLISTS",
+    "UR_L0_USE_DRIVER_INORDER_LISTS",
+    "UR_L0_USE_COPY_ENGINE"
+  ],
+  "environment": {
+    "SYCL_PI_LEVEL_ZERO_DEVICE_SCOPE_EVENTS": null,
+    "UR_L0_USE_COPY_ENGINE": null,
+    "UR_L0_USE_DRIVER_INORDER_LISTS": null,
+    "UR_L0_USE_IMMEDIATE_COMMANDLISTS": null
+  },
+  "parsed_json_artifacts": 542,
+  "source_mentions": {
+    "SYCL_PI_LEVEL_ZERO_DEVICE_SCOPE_EVENTS": [],
+    "UR_L0_USE_COPY_ENGINE": [],
+    "UR_L0_USE_DRIVER_INORDER_LISTS": [],
+    "UR_L0_USE_IMMEDIATE_COMMANDLISTS": []
+  }
+}

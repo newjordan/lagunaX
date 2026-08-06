@@ -153,9 +153,15 @@ index 3b807c7cb..f0d7dc187 100644
 +    ggml_tensor * gate = glu->src[0];
 +    ggml_tensor * up   = glu->src[1];
 +    if (ggml_sycl_mul_mat_id_dual_swiglu_fused(ctx, gate, up, glu)) {
-+        static std::atomic<int> once{0};
-+        if (once.fetch_add(1) == 0) {
-+            fprintf(stderr, "[lx-control-moe-dual] fuse hit (gate+up+swiglu)\n");
++        static const bool trace = []() {
++            const char * env = std::getenv("GGML_SYCL_TRACE_MOE_DUAL_SWIGLU");
++            return env != nullptr && std::atoi(env) != 0;
++        }();
++        if (trace) {
++            static std::atomic<int> once{0};
++            if (once.fetch_add(1, std::memory_order_relaxed) == 0) {
++                fprintf(stderr, "[lx-control-moe-dual] fuse hit (gate+up+swiglu)\n");
++            }
 +        }
 +        return 2;
 +    }
@@ -468,12 +474,18 @@ index 78574c4b5..87aabc669 100644
 +    }
 +    const bool with_norm = clamp != nullptr;
 +    {
-+        static std::atomic<int> dbg{0};
-+        if (dbg.fetch_add(1) == 0) {
-+            fprintf(stderr,
-+                    "[lx-control-topk-moe] gather-norm params n_exp=%d n_used=%d n_rows=%d clamp_min=%g scale=%g bias=%g with_norm=%d\n",
-+                    n_experts, n_expert_used, n_rows, (double) clamp_min, (double) scale_val, (double) scale_bias,
-+                    (int) with_norm);
++        static const bool trace = []() {
++            const char * env = getenv("GGML_SYCL_TRACE_TOPK_MOE");
++            return env != nullptr && std::atoi(env) != 0;
++        }();
++        if (trace) {
++            static std::atomic<int> dbg{0};
++            if (dbg.fetch_add(1) == 0) {
++                fprintf(stderr,
++                        "[lx-control-topk-moe] gather-norm params n_exp=%d n_used=%d n_rows=%d clamp_min=%g scale=%g bias=%g with_norm=%d\n",
++                        n_experts, n_expert_used, n_rows, (double) clamp_min, (double) scale_val, (double) scale_bias,
++                        (int) with_norm);
++            }
 +        }
 +    }
 +    const sycl::range<1> block_dims(WARP_SIZE);
@@ -623,7 +635,7 @@ index 78574c4b5..87aabc669 100644
  }
  
  static bool ggml_sycl_should_use_topk_moe(const ggml_tensor * gating_op, const ggml_tensor * weights,
-@@ -544,23 +764,152 @@ int ggml_sycl_fuse(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i)
+@@ -544,23 +764,158 @@ int ggml_sycl_fuse(ggml_backend_sycl_context & ctx, ggml_cgraph * cgraph, int i)
          return 0;
      }
  
@@ -753,12 +765,18 @@ index 78574c4b5..87aabc669 100644
 +                                                                     /*is_topk_moe=*/true);
 +            if (can_sub && can_use && bias_ok && can_mem && node->data && add->data && argsort->data &&
 +                getrows->data && weights->data) {
-+                static std::atomic<int> once{0};
-+                if (once.fetch_add(1) == 0) {
-+                    const int m = ggml_sycl_topk_moe_hybrid_mode();
-+                    fprintf(stderr,
-+                            "[lx-control-topk-moe] laguna bias fuse HIT (hybrid mode=%d: 0=stock 1=gather 2=gather-norm)\n",
-+                            m);
++                static const bool trace = []() {
++                    const char * env = getenv("GGML_SYCL_TRACE_TOPK_MOE");
++                    return env != nullptr && std::atoi(env) != 0;
++                }();
++                if (trace) {
++                    static std::atomic<int> once{0};
++                    if (once.fetch_add(1, std::memory_order_relaxed) == 0) {
++                        const int m = ggml_sycl_topk_moe_hybrid_mode();
++                        fprintf(stderr,
++                                "[lx-control-topk-moe] laguna bias fuse HIT (hybrid mode=%d: 0=stock 1=gather 2=gather-norm)\n",
++                                m);
++                    }
 +                }
 +                GGML_UNUSED(logits);
 +                GGML_UNUSED(ids);

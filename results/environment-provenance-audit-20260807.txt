@@ -1,0 +1,28 @@
+Benchmark environment provenance audit — 2026-08-07
+
+Scope
+-----
+This audit examines the environment metadata emitted by scripts/bench-serial.sh.
+It is a reproducibility/control-plane audit, not a throughput measurement.
+
+Direct observations
+-------------------
+1. The emitted `env` object begins at line 154 and records exactly four variables:
+   ONEAPI_DEVICE_SELECTOR, ZE_AFFINITY_MASK, GGML_SYCL_DISABLE_GRAPH, and
+   GGML_SYCL_DISABLE_DNN (scripts/bench-serial.sh lines 154-159).
+2. The benchmark executes an external SYCL/Level-Zero binary, but its result metadata
+   does not snapshot other process environment variables (for example library search,
+   loader, compiler-runtime, or Level-Zero tuning variables).
+
+Machine-checkable result
+------------------------
+recorded_env_keys=4
+recorded_env_key_names=ONEAPI_DEVICE_SELECTOR,ZE_AFFINITY_MASK,GGML_SYCL_DISABLE_GRAPH,GGML_SYCL_DISABLE_DNN
+full_process_environment_snapshot=false
+
+Consequence boundary
+--------------------
+Historical results cannot, from metrics.json alone, establish that unrecorded runtime
+settings were identical. This does not prove that any unrecorded variable changed or
+that throughput was affected; it proves only that the current result contract cannot
+exclude that confounder.

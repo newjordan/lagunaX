@@ -1,0 +1,44 @@
+{
+  "angle": "benchmark-process-resource-limits",
+  "finding": "Laguna neither configures nor records process resource limits, including locked-memory, open-file, stack, address-space, and core-file limits.",
+  "generated_at": "2026-08-01T20:41:12.778428+00:00",
+  "laguna": {
+    "bench_policy_hits": [],
+    "env_policy_hits": [],
+    "metrics_record_limits": false
+  },
+  "live": {
+    "address_space_bytes": {
+      "hard": "unlimited",
+      "soft": "unlimited"
+    },
+    "core_file_bytes": {
+      "hard": "unlimited",
+      "soft": 0
+    },
+    "data_segment_bytes": {
+      "hard": "unlimited",
+      "soft": "unlimited"
+    },
+    "locked_memory_bytes": {
+      "hard": 8415100928,
+      "soft": 8415100928
+    },
+    "open_files": {
+      "hard": 1048576,
+      "soft": 1024
+    },
+    "processes": {
+      "hard": 236457,
+      "soft": 236457
+    },
+    "resident_set_bytes": {
+      "hard": "unlimited",
+      "soft": "unlimited"
+    },
+    "stack_bytes": {
+      "hard": "unlimited",
+      "soft": 8388608
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "direction": "separate prompt/batch CPU thread control",
+  "checks": {
+    "shell_syntax": true,
+    "default_inherits_threads": true,
+    "positive_integer_validation": true,
+    "cli_forwarding": true,
+    "metrics_recording": true
+  },
+  "result": "pass"
+}

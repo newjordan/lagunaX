@@ -1,0 +1,9 @@
+{
+  "angle": "model-depth benchmark policy and provenance",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "supported": true,
+  "default_n_depth": 0,
+  "configured_by_laguna": false,
+  "recorded_in_metrics": false,
+  "conclusion": "Laguna benchmarks the full model by executable default but neither pins nor records model depth."
+}

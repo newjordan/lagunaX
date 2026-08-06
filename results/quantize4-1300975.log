@@ -1,0 +1,5 @@
+llama_model_quantize_impl: quant size  = 15309.24 MiB (3.84 BPW)
+
+llama_quantize: quantize time = 85670.33 ms
+llama_quantize:    total time = 85670.33 ms
+rc=0

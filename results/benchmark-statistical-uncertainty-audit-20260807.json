@@ -1,0 +1,13 @@
+{
+  "audit": "benchmark-statistical-uncertainty-retention",
+  "canonical_repetitions": 5,
+  "throughput_statistic_retained": "avg_ts",
+  "stddev_ts_retained": false,
+  "per_repetition_samples_retained": false,
+  "confidence_interval_computed": false,
+  "score_inputs": [
+    "pp512",
+    "tg128"
+  ],
+  "conclusion": "The canonical claim reduces five repetitions to means and cannot quantify uncertainty or distinguish speedup from run variance."
+}

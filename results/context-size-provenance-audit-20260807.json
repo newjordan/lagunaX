@@ -1,0 +1,11 @@
+{
+  "policy": "benchmark-context-size",
+  "declared_ctx": 8192,
+  "ctx_passed_to_llama_bench": false,
+  "ctx_recorded_in_metrics": true,
+  "effective_window": {
+    "prompt_tokens": 512,
+    "generated_tokens": 128
+  },
+  "finding": "CTX is declared and recorded but is not passed to either llama-bench invocation; the benchmark is therefore not evidence for an 8192-token runtime context policy."
+}

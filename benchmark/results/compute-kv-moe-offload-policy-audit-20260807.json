@@ -1,0 +1,33 @@
+{
+  "audit": "compute-kv-moe-offload-policy",
+  "controls": {
+    "n_cpu_moe": {
+      "cli": "-ncmoe",
+      "default": 0,
+      "env_override": false,
+      "harness_override": false,
+      "effective": 0
+    },
+    "no_kv_offload": {
+      "cli": "-nkvo",
+      "default": 0,
+      "env_override": false,
+      "harness_override": false,
+      "effective": 0
+    },
+    "no_op_offload": {
+      "cli": "-nopo",
+      "default": 0,
+      "env_override": false,
+      "harness_override": false,
+      "effective": 0
+    }
+  },
+  "parsed_json_artifacts": 608,
+  "artifact_mentions": {
+    "n_cpu_moe": 33,
+    "no_kv_offload": 35,
+    "no_op_offload": 34
+  },
+  "conclusion": "Canonical serial runs use executable defaults: all MoE layers and general ops remain accelerator-offloaded, and KV offload remains enabled."
+}

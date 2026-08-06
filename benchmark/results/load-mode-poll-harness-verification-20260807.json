@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "defaults": {
+    "LX_LOAD_MODE": "mmap",
+    "LX_POLL": 50
+  },
+  "supported_load_modes": [
+    "none",
+    "mmap",
+    "mlock",
+    "mmap+mlock",
+    "dio"
+  ],
+  "poll_range": [
+    0,
+    100
+  ],
+  "checks": [
+    "bash syntax",
+    "binary help exposes load-mode",
+    "binary help exposes poll",
+    "harness forwards both controls",
+    "metrics records both controls"
+  ]
+}

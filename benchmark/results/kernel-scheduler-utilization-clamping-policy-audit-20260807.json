@@ -1,0 +1,17 @@
+{
+  "active_policy": {
+    "sched_util_clamp_max": "1024",
+    "sched_util_clamp_min": "1024",
+    "sched_util_clamp_min_rt_default": "1024"
+  },
+  "angle": "kernel-scheduler-utilization-clamping-policy",
+  "available_knobs": [
+    "sched_util_clamp_min",
+    "sched_util_clamp_max",
+    "sched_util_clamp_min_rt_default"
+  ],
+  "provenance": {
+    "env_controls_any_uclamp_knob": false,
+    "serial_harness_records_any_uclamp_knob": false
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "active_sources": {
+    "env.sh": [],
+    "scripts/bench-serial.sh": []
+  },
+  "artifacts": {
+    "json_files_parsed": 566,
+    "mentions": {
+      "LD_AUDIT": [],
+      "LD_PRELOAD": [
+        "benchmark/results/host-allocator-policy-audit-20260807.json"
+      ],
+      "SYCL_PI_TRACE": [],
+      "ZE_ENABLE_LOADER_DEBUG_TRACE": [],
+      "ZE_ENABLE_TRACING_LAYER": [],
+      "ZE_ENABLE_VALIDATION_LAYER": []
+    }
+  },
+  "audit": "runtime-injection-policy",
+  "effective_injection_active": false,
+  "process_environment": {
+    "LD_AUDIT": null,
+    "LD_PRELOAD": null,
+    "SYCL_PI_TRACE": null,
+    "ZE_ENABLE_LOADER_DEBUG_TRACE": null,
+    "ZE_ENABLE_TRACING_LAYER": null,
+    "ZE_ENABLE_VALIDATION_LAYER": null
+  }
+}

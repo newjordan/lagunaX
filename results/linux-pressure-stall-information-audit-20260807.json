@@ -1,0 +1,52 @@
+{
+  "angle": "linux-pressure-stall-information-provenance",
+  "canonical_policy": {
+    "env_or_harness_reads_psi": [],
+    "metrics_record_psi": []
+  },
+  "generated_utc": "2026-08-01T21:40:10.937443+00:00",
+  "live_pressure": {
+    "cpu": {
+      "full": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 0
+      },
+      "some": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 79118159
+      }
+    },
+    "io": {
+      "full": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 87204340
+      },
+      "some": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 88318860
+      }
+    },
+    "memory": {
+      "full": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 404230
+      },
+      "some": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 410810
+      }
+    }
+  }
+}

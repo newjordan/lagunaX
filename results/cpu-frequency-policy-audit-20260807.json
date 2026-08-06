@@ -1,0 +1,17 @@
+{
+  "generated_utc": "2026-08-01T18:37:36.929848+00:00",
+  "cpu0_cpufreq": {
+    "scaling_driver": "amd-pstate-epp",
+    "scaling_governor": "performance",
+    "scaling_min_freq": "1746460",
+    "scaling_max_freq": "5086181",
+    "cpuinfo_min_freq": "582154",
+    "cpuinfo_max_freq": "5086181"
+  },
+  "canonical_policy": {
+    "env_has_cpufreq_control": false,
+    "harness_has_cpufreq_control": false,
+    "metrics_record_governor": false,
+    "metrics_record_frequency_bounds": false
+  }
+}

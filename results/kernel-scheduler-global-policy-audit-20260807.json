@@ -1,0 +1,18 @@
+{
+  "angle": "kernel-scheduler-global-policy",
+  "finding": "Laguna neither configures nor records the audited kernel scheduler autogroup, real-time bandwidth, timeslice, or utilization-clamp policy.",
+  "generated_at": "2026-08-01T20:39:52.357319+00:00",
+  "laguna": {
+    "bench_policy_hits": [],
+    "env_policy_hits": [],
+    "metrics_record_policy": false
+  },
+  "live": {
+    "sched_autogroup_enabled": 1,
+    "sched_rr_timeslice_ms": 100,
+    "sched_rt_period_us": 1000000,
+    "sched_rt_runtime_us": 950000,
+    "sched_util_clamp_max": 1024,
+    "sched_util_clamp_min": 1024
+  }
+}

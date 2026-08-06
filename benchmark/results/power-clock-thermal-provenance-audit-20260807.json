@@ -1,0 +1,26 @@
+{
+  "active_explicit_controls": 0,
+  "active_source_hits": {
+    "gpu_clock": [],
+    "gpu_power": [],
+    "temperature": [],
+    "throttling": []
+  },
+  "audit": "power-clock-thermal-provenance",
+  "device_snapshot": {
+    "command": [
+      "xpu-smi",
+      "discovery",
+      "-d",
+      "0"
+    ],
+    "error": "[Errno 2] No such file or directory: 'xpu-smi'"
+  },
+  "environment_matches": [],
+  "historical_provenance_keys": {
+    "frequency_penalty": 1,
+    "temperature": 12
+  },
+  "historical_provenance_records": 13,
+  "json_artifacts_parsed": 531
+}

@@ -1,0 +1,6 @@
+json_artifacts=507
+artifacts_with_temperature_field=5
+artifacts_with_frequency_field=0
+artifacts_with_power_field=0
+artifacts_with_throttle_field=0
+operating_state_complete=false

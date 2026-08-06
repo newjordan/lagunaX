@@ -1,0 +1,13 @@
+{
+  "audit": "cpu-affinity-control",
+  "host_cpu_affinity_explicit": false,
+  "controls": {
+    "taskset": false,
+    "numactl_physcpubind": false,
+    "sched_setaffinity": false,
+    "omp_places": false,
+    "kmp_affinity": false,
+    "ze_affinity_mask": true
+  },
+  "distinction": "ZE_AFFINITY_MASK selects GPU devices/subdevices; it does not bind host benchmark threads to CPU cores."
+}

@@ -1,0 +1,25 @@
+{
+  "generated_utc": "2026-08-01T21:15:21.911638+00:00",
+  "scope": "accelerator MSI interrupt routing and affinity",
+  "live": {
+    "device": "0000:0d:00.0",
+    "online_cpus": "0-31",
+    "default_smp_affinity": "ffffffff",
+    "msi_irq_count": 1,
+    "interrupts": [
+      {
+        "irq": 159,
+        "configured_affinity_list": "0-31",
+        "effective_affinity_list": "27",
+        "numa_node": "-1",
+        "interrupts_line": "159:          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0   19631804          0          0          0          0 IR-PCI-MSI-0000:0d:00.0    0-edge      xe"
+      }
+    ]
+  },
+  "laguna": {
+    "canonical_environment": "env.sh",
+    "serial_harness": "scripts/bench-serial.sh",
+    "configures_accelerator_interrupt_affinity": false,
+    "records_accelerator_interrupt_affinity": false
+  }
+}

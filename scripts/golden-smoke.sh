@@ -6,6 +6,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # shellcheck disable=SC1091
 source "$ROOT/env.sh"
+# shellcheck disable=SC1091
+source "$ROOT/scripts/lib-gpu-lock.sh"
 
 N_TOKENS="${N_TOKENS:-64}"
 PROMPT="${PROMPT:-Write a Python function that returns the nth Fibonacci number.}"
@@ -19,8 +21,11 @@ if [[ ! -x "$LX_LLAMA_SERVER" ]]; then
   exit 1
 fi
 
+# Exclusive B70 — do not golden while bench/ppl owns the card.
+lx_gpu_lock_enter "golden-smoke" || exit $?
+
 TMP="$(mktemp -d)"
-trap 'kill $(cat "$TMP/server.pid" 2>/dev/null) 2>/dev/null || true; rm -rf "$TMP"' EXIT
+trap 'kill $(cat "$TMP/server.pid" 2>/dev/null) 2>/dev/null || true; rm -rf "$TMP"; lx_gpu_lock_leave' EXIT
 
 echo "starting server on :$PORT ..."
 # Laguna GGUF embeds a jinja template this binary can't parse; override with known-good file.

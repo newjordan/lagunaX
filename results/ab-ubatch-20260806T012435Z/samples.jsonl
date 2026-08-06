@@ -1,0 +1,12 @@
+{"label": "A", "ub": 2048, "depth": 8192, "round": 1, "prompt_n": 6566, "prompt_ms": 5713.459, "pp_tps": 1149.2162628628298, "tg_tps": 84.58179588298108, "vram_gib": 25.27}
+{"label": "A", "ub": 2048, "depth": 32768, "round": 1, "prompt_n": 26227, "prompt_ms": 39273.084, "pp_tps": 667.8110636791345, "tg_tps": 55.864361330689086, "vram_gib": 25.27}
+{"label": "A", "ub": 2048, "depth": 65536, "round": 1, "prompt_n": 52443, "prompt_ms": 135034.677, "pp_tps": 388.3669081535257, "tg_tps": 38.76194352384829, "vram_gib": 25.27}
+{"label": "B", "ub": 4096, "depth": 8192, "round": 1, "prompt_n": 6566, "prompt_ms": 6177.5470000000005, "pp_tps": 1062.881431739815, "tg_tps": 75.90780996479775, "vram_gib": 26.54}
+{"label": "B", "ub": 4096, "depth": 32768, "round": 1, "prompt_n": 26227, "prompt_ms": 41941.623, "pp_tps": 625.3215332177298, "tg_tps": 52.113189848350615, "vram_gib": 26.54}
+{"label": "B", "ub": 4096, "depth": 65536, "round": 1, "prompt_n": 52443, "prompt_ms": 140022.78100000002, "pp_tps": 374.5319127749648, "tg_tps": 36.864320867048825, "vram_gib": 26.54}
+{"label": "A", "ub": 2048, "depth": 8192, "round": 2, "prompt_n": 6566, "prompt_ms": 5787.762, "pp_tps": 1134.4626817757883, "tg_tps": 84.10782623323101, "vram_gib": 25.27}
+{"label": "A", "ub": 2048, "depth": 32768, "round": 2, "prompt_n": 26227, "prompt_ms": 39654.879, "pp_tps": 661.38141538649, "tg_tps": 55.871774278031914, "vram_gib": 25.27}
+{"label": "A", "ub": 2048, "depth": 65536, "round": 2, "prompt_n": 52443, "prompt_ms": 135381.392, "pp_tps": 387.37229116391416, "tg_tps": 38.70811660820128, "vram_gib": 25.27}
+{"label": "B", "ub": 4096, "depth": 8192, "round": 2, "prompt_n": 6566, "prompt_ms": 6198.528, "pp_tps": 1059.2837525296327, "tg_tps": 75.814292889567, "vram_gib": 26.54}
+{"label": "B", "ub": 4096, "depth": 32768, "round": 2, "prompt_n": 26227, "prompt_ms": 42003.844, "pp_tps": 624.3952339219239, "tg_tps": 52.04741519524286, "vram_gib": 26.54}
+{"label": "B", "ub": 4096, "depth": 65536, "round": 2, "prompt_n": 52443, "prompt_ms": 140347.691, "pp_tps": 373.66485779947743, "tg_tps": 36.88641749891646, "vram_gib": 26.54}

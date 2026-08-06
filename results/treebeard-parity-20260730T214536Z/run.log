@@ -1,0 +1,521 @@
+=== TREEBEARD-PARITY LAGUNA QUALITY-SAFE 20260730T214536Z ===
+OUT=/home/frosty40/turbo/lx/results/treebeard-parity-20260730T214536Z BD=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin MODEL=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf SRV_CTX=32768
+kills: MUL_MAT_ADD=1 DUAL_DOWN=1 DUAL_MT=1
+stamp=20260730T214536Z
+binary=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
+-rwxrwxr-x 1 frosty40 frosty40 564624 Jul 30 10:02 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench
+-rwxrwxr-x 1 frosty40 frosty40 662784 Jul 30 05:29 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-server
+a6281386770d3b8c6f15fe7a4f12ea21  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0.17.0
+model_sha256=771a73e1249b9bc08e17d3fca59f5c49b7b9c8a6a47b5a6ac82f95c6e76923c4
+GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
+GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
+GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
+GGML_SYCL_DISABLE_GRAPH=1
+SRV_CTX=32768
+template=/home/frosty40/turbo/worktrees/treebeard-pr-private-latest/models/templates/poolside-Laguna-XS-2.1.jinja
+INFO: Output filtered by ONEAPI_DEVICE_SELECTOR environment variable, which is set to level_zero:gpu.
+To see device ids, use the --ignore-device-selectors CLI option.
+
+[level_zero:gpu] Intel(R) oneAPI Unified Runtime over Level-Zero V2, Intel(R) Arc(TM) Pro B70 Graphics 20.2.0 [1.15.38308+1]
+tool-eval-bench 2.1.0
+8b3259be7411fe27c7610d0de64ae1d3b622b9ef
+
+[2026-07-30T16:45:46-05:00] PHASE formal serial pp512/tg128
+== lx serial bench ==
+  mode:    candidate
+  binary:  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench
+  model:   /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+  window:  pp512 / tg128  reps=5
+  device:  level_zero:gpu  ZE_AFFINITY_MASK=0
+  out:     /home/frosty40/turbo/lx/results/20260730T214546Z/metrics.json
+-- pp512 --
+-- tg128 --
+{
+  "stamp": "20260730T214546Z",
+  "track": "serial",
+  "mode": "candidate",
+  "pp512": 1173.907781,
+  "tg128": 136.012545,
+  "window": {
+    "pp": 512,
+    "tg": 128,
+    "reps": 5
+  },
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "flags": {
+    "ngl": 99,
+    "threads": 16,
+    "ubatch": 2048,
+    "bbatch": 2048,
+    "ctx": 8192,
+    "ctk": "f16",
+    "ctv": "f16"
+  },
+  "env": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0",
+    "GGML_SYCL_DISABLE_GRAPH": "1",
+    "GGML_SYCL_DISABLE_DNN": null
+  },
+  "note": "treebeard-parity quality-safe formal",
+  "claim_boundary": [
+    "Serial only: one stream pp512 + tg128.",
+    "Not multi-slot aggregate tok/s.",
+    "Not comparable to mlx.fast M5 absolute tok/s (different quant/silicon).",
+    "Score is vs pinned B70 baseline only."
+  ]
+}
+
+wrote /home/frosty40/turbo/lx/results/20260730T214546Z/metrics.json
+  pp512=1173.907781  tg128=136.012545
+score=1.203190  increase=+20.32%  dec=1.2670x  pre=1.0305x
+{
+  "decode_tok_s": 136.012545,
+  "prefill_tok_s": 1173.907781,
+  "baseline_decode_tok_s": 107.353814,
+  "baseline_prefill_tok_s": 1139.150972,
+  "decode_speedup": 1.2669558717308356,
+  "prefill_speedup": 1.0305111524761095,
+  "decode_floor": 0.95,
+  "prefill_floor": 0.95,
+  "floors_ok": true,
+  "score": 1.2031902126699856,
+  "increase_pct": 20.31902126699856,
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
+  "track": "serial",
+  "not": "multi-slot aggregate tok/s",
+  "baseline_path": "/home/frosty40/turbo/lx/baseline/baseline.json",
+  "candidate_path": "/home/frosty40/turbo/lx/results/20260730T214546Z/metrics.json",
+  "candidate_meta": {
+    "stamp": "20260730T214546Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "treebeard-parity quality-safe formal",
+    "flags": {
+      "ngl": 99,
+      "threads": 16,
+      "ubatch": 2048,
+      "bbatch": 2048,
+      "ctx": 8192,
+      "ctk": "f16",
+      "ctv": "f16"
+    },
+    "env": {
+      "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+      "ZE_AFFINITY_MASK": "0",
+      "GGML_SYCL_DISABLE_GRAPH": "1",
+      "GGML_SYCL_DISABLE_DNN": null
+    }
+  },
+  "baseline_meta": {
+    "stamp": "20260729T183834Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "v0 control pin: serial track, Q4_K_M, base-control"
+  }
+}
+score → /home/frosty40/turbo/lx/results/20260730T214546Z/score.json
+formal_exit=0
+
+[2026-07-30T16:46:24-05:00] PHASE prefill ladder
+ladder_exit=0
+# Prefill / decode ladder
+
+| n_prompt | n_gen | t/s |
+|--------:|------:|----:|
+| 512 | 0 | 1169.07 |
+| 2048 | 0 | 2035.25 |
+| 4096 | 0 | 2009.40 |
+| 8192 | 0 | 1955.38 |
+| 16384 | 0 | 1862.32 |
+| 0 | 128 | 135.11 |
+
+
+[2026-07-30T16:47:49-05:00] PHASE long-context needles + dossier
+start server ctx=32768 np=1 n_predict_default=64 alias=laguna-quality-safe
+pid=682603
+health ok after ~18s
+model=laguna-quality-safe base=http://127.0.0.1:18930
+
+=== PREFILL LADDER ===
+  prefill ladder chars≈2000 ...
+    -> {'target_chars': 2000, 'ok': True, 'prompt_n': 359, 'pp_tps': 417.4306966209043, 'tg_tps': 43.846668201300055, 'wall_s': 1.5914843082427979, 'preview': ' Broadway decade notes.\n</think>\nThe repeated phrase "Broadway decade notes" lacks sufficient context to form a meaningf'}
+  prefill ladder chars≈8000 ...
+    -> {'target_chars': 8000, 'ok': True, 'prompt_n': 1402, 'pp_tps': 1780.0416951278658, 'tg_tps': 121.21166207703757, 'wall_s': 1.0547106266021729, 'preview': ' Broadway decade notes. Broadway decade notes. Broadway decade notes. Broadway decade notes. Broadway decade notes. Broa'}
+  prefill ladder chars≈16000 ...
+    -> {'target_chars': 16000, 'ok': True, 'prompt_n': 2793, 'pp_tps': 2165.7173075938904, 'tg_tps': 110.93854004881297, 'wall_s': 1.5833723545074463, 'preview': ' Broadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroa'}
+  prefill ladder chars≈32000 ...
+    -> {'target_chars': 32000, 'ok': True, 'prompt_n': 5577, 'pp_tps': 2404.0637600643495, 'tg_tps': 106.09833326149591, 'wall_s': 2.6307501792907715, 'preview': ' Broadway decade notes.\nOkay, the user wants a one-sentence summary of "Broadway decade notes." Let me start by understa'}
+  prefill ladder chars≈48000 ...
+    -> {'target_chars': 48000, 'ok': True, 'prompt_n': 8359, 'pp_tps': 2354.7911647581936, 'tg_tps': 100.79279835455756, 'wall_s': 3.8810596466064453, 'preview': ' Broadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroa'}
+
+=== NEEDLE RETRIEVAL ===
+  needle Carousel depth=0.1 para=9 ...
+    ok=True answer='TB-CAR-1945-X\n'
+  needle Company depth=0.5 para=49 ...
+    ok=True answer='TB-COM-1970-Q\n'
+  needle Hadestown depth=0.9 para=89 ...
+    ok=True answer='TB-HAD-2019-Z\n'
+
+=== BROADWAY DOSSIER QA ===
+  dossier Q1: What year did Oklahoma! open?...
+    ok=True answer='Oklahoma! opened in 1943.\n'
+  dossier Q2: Who were the writers associated with Oklahoma! in this dossi...
+    ok=True answer='Rodgers and Hammerstein were the writers associated with Oklahoma! according to the dossier.\n'
+  dossier Q3: In what year did West Side Story premiere on Broadway accord...
+    ok=True answer='West Side Story premiered on Broadway in 1957.\n'
+  dossier Q4: Who wrote the lyrics for West Side Story per the dossier?...
+    ok=True answer='Stephen Sondheim wrote the lyrics for West Side Story per the dossier.\n'
+  dossier Q5: Which 1968 musical is linked to counterculture rock energy i...
+    ok=True answer='Hair (1968)\n'
+  dossier Q6: Which 1975 show about dancers is mentioned as a long-running...
+    ok=True answer='A Chorus Line\n'
+  dossier Q7: Which composer is tied to mega-musicals like Phantom in the ...
+    ok=True answer='Andrew Lloyd Webber\n'
+  dossier Q8: What year does the dossier give for Phantom on Broadway?...
+    ok=False answer='The dossier does not provide a specific year for The Phantom of the Opera on Broadway.\n'
+  dossier Q9: Who wrote Rent according to the dossier?...
+    ok=False answer='The dossier does not specify who wrote Rent.\n'
+  dossier Q10: What year did Rent open per the dossier?...
+    ok=True answer='Rent opened in 1996 per the dossier.\n'
+  dossier Q11: Which 2003 fantasy blockbuster is named in the dossier?...
+    ok=True answer='The 2003 fantasy blockbuster named in the dossier is **Wicked**.\n'
+  dossier Q12: What year did Hamilton open on Broadway per the dossier?...
+    ok=True answer='Hamilton opened on Broadway in 2015.\n'
+  dossier Q13: Who is credited with book, music, and lyrics for Hamilton he...
+    ok=True answer='Lin-Manuel Miranda is credited with book, music, and lyrics for Hamilton.\n'
+  dossier Q14: What major disruption to Broadway does the 2020s section men...
+    ok=True answer='The 2020s section mentions "pandemic shutdowns" as the major disruption to Broadway.\n'
+
+# Long-context package eval
+
+- base: `http://127.0.0.1:18930`
+- model: `laguna-quality-safe`
+
+## Prefill / short decode ladder
+
+| chars | prompt_n | pp tok/s | tg tok/s | wall_s | ok |
+|------:|---------:|---------:|---------:|-------:|:--:|
+| 2000 | 359 | 417.4306966209043 | 43.846668201300055 | 1.6 | yes |
+| 8000 | 1402 | 1780.0416951278658 | 121.21166207703757 | 1.1 | yes |
+| 16000 | 2793 | 2165.7173075938904 | 110.93854004881297 | 1.6 | yes |
+| 32000 | 5577 | 2404.0637600643495 | 106.09833326149591 | 2.6 | yes |
+| 48000 | 8359 | 2354.7911647581936 | 100.79279835455756 | 3.9 | yes |
+
+## Needle-in-haystack
+
+- doc_chars: 42739
+- paragraphs: 100
+- score: **3/3**
+
+- depth 0.1: PASS — Carousel → 'TB-CAR-1945-X\n'
+- depth 0.5: PASS — Company → 'TB-COM-1970-Q\n'
+- depth 0.9: PASS — Hadestown → 'TB-HAD-2019-Z\n'
+
+## Broadway long dossier QA
+
+- doc_chars: 61092
+- score: **12/14**
+
+- PASS: What year did Oklahoma! open? → 'Oklahoma! opened in 1943.\n'
+- PASS: Who were the writers associated with Oklahoma! in this dossier? → 'Rodgers and Hammerstein were the writers associated with Oklahoma! according to the dossier.\n'
+- PASS: In what year did West Side Story premiere on Broadway according to the dossier? → 'West Side Story premiered on Broadway in 1957.\n'
+- PASS: Who wrote the lyrics for West Side Story per the dossier? → 'Stephen Sondheim wrote the lyrics for West Side Story per the dossier.\n'
+- PASS: Which 1968 musical is linked to counterculture rock energy in the dossier? → 'Hair (1968)\n'
+- PASS: Which 1975 show about dancers is mentioned as a long-running phenomenon? → 'A Chorus Line\n'
+- PASS: Which composer is tied to mega-musicals like Phantom in the dossier? → 'Andrew Lloyd Webber\n'
+- FAIL: What year does the dossier give for Phantom on Broadway? → 'The dossier does not provide a specific year for The Phantom of the Opera on Broadway.\n'
+- FAIL: Who wrote Rent according to the dossier? → 'The dossier does not specify who wrote Rent.\n'
+- PASS: What year did Rent open per the dossier? → 'Rent opened in 1996 per the dossier.\n'
+- PASS: Which 2003 fantasy blockbuster is named in the dossier? → 'The 2003 fantasy blockbuster named in the dossier is **Wicked**.\n'
+- PASS: What year did Hamilton open on Broadway per the dossier? → 'Hamilton opened on Broadway in 2015.\n'
+- PASS: Who is credited with book, music, and lyrics for Hamilton here? → 'Lin-Manuel Miranda is credited with book, music, and lyrics for Hamilton.\n'
+- PASS: What major disruption to Broadway does the 2020s section mention? → 'The 2020s section mentions "pandemic shutdowns" as the major disruption to Broadway.\n'
+
+## Verdict
+
+**STRONG — long-context speed path + retrieval/comprehension held**
+
+longctx_exit=0
+
+[2026-07-30T16:48:42-05:00] PHASE single-agent sequential speed
+{"wall_s": 1.1192152500152588, "prompt_n": 29, "predicted_n": 53, "pp_tps": 175.23611555915426, "tg_tps": 136.4983787598221, "preview": "In LLM serving, reducing latency (faster response times) typically comes at the cost of lower throughput (fewer requests processed per second), and vice versa, as optimizing for one often requires sac", "ok": true, "tag": "p0_r0"}
+{"wall_s": 0.5571119785308838, "prompt_n": 29, "predicted_n": 53, "pp_tps": 191.60758766047135, "tg_tps": 136.47869516067146, "preview": "In LLM serving, reducing latency (faster response times) typically comes at the cost of lower throughput (fewer requests processed per second), and vice versa, as optimizing for one often requires sac", "ok": true, "tag": "p0_r1"}
+{"wall_s": 0.8538200855255127, "prompt_n": 25, "predicted_n": 96, "pp_tps": 182.25293791735922, "tg_tps": 135.48471774722785, "preview": "Here's a Python function that returns the nth Fibonacci number using an efficient iterative approach:  ```python def fibonacci(n):     if n < 0:         raise ValueError(\"n must be a non-negative inte", "ok": true, "tag": "p1_r0"}
+{"wall_s": 0.8699066638946533, "prompt_n": 25, "predicted_n": 96, "pp_tps": 182.20644719292747, "tg_tps": 134.9135077933631, "preview": "To solve this problem, we need to write a Python function that returns the nth Fibonacci number. The Fibonacci sequence is defined such that each number is the sum of the two preceding ones, starting ", "ok": true, "tag": "p1_r1"}
+{"wall_s": 0.87595534324646, "prompt_n": 25, "predicted_n": 96, "pp_tps": 175.23077893585852, "tg_tps": 135.06136850931642, "preview": "Fusing GPU kernels without correctness gates (mechanisms to ensure proper synchronization and data integrity) introduces several critical risks:  1. **Race Conditions**:      Without synchronization, ", "ok": true, "tag": "p2_r0"}
+{"wall_s": 0.8735270500183105, "prompt_n": 25, "predicted_n": 96, "pp_tps": 175.43367203727615, "tg_tps": 135.50843187101856, "preview": "Fusing GPU kernels without correctness gates (e.g., assertions, validation checks, or synchronization) introduces several critical risks:  1. **Race Conditions**:      Merging kernels can lead to conc", "ok": true, "tag": "p2_r1"}
+{"wall_s": 0.7220163345336914, "prompt_n": 25, "predicted_n": 76, "pp_tps": 178.72589881254515, "tg_tps": 135.90649633052462, "preview": "MoE (Mixture of Experts) routing dynamically selects the most relevant expert sub-networks for each input token based on a learned gating mechanism, enabling efficient sparse activation where only a s", "ok": true, "tag": "p3_r0"}
+{"wall_s": 0.6814653873443604, "prompt_n": 25, "predicted_n": 71, "pp_tps": 179.59770114942526, "tg_tps": 136.06589422122397, "preview": "MoE (Mixture of Experts) routing dynamically selects the most relevant expert sub-networks for each input token based on a learned gating mechanism, enabling sparse activation where only a subset of p", "ok": true, "tag": "p3_r1"}
+{"wall_s": 0.890470027923584, "prompt_n": 33, "predicted_n": 96, "pp_tps": 203.19070987445278, "tg_tps": 135.56813640413992, "preview": "To debug the `E_SCHEMA_MISSING` error, I'll check the migration status and schema state:  ```bash # Check current migration status flyctl deploy --check-migrations  # Or if using a different migration", "ok": true, "tag": "p4_r0"}
+{"wall_s": 0.8941535949707031, "prompt_n": 33, "predicted_n": 96, "pp_tps": 204.3419569767298, "tg_tps": 135.3590186471148, "preview": "To debug the `E_SCHEMA_MISSING` error, I'll check the database schema status and migration history. Here's the next command:  ```bash # Check current database schema version and pending migrations ech", "ok": true, "tag": "p4_r1"}
+SINGLE_AGENT {
+  "n": 10,
+  "n_ok_content": 10,
+  "tg_p50": 135.53828413757924,
+  "tg_mean": 135.68446454444228,
+  "tg_min": 134.9135077933631,
+  "tg_max": 136.4983787598221,
+  "wall_p50": 0.8717168569564819
+}
+
+[2026-07-30T16:48:50-05:00] PHASE held-out ho-pack-v1.1
+start server ctx=32768 np=1 n_predict_default=128 alias=laguna-quality-safe
+pid=684932
+health ok after ~18s
+  HO-01   pass     4/4
+  HO-02   fail     ?/?
+  HO-03   partial  2/4
+  HO-04   pass     2/2
+  HO-05   pass     2/2
+  HO-06   fail     ?/?
+  HO-07   fail     ?/?
+  HO-08   fail     ?/?
+  HO-09   pass     3/3
+  HO-10   pass     3/3
+  HO-11   fail     1/2
+  HO-12   fail     ?/?
+  HO-13   fail     ?/?
+  HO-14   fail     ?/?
+  HO-15   pass     2/2
+  HO-16   fail     ?/?
+  HO-17   fail     ?/?
+  HO-18   fail     ?/?
+  HO-19   pass     1/1 (stress, report-only)
+  HO-20   fail     ?/?
+  HO-21   fail     ?/?
+  HO-22   partial  2/3
+  HO-23   fail     ?/?
+  HO-24   fail     ?/?
+
+ho-pack ho-pack-v1.1: 14/46 (30.4%)  {'pass': 6, 'fail': 15, 'partial': 2}  [stress report-only: {'pass': 1}]
+wrote /home/frosty40/turbo/lx/results/treebeard-parity-20260730T214536Z/agent/heldout.json
+heldout_exit=0
+{
+  "score_pct": 30.4,
+  "points": 14,
+  "max_points": 46,
+  "outcomes": {
+    "pass": 6,
+    "fail": 15,
+    "partial": 2
+  },
+  "n": 23
+}
+
+[2026-07-30T16:49:54-05:00] PHASE public Agent Bench 69
+start server ctx=32768 np=1 n_predict_default=256 alias=laguna-quality-safe
+pid=687272
+health ok after ~18s
+{"event": "scenario_start", "scenario_id": "TC-01", "title": "Direct Specialist Match", "category": "A", "index": 0, "total": 69}
+Server returned 400 for http://127.0.0.1:18930/v1/chat/completions: {"error":{"code":400,"message":"request (34772 tokens) exceeds the available context size (32768 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":34772,"n_ctx":32768}}
+{"event": "scenario_result", "scenario_id": "TC-01", "status": "fail", "points": 0, "index": 0, "total": 69, "duration_seconds": 40.53}
+{"event": "scenario_start", "scenario_id": "TC-02", "title": "Distractor Resistance", "category": "A", "index": 1, "total": 69}
+Server returned 400 for http://127.0.0.1:18930/v1/chat/completions: {"error":{"code":400,"message":"request (37142 tokens) exceeds the available context size (32768 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":37142,"n_ctx":32768}}
+{"event": "scenario_result", "scenario_id": "TC-02", "status": "fail", "points": 0, "index": 1, "total": 69, "duration_seconds": 38.53}
+{"event": "scenario_start", "scenario_id": "TC-03", "title": "Implicit Tool Need", "category": "A", "index": 2, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-03", "status": "fail", "points": 0, "index": 2, "total": 69, "duration_seconds": 47.65}
+{"event": "scenario_start", "scenario_id": "TC-04", "title": "Unit Handling", "category": "B", "index": 3, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-04", "status": "pass", "points": 2, "index": 3, "total": 69, "duration_seconds": 49.79}
+{"event": "scenario_start", "scenario_id": "TC-05", "title": "Date and Time Parsing", "category": "B", "index": 4, "total": 69}
+Could not repair streamed tool-call arguments: {"title":
+Could not repair malformed tool-call arguments: {"title":
+{"event": "scenario_result", "scenario_id": "TC-05", "status": "pass", "points": 2, "index": 4, "total": 69, "duration_seconds": 45.88}
+{"event": "scenario_start", "scenario_id": "TC-06", "title": "Multi-Value Extraction", "category": "B", "index": 5, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-06", "status": "fail", "points": 0, "index": 5, "total": 69, "duration_seconds": 43.3}
+{"event": "scenario_start", "scenario_id": "TC-07", "title": "Search \u2192 Read \u2192 Act", "category": "C", "index": 6, "total": 69}
+Could not repair streamed tool-call arguments: {"file_id":
+Could not repair malformed tool-call arguments: {"file_id":
+Server returned 400 for http://127.0.0.1:18930/v1/chat/completions: {"error":{"code":400,"message":"request (34641 tokens) exceeds the available context size (32768 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":34641,"n_ctx":32768}}
+{"event": "scenario_result", "scenario_id": "TC-07", "status": "partial", "points": 1, "index": 6, "total": 69, "duration_seconds": 107.75}
+{"event": "scenario_start", "scenario_id": "TC-08", "title": "Conditional Branching", "category": "C", "index": 7, "total": 69}
+Server returned 400 for http://127.0.0.1:18930/v1/chat/completions: {"error":{"code":400,"message":"request (35277 tokens) exceeds the available context size (32768 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":35277,"n_ctx":32768}}
+{"event": "scenario_result", "scenario_id": "TC-08", "status": "fail", "points": 0, "index": 7, "total": 69, "duration_seconds": 39.71}
+{"event": "scenario_start", "scenario_id": "TC-09", "title": "Parallel Independence", "category": "C", "index": 8, "total": 69}
+Server returned 400 for http://127.0.0.1:18930/v1/chat/completions: {"error":{"code":400,"message":"request (34091 tokens) exceeds the available context size (32768 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":34091,"n_ctx":32768}}
+{"event": "scenario_result", "scenario_id": "TC-09", "status": "partial", "points": 1, "index": 8, "total": 69, "duration_seconds": 39.32}
+{"event": "scenario_start", "scenario_id": "TC-10", "title": "Trivial Knowledge", "category": "D", "index": 9, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-10", "status": "pass", "points": 2, "index": 9, "total": 69, "duration_seconds": 1.05}
+{"event": "scenario_start", "scenario_id": "TC-11", "title": "Simple Math", "category": "D", "index": 10, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-11", "status": "partial", "points": 1, "index": 10, "total": 69, "duration_seconds": 41.02}
+{"event": "scenario_start", "scenario_id": "TC-12", "title": "Impossible Request", "category": "D", "index": 11, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-12", "status": "pass", "points": 2, "index": 11, "total": 69, "duration_seconds": 1.96}
+{"event": "scenario_start", "scenario_id": "TC-13", "title": "Empty Results", "category": "E", "index": 12, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-13", "status": "pass", "points": 2, "index": 12, "total": 69, "duration_seconds": 55.0}
+{"event": "scenario_start", "scenario_id": "TC-14", "title": "Malformed Response", "category": "E", "index": 13, "total": 69}
+Could not repair streamed tool-call arguments: {"ticker":
+Could not repair malformed tool-call arguments: {"ticker":
+{"event": "scenario_result", "scenario_id": "TC-14", "status": "partial", "points": 1, "index": 13, "total": 69, "duration_seconds": 50.81}
+{"event": "scenario_start", "scenario_id": "TC-15", "title": "Conflicting Information", "category": "E", "index": 14, "total": 69}
+{"event": "scenario_result", "scenario_id": "TC-15", "status": "fail", "points": 0, "index": 14, "total": 69, "duration_seconds": 49.31}
+{"event": "scenario_start", "scenario_id": "TC-16", "title": "German Language Tool Call", "category": "F", "index": 15, "total": 69}
+Terminated
+agent69_exit=143
+
+[2026-07-30T17:01:22-05:00] PHASE multi-slot appendix np=4
+start server ctx=16384 np=4 n_predict_default=64 alias=laguna-quality-safe
+pid=711660
+health ok after ~18s
+{'i': 0, 'ok': True, 'wall_s': 1.1630401611328125, 'tg': 31.54806347470371, 'pp': 28.615578320837862, 'predicted_n': 9}
+{'i': 2, 'ok': True, 'wall_s': 1.16225004196167, 'tg': 31.560896750279664, 'pp': 28.60507951590256, 'predicted_n': 9}
+{'i': 1, 'ok': True, 'wall_s': 1.662198543548584, 'tg': 12.36403001436975, 'pp': 28.05973062658598, 'predicted_n': 9}
+{'i': 3, 'ok': True, 'wall_s': 1.8256723880767822, 'tg': 33.717360015004225, 'pp': 28.610345749808747, 'predicted_n': 32}
+{'i': 6, 'ok': True, 'wall_s': 0.4506685733795166, 'tg': 39.34485200714952, 'pp': 88.92409923929475, 'predicted_n': 7}
+{'i': 4, 'ok': True, 'wall_s': 0.5041007995605469, 'tg': 38.96947391210218, 'pp': 89.63421093374401, 'predicted_n': 9}
+{'i': 5, 'ok': True, 'wall_s': 0.5208883285522461, 'tg': 40.34893761247267, 'pp': 89.28209082423604, 'predicted_n': 10}
+{'i': 7, 'ok': True, 'wall_s': 0.5356292724609375, 'tg': 45.703839122486286, 'pp': 90.00310919831776, 'predicted_n': 12}
+MULTISLOT {
+  "n_ok": 8,
+  "n": 8,
+  "tg_p50_per_request": 36.3434169635532,
+  "tg_mean_per_request": 34.194681613571,
+  "note": "np=4 appendix only; not treebeard np12 fleet claim"
+}
+
+[2026-07-30T17:01:49-05:00] PHASE assemble SCORECARD.md
+# Laguna quality-safe — Treebeard-parity scorecard
+
+Generated: 2026-07-30 22:01 UTC
+
+Model: Laguna-XS-2.1 Q4_K_M · Binary: control tip · **quality-safe env kills**
+(MUL_MAT_ADD + MOE_DUAL_DOWN + MOE_DUAL_MULTITOKEN off).
+
+Not matched Qwen/Treebeard product A/B — same **gate instruments**, different model.
+
+## Pins
+
+```
+stamp=20260730T214536Z
+binary=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
+-rwxrwxr-x 1 frosty40 frosty40 564624 Jul 30 10:02 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench
+-rwxrwxr-x 1 frosty40 frosty40 662784 Jul 30 05:29 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-server
+a6281386770d3b8c6f15fe7a4f12ea21  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0.17.0
+model_sha256=771a73e1249b9bc08e17d3fca59f5c49b7b9c8a6a47b5a6ac82f95c6e76923c4
+GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=1
+GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
+GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
+GGML_SYCL_DISABLE_GRAPH=1
+SRV_CTX=32768
+template=/home/frosty40/turbo/worktrees/treebeard-pr-private-latest/models/templates/poolside-Laguna-XS-2.1.jinja
+INFO: Output filtered by ONEAPI_DEVICE_SELECTOR environment variable, which is set to level_zero:gpu.
+To see device ids, use the --ignore-device-selectors CLI option.
+
+[level_zero:gpu] Intel(R) oneAPI Unified Runtime over Level-Zero V2, Intel(R) Arc(TM) Pro B70 Graphics 20.2.0 [1.15.38308+1]
+tool-eval-bench 2.1.0
+8b3259be7411fe27c7610d0de64ae1d3b622b9ef
+
+```
+
+## 1. Formal serial (pp512 / tg128)
+
+| metric | value |
+|--------|------:|
+| pp512 | 1173.9 |
+| tg128 | 136.0 |
+| vs pin | **+20.32%** |
+| decode× | 1.267 |
+| prefill× | 1.031 |
+
+## 2. Prefill ladder
+
+# Prefill / decode ladder
+
+| n_prompt | n_gen | t/s |
+|--------:|------:|----:|
+| 512 | 0 | 1169.07 |
+| 2048 | 0 | 2035.25 |
+| 4096 | 0 | 2009.40 |
+| 8192 | 0 | 1955.38 |
+| 16384 | 0 | 1862.32 |
+| 0 | 128 | 135.11 |
+
+
+## 3. Long-context
+
+# Long-context package eval
+
+- base: `http://127.0.0.1:18930`
+- model: `laguna-quality-safe`
+
+## Prefill / short decode ladder
+
+| chars | prompt_n | pp tok/s | tg tok/s | wall_s | ok |
+|------:|---------:|---------:|---------:|-------:|:--:|
+| 2000 | 359 | 417.4306966209043 | 43.846668201300055 | 1.6 | yes |
+| 8000 | 1402 | 1780.0416951278658 | 121.21166207703757 | 1.1 | yes |
+| 16000 | 2793 | 2165.7173075938904 | 110.93854004881297 | 1.6 | yes |
+| 32000 | 5577 | 2404.0637600643495 | 106.09833326149591 | 2.6 | yes |
+| 48000 | 8359 | 2354.7911647581936 | 100.79279835455756 | 3.9 | yes |
+
+## Needle-in-haystack
+
+- doc_chars: 42739
+- paragraphs: 100
+- score: **3/3**
+
+- depth 0.1: PASS — Carousel → 'TB-CAR-1945-X\n'
+- depth 0.5: PASS — Company → 'TB-COM-1970-Q\n'
+- depth 0.9: PASS — Hadestown → 'TB-HAD-2019-Z\n'
+
+## Broadway long dossier QA
+
+- doc_chars: 61092
+- score: **12/14**
+
+- PASS: What year did Oklahoma! open? → 'Oklahoma! opened in 1943.\n'
+- PASS: Who were the writers associated with Oklahoma! in this dossier? → 'Rodgers and Hammerstein were the writers associated with Oklahoma! according to the dossier.\n'
+- PASS: In what year did West Side Story premiere on Broadway according to the dossier? → 'West Side Story premiered on Broadway in 1957.\n'
+- PASS: Who wrote the lyrics for West Side Story per the dossier? → 'Stephen Sondheim wrote the lyrics for West Side Story per the dossier.\n'
+- PASS: Which 1968 musical is linked to counterculture rock energy in the dossier? → 'Hair (1968)\n'
+- PASS: Which 1975 show about dancers is mentioned as a long-running phenomenon? → 'A Chorus Line\n'
+- PASS: Which composer is tied to mega-musicals like Phantom in the dossier? → 'Andrew Lloyd Webber\n'
+- FAIL: What year does the dossier give for Phantom on Broadway? → 'The dossier does not provide a specific year for The Phantom of the Opera on Broadway.\n'
+- FAIL: Who wrote Rent according to the dossier? → 'The dossier does not specify who wrote Rent.\n'
+- PASS: What year did Rent open per the dossier? → 'Rent opened in 1996 per the dossier.\n'
+- PASS: Which 2003 fantasy blockbuster is named in the dossier? → 'The 2003 fantasy blockbuster named in the dossier is **Wicked**.\n'
+- PASS: What year did Hamilton open on Broadway per the dossier? → 'Hamilton opened on Broadway in 2015.\n'
+- PASS: Who is credited with book, music, and lyrics for Hamilton here? → 'Lin-Manuel Miranda is credited with book, music, and lyrics for Hamilton.\n'
+- PASS: What major disruption to Broadway does the 2020s section mention? → 'The 2020s section mentions "pandemic shutdowns" as the major disruption to Broadway.\n'
+
+## Verdict
+
+**STRONG — long-context speed path + retrieval/comprehension held**
+
+
+
+## 4. Single-agent sequential speed
+
+| metric | value |
+|--------|------:|
+| tg p50 | **135.53828413757924** |
+| tg mean | 135.68446454444228 |
+| wall p50 s | 0.8717168569564819 |
+| content ok | 10/10 |
+
+Treebeard reference (Qwen stock Q5): control 77.1 · package 88.9 tg p50 — **not comparable model**.
+
+## 5. Held-out ho-pack-v1.1
+
+- score: **30.4**
+- points: 14/46
+- outcomes: `{"pass": 6, "fail": 15, "partial": 2}`
+
+Treebeard reference: 91.3% (42/46) on Qwen — **not comparable model**.
+
+## 7. Multi-slot appendix (np=4)
+
+- ok: 8/8
+- tg p50 per request: 36.3434169635532
+- note: np=4 appendix only; not treebeard np12 fleet claim
+
+Treebeard np12 fleet is a different claim (package multi-slot).
+
+## Artifacts
+
+`/home/frosty40/turbo/lx/results/treebeard-parity-20260730T214536Z`
+
+
+
+=== SCORECARD → /home/frosty40/turbo/lx/results/treebeard-parity-20260730T214536Z/SCORECARD.md ===
+DONE /home/frosty40/turbo/lx/results/treebeard-parity-20260730T214536Z

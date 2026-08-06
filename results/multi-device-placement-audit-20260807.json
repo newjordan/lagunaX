@@ -1,0 +1,29 @@
+{
+  "artifact_explicit_counts": {
+    "--device": 0,
+    "--main-gpu": 0,
+    "--split-mode": 0,
+    "--tensor-split": 0
+  },
+  "artifacts_scanned": 1030,
+  "device_inventory": [
+    "Available devices:",
+    "SYCL0: Intel(R) Arc(TM) Pro B70 Graphics (32656 MiB, 32534 MiB free)"
+  ],
+  "device_inventory_count": 2,
+  "knobs": [
+    "--split-mode",
+    "--tensor-split",
+    "--main-gpu",
+    "--device"
+  ],
+  "list_devices_exit_code": 0,
+  "policy": "multi_device_tensor_placement",
+  "serial_policy_explicit": false,
+  "source_explicit": {
+    "--device": [],
+    "--main-gpu": [],
+    "--split-mode": [],
+    "--tensor-split": []
+  }
+}

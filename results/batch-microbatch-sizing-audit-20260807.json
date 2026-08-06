@@ -1,0 +1,17 @@
+{
+  "angle": "logical batch versus physical microbatch sizing",
+  "llama_bench_defaults": {
+    "batch_size": 2048,
+    "ubatch_size": 512
+  },
+  "laguna_policy": {
+    "batch_size": 2048,
+    "ubatch_size": 2048
+  },
+  "serial_harness_passes": {
+    "batch_size": true,
+    "ubatch_size": true
+  },
+  "laguna_ubatch_is_default": false,
+  "laguna_ubatch_default_ratio": 4.0
+}

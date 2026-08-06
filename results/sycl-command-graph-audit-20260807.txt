@@ -1,0 +1,11 @@
+SYCL command-graph policy audit
+===============================
+bench_serial_explicit_graph_flag=false
+env_default_GGML_SYCL_DISABLE_GRAPH=1
+metric_files_with_env=187
+GGML_SYCL_DISABLE_GRAPH_counts={"0": 1, "1": 171, "None": 15}
+
+Assertions:
+PASS: env.sh disables SYCL command graphs by default
+PASS: bench-serial supplies no independent command-graph control
+PASS: 171/187 historical metric artifacts with env metadata record graph disablement

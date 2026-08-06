@@ -1,0 +1,19 @@
+[2026-07-31T17:02:54Z] QUEST-2DAY START pid=576455
+[2026-07-31T17:02:54Z] deadline=2026-08-02T14:00:00Z goal_score=1.250 stretch=1.300 sleep=1200s
+[2026-07-31T17:02:54Z] baseline=/home/frosty40/turbo/lx/baseline/baseline.json bin=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+[2026-07-31T17:02:54Z] env: mm-add=0 dual_down=1 dual_mt=1
+[2026-07-31T17:02:54Z] time_left_s=161826
+[2026-07-31T17:02:54Z] ======== CYCLE 1 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c1-20260731T170254Z ========
+[lx-gpu-lock] ACQUIRED pid=576455 reason=quest-2day-c1
+[2026-07-31T17:02:54Z] CYCLE 1 golden-smoke
+[2026-07-31T17:03:12Z] CYCLE 1 GOLDEN OK
+[2026-07-31T17:03:50Z] CYCLE 1 RESULT pp512=1164.168194 tg128=137.869298 score=1.2129591517888907 increase=21.295915178889068%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+board n=14 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T17:03:50Z] CYCLE 1 sleep 1200s
+[2026-07-31T17:23:50Z] time_left_s=160570
+[2026-07-31T17:23:50Z] ======== CYCLE 2 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c2-20260731T172350Z ========
+[2026-07-31T17:24:28Z] CYCLE 2 RESULT pp512=1167.151085 tg128=138.018337 score=1.2147193009304396 increase=21.471930093043955%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+board n=15 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T17:24:28Z] CYCLE 2 sleep 1200s

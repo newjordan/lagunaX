@@ -1,0 +1,23 @@
+>> mode=onednn   out=/home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c6-20260731T145637Z/ktrace-decode
+>> workload: /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench -m /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf -ngl 99 -fa 1 -ub 4096 -b 8192 -p 256 -n 32 -r 1 -p 0 -n 64 -r 1 -ub 2048 -b 2048 -fa on -t 16
+
+================= KERNEL TRACE (onednn) =================
+  hottest oneDNN GPU primitives by total exec time (total 1922.03 ms over 95107 calls):
+  prim    shape (mxk:kxn)               ms_tot  calls   %gpu
+  matmul  1x512x2048:1x2048x9          106.681   6046   5.6%
+  matmul  1x512x2048:1x2048x10          91.873   5212   4.8%
+  matmul  1x512x2048:1x2048x11          76.178   4332   4.0%
+  matmul  1x512x2048:1x2048x12          64.855   3674   3.4%
+  matmul  1x2048x8192:1x8192x256        57.177    496   3.0%
+  matmul  1x512x2048:1x2048x13          51.827   2958   2.7%
+  matmul  1x2048x512:1x512x9            51.052   3023   2.7%
+  matmul  1x8192x2048:1x2048x256        50.106    512   2.6%
+  matmul  1x512x2048:1x2048x14          46.444   2646   2.4%
+  matmul  1x1024x2048:1x2048x256        45.863   1280   2.4%
+  matmul  1x2048x512:1x512x10           44.046   2606   2.3%
+  matmul  1x512x2048:1x2048x15          41.316   2352   2.1%
+  matmul  1x2048x512:1x512x11           36.848   2166   1.9%
+  matmul  1x512x2048:1x2048x16          36.350   2068   1.9%
+  matmul  1x512x2048:1x2048x17          34.220   1788   1.8%
+  (full primitive log: /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c6-20260731T145637Z/ktrace-decode/trace.log — grep onednn_verbose)
+=======================================================

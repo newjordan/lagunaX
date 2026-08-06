@@ -1,0 +1,16 @@
+{
+  "audit": "gpu-lock-process-name-coverage",
+  "requested_exact_names": [
+    "llama-bench",
+    "llama-perplexity",
+    "llama-cli",
+    "llama-server"
+  ],
+  "linux_comm_observed": "llama-perplexit",
+  "requested_name_length": 16,
+  "observed_comm_length": 15,
+  "pgrep_exact_full_name_matches": false,
+  "pgrep_exact_observed_comm_matches": true,
+  "lock_uses_exact_full_name": true,
+  "llama_perplexity_covered": false
+}

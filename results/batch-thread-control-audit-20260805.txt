@@ -1,0 +1,10 @@
+Batch-thread control audit
+==========================
+logs_scanned=160
+records_with_n_threads_batch=0
+n_threads_batch_counts={}
+bench_serial_explicit_threads_batch=false
+
+Assertions:
+FAIL: no batch-thread metadata
+PASS: serial harness does not explicitly control batch threads

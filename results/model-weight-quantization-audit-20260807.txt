@@ -1,0 +1,10 @@
+MODEL WEIGHT QUANTIZATION AUDIT
+configured_model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+live_model_type=laguna 30B.A3B Q4_K - Medium
+live_model_size_bytes=20270574592
+live_model_parameters=33442617088
+gguf_files_under_model_root=3
+alternative_gguf_files_under_model_root=2
+serial_harness_model_argument_count=1
+serial_harness_weight_quantization_control=false
+assertions=PASS

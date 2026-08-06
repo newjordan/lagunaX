@@ -1,0 +1,23 @@
+{
+  "angle": "host-vm-overcommit-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_policy": [],
+    "metrics_record_commit_accounting": [],
+    "metrics_record_policy": []
+  },
+  "generated_utc": "2026-08-01T21:29:29.981509+00:00",
+  "live_commit_accounting": {
+    "CommitLimit": "41260096 kB",
+    "Committed_AS": "9982648 kB",
+    "MemTotal": "65742988 kB"
+  },
+  "live_policy": {
+    "admin_reserve_kbytes": "8192",
+    "max_map_count": "1048576",
+    "mmap_min_addr": "65536",
+    "overcommit_kbytes": "0",
+    "overcommit_memory": "0",
+    "overcommit_ratio": "50",
+    "user_reserve_kbytes": "131072"
+  }
+}

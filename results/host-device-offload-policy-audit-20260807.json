@@ -1,0 +1,33 @@
+{
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "controls": {
+    "no_kv_offload": {
+      "flag": "--no-kv-offload",
+      "default": "0",
+      "help": "-nkvo, --no-kv-offload <0|1>                      (default: 0)",
+      "supported": true,
+      "live_default_confirmed": true,
+      "configured_by_laguna": false
+    },
+    "no_op_offload": {
+      "flag": "--no-op-offload",
+      "default": "0",
+      "help": "-nopo, --no-op-offload <0|1>                      (default: 0)",
+      "supported": true,
+      "live_default_confirmed": true,
+      "configured_by_laguna": false
+    },
+    "no_host": {
+      "flag": "--no-host",
+      "default": "0",
+      "help": "--no-host <0|1>                                   (default: 0)",
+      "supported": true,
+      "live_default_confirmed": true,
+      "configured_by_laguna": false
+    }
+  },
+  "all_supported": true,
+  "all_defaults_confirmed": true,
+  "laguna_configures_any": false,
+  "laguna_records_any": false
+}

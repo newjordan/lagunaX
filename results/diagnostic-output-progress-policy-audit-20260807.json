@@ -1,0 +1,23 @@
+{
+  "direction": "benchmark diagnostic-output and progress-indicator policy",
+  "live_contract": {
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+    "progress_flag": "--progress",
+    "progress_help": "print test progress indicators",
+    "verbose_flag": "-v/--verbose",
+    "verbose_help": "verbose output",
+    "defaults": {
+      "progress": "disabled",
+      "verbose": "disabled"
+    }
+  },
+  "laguna": {
+    "progress_passed": false,
+    "verbose_passed": false,
+    "progress_recorded": false,
+    "verbose_recorded": false,
+    "stdout_captured_as_json": true,
+    "stderr_redirected_to_raw_log": true
+  },
+  "finding": "Laguna leaves progress and verbose diagnostics disabled; benchmark stdout is captured for JSON parsing while stderr is redirected to the raw log."
+}

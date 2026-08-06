@@ -1,0 +1,19 @@
+{
+  "timestamp_utc": "2026-08-01T17:12:09.558055+00:00",
+  "policy": "host-cpu-affinity",
+  "allowed_cpu_list": "0-31",
+  "allowed_cpu_count": 32,
+  "online_logical_cpus": 32,
+  "physical_cores": 16,
+  "smt_threads_per_core": 2,
+  "active_source_controls": [],
+  "control_mentions": {
+    "taskset": false,
+    "numactl": false,
+    "GOMP_CPU_AFFINITY": false,
+    "KMP_AFFINITY": false,
+    "OMP_PROC_BIND": false,
+    "OMP_PLACES": false
+  },
+  "explicit_affinity_policy": false
+}

@@ -409,9 +409,13 @@ index 7b1b3d467..b16db7562 100644
 +    const int            block_num_y = (nrows + GGML_SYCL_MMV_Y - 1) / GGML_SYCL_MMV_Y;
 +    const sycl::range<3> block_nums(1, (unsigned) n_experts_used, (unsigned) block_num_y);
 +    const sycl::range<3> block_dims(1, GGML_SYCL_MMV_Y, WARP_SIZE);
-+    {
++    static const bool trace_launch = [] {
++        const char * env = std::getenv("GGML_SYCL_TRACE_MOE_DUAL_SWIGLU");
++        return env != nullptr && std::atoi(env) != 0;
++    }();
++    if (trace_launch) {
 +        static std::atomic<int> once{0};
-+        if (once.fetch_add(1) == 0) {
++        if (once.fetch_add(1, std::memory_order_relaxed) == 0) {
 +            fprintf(stderr,
 +                    "[lx-control-moe-dual] n_experts=%d nrows=%d ncols=%d (first entry)\n",
 +                    n_experts_used, nrows, ncols);

@@ -1,0 +1,22 @@
+{
+  "audit": "kv-cache-precision-policy",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "executable_defaults": {
+    "cache_type_k": "f16",
+    "cache_type_v": "f16"
+  },
+  "canonical_environment": {
+    "CTK": "f16",
+    "CTV": "f16"
+  },
+  "harness_passes": {
+    "cache_type_k": true,
+    "cache_type_v": true
+  },
+  "metrics_records": {
+    "cache_type_k": true,
+    "cache_type_v": true
+  },
+  "policy": "The canonical benchmark explicitly uses f16 for both K and V caches.",
+  "optimization_status": "No reduced-precision KV-cache type is selected by the canonical environment."
+}

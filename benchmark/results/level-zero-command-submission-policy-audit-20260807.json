@@ -1,0 +1,30 @@
+{
+  "active_policy": {
+    "SYCL_PI_LEVEL_ZERO_DEVICE_SCOPE_EVENTS": null,
+    "SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS": null,
+    "UR_L0_USE_DRIVER_INORDER_LISTS": null,
+    "UR_L0_USE_IMMEDIATE_COMMANDLISTS": null
+  },
+  "angle": "level-zero-command-submission-policy",
+  "provenance": {
+    "serial_harness_records_any_command_submission_control": false
+  },
+  "source_mentions": {
+    "SYCL_PI_LEVEL_ZERO_DEVICE_SCOPE_EVENTS": {
+      "env_sh": false,
+      "serial_harness": false
+    },
+    "SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS": {
+      "env_sh": false,
+      "serial_harness": false
+    },
+    "UR_L0_USE_DRIVER_INORDER_LISTS": {
+      "env_sh": false,
+      "serial_harness": false
+    },
+    "UR_L0_USE_IMMEDIATE_COMMANDLISTS": {
+      "env_sh": false,
+      "serial_harness": false
+    }
+  }
+}

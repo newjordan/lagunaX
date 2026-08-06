@@ -1,0 +1,9 @@
+{
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "depth_option_supported": true,
+  "depth_default": 0,
+  "harness_passes_depth": false,
+  "depth_expands_context": true,
+  "depth_state_is_snapshotted": true,
+  "depth_state_is_cached": true
+}

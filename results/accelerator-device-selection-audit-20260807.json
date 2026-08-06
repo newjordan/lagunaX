@@ -1,0 +1,26 @@
+{
+  "audit": "accelerator-device-selection",
+  "env_defaults": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0"
+  },
+  "serial_harness_mentions": {
+    "ONEAPI_DEVICE_SELECTOR": true,
+    "ZE_AFFINITY_MASK": true
+  },
+  "drm_cards": [
+    {
+      "card": "card0",
+      "pci_address": "0000:0d:00.0",
+      "vendor": "0x8086",
+      "device": "0xe223",
+      "tiles": 1
+    }
+  ],
+  "selection_scope": "backend-wide GPU selection narrowed by Level Zero affinity index 0",
+  "checks": {
+    "selector_is_not_pci_stable": true,
+    "affinity_is_ordinal": true,
+    "multiple_drm_cards_visible": false
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "angle": "kernel-rcu-runtime-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_rcu": [],
+    "metrics_record_rcu": []
+  },
+  "cmdline_rcu_controls": [],
+  "generated_utc": "2026-08-01T21:36:44.745647+00:00",
+  "kernel_cmdline": "BOOT_IMAGE=/boot/vmlinuz-7.0.0-28-generic root=UUID=9e57cf7d-de45-490b-9bd8-c900f7bfdae7 ro quiet splash idle=nomwait processor.max_cstate=1 pcie_aspm=off amd_iommu=on iommu=pt vt.handoff=7",
+  "live_policy": {
+    "kthread_prio": "0",
+    "rcu_cpu_stall_timeout": "60",
+    "rcu_expedited": "0",
+    "rcu_nocb_gp_stride": "-1",
+    "rcu_normal": "0",
+    "rcu_normal_after_boot": "0",
+    "rcu_resched_ns": "3000000",
+    "use_softirq": "Y"
+  }
+}

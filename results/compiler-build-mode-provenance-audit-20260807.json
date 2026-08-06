@@ -1,0 +1,19 @@
+{
+  "angle": "compiler_build_mode_provenance",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "binary": {
+    "file_identity": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, not stripped",
+    "not_stripped": true,
+    "has_symbol_table": true,
+    "compiler_comments": [
+      "[     0]  GCC: (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "[    2d]  Intel(R) oneAPI DPC++/C++ Compiler 2026.0.0 (2026.0.0.20260331)"
+    ]
+  },
+  "canonical_provenance": {
+    "records_build_type": false,
+    "records_compiler_flags": false,
+    "records_compiler_identity": false,
+    "records_stripping_policy": false
+  }
+}

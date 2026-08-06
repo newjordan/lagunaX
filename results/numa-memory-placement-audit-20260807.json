@@ -1,0 +1,18 @@
+{
+  "active_source_overrides": {
+    "env.sh": false,
+    "scripts/bench-serial.sh": false
+  },
+  "executable_default": "disabled",
+  "help_line": "--numa <distribute|isolate|numactl>         numa mode (default: disabled)",
+  "historical_json_mention_count": 3,
+  "historical_json_mentions": [
+    "results/cpu-affinity-policy-audit-20260807.json",
+    "results/cpu-thread-affinity-policy-audit-20260807.json",
+    "results/cpu-affinity-control-audit-20260807.json"
+  ],
+  "host_numa_nodes_online": "0",
+  "llama_bench": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "policy": "numa_memory_placement",
+  "process_environment_overrides": {}
+}

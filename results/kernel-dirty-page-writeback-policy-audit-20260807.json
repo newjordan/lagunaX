@@ -1,0 +1,17 @@
+{
+  "angle": "kernel-dirty-page-writeback-policy",
+  "generated_at": "2026-08-01T20:48:43.730941+00:00",
+  "laguna": {
+    "bench_policy_hits": [],
+    "env_policy_hits": [],
+    "metrics_record_policy": false
+  },
+  "live": {
+    "dirty_background_bytes": 0,
+    "dirty_background_ratio": 10,
+    "dirty_bytes": 0,
+    "dirty_expire_centisecs": 3000,
+    "dirty_ratio": 20,
+    "dirty_writeback_centisecs": 500
+  }
+}

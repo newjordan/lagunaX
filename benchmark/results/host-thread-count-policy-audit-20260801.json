@@ -1,0 +1,12 @@
+{
+  "date": "2026-08-01",
+  "angle": "host-thread-count-policy",
+  "active_binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "llama_bench_threads_default": 16,
+  "laguna_threads_default": 16,
+  "logical_cpus_visible": 32,
+  "laguna_passes_threads": true,
+  "laguna_records_threads": true,
+  "thread_fraction_of_visible_logical_cpus": 0.5,
+  "threads_batch_supported": false
+}

@@ -1,0 +1,22 @@
+{
+  "active_env_mentions": {
+    "GGML_SYCL_DISABLE_MOE_DUAL_DOWN": true,
+    "GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN": true,
+    "GGML_SYCL_DISABLE_QKV_SHARED_QUANT": true
+  },
+  "artifact_value_counts": {
+    "GGML_SYCL_DISABLE_MOE_DUAL_DOWN": {
+      "0": 0,
+      "1": 0
+    },
+    "GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN": {
+      "0": 0,
+      "1": 0
+    },
+    "GGML_SYCL_DISABLE_QKV_SHARED_QUANT": {
+      "0": 0,
+      "1": 0
+    }
+  },
+  "parsed_json_artifacts": 521
+}

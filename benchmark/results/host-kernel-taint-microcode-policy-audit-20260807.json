@@ -1,0 +1,25 @@
+{
+  "audit": "host_kernel_taint_microcode_policy",
+  "evidence_reconciliation": {
+    "champion_additional_multiplicative_improvement_percent": 62.942887730769236,
+    "champion_quality_claim": "golden OK",
+    "champion_score": 1.2274239323072529,
+    "costly_action_launched": false,
+    "latest_score": 1.2147193009304396,
+    "latest_vs_champion_percent": -1.0350646620464476,
+    "literal_target_score": 2.0
+  },
+  "host": {
+    "cpu_microcode_revisions": [
+      "0xa201213"
+    ],
+    "kernel_command_line": "BOOT_IMAGE=/boot/vmlinuz-7.0.0-28-generic root=UUID=9e57cf7d-de45-490b-9bd8-c900f7bfdae7 ro quiet splash idle=nomwait processor.max_cstate=1 pcie_aspm=off amd_iommu=on iommu=pt vt.handoff=7",
+    "kernel_is_tainted": false,
+    "kernel_taint_mask": 0
+  },
+  "laguna": {
+    "configures_microcode_or_taint_policy": false,
+    "records_microcode_or_taint_metrics": false,
+    "rejects_tainted_kernel": false
+  }
+}

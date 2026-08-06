@@ -59,9 +59,21 @@ int ggml_sycl_fuse_mul_mat_add(
     if (!ggml_is_quantized(w->type) || x->type != GGML_TYPE_F32) {
         return 0;
     }
-    // Any batch size: multi-col 2..8 uses switch_ncols addend; larger uses per-col loop offset.
+    // QUALITY-SAFE (2026-07-31): decode only (ne11==1). Any-batch prefill fuse
+    // wrecks wikitext PPL (1e5–1e6) — GEMM/large-N paths drop residual addends while
+    // still eliding the graph ADD. Decode reorder-MMVQ epilogue stays correct.
+    // Opt-in any-batch research: GGML_SYCL_ENABLE_MUL_MAT_ADD_ANY_BATCH=1 (not quality-safe).
     if (x->ne[1] < 1) {
         return 0;
+    }
+    {
+        static const bool any_batch = []() {
+            const char * e = getenv("GGML_SYCL_ENABLE_MUL_MAT_ADD_ANY_BATCH");
+            return e != nullptr && std::atoi(e) != 0;
+        }();
+        if (!any_batch && x->ne[1] != 1) {
+            return 0;
+        }
     }
     // Only types with reorder MMVQ addend epilogue wired (Q4_K/Q5_K/Q6_K).
     if (w->type != GGML_TYPE_Q4_K && w->type != GGML_TYPE_Q5_K && w->type != GGML_TYPE_Q6_K) {
@@ -104,24 +116,27 @@ int ggml_sycl_fuse_mul_mat_add(
 
     // Fuse span may include skipped views between mul_mat and add(s).
     const int n_span = j_add2 - i + 1;
-    std::vector<ggml_op> ops(n_span, GGML_OP_NONE);
+    // Both lookahead windows are bounded to three intervening nodes, so the
+    // complete double-ADD span is at most seven nodes. Keep this decode-hot
+    // control path on the stack instead of allocating a vector every graph run.
+    ggml_op ops[7] = {};
     for (int k = 0; k < n_span; ++k) {
         ops[k] = cgraph->nodes[i + k]->op;
     }
     const int output = j_add2;
-    if (!ggml_can_fuse_subgraph(cgraph, i, n_span, ops.data(), &output, 1)) {
+    if (!ggml_can_fuse_subgraph(cgraph, i, n_span, ops, &output, 1)) {
         // Fall back to single-ADD span if double-ADD can_fuse fails.
         if (add2) {
             add2      = nullptr;
             residual2 = nullptr;
             j_add2    = j_add;
             const int n_span1 = j_add - i + 1;
-            std::vector<ggml_op> ops1(n_span1, GGML_OP_NONE);
+            ggml_op ops1[4] = {};
             for (int k = 0; k < n_span1; ++k) {
                 ops1[k] = cgraph->nodes[i + k]->op;
             }
             const int out1 = j_add;
-            if (!ggml_can_fuse_subgraph(cgraph, i, n_span1, ops1.data(), &out1, 1)) {
+            if (!ggml_can_fuse_subgraph(cgraph, i, n_span1, ops1, &out1, 1)) {
                 return 0;
             }
         } else {
@@ -145,11 +160,18 @@ int ggml_sycl_fuse_mul_mat_add(
     ggml_sycl_mmvq_set_row_addend2(nullptr);
     mm->data = saved_mm_data;
 
-    {
+    // Decode executes this path once per eligible graph evaluation. Keep diagnostics
+    // opt-in so normal inference does not perform an atomic load for every fused op.
+    static const bool trace_fuse = []() {
+        const char * e = getenv("GGML_SYCL_TRACE_MUL_MAT_ADD_FUSE");
+        return e != nullptr && std::atoi(e) != 0;
+    }();
+    if (trace_fuse) {
         static std::atomic<int> once_single{0};
         static std::atomic<int> once_double{0};
         std::atomic<int> * once = residual2 ? &once_double : &once_single;
-        if (once->fetch_add(1) == 0) {
+        if (once->load(std::memory_order_relaxed) == 0 &&
+              once->exchange(1, std::memory_order_relaxed) == 0) {
             fprintf(stderr,
                     "[lx-control-mm-add] fuse hit (mul_mat+add%s) ne0=%" PRId64 " ne1=%" PRId64
                     " wtype=%s alias_res=%d mm='%s' add='%s' add2='%s'\n",

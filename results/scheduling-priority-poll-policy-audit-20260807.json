@@ -1,0 +1,16 @@
+{
+  "benchmark": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "controls": {
+    "priority": {
+      "supported": true,
+      "default": 0,
+      "overridden": false
+    },
+    "poll": {
+      "supported": true,
+      "default_percent": 50,
+      "overridden": false
+    }
+  },
+  "interpretation": "Active runs use normal priority and the default 50% spin-poll policy."
+}

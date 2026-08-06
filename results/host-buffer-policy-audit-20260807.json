@@ -1,0 +1,12 @@
+{
+  "timestamp_utc": "2026-08-01T16:33:16.106107+00:00",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "supported": true,
+  "help_line": "--no-host <0|1>                                   (default: 0)",
+  "default_no_host": 0,
+  "effective_host_buffers_enabled": true,
+  "env_override_present": false,
+  "serial_harness_override_present": false,
+  "historical_json_artifacts_parsed": 580,
+  "historical_no_host_mentions": 34
+}

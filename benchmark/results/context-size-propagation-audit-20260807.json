@@ -1,0 +1,11 @@
+{
+  "policy": "context-size-propagation",
+  "env_ctx_default": 8192,
+  "llama_bench_common_uses_ctx": false,
+  "metrics_records_ctx": true,
+  "recorded_ctx_is_not_an_effective_benchmark_argument": true,
+  "sources": [
+    "env.sh",
+    "scripts/bench-serial.sh"
+  ]
+}

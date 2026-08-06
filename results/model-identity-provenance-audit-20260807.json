@@ -1,0 +1,11 @@
+{
+  "audit": "model-identity-provenance",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "model_size_bytes": 20274296256,
+  "model_sha256": "771a73e1249b9bc08e17d3fca59f5c49b7b9c8a6a47b5a6ac82f95c6e76923c4",
+  "harness_records_model_path": true,
+  "harness_computes_model_sha256": false,
+  "harness_emits_model_sha256": false,
+  "exact_model_bytes_bound_to_metrics": false,
+  "bench_binary_sha256_bound_to_metrics": true
+}

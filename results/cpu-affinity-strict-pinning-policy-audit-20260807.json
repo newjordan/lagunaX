@@ -1,0 +1,25 @@
+{
+  "collected_at": "2026-08-01T19:56:38.372943+00:00",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "controls": {
+    "cpu_mask": {
+      "option": "--cpu-mask",
+      "default": "0x0"
+    },
+    "cpu_strict": {
+      "option": "--cpu-strict",
+      "accepted_values": [
+        0,
+        1
+      ],
+      "default": 0
+    }
+  },
+  "laguna": {
+    "environment_configures_affinity": false,
+    "serial_harness_passes_cpu_mask": false,
+    "serial_harness_passes_cpu_strict": false,
+    "serial_metrics_record_cpu_mask": false,
+    "serial_metrics_record_cpu_strict": false
+  }
+}

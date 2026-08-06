@@ -1,0 +1,16 @@
+Laguna serial benchmark phase-order / thermal-state audit
+generated_utc=2026-08-01T12:28:33.825049+00:00
+logs_scanned=162
+logs_with_both_phase_markers=159
+pp_before_tg=159
+tg_before_pp=0
+logs_missing_phase_marker=3
+temperature_capture=false
+frequency_capture=false
+power_capture=false
+cooldown_between_phases=false
+phase_order_randomization=false
+ASSERTIONS:
+all_complete_logs_pp_before_tg=true
+no_thermal_state_controls=true
+audit_internal_consistency=true

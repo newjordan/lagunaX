@@ -1,0 +1,19 @@
+{
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "supported_controls": {
+    "poll": "--poll",
+    "priority": "--prio"
+  },
+  "defaults": {
+    "poll_percent": 50,
+    "priority": 0
+  },
+  "active_overrides": {
+    "poll": false,
+    "priority": false
+  },
+  "effective": {
+    "poll_percent": 50,
+    "priority": 0
+  }
+}

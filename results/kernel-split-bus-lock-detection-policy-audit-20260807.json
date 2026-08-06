@@ -1,0 +1,21 @@
+{
+  "angle": "kernel-split-bus-lock-detection-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_lock_detection": false,
+    "metrics_record_lock_detection": false,
+    "rejects_lock_events": false
+  },
+  "generated_utc": "2026-08-01T21:43:16.628147+00:00",
+  "live_state": {
+    "boot_overrides": {
+      "bus_lock_detect": null,
+      "split_lock_detect": null
+    },
+    "dmesg_restrict": 1,
+    "effective_policy": {
+      "bus_lock_detect": "kernel-default",
+      "split_lock_detect": "kernel-default"
+    },
+    "kernel_cmdline": "BOOT_IMAGE=/boot/vmlinuz-7.0.0-28-generic root=UUID=9e57cf7d-de45-490b-9bd8-c900f7bfdae7 ro quiet splash idle=nomwait processor.max_cstate=1 pcie_aspm=off amd_iommu=on iommu=pt vt.handoff=7"
+  }
+}

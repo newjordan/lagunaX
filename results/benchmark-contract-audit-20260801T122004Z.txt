@@ -1,0 +1,7 @@
+Laguna serial benchmark contract audit
+latest_score_ctx=8192
+ctx_recorded_in_metrics=True
+ctx_flag_present_in_COMMON_argv=False
+prefill_command_has_explicit_p=True
+decode_command_has_explicit_n=True
+VERDICT=FAIL: metadata claims ctx but benchmark argv does not set it

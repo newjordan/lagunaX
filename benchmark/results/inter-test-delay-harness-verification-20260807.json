@@ -1,0 +1,11 @@
+{
+  "control": "LX_DELAY",
+  "default_seconds": 0,
+  "llama_bench_help": "--delay <0...N> (seconds)",
+  "forwarding": "--delay \"$LX_DELAY\"",
+  "metrics_field": "flags.delay_seconds",
+  "invalid_value": "bad",
+  "invalid_exit_code": 2,
+  "verifier": "bash -n env.sh scripts/bench-serial.sh plus focused CLI/wiring/error-path assertions",
+  "passed": true
+}

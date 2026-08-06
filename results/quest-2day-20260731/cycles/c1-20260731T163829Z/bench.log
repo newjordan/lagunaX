@@ -1,0 +1,11 @@
+[lx-gpu-lock] WARNING: LX_GPU_LOCK_SKIP=1 — exclusive lock disabled (wedge risk)
+== lx serial bench ==
+  mode:    candidate
+  binary:  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench
+  model:   /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+  window:  pp512 / tg128  reps=5
+  device:  level_zero:gpu  ZE_AFFINITY_MASK=0
+  out:     /home/frosty40/turbo/lx/results/20260731T163848Z/metrics.json
+-- pp512 --
+-- tg128 --
+tg bench failed

@@ -1,0 +1,8 @@
+direction=compiler_optimization_and_profile_guided_builds
+parsed_metrics=191
+metrics_with_compiler_or_optimization_metadata=0
+matching_metadata_fields=0
+searched_keys=compiler,cmake_build_type,build_type,cflags,cxxflags,lto,ipo,march,mtune,pgo,profile_use
+finding=scored metrics preserve executable path and runtime configuration but no compiler identity, optimization level, LTO/IPO, ISA-tuning, or PGO state
+hypothesis=an LTO plus profile-guided build trained on pp512 and tg128 may reduce host dispatch overhead without changing inference arithmetic; require interleaved throughput and golden/logit quality gates
+assertions=PASS

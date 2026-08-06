@@ -1,0 +1,12 @@
+{
+  "canonical_common_arguments_use_multi_value_or_range_sweep": false,
+  "canonical_timed_llama_bench_invocations": 2,
+  "canonical_topology": "two independent processes",
+  "executable": "resolved through env.sh",
+  "help_multi_value_statement": "Multiple values can be given for each parameter by separating them with ','",
+  "help_range_statement": "or by specifying the parameter multiple times. Ranges can be given as",
+  "implication": "candidate parameter sweeps cannot share one model load or one process/runtime state in the canonical harness",
+  "quality_result": "not measured by this topology audit",
+  "supports_multi_value_parameters": true,
+  "supports_ranges": true
+}

@@ -1,0 +1,15 @@
+{
+  "coverage": {
+    "eu_active": 1,
+    "kernel_duration": 1,
+    "kernel_name": 1,
+    "memory_bandwidth": 0,
+    "occupancy": 1
+  },
+  "files_scanned": 1210,
+  "profile_named_files": 7,
+  "trace_named_files": 1,
+  "trace_paths": [
+    "results/quest-2day-20260731/cycles/c6-20260731T145637Z/ktrace.txt"
+  ]
+}

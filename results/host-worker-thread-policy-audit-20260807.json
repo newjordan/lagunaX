@@ -1,0 +1,19 @@
+{
+  "policy": {
+    "env_default_threads": 16,
+    "process_override": null,
+    "effective_threads": 16,
+    "bench_explicitly_passes_threads": true,
+    "logical_cpu_count": 32,
+    "effective_fraction_of_logical_cpus": 0.5
+  },
+  "historical_coverage": {
+    "json_artifacts_parsed": 568,
+    "thread_values_recorded": 357,
+    "distinct_thread_values": [
+      8,
+      16,
+      32
+    ]
+  }
+}

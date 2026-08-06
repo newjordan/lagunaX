@@ -1,0 +1,48 @@
+{
+  "device": "/sys/devices/pci0000:00/0000:00:03.1/0000:0b:00.0/0000:0c:01.0/0000:0d:00.0",
+  "engine_controls": [
+    {
+      "engine": "bcs",
+      "gt": "gt0",
+      "path": "/sys/devices/pci0000:00/0000:00:03.1/0000:0b:00.0/0000:0c:01.0/0000:0d:00.0/tile0/gt0/engines/bcs/job_timeout_ms",
+      "job_timeout_ms": 5000
+    },
+    {
+      "engine": "ccs",
+      "gt": "gt0",
+      "path": "/sys/devices/pci0000:00/0000:00:03.1/0000:0b:00.0/0000:0c:01.0/0000:0d:00.0/tile0/gt0/engines/ccs/job_timeout_ms",
+      "job_timeout_ms": 5000
+    },
+    {
+      "engine": "rcs",
+      "gt": "gt0",
+      "path": "/sys/devices/pci0000:00/0000:00:03.1/0000:0b:00.0/0000:0c:01.0/0000:0d:00.0/tile0/gt0/engines/rcs/job_timeout_ms",
+      "job_timeout_ms": 5000
+    },
+    {
+      "engine": "vcs",
+      "gt": "gt1",
+      "path": "/sys/devices/pci0000:00/0000:00:03.1/0000:0b:00.0/0000:0c:01.0/0000:0d:00.0/tile0/gt1/engines/vcs/job_timeout_ms",
+      "job_timeout_ms": 5000
+    },
+    {
+      "engine": "vecs",
+      "gt": "gt1",
+      "path": "/sys/devices/pci0000:00/0000:00:03.1/0000:0b:00.0/0000:0c:01.0/0000:0d:00.0/tile0/gt1/engines/vecs/job_timeout_ms",
+      "job_timeout_ms": 5000
+    }
+  ],
+  "laguna_source_mentions": {
+    "env.sh": {
+      "job_timeout_ms": false,
+      "preempt_timeout_ms": false,
+      "timeslice_duration_ms": false
+    },
+    "scripts/bench-serial.sh": {
+      "job_timeout_ms": false,
+      "preempt_timeout_ms": false,
+      "timeslice_duration_ms": false
+    }
+  },
+  "conclusion": "Kernel-exported accelerator engine timeout policy is readable, but Laguna's canonical serial path neither controls nor records it."
+}

@@ -1,0 +1,16 @@
+{
+  "generated_utc": "2026-08-01T19:03:07.432517+00:00",
+  "angle": "inter-test-delay-and-thermal-recovery-policy",
+  "live_contract": {
+    "supports_delay": true,
+    "default_seconds": 0
+  },
+  "active_process_environment": {
+    "LAGUNA_BENCH_DELAY": null
+  },
+  "canonical_policy": {
+    "env_configures_delay": false,
+    "harness_passes_delay": false,
+    "metrics_record_delay": false
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "binary_exists": true,
+  "active_binary_sha256": "45e07d098300d6ffaf5fdc211c1cfe58d263083aa31c18c7ffa109ebd78c0ac1",
+  "json_artifacts_scanned": 550,
+  "prior_binary_sha256_records": [],
+  "serial_harness_records_binary_sha256": true
+}

@@ -1,0 +1,25 @@
+{
+  "generated_utc": "2026-08-01T18:55:53.935187+00:00",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "live_contract": {
+    "split_mode": {
+      "choices": "none|layer|row|tensor",
+      "default": "layer"
+    },
+    "main_gpu": {
+      "default": "0"
+    },
+    "tensor_split": {
+      "default": "0"
+    }
+  },
+  "canonical_policy": {
+    "env_configures_split_or_primary_device": false,
+    "harness_passes_split_or_primary_device": false,
+    "metrics_record_split_or_primary_device": false
+  },
+  "active_device_selection": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0"
+  }
+}

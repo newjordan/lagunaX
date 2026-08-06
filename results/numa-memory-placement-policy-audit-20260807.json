@@ -1,0 +1,15 @@
+{
+  "angle": "host NUMA topology and memory-placement policy",
+  "online_nodes": "0",
+  "node_count": 1,
+  "nodes": [
+    {
+      "node": 0,
+      "cpulist": "0-31",
+      "mem_total_kb": 65742988
+    }
+  ],
+  "laguna_configures_numa_policy": false,
+  "metrics_record_numa_policy": false,
+  "optimization_applicability": "no cross-node placement is possible on this single-node host"
+}

@@ -1,0 +1,15 @@
+{
+  "policy": {
+    "executable_supports_no_warmup": true,
+    "executable_default_repetitions": 5,
+    "active_repetitions": 5,
+    "harness_explicitly_sets_repetitions": true,
+    "harness_disables_warmup": false,
+    "effective_warmup": "enabled"
+  },
+  "history": {
+    "json_artifacts_parsed": 586,
+    "artifacts_recording_repetitions": 174,
+    "artifacts_recording_warmup_policy": 3
+  }
+}

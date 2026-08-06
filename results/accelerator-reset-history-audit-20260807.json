@@ -1,0 +1,19 @@
+{
+  "generated_utc": "2026-08-01T20:29:48.527936+00:00",
+  "angle": "accelerator-reset-history-and-run-validity",
+  "device": "/sys/devices/pci0000:00/0000:00:03.1/0000:0b:00.0/0000:0c:01.0/0000:0d:00.0",
+  "reset_capability": {
+    "reset_method": "flr bus",
+    "reset_control_present": true
+  },
+  "boot_kernel_reset_events": [
+    "Jul 31 08:19:52 Turbo kernel: xe 0000:0d:00.0: vgaarb: VGA decodes changed: olddecodes=io+mem,decodes=io+mem:owns=none",
+    "Jul 31 11:21:28 Turbo kernel: xe 0000:0d:00.0: [drm] Tile0: GT0: Engine reset: engine_class=bcs, logical_mask: 0x1, guc_id=23, state=0x289"
+  ],
+  "boot_kernel_reset_event_count": 2,
+  "canonical_policy": {
+    "checks_reset_history": false,
+    "records_reset_history": false
+  },
+  "conclusion": "The accelerator supports function/bus reset and has a boot-session engine-reset event, but Laguna's canonical benchmark path neither checks nor records reset history."
+}

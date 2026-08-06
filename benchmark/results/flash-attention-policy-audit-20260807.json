@@ -1,0 +1,12 @@
+{
+  "active_binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "supported": true,
+  "allowed_values": [
+    "on",
+    "off",
+    "auto"
+  ],
+  "default": "auto",
+  "canonical_configuration_present": true,
+  "metrics_provenance_present": true
+}

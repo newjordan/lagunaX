@@ -1,0 +1,147 @@
+{
+  "base": "http://127.0.0.1:18911",
+  "model": "laguna-tip-proof",
+  "prefill": [
+    {
+      "target_chars": 2000,
+      "ok": true,
+      "prompt_n": 359,
+      "pp_tps": 463.9309815435591,
+      "tg_tps": 44.268416006905866,
+      "wall_s": 1.498368501663208,
+      "preview": "11ast Functionalallyprimevizop14 subsequently4114144of4121of41042041"
+    },
+    {
+      "target_chars": 8000,
+      "ok": true,
+      "prompt_n": 1402,
+      "pp_tps": 2657.945874212048,
+      "tg_tps": 123.66719611685004,
+      "wall_s": 0.7892887592315674,
+      "preview": " wh  \u00ad   ho as in above at in any for in and in chat.\n\n in the otherwise in the 1 and above in the"
+    },
+    {
+      "target_chars": 16000,
+      "ok": true,
+      "prompt_n": 2793,
+      "pp_tps": 3155.7681747615375,
+      "tg_tps": 113.17578321178726,
+      "wall_s": 1.1728484630584717,
+      "preview": ",plexer particular ful particular`s`, for particular`s`Cap`:Cap inAttributesCache``Cap inAttributesCacheCapCapCapCapCap`"
+    },
+    {
+      "target_chars": 32000,
+      "ok": true,
+      "prompt_n": 5577,
+      "pp_tps": 3478.1057700882902,
+      "tg_tps": 108.22693836137651,
+      "wall_s": 1.9086682796478271,
+      "preview": "ALOGades inter-1111212125121:2012`034I2I20"
+    },
+    {
+      "target_chars": 48000,
+      "ok": false,
+      "error": "Remote end closed connection without response"
+    }
+  ],
+  "needles": {
+    "n_paragraphs": 80,
+    "doc_chars": 34044,
+    "needles_ok": 0,
+    "needles_total": 3,
+    "results": [
+      {
+        "show": "Carousel",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "show": "Company",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "show": "Hadestown",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      }
+    ]
+  },
+  "dossier": {
+    "doc_chars": 61092,
+    "qa_ok": 0,
+    "qa_total": 14,
+    "results": [
+      {
+        "q": "What year did Oklahoma! open?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "Who were the writers associated with Oklahoma! in this dossier?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "In what year did West Side Story premiere on Broadway according to the dossier?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "Who wrote the lyrics for West Side Story per the dossier?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "Which 1968 musical is linked to counterculture rock energy in the dossier?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "Which 1975 show about dancers is mentioned as a long-running phenomenon?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "Which composer is tied to mega-musicals like Phantom in the dossier?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "What year does the dossier give for Phantom on Broadway?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "Who wrote Rent according to the dossier?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "What year did Rent open per the dossier?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "Which 2003 fantasy blockbuster is named in the dossier?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "What year did Hamilton open on Broadway per the dossier?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "Who is credited with book, music, and lyrics for Hamilton here?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      },
+      {
+        "q": "What major disruption to Broadway does the 2020s section mention?",
+        "ok": false,
+        "error": "<urlopen error [Errno 111] Connection refused>"
+      }
+    ]
+  }
+}

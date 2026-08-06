@@ -1,0 +1,16 @@
+{
+  "audit": "active_evidence_reconciliation",
+  "champion_absolute_gap_to_target": 0.7725760676927471,
+  "champion_additional_multiplicative_improvement_percent": 62.942887730769236,
+  "champion_quality_claim": "golden OK",
+  "champion_score": 1.2274239323072529,
+  "champion_stamp": "20260731T141436Z",
+  "costly_action_launched": false,
+  "latest_is_champion": false,
+  "latest_pointer": "/home/frosty40/turbo/lx/results/20260731T172351Z",
+  "latest_score": 1.2147193009304396,
+  "latest_stamp": "20260731T172351Z",
+  "latest_vs_champion_absolute": -0.012704631376813325,
+  "latest_vs_champion_percent": -1.0350646620464476,
+  "literal_target_score": 2.0
+}

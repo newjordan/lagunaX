@@ -1,0 +1,12 @@
+{
+  "angle": "address-space-layout-randomization-policy-and-provenance",
+  "has_vdso_mapping": true,
+  "kernel_policy_meaning": "full randomization including heap",
+  "kernel_randomize_va_space": 2,
+  "proc_self_personality": "00000000",
+  "process_mapping_count": 49,
+  "provenance": {
+    "env_controls_aslr": false,
+    "serial_harness_controls_or_records_aslr": false
+  }
+}

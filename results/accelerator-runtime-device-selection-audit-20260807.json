@@ -1,0 +1,23 @@
+{
+  "active_environment": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "SYCL_DEVICE_FILTER": null,
+    "ZE_AFFINITY_MASK": "0"
+  },
+  "angle": "accelerator_runtime_device_selection",
+  "canonical_environment": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "SYCL_DEVICE_FILTER": null,
+    "ZE_AFFINITY_MASK": "0"
+  },
+  "harness_mentions": {
+    "ONEAPI_DEVICE_SELECTOR": true,
+    "SYCL_DEVICE_FILTER": false,
+    "ZE_AFFINITY_MASK": true
+  },
+  "metrics_record": {
+    "ONEAPI_DEVICE_SELECTOR": true,
+    "SYCL_DEVICE_FILTER": false,
+    "ZE_AFFINITY_MASK": true
+  }
+}

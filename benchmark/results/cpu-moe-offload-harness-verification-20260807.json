@@ -1,0 +1,13 @@
+{
+  "direction": "expose CPU MoE layer offload control",
+  "verifier": "bash syntax + installed llama-bench CLI + forwarding + metrics assertions",
+  "status": "pass",
+  "default_cpu_moe_layers": 0,
+  "cli_option": "--n-cpu-moe",
+  "checks": {
+    "shell_syntax": true,
+    "installed_cli_support": true,
+    "argument_forwarding": true,
+    "metrics_recording": true
+  }
+}

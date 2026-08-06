@@ -1,0 +1,27 @@
+{
+  "angle": "level_zero_command_submission_policy",
+  "controls": {
+    "SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS": {
+      "configured_by_canonical_sources": false,
+      "recorded_in_benchmark_metrics": false,
+      "active_process_value": null
+    },
+    "UR_L0_USE_IMMEDIATE_COMMANDLISTS": {
+      "configured_by_canonical_sources": false,
+      "recorded_in_benchmark_metrics": false,
+      "active_process_value": null
+    },
+    "SYCL_PI_LEVEL_ZERO_BATCH_SIZE": {
+      "configured_by_canonical_sources": false,
+      "recorded_in_benchmark_metrics": false,
+      "active_process_value": null
+    },
+    "UR_L0_COMMAND_LIST_CACHE": {
+      "configured_by_canonical_sources": false,
+      "recorded_in_benchmark_metrics": false,
+      "active_process_value": null
+    }
+  },
+  "canonical_policy_explicit": false,
+  "metrics_preserve_policy": false
+}

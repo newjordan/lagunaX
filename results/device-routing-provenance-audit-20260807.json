@@ -1,0 +1,17 @@
+{
+  "collected_at": "2026-08-01T19:34:35.128524+00:00",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "contract": {
+    "supported": true,
+    "default": "auto",
+    "listed_devices": [
+      "Available devices:",
+      "SYCL0: Intel(R) Arc(TM) Pro B70 Graphics (32656 MiB, 32534 MiB free)"
+    ]
+  },
+  "laguna": {
+    "canonical_selector": "ONEAPI_DEVICE_SELECTOR=\"${ONEAPI_DEVICE_SELECTOR:-level_zero:gpu}\"",
+    "explicit_device_argument": false,
+    "effective_device_recorded_in_metrics": false
+  }
+}

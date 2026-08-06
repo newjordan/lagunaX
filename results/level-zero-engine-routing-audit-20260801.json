@@ -1,0 +1,30 @@
+{
+  "active_policy_explicit": false,
+  "artifact_explicit_counts": {
+    "SYCL_PI_LEVEL_ZERO_USE_COMPUTE_ENGINE": 0,
+    "SYCL_PI_LEVEL_ZERO_USE_COPY_ENGINE": 0,
+    "UR_L0_USE_COMPUTE_ENGINE": 0,
+    "UR_L0_USE_COPY_ENGINE": 1
+  },
+  "artifact_policy_preserved": true,
+  "artifacts_scanned": 1114,
+  "knobs": [
+    "SYCL_PI_LEVEL_ZERO_USE_COPY_ENGINE",
+    "SYCL_PI_LEVEL_ZERO_USE_COMPUTE_ENGINE",
+    "UR_L0_USE_COPY_ENGINE",
+    "UR_L0_USE_COMPUTE_ENGINE"
+  ],
+  "policy": "level_zero_copy_compute_engine_routing",
+  "process_environment": {
+    "SYCL_PI_LEVEL_ZERO_USE_COMPUTE_ENGINE": null,
+    "SYCL_PI_LEVEL_ZERO_USE_COPY_ENGINE": null,
+    "UR_L0_USE_COMPUTE_ENGINE": null,
+    "UR_L0_USE_COPY_ENGINE": null
+  },
+  "source_explicit": {
+    "SYCL_PI_LEVEL_ZERO_USE_COMPUTE_ENGINE": [],
+    "SYCL_PI_LEVEL_ZERO_USE_COPY_ENGINE": [],
+    "UR_L0_USE_COMPUTE_ENGINE": [],
+    "UR_L0_USE_COPY_ENGINE": []
+  }
+}

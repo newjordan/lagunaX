@@ -1,0 +1,31 @@
+{
+  "generated_utc": "2026-08-01T21:25:40.722151+00:00",
+  "scope": "VM compaction, fragmentation threshold, and free-memory watermark policy",
+  "live": {
+    "controls": {
+      "compaction_proactiveness": "20",
+      "extfrag_threshold": "500",
+      "watermark_boost_factor": "15000",
+      "watermark_scale_factor": "10",
+      "min_free_kbytes": "67584",
+      "zone_reclaim_mode": "0",
+      "percpu_pagelist_high_fraction": "0"
+    },
+    "vmstat_lifetime_counters": {
+      "compact_migrate_scanned": 5958268,
+      "compact_free_scanned": 526668240,
+      "compact_stall": 9,
+      "compact_fail": 7,
+      "compact_success": 2,
+      "compact_daemon_wake": 888,
+      "compact_daemon_migrate_scanned": 5954022,
+      "compact_daemon_free_scanned": 526667151
+    }
+  },
+  "laguna": {
+    "canonical_environment": "env.sh",
+    "serial_harness": "scripts/bench-serial.sh",
+    "configures_compaction_or_watermarks": false,
+    "records_compaction_or_watermarks": false
+  }
+}

@@ -1,0 +1,10 @@
+logs_scanned=162
+records=314
+n_gpu_layers={"99": 314}
+n_cpu_moe={"0": 314}
+split_mode={"\"layer\"": 314}
+main_gpu={"0": 314}
+no_kv_offload={"false": 314}
+tensor_split={"\"0.00\"": 314}
+no_op_offload={"0": 314}
+devices={"\"auto\"": 314}

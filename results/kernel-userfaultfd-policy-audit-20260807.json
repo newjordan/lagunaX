@@ -1,0 +1,14 @@
+{
+  "angle": "kernel-userfaultfd-policy",
+  "generated_at": "2026-08-01T22:01:41.724291+00:00",
+  "interpretation": "userfaultfd lets user space handle page faults. This audit records whether unprivileged processes may use it and whether Laguna controls or records that policy.",
+  "laguna": {
+    "env_or_harness_controls_userfaultfd": false,
+    "serial_harness_records_userfaultfd_policy": false
+  },
+  "live": {
+    "proc_interface": "/proc/sys/vm/unprivileged_userfaultfd",
+    "unprivileged_userfaultfd": 0,
+    "unprivileged_userfaultfd_enabled": false
+  }
+}

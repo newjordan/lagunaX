@@ -1,0 +1,15 @@
+{
+  "angle": "device_offload_policy",
+  "live_help": {
+    "no_kv_offload_supported": true,
+    "no_kv_offload_default": "0",
+    "no_op_offload_supported": true,
+    "no_op_offload_default": "0"
+  },
+  "canonical_sources": {
+    "kv_offload_override": false,
+    "op_offload_override": false,
+    "metrics_record_kv_offload": false,
+    "metrics_record_op_offload": false
+  }
+}

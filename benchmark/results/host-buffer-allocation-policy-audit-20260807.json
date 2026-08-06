@@ -1,0 +1,11 @@
+{
+  "angle": "host_buffer_allocation_policy",
+  "live_help": {
+    "no_host_supported": true,
+    "no_host_default": "0"
+  },
+  "canonical_sources": {
+    "no_host_override": false,
+    "metrics_record_no_host": false
+  }
+}

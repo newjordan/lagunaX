@@ -1,0 +1,10 @@
+{
+  "policy": "host_tensor_buffers",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "no_host_supported": true,
+  "executable_default_no_host": 0,
+  "active_source_override": false,
+  "process_environment_override": false,
+  "effective_no_host": 0,
+  "interpretation": "host tensor buffers remain permitted"
+}

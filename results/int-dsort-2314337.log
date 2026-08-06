@@ -1,0 +1,4 @@
+=== A: integrated ON, device-sort ON (default) ===
+GOLDEN MISMATCH
+=== B: integrated ON, device-sort OFF (host sort) ===
+GOLDEN MISMATCH

@@ -1,0 +1,13 @@
+{
+  "audit": "onednn-dispatch-policy",
+  "active_policy": "unset/default",
+  "serial_harness_records_policy": true,
+  "json_files_scanned": 526,
+  "historical_records": 388,
+  "historical_counts": {
+    "disabled": 2,
+    "enabled": 0,
+    "other": 386
+  },
+  "process_value": null
+}

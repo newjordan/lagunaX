@@ -1,0 +1,12 @@
+{
+  "audit": "benchmark-inter-test-delay-policy",
+  "timestamp_utc": "2026-08-01T16:49:48Z",
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "executable_sha256": "45e07d098300d6ffaf5fdc211c1cfe58d263083aa31c18c7ffa109ebd78c0ac1",
+  "delay_supported": true,
+  "executable_default_delay_seconds": 0,
+  "serial_source_override": false,
+  "process_environment_override": false,
+  "effective_delay_seconds": 0,
+  "separate_processes_mean_delay_is_not_applied_between_pp_and_tg": true
+}

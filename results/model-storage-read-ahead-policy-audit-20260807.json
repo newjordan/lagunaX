@@ -1,0 +1,32 @@
+{
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "model_size_bytes": 20274296256,
+  "mount": {
+    "target": "/mnt/data2tb",
+    "source": "/dev/nvme1n1p1",
+    "fstype": "ext4",
+    "options": "rw,noatime"
+  },
+  "matching_block_devices": [
+    {
+      "name": "nvme1n1",
+      "path": "/dev/nvme1n1",
+      "type": "disk",
+      "pkname": null,
+      "rota": false,
+      "ra": 128,
+      "sched": "none"
+    },
+    {
+      "name": "nvme1n1p1",
+      "path": "/dev/nvme1n1p1",
+      "type": "part",
+      "pkname": "nvme1n1",
+      "rota": false,
+      "ra": 128,
+      "sched": "none"
+    }
+  ],
+  "laguna_configures_storage_read_ahead": false,
+  "metrics_record_storage_read_ahead": false
+}

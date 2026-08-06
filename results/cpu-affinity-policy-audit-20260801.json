@@ -1,0 +1,9 @@
+{
+  "active_cpu_mask_override": false,
+  "active_cpu_strict_override": false,
+  "audit_process_cpus_allowed_list": "0-31",
+  "cpu_mask_default": "0x0",
+  "cpu_strict_default": 0,
+  "logical_cpu_count": 32,
+  "process_affinity_wrapper": false
+}

@@ -1,0 +1,23 @@
+{
+  "audit": "host-polling-scheduling-policy",
+  "executable_support": {
+    "priority": {
+      "line": "--prio <-1|0|1|2|3>                         process/thread priority (default: 0)",
+      "default": "0"
+    },
+    "poll": {
+      "line": "--poll <0...100>                                  (default: 50)",
+      "default": "50"
+    }
+  },
+  "canonical_policy": {
+    "passes_priority": false,
+    "passes_poll": false,
+    "records_priority": false,
+    "records_poll": false
+  },
+  "process_environment": {
+    "LX_PRIORITY": null,
+    "LX_POLL": null
+  }
+}

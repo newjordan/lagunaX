@@ -1,0 +1,22 @@
+{
+  "active_source_mentions": {
+    "env.sh": [],
+    "scripts/bench-serial.sh": []
+  },
+  "artifact_mentions": [],
+  "current_snapshot": {
+    "linux_pressure_stall_information": {
+      "cpu": "some avg10=0.00 avg60=0.00 avg300=0.00 total=58366213\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+      "io": "some avg10=0.00 avg60=0.00 avg300=0.00 total=78112390\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=77230897",
+      "memory": "some avg10=0.00 avg60=0.00 avg300=0.00 total=410423\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=403929"
+    },
+    "loadavg_1m_5m_15m": [
+      0.10107421875,
+      0.1455078125,
+      0.10205078125
+    ]
+  },
+  "finding": "active benchmark sources do not capture host load average, CPU utilization, iowait, or Linux PSI",
+  "parsed_json_artifacts": 541,
+  "policy": "host load and Linux PSI provenance"
+}

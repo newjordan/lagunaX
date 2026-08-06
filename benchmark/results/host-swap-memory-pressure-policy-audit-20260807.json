@@ -1,0 +1,23 @@
+{
+  "collected_at": "2026-08-01T19:45:55.297940+00:00",
+  "live": {
+    "vm_swappiness": 60,
+    "swap_total_kib": 8388604,
+    "swap_free_kib": 8347920,
+    "mem_available_kib": 61941492,
+    "swap_devices": [
+      {
+        "filename": "/swap.img",
+        "type": "file",
+        "size_kib": 8388604,
+        "used_kib": 40684,
+        "priority": -1
+      }
+    ]
+  },
+  "laguna": {
+    "env_policy_hits": [],
+    "bench_policy_hits": [],
+    "records_memory_pressure_or_swap": false
+  }
+}

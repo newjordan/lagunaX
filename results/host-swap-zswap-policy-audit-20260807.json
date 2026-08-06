@@ -1,0 +1,34 @@
+{
+  "angle": "host-swap-zswap-policy",
+  "finding": "The audit captures active swap devices, VM swap clustering and swappiness, zswap configuration, and whether Laguna controls or records this policy.",
+  "generated_at": "2026-08-01T20:55:53.689308+00:00",
+  "laguna": {
+    "bench_policy_hits": [],
+    "env_policy_hits": [],
+    "metrics_record_policy": false
+  },
+  "live": {
+    "meminfo": {
+      "SwapFree": "8347920 kB",
+      "SwapTotal": "8388604 kB"
+    },
+    "page_cluster": "3",
+    "swappiness": "60",
+    "swaps": [
+      {
+        "filename": "/swap.img",
+        "priority": "-1",
+        "size_kib": "8388604",
+        "type": "file",
+        "used_kib": "40684"
+      }
+    ],
+    "zswap": {
+      "accept_threshold_percent": "90",
+      "compressor": "lzo",
+      "enabled": "N",
+      "max_pool_percent": "20",
+      "zpool": null
+    }
+  }
+}

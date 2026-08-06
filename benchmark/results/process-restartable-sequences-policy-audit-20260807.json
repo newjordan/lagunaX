@@ -1,0 +1,17 @@
+{
+  "angle": "process-restartable-sequences-policy",
+  "generated_utc": "2026-08-01T22:54:46.412563+00:00",
+  "live": {
+    "at_rseq_align": 64,
+    "at_rseq_feature_size": 33,
+    "kernel_advertises_rseq_abi": true
+  },
+  "provenance": {
+    "env_controls_or_records_rseq": false,
+    "serial_harness_controls_or_records_rseq": false
+  },
+  "sources": {
+    "abi": "getauxval(AT_RSEQ_FEATURE_SIZE/AT_RSEQ_ALIGN)",
+    "policy_control": "GLIBC_TUNABLES=glibc.pthread.rseq=0 disables glibc registration"
+  }
+}

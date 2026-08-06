@@ -1,0 +1,12 @@
+{
+  "angle": "benchmark_warmup_policy",
+  "live_contract": {
+    "no_warmup_supported": true,
+    "default_warmup_enabled": true
+  },
+  "canonical": {
+    "env_configures_warmup": false,
+    "harness_passes_no_warmup": false,
+    "metrics_record_warmup": false
+  }
+}

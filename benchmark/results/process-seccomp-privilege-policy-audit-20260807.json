@@ -1,0 +1,13 @@
+{
+  "angle": "process-seccomp-and-no-new-privileges-policy",
+  "live": {
+    "no_new_privileges": 1,
+    "seccomp_filter_count": 0,
+    "seccomp_mode": 0,
+    "seccomp_mode_name": "disabled"
+  },
+  "provenance": {
+    "env_controls_or_records_policy": false,
+    "serial_harness_controls_or_records_policy": false
+  }
+}

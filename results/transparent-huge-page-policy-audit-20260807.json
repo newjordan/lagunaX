@@ -1,0 +1,28 @@
+{
+  "angle": "transparent-huge-page-policy",
+  "finding": "The host uses madvise-only anonymous THP and defragmentation, disables shmem THP, and enables khugepaged defragmentation; Laguna neither configures nor records this effective policy.",
+  "generated_at": "2026-08-01T20:47:13.892026+00:00",
+  "laguna": {
+    "bench_policy_hits": [],
+    "env_policy_hits": [],
+    "metrics_record_policy": false
+  },
+  "live": {
+    "effective": {
+      "defrag": "madvise",
+      "enabled": "madvise",
+      "khugepaged_defrag": "1",
+      "khugepaged_pages_to_scan": "4096",
+      "khugepaged_scan_sleep_millisecs": "10000",
+      "shmem_enabled": "never"
+    },
+    "raw": {
+      "defrag": "always defer defer+madvise [madvise] never",
+      "enabled": "always [madvise] never",
+      "khugepaged_defrag": "1",
+      "khugepaged_pages_to_scan": "4096",
+      "khugepaged_scan_sleep_millisecs": "10000",
+      "shmem_enabled": "always within_size advise [never] deny force"
+    }
+  }
+}

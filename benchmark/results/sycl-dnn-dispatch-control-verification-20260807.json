@@ -1,0 +1,11 @@
+{
+  "control": "SYCL oneDNN dispatch",
+  "checks": {
+    "shell_syntax": true,
+    "backend_default_preserved": true,
+    "explicit_backend_forwarding": true,
+    "tristate_validation": true,
+    "metrics_recorded": true
+  },
+  "finding": "The canonical environment and serial harness preserve backend-default DNN dispatch when unset, while allowing validated 0/1 A/B selection and recording the effective policy."
+}

@@ -1,0 +1,9 @@
+{
+  "active_help_line": "-ncmoe, --n-cpu-moe <n>                           (default: 0)",
+  "active_sources_override_cpu_moe": false,
+  "artifacts_mentioning_cpu_moe": 32,
+  "effective_cpu_moe_layers": 0,
+  "executable_default_cpu_moe_layers": 0,
+  "parsed_json_artifacts": 553,
+  "quality_result": "not measured by this policy-coverage audit"
+}

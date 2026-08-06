@@ -1,0 +1,96 @@
+  5537	static bool ggml_sycl_rms_norm_mul_nx2_f32(
+  5538	    ggml_backend_sycl_context & ctx, const ggml_tensor * rms, const ggml_tensor * mul, bool write_q8) {
+  5539	    const ggml_tensor * x = rms->src[0];
+  5540	    const ggml_tensor * w = mul->src[0] == rms ? mul->src[1] : mul->src[0];
+  5541	    if (!ggml_sycl_is_nx2_f32_vector(x) ||
+  5542	        !ggml_sycl_is_nx2_f32_vector(rms) ||
+  5543	        !ggml_sycl_is_nx2_f32_vector(w) ||
+  5544	        !ggml_sycl_is_nx2_f32_vector(mul)) {
+  5545	        return false;
+  5546	    }
+  5547	
+  5548	    float eps;
+  5549	    memcpy(&eps, rms->op_params, sizeof(float));
+  5550	
+  5551	    const float * x_data = (const float *) x->data;
+  5552	    const float * w_data = (const float *) w->data;
+  5553	    float * out          = (float *) mul->data;
+  5554	
+  5555	    constexpr int ncols = 2048;
+  5556	    const int wg_size = g_ggml_sycl_enable_rms_norm_mul_fusion >= 2 ? 1024 : 512;
+  5557	    const int nwarps  = wg_size / WARP_SIZE;
+  5558	    char * q8_out = nullptr;
+  5559	    size_t q8_row_stride = 0;
+  5560	    if (write_q8) {
+  5561	        constexpr int src1_padded_cols = GGML_PAD(ncols, MATRIX_ROW_PADDING);
+  5562	        q8_row_stride = (size_t) src1_padded_cols * sizeof(block_q8_1) / QK8_1;
+  5563	        if (!ctx.moe_act_q8_alloc) {
+  5564	            ctx.moe_act_q8_alloc = std::make_unique<ggml_sycl_pool_alloc<char>>(ctx.pool());
+  5565	        }
+  5566	        if (!ctx.moe_act_q8 || ctx.moe_act_q8_size < q8_row_stride) {
+  5567	            ctx.moe_act_q8 = ctx.moe_act_q8_alloc->realloc(q8_row_stride);
+  5568	            ctx.moe_act_q8_size = ctx.moe_act_q8_alloc->actual_size;
+  5569	        }
+  5570	        q8_out = ctx.moe_act_q8;
+  5571	    }
+  5572	
+  5573	    dpct::queue_ptr stream = ctx.stream();
+  5574	
+  5575	    stream->submit([&](sycl::handler & cgh) {
+  5576	        sycl::local_accessor<float, 1> local_sums(sycl::range<1>(nwarps), cgh);
+  5577	        cgh.parallel_for(
+  5578	            sycl::nd_range<1>(sycl::range<1>(wg_size), sycl::range<1>(wg_size)),
+  5676	static int ggml_sycl_try_fuse_rms_norm_mul(ggml_backend_sycl_context & ctx, const ggml_cgraph * cgraph, int node_idx) {
+  5677	    if (!g_ggml_sycl_enable_rms_norm_mul_fusion || g_ggml_sycl_disable_optimize) {
+  5678	        return 0;
+  5679	    }
+  5680	    if (!ggml_can_fuse_subgraph(cgraph, node_idx,
+  5681	            { GGML_OP_RMS_NORM, GGML_OP_MUL }, { node_idx + 1 })) {
+  5682	        return 0;
+  5683	    }
+  5684	
+  5685	    ggml_tensor * rms = cgraph->nodes[node_idx];
+  5686	    ggml_tensor * mul = cgraph->nodes[node_idx + 1];
+  5687	    if (!rms || !mul || rms->op != GGML_OP_RMS_NORM || mul->op != GGML_OP_MUL ||
+  5688	        (mul->src[0] != rms && mul->src[1] != rms)) {
+  5689	        return 0;
+  5690	    }
+  5691	    if (mul->src[1] == rms && !ggml_are_same_shape(mul->src[0], rms)) {
+  5692	        return 0;
+  5693	    }
+  5694	    if (!ggml_sycl_fusion_memory_ranges_ok(cgraph, node_idx, 2, node_idx + 1)) {
+  5695	        return 0;
+  5696	    }
+  5697	
+  5698	    const bool write_q8 =
+  5699	        g_ggml_sycl_enable_rms_norm_mul_fusion == 3 ||
+  5700	        (g_ggml_sycl_enable_rms_norm_mul_fusion == 4 &&
+  5701	         ggml_sycl_future_moe_gate_up_uses_src(cgraph, node_idx, mul));
+  5702	    return ggml_sycl_rms_norm_mul_nx2_f32(ctx, rms, mul, write_q8) ? 1 : 0;
+  5703	}
+  5704	
+  7060	                case GGML_OP_ADD:
+  7061	                    fused_skip = ggml_sycl_try_fuse_moe_tail_add_rms_norm(*sycl_ctx, cgraph, i);
+  7062	                    if (fused_skip == 0) {
+  7063	                        fused_skip = ggml_sycl_try_fuse_moe_tail_add(*sycl_ctx, cgraph, i);
+  7064	                    }
+  7065	                    break;
+  7066	                case GGML_OP_UNARY:
+  7067	                    fused_skip = ggml_sycl_try_fuse_moe_shared_gate_sigmoid_tail(*sycl_ctx, cgraph, i);
+  7068	                    break;
+  7069	                case GGML_OP_RMS_NORM:
+  7070	                    fused_skip = ggml_sycl_try_fuse_rms_norm_mul(*sycl_ctx, cgraph, i);
+  7071	                    break;
+  7072	                default:
+  7073	                    break;
+  7074	            }
+  7075	            if (fused_skip > 0) {
+  7076	                i += fused_skip;
+  7077	                continue;
+  7078	            }
+  7079	        } else {
+  7080	            const int rms_mul_skip = ggml_sycl_try_fuse_rms_norm_mul(*sycl_ctx, cgraph, i);
+  7081	            if (rms_mul_skip > 0) {
+  7082	                i += rms_mul_skip;
+  7083	                continue;
+  7084	            }

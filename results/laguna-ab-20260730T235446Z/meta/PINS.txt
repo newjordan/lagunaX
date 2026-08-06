@@ -1,0 +1,7 @@
+stamp=20260730T235446Z
+binary=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin
+a6281386770d3b8c6f15fe7a4f12ea21  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/libggml-sycl.so.0.17.0
+model_sha256=771a73e1249b9bc08e17d3fca59f5c49b7b9c8a6a47b5a6ac82f95c6e76923c4
+SRV_CTX=32768 AGENT_CTX=32768
+base_arm=all major custom fuses DISABLED
+tip_arm=quality-safe (only mm-add + dual-down + dual-multitoken disabled)

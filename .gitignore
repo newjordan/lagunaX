@@ -17,3 +17,8 @@ __pycache__/
 .DS_Store
 *.swp
 *~
+
+# B70 exclusive lock (runtime)
+results/.b70-gpu.lock
+results/.b70-gpu.lock.meta
+results/.b70-gpu.lock.test.*

@@ -1,0 +1,22 @@
+{
+  "baseline_decode_tok_s": 107.353814,
+  "baseline_kv_precision": [
+    "f16",
+    "f16"
+  ],
+  "baseline_prefill_tok_s": 1139.150972,
+  "candidate_decode_tok_s": 138.018337,
+  "candidate_kv_precision": [
+    "f16",
+    "f16"
+  ],
+  "candidate_prefill_tok_s": 1167.151085,
+  "kv_precision_pairs": {
+    "f16/f16": 174
+  },
+  "literal_target_delta": 0.7852806990695604,
+  "literal_target_score": 2.0,
+  "quality_result": "not measured by this provenance audit",
+  "records_with_kv_precision": 174,
+  "verified_score": 1.2147193009304396
+}

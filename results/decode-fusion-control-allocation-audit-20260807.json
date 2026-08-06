@@ -1,0 +1,13 @@
+{
+  "angle": "decode fusion control-path heap allocation",
+  "verifier": "python3 scripts/test_mmadd_decode_only.py",
+  "returncode": 1,
+  "stdout": [
+    "OK: fullsnippet has decode-only gate + any-batch opt-in"
+  ],
+  "stderr": [
+    "FAIL: tip lib unexpected bytes at 0x22952f: 8b8c2480000000488984"
+  ],
+  "snippet_structural_gate_passed": true,
+  "binary_patch_check_passed": false
+}

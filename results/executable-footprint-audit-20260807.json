@@ -1,0 +1,9 @@
+{
+  "audit": "executable-footprint",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "sha256": "45e07d098300d6ffaf5fdc211c1cfe58d263083aa31c18c7ffa109ebd78c0ac1",
+  "file_bytes": 564624,
+  "debug_sections": [],
+  "defined_symbol_rows": 1610,
+  "stripped": false
+}

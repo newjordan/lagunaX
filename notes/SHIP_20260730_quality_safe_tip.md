@@ -44,6 +44,9 @@ Prefill 3× was the broken dual multitoken path. Surviving win is mostly **decod
 
 ### Next
 
-1. Leave three fuses dead until fixed in source (default OFF or corrected).
+1. Leave dual_down + dual_multitoken dead until fixed in source (default OFF or corrected).
 2. Prove chat + long-ctx + agent on quality-safe stack.
-3. Only then reclaim mm-add / dual-down with bitexact/PPL gates.
+3. ~~Only then reclaim mm-add / dual-down with bitexact/PPL gates.~~
+   **Update 2026-07-31:** mm-add reclaimed **decode-only** (binary patch + env default ON).
+   Formal score **1.223** / tg **138.9** vs prior quality-safe **1.209** / tg **136.4**.
+   See `notes/SHIP_20260731_mmadd_decode_only.md`. dual_down still killed.

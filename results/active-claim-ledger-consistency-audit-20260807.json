@@ -1,0 +1,25 @@
+{
+  "sources": [
+    "/home/frosty40/turbo/lx/results/LATEST_SCORE.json",
+    "/home/frosty40/turbo/lx/results/MOUNT_DOOM_STATUS.md"
+  ],
+  "active_score": 1.2147193009304396,
+  "board_champion_score": 1.227,
+  "board_goal": 1.25,
+  "literal_target": 2.0,
+  "active_vs_board_champion_delta": -0.01228069906956053,
+  "board_goal_vs_literal_target_delta": 0.75,
+  "absolute_gap_to_literal_target": 0.7852806990695604,
+  "additional_gain_required_over_active_pct": 64.64709159293496,
+  "active_target_met": false,
+  "board_champion_target_met": false,
+  "board_goal_matches_literal_target": false,
+  "contradictions": {
+    "active_score_differs_from_board_champion": true,
+    "board_goal_is_not_literal_2x_target": true
+  },
+  "measured_negative_results": {
+    "active_score_below_literal_target": true,
+    "board_champion_below_literal_target": true
+  }
+}

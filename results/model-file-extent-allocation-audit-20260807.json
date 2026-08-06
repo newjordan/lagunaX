@@ -1,0 +1,18 @@
+{
+  "angle": "model-file-extent-allocation-policy",
+  "finding": "Laguna neither records nor rejects runs based on model-file extent fragmentation or sparse-allocation state.",
+  "generated_at": "2026-08-01T21:27:58.759432+00:00",
+  "laguna": {
+    "records_extent_or_allocation_state": false,
+    "source_hits": []
+  },
+  "model": {
+    "allocated_bytes": 20274302976,
+    "allocation_ratio": 1.0000003314541681,
+    "extent_count": 71,
+    "filesystem_block_size": 4096,
+    "path": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "size_bytes": 20274296256,
+    "sparse": false
+  }
+}

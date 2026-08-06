@@ -1,0 +1,21 @@
+===== ARM ship_rebench =====
+ship_rebench score=1.219768 tg=138.53 pp=1173.5 +21.98%
+===== ARM ub4096_b8192 =====
+ub4096_b8192 score=1.217161 tg=138.58 pp=1162.3 +21.72%
+===== ARM ub4096_b2048 =====
+ub4096_b2048 score=1.218039 tg=138.48 pp=1168.2 +21.80%
+===== ARM dnn_off =====
+dnn_off score=1.215262 tg=138.37 pp=1160.2 +21.53%
+===== ARM dual_sgs16 =====
+dual_sgs16 score=1.217894 tg=138.27 pp=1173.0 +21.79%
+===== ARM dual_sgs32 =====
+dual_sgs32 score=1.219944 tg=138.68 pp=1170.5 +21.99%
+===== ARM down_sgs16 =====
+down_sgs16 score=1.216210 tg=138.64 pp=1157.1 +21.62%
+===== ARM dual_down_only =====
+dual_down_only score=1.231135 tg=138.63 pp=1215.2 +23.11%
+===== ARM kill_packed =====
+kill_packed score=1.220730 tg=138.71 pp=1172.7 +22.07%
+===== ARM kill_integrated =====
+kill_integrated score=1.217978 tg=138.33 pp=1171.9 +21.80%
+===== SUMMARY =====

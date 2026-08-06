@@ -1,0 +1,14 @@
+{
+  "generated_utc": "2026-08-01T19:00:28.350490+00:00",
+  "angle": "transparent-hugepage-memory-policy",
+  "host_policy": {
+    "enabled": "always [madvise] never",
+    "defrag": "always defer defer+madvise [madvise] never",
+    "shmem_enabled": "always within_size advise [never] deny force"
+  },
+  "canonical_policy": {
+    "env_has_thp_control": false,
+    "harness_has_thp_control": false,
+    "metrics_record_thp_policy": false
+  }
+}

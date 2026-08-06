@@ -1,0 +1,17 @@
+{
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "live_cli": {
+    "accepted_values": [
+      "on",
+      "off",
+      "auto"
+    ],
+    "default": "auto"
+  },
+  "laguna": {
+    "configured_default": "-1",
+    "passes_configured_value": true,
+    "records_as_integer": true,
+    "default_is_documented_cli_value": false
+  }
+}

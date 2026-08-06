@@ -1,0 +1,9 @@
+{
+  "verifier": "bash -n env.sh scripts/bench-serial.sh plus exact CLI/wiring/default assertions",
+  "passed": true,
+  "installed_cli_support": "--no-op-offload <0|1>",
+  "forwarded_argument": "--no-op-offload $LX_NO_OP_OFFLOAD",
+  "metrics_field": "flags.no_op_offload",
+  "default": 0,
+  "default_semantics": "operation offload remains enabled"
+}

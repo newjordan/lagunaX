@@ -1,0 +1,88 @@
+{
+  "angle": "kernel-unbound-workqueue-affinity-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_workqueue_affinity": [],
+    "metrics_record_workqueue_affinity": []
+  },
+  "generated_utc": "2026-08-01T21:19:08.274839+00:00",
+  "live_policy": {
+    "global_cpumask": "ffffffff",
+    "isolated_cpumask": "00000000",
+    "online_cpus": "0-31",
+    "queues": {
+      "blkcg_punt_bio": {
+        "affinity_scope": "default (cache)",
+        "affinity_strict": "0",
+        "cpumask": "ffffffff",
+        "max_active": "1024",
+        "nice": "0",
+        "per_cpu": "0"
+      },
+      "nvme-auth-wq": {
+        "affinity_scope": "default (cache)",
+        "affinity_strict": "0",
+        "cpumask": "ffffffff",
+        "max_active": "1024",
+        "nice": "0",
+        "per_cpu": "0"
+      },
+      "nvme-delete-wq": {
+        "affinity_scope": "default (cache)",
+        "affinity_strict": "0",
+        "cpumask": "ffffffff",
+        "max_active": "1024",
+        "nice": "0",
+        "per_cpu": "0"
+      },
+      "nvme-reset-wq": {
+        "affinity_scope": "default (cache)",
+        "affinity_strict": "0",
+        "cpumask": "ffffffff",
+        "max_active": "1024",
+        "nice": "0",
+        "per_cpu": "0"
+      },
+      "nvme-wq": {
+        "affinity_scope": "default (cache)",
+        "affinity_strict": "0",
+        "cpumask": "ffffffff",
+        "max_active": "1024",
+        "nice": "0",
+        "per_cpu": "0"
+      },
+      "scsi_tmf_0": {
+        "affinity_scope": "default (cache)",
+        "affinity_strict": "0",
+        "cpumask": "ffffffff",
+        "max_active": "1",
+        "nice": "0",
+        "per_cpu": "0"
+      },
+      "scsi_tmf_1": {
+        "affinity_scope": "default (cache)",
+        "affinity_strict": "0",
+        "cpumask": "ffffffff",
+        "max_active": "1",
+        "nice": "0",
+        "per_cpu": "0"
+      },
+      "scsi_tmf_2": {
+        "affinity_scope": "default (cache)",
+        "affinity_strict": "0",
+        "cpumask": "ffffffff",
+        "max_active": "1",
+        "nice": "0",
+        "per_cpu": "0"
+      },
+      "writeback": {
+        "affinity_scope": "default (cache)",
+        "affinity_strict": "0",
+        "cpumask": "ffffffff",
+        "max_active": "1024",
+        "nice": "0",
+        "per_cpu": "0"
+      }
+    },
+    "requested_cpumask": "ffffffff"
+  }
+}

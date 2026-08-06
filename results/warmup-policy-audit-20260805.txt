@@ -1,0 +1,6 @@
+Warmup-policy audit
+logs_scanned=160
+logs_with_both_phase_markers=158
+bench_common_has_no_warmup=false
+binary_help_option=--no-warmup
+binary_help_semantics=skip warmup runs before benchmarking

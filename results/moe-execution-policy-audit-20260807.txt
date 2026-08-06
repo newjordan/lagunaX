@@ -1,0 +1,9 @@
+MoE execution-policy audit
+==========================
+artifacts_parsed=192
+GGML_SYCL_ENABLE_MOE_PIPELINE: 1=0, 0=0, missing=192, other=0
+GGML_SYCL_ENABLE_MOE_DOWN_GROUPED: 1=0, 0=0, missing=192, other=0
+
+Assertions:
+PASS: env.sh explicitly unsets both experimental MoE execution-policy variables.
+PASS: bench-serial metrics record neither variable, so historical artifacts cannot reconstruct either policy.

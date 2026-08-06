@@ -1,0 +1,26 @@
+{
+  "angle": "kernel-preemption-model-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_preemption": [],
+    "metrics_record_preemption": []
+  },
+  "generated_utc": "2026-08-01T21:00:40.146370+00:00",
+  "live_policy": {
+    "boot_config": {
+      "CONFIG_HZ_100": "n",
+      "CONFIG_HZ_1000": "y",
+      "CONFIG_HZ_250": "n",
+      "CONFIG_HZ_300": "n",
+      "CONFIG_PREEMPT": "n",
+      "CONFIG_PREEMPT_BUILD": "y",
+      "CONFIG_PREEMPT_DYNAMIC": "y",
+      "CONFIG_PREEMPT_LAZY": "y",
+      "CONFIG_PREEMPT_RT": "n"
+    },
+    "boot_config_path": "/boot/config-7.0.0-28-generic",
+    "debugfs_runtime_preempt": null,
+    "kernel_cmdline_preempt_controls": [],
+    "kernel_release": "7.0.0-28-generic",
+    "kernel_version": "Linux version 7.0.0-28-generic (buildd@lcy02-amd64-004) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #28~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 15:50:57 UTC 2"
+  }
+}

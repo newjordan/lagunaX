@@ -1,0 +1,13 @@
+{
+  "audit": "device-split-effective-wiring",
+  "checks": {
+    "shell_syntax": true,
+    "split_mode_forwarded": true,
+    "main_gpu_forwarded": true,
+    "tensor_split_forwarded": true,
+    "split_mode_recorded": true,
+    "main_gpu_recorded": true,
+    "tensor_split_recorded": true
+  },
+  "passed": true
+}

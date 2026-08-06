@@ -1,0 +1,9 @@
+{
+  "control": "throughput uncertainty retention",
+  "parser_selects_avg_only": true,
+  "parser_prints_single_float": true,
+  "metrics_store_point_estimates": true,
+  "metrics_store_uncertainty": false,
+  "raw_benchmark_json_retained_in_log": true,
+  "interpretation": "The canonical metrics and score path reduce each workload to avg_ts; uncertainty is not retained as structured score evidence."
+}

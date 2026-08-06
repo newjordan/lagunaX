@@ -1,0 +1,9 @@
+{
+  "deadline_utc": "2026-08-02T14:00:00Z",
+  "goal_score": 1.25,
+  "stretch_score": 1.3,
+  "start_score_target_beat": 1.227,
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin",
+  "track": "serial quality-safe tip",
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25"
+}

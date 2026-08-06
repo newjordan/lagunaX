@@ -1,0 +1,13 @@
+=== GOLDEN (mmid fused single-launch) ===
+GOLDEN MISMATCH
+=== BENCH pp512/tg128 ===
+  window:  pp512 / tg128  reps=5 combined_bench=0 delay=0 warmup_disabled=0 threads=16 threads_batch=16 cpu_moe_layers=0 no_kv_offload=0 no_op_offload=0 no_host=0 sycl_disable_graph=1 sycl_disable_dnn=backend-default priority=0 load=mmap poll=50 numa=disabled cpu_mask=0x0 cpu_strict=0 split=layer main_gpu=0 tensor_split=0 device=auto
+-- pp512 --
+-- tg128 --
+  "pp512": 718.5776,
+  "tg128": 135.548463,
+    "Serial only: one stream pp512 + tg128.",
+  pp512=718.5776  tg128=135.548463
+  "score": null,
+  "increase_pct": null,
+score → /home/frosty40/turbo/lx/results/20260802T031034Z/score.json

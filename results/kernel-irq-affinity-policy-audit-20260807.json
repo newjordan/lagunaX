@@ -1,0 +1,691 @@
+{
+  "angle": "kernel-irq-affinity-policy",
+  "generated_at": "2026-08-01T21:55:57.740929+00:00",
+  "laguna": {
+    "env_or_harness_controls_irq_affinity": false,
+    "serial_harness_records_irq_affinity": false
+  },
+  "live": {
+    "default_smp_affinity_hex": "ffffffff",
+    "irq_count_with_affinity": 128,
+    "irqs": [
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 0
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 1
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "",
+        "irq": 2
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 3
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 4
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 5
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 6
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "3",
+        "irq": 7
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "19",
+        "irq": 8
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "1",
+        "irq": 9
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 10
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 11
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 12
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 13
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 14
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "0",
+        "irq": 15
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "2",
+        "irq": 26
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "",
+        "irq": 27
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "4",
+        "irq": 28
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "5",
+        "irq": 29
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "6",
+        "irq": 30
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "7",
+        "irq": 32
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "8",
+        "irq": 33
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "9",
+        "irq": 34
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "10",
+        "irq": 35
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "11",
+        "irq": 36
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "12",
+        "irq": 37
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "13",
+        "irq": 38
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "14",
+        "irq": 40
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "15",
+        "irq": 42
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "16",
+        "irq": 44
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "17",
+        "irq": 45
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "18",
+        "irq": 54
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "21",
+        "irq": 63
+      },
+      {
+        "configured_cpu_list": "12",
+        "effective_cpu_list": "12",
+        "irq": 64
+      },
+      {
+        "configured_cpu_list": "1",
+        "effective_cpu_list": "1",
+        "irq": 65
+      },
+      {
+        "configured_cpu_list": "17",
+        "effective_cpu_list": "17",
+        "irq": 66
+      },
+      {
+        "configured_cpu_list": "3",
+        "effective_cpu_list": "3",
+        "irq": 67
+      },
+      {
+        "configured_cpu_list": "19",
+        "effective_cpu_list": "19",
+        "irq": 68
+      },
+      {
+        "configured_cpu_list": "4",
+        "effective_cpu_list": "4",
+        "irq": 69
+      },
+      {
+        "configured_cpu_list": "20",
+        "effective_cpu_list": "20",
+        "irq": 70
+      },
+      {
+        "configured_cpu_list": "5",
+        "effective_cpu_list": "5",
+        "irq": 71
+      },
+      {
+        "configured_cpu_list": "21",
+        "effective_cpu_list": "21",
+        "irq": 72
+      },
+      {
+        "configured_cpu_list": "6",
+        "effective_cpu_list": "6",
+        "irq": 73
+      },
+      {
+        "configured_cpu_list": "22",
+        "effective_cpu_list": "22",
+        "irq": 74
+      },
+      {
+        "configured_cpu_list": "7",
+        "effective_cpu_list": "7",
+        "irq": 75
+      },
+      {
+        "configured_cpu_list": "23",
+        "effective_cpu_list": "23",
+        "irq": 76
+      },
+      {
+        "configured_cpu_list": "8",
+        "effective_cpu_list": "8",
+        "irq": 77
+      },
+      {
+        "configured_cpu_list": "24",
+        "effective_cpu_list": "24",
+        "irq": 78
+      },
+      {
+        "configured_cpu_list": "9",
+        "effective_cpu_list": "9",
+        "irq": 79
+      },
+      {
+        "configured_cpu_list": "25",
+        "effective_cpu_list": "25",
+        "irq": 80
+      },
+      {
+        "configured_cpu_list": "10",
+        "effective_cpu_list": "10",
+        "irq": 81
+      },
+      {
+        "configured_cpu_list": "26",
+        "effective_cpu_list": "26",
+        "irq": 82
+      },
+      {
+        "configured_cpu_list": "11",
+        "effective_cpu_list": "11",
+        "irq": 83
+      },
+      {
+        "configured_cpu_list": "27",
+        "effective_cpu_list": "27",
+        "irq": 84
+      },
+      {
+        "configured_cpu_list": "28",
+        "effective_cpu_list": "28",
+        "irq": 85
+      },
+      {
+        "configured_cpu_list": "13",
+        "effective_cpu_list": "13",
+        "irq": 86
+      },
+      {
+        "configured_cpu_list": "29",
+        "effective_cpu_list": "29",
+        "irq": 87
+      },
+      {
+        "configured_cpu_list": "14",
+        "effective_cpu_list": "14",
+        "irq": 88
+      },
+      {
+        "configured_cpu_list": "30",
+        "effective_cpu_list": "30",
+        "irq": 89
+      },
+      {
+        "configured_cpu_list": "15",
+        "effective_cpu_list": "15",
+        "irq": 90
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "20",
+        "irq": 91
+      },
+      {
+        "configured_cpu_list": "31",
+        "effective_cpu_list": "31",
+        "irq": 92
+      },
+      {
+        "configured_cpu_list": "1",
+        "effective_cpu_list": "1",
+        "irq": 93
+      },
+      {
+        "configured_cpu_list": "2",
+        "effective_cpu_list": "2",
+        "irq": 94
+      },
+      {
+        "configured_cpu_list": "17",
+        "effective_cpu_list": "17",
+        "irq": 95
+      },
+      {
+        "configured_cpu_list": "18",
+        "effective_cpu_list": "18",
+        "irq": 96
+      },
+      {
+        "configured_cpu_list": "3",
+        "effective_cpu_list": "3",
+        "irq": 97
+      },
+      {
+        "configured_cpu_list": "0",
+        "effective_cpu_list": "0",
+        "irq": 98
+      },
+      {
+        "configured_cpu_list": "19",
+        "effective_cpu_list": "19",
+        "irq": 99
+      },
+      {
+        "configured_cpu_list": "16",
+        "effective_cpu_list": "16",
+        "irq": 100
+      },
+      {
+        "configured_cpu_list": "4",
+        "effective_cpu_list": "4",
+        "irq": 101
+      },
+      {
+        "configured_cpu_list": "20",
+        "effective_cpu_list": "20",
+        "irq": 102
+      },
+      {
+        "configured_cpu_list": "5",
+        "effective_cpu_list": "5",
+        "irq": 103
+      },
+      {
+        "configured_cpu_list": "21",
+        "effective_cpu_list": "21",
+        "irq": 104
+      },
+      {
+        "configured_cpu_list": "6",
+        "effective_cpu_list": "6",
+        "irq": 105
+      },
+      {
+        "configured_cpu_list": "22",
+        "effective_cpu_list": "22",
+        "irq": 106
+      },
+      {
+        "configured_cpu_list": "7",
+        "effective_cpu_list": "7",
+        "irq": 107
+      },
+      {
+        "configured_cpu_list": "23",
+        "effective_cpu_list": "23",
+        "irq": 108
+      },
+      {
+        "configured_cpu_list": "8",
+        "effective_cpu_list": "8",
+        "irq": 109
+      },
+      {
+        "configured_cpu_list": "24",
+        "effective_cpu_list": "24",
+        "irq": 110
+      },
+      {
+        "configured_cpu_list": "9",
+        "effective_cpu_list": "9",
+        "irq": 111
+      },
+      {
+        "configured_cpu_list": "25",
+        "effective_cpu_list": "25",
+        "irq": 112
+      },
+      {
+        "configured_cpu_list": "10",
+        "effective_cpu_list": "10",
+        "irq": 113
+      },
+      {
+        "configured_cpu_list": "26",
+        "effective_cpu_list": "26",
+        "irq": 114
+      },
+      {
+        "configured_cpu_list": "11",
+        "effective_cpu_list": "11",
+        "irq": 115
+      },
+      {
+        "configured_cpu_list": "27",
+        "effective_cpu_list": "27",
+        "irq": 116
+      },
+      {
+        "configured_cpu_list": "12",
+        "effective_cpu_list": "12",
+        "irq": 117
+      },
+      {
+        "configured_cpu_list": "28",
+        "effective_cpu_list": "28",
+        "irq": 118
+      },
+      {
+        "configured_cpu_list": "13",
+        "effective_cpu_list": "13",
+        "irq": 119
+      },
+      {
+        "configured_cpu_list": "29",
+        "effective_cpu_list": "29",
+        "irq": 120
+      },
+      {
+        "configured_cpu_list": "14",
+        "effective_cpu_list": "14",
+        "irq": 121
+      },
+      {
+        "configured_cpu_list": "30",
+        "effective_cpu_list": "30",
+        "irq": 122
+      },
+      {
+        "configured_cpu_list": "15",
+        "effective_cpu_list": "15",
+        "irq": 123
+      },
+      {
+        "configured_cpu_list": "31",
+        "effective_cpu_list": "31",
+        "irq": 124
+      },
+      {
+        "configured_cpu_list": "2",
+        "effective_cpu_list": "2",
+        "irq": 125
+      },
+      {
+        "configured_cpu_list": "18",
+        "effective_cpu_list": "18",
+        "irq": 126
+      },
+      {
+        "configured_cpu_list": "0",
+        "effective_cpu_list": "0",
+        "irq": 127
+      },
+      {
+        "configured_cpu_list": "16",
+        "effective_cpu_list": "16",
+        "irq": 128
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "22",
+        "irq": 129
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "23",
+        "irq": 130
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "30",
+        "irq": 132
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "31",
+        "irq": 133
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "14",
+        "irq": 134
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "15",
+        "irq": 135
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "16",
+        "irq": 136
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "29",
+        "irq": 137
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "24",
+        "irq": 139
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "25",
+        "irq": 141
+      },
+      {
+        "configured_cpu_list": "0",
+        "effective_cpu_list": "0",
+        "irq": 142
+      },
+      {
+        "configured_cpu_list": "1",
+        "effective_cpu_list": "1",
+        "irq": 143
+      },
+      {
+        "configured_cpu_list": "2",
+        "effective_cpu_list": "2",
+        "irq": 144
+      },
+      {
+        "configured_cpu_list": "3",
+        "effective_cpu_list": "3",
+        "irq": 145
+      },
+      {
+        "configured_cpu_list": "4",
+        "effective_cpu_list": "4",
+        "irq": 146
+      },
+      {
+        "configured_cpu_list": "5",
+        "effective_cpu_list": "5",
+        "irq": 147
+      },
+      {
+        "configured_cpu_list": "6",
+        "effective_cpu_list": "6",
+        "irq": 148
+      },
+      {
+        "configured_cpu_list": "7",
+        "effective_cpu_list": "7",
+        "irq": 149
+      },
+      {
+        "configured_cpu_list": "8",
+        "effective_cpu_list": "8",
+        "irq": 150
+      },
+      {
+        "configured_cpu_list": "9",
+        "effective_cpu_list": "9",
+        "irq": 151
+      },
+      {
+        "configured_cpu_list": "10",
+        "effective_cpu_list": "10",
+        "irq": 152
+      },
+      {
+        "configured_cpu_list": "11",
+        "effective_cpu_list": "11",
+        "irq": 153
+      },
+      {
+        "configured_cpu_list": "12",
+        "effective_cpu_list": "12",
+        "irq": 154
+      },
+      {
+        "configured_cpu_list": "13",
+        "effective_cpu_list": "13",
+        "irq": 155
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "8",
+        "irq": 156
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "26",
+        "irq": 158
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "27",
+        "irq": 159
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "",
+        "irq": 160
+      },
+      {
+        "configured_cpu_list": "0-31",
+        "effective_cpu_list": "28",
+        "irq": 161
+      }
+    ],
+    "possible_cpu_count": 32,
+    "possible_cpu_list": "0-31",
+    "unique_effective_cpu_lists": [
+      "",
+      "0",
+      "1",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "2",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "3",
+      "30",
+      "31",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9"
+    ]
+  }
+}

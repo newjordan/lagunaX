@@ -1,0 +1,18 @@
+{
+  "angle": "host_thread_count_policy",
+  "host": {
+    "logical_cpus": 32,
+    "cores_per_socket": 16,
+    "threads_per_core": 2,
+    "sockets": 1
+  },
+  "llama_bench": {
+    "threads_supported": true,
+    "threads_default": 16
+  },
+  "laguna": {
+    "configured_threads": 16,
+    "passes_threads": true,
+    "records_threads_in_metrics": true
+  }
+}

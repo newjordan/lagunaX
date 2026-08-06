@@ -1,0 +1,149 @@
+{
+  "cpu0_resume_latency_us": "0",
+  "device_resume_latency_constraints": [
+    {
+      "path": "/sys/devices/system/cpu/cpu0/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu1/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu10/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu11/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu12/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu13/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu14/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu15/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu16/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu17/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu18/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu19/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu2/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu20/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu21/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu22/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu23/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu24/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu25/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu26/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu27/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu28/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu29/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu3/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu30/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu31/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu4/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu5/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu6/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu7/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu8/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    },
+    {
+      "path": "/sys/devices/system/cpu/cpu9/power/pm_qos_resume_latency_us",
+      "microseconds": "0"
+    }
+  ],
+  "cpu_dma_latency_device_present": true,
+  "laguna_source_mentions": {
+    "env.sh": {
+      "cpu_dma_latency": false,
+      "pm_qos_resume_latency_us": false,
+      "PM_QOS": false,
+      "pm_qos": false
+    },
+    "scripts/bench-serial.sh": {
+      "cpu_dma_latency": false,
+      "pm_qos_resume_latency_us": false,
+      "PM_QOS": false,
+      "pm_qos": false
+    }
+  },
+  "conclusion": "The host exports PM-QoS latency controls, but Laguna's canonical serial path neither requests nor records a latency constraint."
+}

@@ -1,0 +1,10 @@
+direction=speculative_decoding_readiness
+configured_model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+configured_model_count=1
+draft_named_model_count=0
+llama_speculative_binary_count=12
+binary=/home/frosty40/turbo/treebeard-work/build-treebeard-single-wavefront/bin/llama-speculative
+binary=/home/frosty40/turbo/treebeard-work/build-treebeard-night/01-mmvq-np12/bin/llama-speculative
+binary=/home/frosty40/turbo/build-treebeard-moe-t2t3-3fcf1c626-oneapi/bin/llama-speculative
+binary=/home/frosty40/turbo/DO NOT REVIVE/build-artifacts/build-adaptive-spec/bin/llama-speculative
+binary=/home/frosty40/turbo/turbo-combined/release/turbo-statetree-0.1.0-rc.7/root/opt/turbo-statetree-0.1.0-rc.7/bin/llama-speculative

@@ -1,0 +1,8 @@
+binary provenance audit
+metric_records_with_binary_path=178
+records_with_binary_hash_field=0
+records_with_binary_version_or_build_id=0
+distinct_currently_existing_binary_targets=4
+assert_metric_records_present=PASS
+assert_no_hash_provenance=PASS
+assert_no_version_provenance=PASS

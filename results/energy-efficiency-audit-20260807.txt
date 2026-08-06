@@ -1,0 +1,12 @@
+Energy/efficiency telemetry audit
+metric_files=191
+parsed_records=191
+records_with_power_field=0
+records_with_energy_field=0
+records_with_wall_clock_or_latency_field=0
+
+Scope: recursively parsed results/**/metrics.json. Field detection is exact, case-insensitive against common power, energy, and wall-clock/latency names. Throughput-only avg_ts/pp512/tg128 fields are not treated as energy or latency telemetry.
+
+ASSERT metric_files_gt_0=PASS
+ASSERT no_power_telemetry=PASS
+ASSERT no_energy_telemetry=PASS

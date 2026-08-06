@@ -1,0 +1,22 @@
+{
+  "angle": "dynamic-userspace-irq-balancing-policy",
+  "canonical_policy": {
+    "env_or_harness_controls_irqbalance": false,
+    "metrics_record_irqbalance_state": false
+  },
+  "generated_utc": "2026-08-01T22:16:14.828239+00:00",
+  "live_state": {
+    "configuration": {},
+    "daemon_active": false,
+    "irqbalance_processes": {
+      "returncode": 1,
+      "stderr": "",
+      "stdout": ""
+    },
+    "irqbalance_service": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "LoadState=not-found\nActiveState=inactive\nSubState=dead\nFragmentPath="
+    }
+  }
+}

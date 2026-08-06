@@ -1,0 +1,20 @@
+{
+  "audit": "model-load-mode-policy",
+  "canonical_configured": false,
+  "executable_contract": {
+    "accepted_load_modes": [
+      "none",
+      "mmap",
+      "mlock",
+      "mmap+mlock",
+      "dio"
+    ],
+    "default_load_mode": "mmap",
+    "legacy_mmap_accepted": [
+      "0",
+      "1"
+    ],
+    "legacy_mmap_deprecated": true
+  },
+  "metrics_recorded": false
+}

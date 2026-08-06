@@ -1,0 +1,16 @@
+{
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "default_priority": 0,
+  "historical_priority_records": 0,
+  "historical_priority_values": {},
+  "json_artifacts_parsed": 519,
+  "priority_option_supported": true,
+  "serial_harness_priority_explicit": false,
+  "supported_values": [
+    -1,
+    0,
+    1,
+    2,
+    3
+  ]
+}

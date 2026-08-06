@@ -1,0 +1,35 @@
+{
+  "audit": "mandatory_primary_evidence_checkpoint",
+  "champion": {
+    "complete_quality_parity_supported_by_primary_directory": false,
+    "decode_speedup": 1.297634213536186,
+    "floors_ok": true,
+    "prefill_speedup": 1.0387749895191243,
+    "primary_directory_files": [
+      "llama-bench.log",
+      "metrics.json",
+      "score.json"
+    ],
+    "quality_artifacts": [],
+    "score": 1.2274239323072529,
+    "stamp": "20260731T141436Z"
+  },
+  "costly_action_launched": false,
+  "latest": {
+    "below_champion_percent": 1.0350646620464476,
+    "score": 1.2147193009304396,
+    "stamp": "20260731T172351Z"
+  },
+  "measured_negative_results": {
+    "champion_does_not_meet_literal_target": true,
+    "champion_primary_directory_has_no_quality_artifact": true,
+    "latest_does_not_reproduce_champion": true
+  },
+  "target_reconciliation": {
+    "champion_absolute_gap_to_literal_target": 0.7725760676927471,
+    "champion_multiplicative_improvement_required_percent": 62.942887730769236,
+    "literal_user_target": 2.0,
+    "status_board_target": 1.25,
+    "targets_contradict": true
+  }
+}

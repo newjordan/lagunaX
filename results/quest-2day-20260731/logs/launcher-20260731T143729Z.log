@@ -1,0 +1,70 @@
+seeded champion {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+[2026-07-31T14:37:31Z] QUEST-2DAY START pid=182152
+[2026-07-31T14:37:31Z] deadline=2026-08-02T14:00:00Z goal_score=1.250 stretch=1.300 sleep=180s
+[2026-07-31T14:37:31Z] baseline=/home/frosty40/turbo/lx/baseline/baseline.json bin=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+[2026-07-31T14:37:31Z] env: mm-add=0 dual_down=1 dual_mt=1
+[2026-07-31T14:37:31Z] time_left_s=170549
+[2026-07-31T14:37:31Z] ======== CYCLE 1 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c1-20260731T143731Z ========
+[lx-gpu-lock] ACQUIRED pid=182152 reason=quest-2day-c1
+[2026-07-31T14:37:31Z] CYCLE 1 golden-smoke
+[2026-07-31T14:37:49Z] CYCLE 1 GOLDEN OK
+[2026-07-31T14:38:27Z] CYCLE 1 RESULT pp512=1170.200062 tg128=137.995871 score=1.2153634404646343 increase=21.53634404646343%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+board n=1 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T14:38:27Z] CYCLE 1 sleep 180s
+[2026-07-31T14:41:27Z] time_left_s=170313
+[2026-07-31T14:41:27Z] ======== CYCLE 2 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c2-20260731T144127Z ========
+[2026-07-31T14:42:05Z] CYCLE 2 RESULT pp512=1163.417295 tg128=137.693827 score=1.2116056833978532 increase=21.160568339785325%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+board n=2 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T14:42:05Z] CYCLE 2 sleep 180s
+[2026-07-31T14:45:05Z] time_left_s=170095
+[2026-07-31T14:45:05Z] ======== CYCLE 3 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c3-20260731T144505Z ========
+[2026-07-31T14:45:43Z] CYCLE 3 RESULT pp512=1172.523905 tg128=138.570461 score=1.2197617003921968 increase=21.976170039219678%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+[2026-07-31T14:45:43Z] CYCLE 3 power profile decode
+board n=3 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T14:46:03Z] CYCLE 3 sleep 180s
+[2026-07-31T14:49:03Z] time_left_s=169857
+[2026-07-31T14:49:03Z] ======== CYCLE 4 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c4-20260731T144903Z ========
+[2026-07-31T14:49:41Z] CYCLE 4 RESULT pp512=1174.613125 tg128=138.599303 score=1.220495175300179 increase=22.049517530017894%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+board n=4 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T14:49:41Z] CYCLE 4 sleep 180s
+[2026-07-31T14:52:41Z] time_left_s=169639
+[2026-07-31T14:52:41Z] ======== CYCLE 5 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c5-20260731T145241Z ========
+[2026-07-31T14:52:41Z] CYCLE 5 golden-smoke
+[2026-07-31T14:52:59Z] CYCLE 5 GOLDEN OK
+[2026-07-31T14:53:37Z] CYCLE 5 RESULT pp512=1181.361091 tg128=138.946835 score=1.2245421248603447 increase=22.454212486034475%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+board n=5 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T14:53:37Z] CYCLE 5 sleep 180s
+[2026-07-31T14:56:37Z] time_left_s=169403
+[2026-07-31T14:56:37Z] ======== CYCLE 6 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c6-20260731T145637Z ========
+[2026-07-31T14:57:15Z] CYCLE 6 RESULT pp512=1176.09918 tg128=137.980588 score=1.2167911721620683 increase=21.679117216206834%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+[2026-07-31T14:57:15Z] CYCLE 6 power profile decode
+[2026-07-31T14:57:35Z] CYCLE 6 ktrace onednn decode
+board n=6 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T14:58:06Z] CYCLE 6 sleep 180s
+[2026-07-31T15:01:06Z] time_left_s=169134
+[2026-07-31T15:01:06Z] ======== CYCLE 7 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c7-20260731T150106Z ========
+[2026-07-31T15:01:44Z] CYCLE 7 RESULT pp512=1165.176669 tg128=138.281381 score=1.2159404217061687 increase=21.594042170616866%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+board n=7 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T15:01:44Z] CYCLE 7 sleep 180s
+[2026-07-31T15:04:44Z] time_left_s=168916
+[2026-07-31T15:04:45Z] ======== CYCLE 8 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c8-20260731T150444Z ========
+[2026-07-31T15:05:22Z] CYCLE 8 RESULT pp512=1172.551773 tg128=138.4585 score=1.219029719311335 increase=21.902971931133507%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+board n=8 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T15:05:22Z] CYCLE 8 sleep 180s
+[2026-07-31T15:08:22Z] time_left_s=168698
+[2026-07-31T15:08:22Z] ======== CYCLE 9 → /home/frosty40/turbo/lx/results/quest-2day-20260731/cycles/c9-20260731T150822Z ========
+[2026-07-31T15:08:23Z] CYCLE 9 golden-smoke
+[2026-07-31T15:08:41Z] CYCLE 9 GOLDEN OK
+[2026-07-31T15:09:18Z] CYCLE 9 RESULT pp512=1167.781713 tg128=138.440154 score=1.2176670178859954 increase=21.76670178859954%
+champ holds {'pp512': 1183.321539, 'tg128': 139.305982, 'score': 1.2274239323072529, 'increase_pct': 22.742393230725288, 'source': 'seed-LATEST_SCORE', 'binary': '/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench', 'note': 'post-brownout tip reclaim rebench'}
+[2026-07-31T15:09:18Z] CYCLE 9 power profile decode
+board n=9 champ_score=1.2274239323072529 gap_to_goal=0.022576067692747115
+[2026-07-31T15:09:39Z] CYCLE 9 sleep 180s

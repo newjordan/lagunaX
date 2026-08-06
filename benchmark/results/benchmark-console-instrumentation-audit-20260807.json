@@ -1,0 +1,20 @@
+{
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "capabilities": {
+    "verbose": true,
+    "progress": true,
+    "stderr_output": true
+  },
+  "active_policy": {
+    "verbose_enabled": false,
+    "progress_enabled": false,
+    "stderr_output_configured": false,
+    "stdout_output": "json",
+    "stderr_is_captured_in_timed_invocations": true
+  },
+  "defaults": {
+    "verbose": false,
+    "progress": false,
+    "stderr_output": "none"
+  }
+}

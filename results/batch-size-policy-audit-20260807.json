@@ -1,0 +1,19 @@
+{
+  "active_defaults": {
+    "batch": 2048,
+    "ubatch": 2048
+  },
+  "controls": {
+    "batch": "-b/--batch-size",
+    "ubatch": "-ub/--ubatch-size"
+  },
+  "executable_defaults": {
+    "batch": 2048,
+    "ubatch": 512
+  },
+  "harness_passes_both": true,
+  "process_environment_explicit": {
+    "BBATCH": false,
+    "UBATCH": false
+  }
+}

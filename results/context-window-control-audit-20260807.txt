@@ -1,0 +1,7 @@
+context-window control audit
+metrics_with_recorded_ctx=170
+unique_recorded_ctx=[8192]
+common_passes_ctx=False
+benchmark_invocations_pass_ctx=False
+recorded_ctx_is_effective_runtime_control=false
+finding=The harness records CTX metadata but does not pass it to either llama-bench invocation; changing CTX alone cannot alter the measured workload.

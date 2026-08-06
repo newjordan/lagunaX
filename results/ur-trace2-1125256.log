@@ -1,0 +1,8 @@
+>> mode=ur   out=/home/frosty40/turbo/lx/results/ur-trace-mt
+>> workload: /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench -m /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf -ngl 99 -fa 1 -ub 2048 -b 2048 -p 256 -n 0 -r 1 -t 16 -ctk f16 -ctv f16 -o json
+
+================= KERNEL TRACE (ur) =================
+  Level-Zero/UR call histogram (top 20):
+  total UR calls: 0
+=======================================================
+rc=0

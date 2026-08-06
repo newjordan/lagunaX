@@ -1,0 +1,13 @@
+{
+  "executable": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "repetitions_supported": true,
+  "configured_repetitions": 5,
+  "harness_requests_repetitions": true,
+  "harness_parser_uses_mean_only": true,
+  "metrics_records_repetition_count": true,
+  "metrics_records_dispersion": false,
+  "historical_logs_scanned": 160,
+  "parsed_benchmark_rows": 312,
+  "rows_with_samples": 312,
+  "rows_with_stddev": 312
+}

@@ -1,0 +1,140 @@
+=== BENCH build-base-control dual_down OFF ===
+[lx-gpu-lock] ACQUIRED pid=1062020 reason=bench-serial:bc current-source dual_down-OFF control
+== lx serial bench ==
+  mode:    candidate
+  binary:  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench
+  bin sha: 45e07d098300d6ffaf5fdc211c1cfe58d263083aa31c18c7ffa109ebd78c0ac1
+  model:   /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+  window:  pp512 / tg128  reps=5 combined_bench=0 delay=0 warmup_disabled=0 threads=16 threads_batch=16 cpu_moe_layers=0 no_kv_offload=0 no_op_offload=0 no_host=0 sycl_disable_graph=1 sycl_disable_dnn=backend-default priority=0 load=mmap poll=50 numa=disabled cpu_mask=0x0 cpu_strict=0 split=layer main_gpu=0 tensor_split=0 device=auto
+  device:  level_zero:gpu  ZE_AFFINITY_MASK=0
+  out:     /home/frosty40/turbo/lx/results/20260802T014924Z/metrics.json
+-- pp512 --
+-- tg128 --
+{
+  "stamp": "20260802T014924Z",
+  "track": "serial",
+  "mode": "candidate",
+  "pp512": 1137.665539,
+  "tg128": 136.693934,
+  "window": {
+    "pp": 512,
+    "tg": 128,
+    "reps": 5,
+    "depth": 0
+  },
+  "combined_bench": false,
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+  "binary_sha256": "45e07d098300d6ffaf5fdc211c1cfe58d263083aa31c18c7ffa109ebd78c0ac1",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "flags": {
+    "ngl": 99,
+    "threads": 16,
+    "threads_batch": 16,
+    "cpu_moe_layers": 0,
+    "cpu_mask": "0x0",
+    "cpu_strict": 0,
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "tensor_split": "0",
+    "device": "auto",
+    "ubatch": 2048,
+    "bbatch": 2048,
+    "ctx": 8192,
+    "ctk": "f16",
+    "ctv": "f16",
+    "no_kv_offload": 0,
+    "no_op_offload": 0,
+    "no_host": 0,
+    "flash_attn": -1,
+    "sycl_disable_graph": 1,
+    "sycl_disable_dnn": "backend-default",
+    "priority": 0,
+    "load_mode": "mmap",
+    "poll": 50,
+    "delay_seconds": 0,
+    "numa": "disabled"
+  },
+  "env": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0",
+    "GGML_SYCL_DISABLE_GRAPH": "1",
+    "GGML_SYCL_DISABLE_DNN": null
+  },
+  "note": "bc current-source dual_down-OFF control",
+  "claim_boundary": [
+    "Serial only: one stream pp512 + tg128.",
+    "Not multi-slot aggregate tok/s.",
+    "Not comparable to mlx.fast M5 absolute tok/s (different quant/silicon).",
+    "Score is vs pinned B70 baseline only."
+  ]
+}
+
+wrote /home/frosty40/turbo/lx/results/20260802T014924Z/metrics.json
+  pp512=1137.665539  tg128=136.693934
+score=1.198277  increase=+19.83%  dec=1.2733x  pre=0.9987x
+{
+  "decode_tok_s": 136.693934,
+  "prefill_tok_s": 1137.665539,
+  "baseline_decode_tok_s": 107.353814,
+  "baseline_prefill_tok_s": 1139.150972,
+  "decode_speedup": 1.2733030053315106,
+  "prefill_speedup": 0.9986960174406103,
+  "decode_floor": 0.95,
+  "prefill_floor": 0.95,
+  "floors_ok": true,
+  "score": 1.1982768045165904,
+  "increase_pct": 19.827680451659035,
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
+  "track": "serial",
+  "not": "multi-slot aggregate tok/s",
+  "baseline_path": "/home/frosty40/turbo/lx/baseline/baseline.json",
+  "candidate_path": "/home/frosty40/turbo/lx/results/20260802T014924Z/metrics.json",
+  "candidate_meta": {
+    "stamp": "20260802T014924Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "bc current-source dual_down-OFF control",
+    "flags": {
+      "ngl": 99,
+      "threads": 16,
+      "threads_batch": 16,
+      "cpu_moe_layers": 0,
+      "cpu_mask": "0x0",
+      "cpu_strict": 0,
+      "split_mode": "layer",
+      "main_gpu": 0,
+      "tensor_split": "0",
+      "device": "auto",
+      "ubatch": 2048,
+      "bbatch": 2048,
+      "ctx": 8192,
+      "ctk": "f16",
+      "ctv": "f16",
+      "no_kv_offload": 0,
+      "no_op_offload": 0,
+      "no_host": 0,
+      "flash_attn": -1,
+      "sycl_disable_graph": 1,
+      "sycl_disable_dnn": "backend-default",
+      "priority": 0,
+      "load_mode": "mmap",
+      "poll": 50,
+      "delay_seconds": 0,
+      "numa": "disabled"
+    },
+    "env": {
+      "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+      "ZE_AFFINITY_MASK": "0",
+      "GGML_SYCL_DISABLE_GRAPH": "1",
+      "GGML_SYCL_DISABLE_DNN": null
+    }
+  },
+  "baseline_meta": {
+    "stamp": "20260729T183834Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "v0 control pin: serial track, Q4_K_M, base-control"
+  }
+}
+score → /home/frosty40/turbo/lx/results/20260802T014924Z/score.json
+bench rc=0
