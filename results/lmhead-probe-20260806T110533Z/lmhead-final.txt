@@ -1,0 +1,1 @@
+[lmhead-probe] FINAL: 647 lm_head calls, 7534309 us, 11644.99 us/cycle; max_suffix=39; per-suffix hits: 39:647

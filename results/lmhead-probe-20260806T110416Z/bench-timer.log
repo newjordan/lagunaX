@@ -1,0 +1,38 @@
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+To enable execution of this file add
+	add-auto-load-safe-path /opt/intel/oneapi/compiler/2026.0/lib/libsycl.so.9.0.0-gdb.py
+line to your configuration file "/home/frosty40/.config/gdb/gdbinit".
+To completely disable this security protection add
+	set auto-load safe-path /
+line to your configuration file "/home/frosty40/.config/gdb/gdbinit".
+For more information about this security protection see the
+"Auto-loading safe path" section in the GDB manual.  E.g., run from the shell:
+	info "(gdb)Auto-loading safe path"
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x000079ccb51108d7 in __GI___wait4 (pid=646360, stat_loc=0x0, options=0, usage=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:30
+#0  0x000079ccb51108d7 in __GI___wait4 (pid=646360, stat_loc=0x0, options=0, usage=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:30
+30	in ../sysdeps/unix/sysv/linux/wait4.c
+#1  0x000079ccba310bea in ggml_print_backtrace () from /home/frosty40/turbo/lx/src-lmhead-build/bin/libggml-base.so.0
+#2  0x000079ccba32b286 in ggml_uncaught_exception() () from /home/frosty40/turbo/lx/src-lmhead-build/bin/libggml-base.so.0
+#3  0x000079ccb54bb0da in ?? () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#4  0x000079ccb54a5a55 in std::terminate() () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#5  0x000079ccb54bb391 in __cxa_throw () from /lib/x86_64-linux-gnu/libstdc++.so.6
+#6  0x000079ccacf1edaa in sycl::_V1::detail::select_device(std::function<int (sycl::_V1::device const&)>, std::vector<sycl::_V1::device, std::allocator<sycl::_V1::device> >&) () from /opt/intel/oneapi/compiler/2026.0/lib/libsycl.so.9
+#7  0x000079ccacf1f5ad in sycl::_V1::detail::select_device(std::function<int (sycl::_V1::device const&)> const&) () from /opt/intel/oneapi/compiler/2026.0/lib/libsycl.so.9
+#8  0x000079ccb5a62b68 in dpct::dev_mgr::dev_mgr() () from /home/frosty40/turbo/lx/src-lmhead-build/bin/libggml-sycl.so.0
+#9  0x000079ccb5a1c0e0 in ggml_sycl_init() () from /home/frosty40/turbo/lx/src-lmhead-build/bin/libggml-sycl.so.0
+#10 0x000079ccb5a1f5cf in ggml_backend_sycl_reg () from /home/frosty40/turbo/lx/src-lmhead-build/bin/libggml-sycl.so.0
+#11 0x000079ccba3f188d in ggml_backend_registry::ggml_backend_registry() () from /home/frosty40/turbo/lx/src-lmhead-build/bin/libggml.so.0
+#12 0x000079ccba3efaf5 in ggml_backend_load_best(char const*, bool, char const*) () from /home/frosty40/turbo/lx/src-lmhead-build/bin/libggml.so.0
+#13 0x000079ccba3ee29c in ggml_backend_load_all_from_path () from /home/frosty40/turbo/lx/src-lmhead-build/bin/libggml.so.0
+#14 0x000079ccba40ca6a in llama_bench(int, char**) () from /home/frosty40/turbo/lx/src-lmhead-build/bin/libllama-bench-impl.so
+#15 0x000079ccb502a1ca in __libc_start_call_main (main=main@entry=0x4054e0 <main>, argc=argc@entry=7, argv=argv@entry=0x7ffdca10b948) at ../sysdeps/nptl/libc_start_call_main.h:58
+#16 0x000079ccb502a28b in __libc_start_main_impl (main=0x4054e0 <main>, argc=7, argv=0x7ffdca10b948, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7ffdca10b938) at ../csu/libc-start.c:360
+#17 0x0000000000405415 in _start ()
+[Inferior 1 (process 646359) detached]
