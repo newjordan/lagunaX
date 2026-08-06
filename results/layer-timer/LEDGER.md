@@ -47,3 +47,17 @@ dispatches (attn_o/ffn_shexp/ffn_out/lmhead) to bound total CPU submit.
 - instrumented champion .so installed in results/src-repro-20260806T035656Z/bin
 - bench-champion-cycle --bin=<that tree> running (proof-suite in progress,
   13:05Z start) to certify speed-neutrality of the instrumented binary
+
+## Measurement 2 (2026-08-06 09:28 CDT, pp512/tg128 official shape, rc=0)
+[layer-timer] bucket order: 0=attn_o 1=ffn_shexp 2=ffn_out 3=lmhead 4=tok_embd 5=other
+- attn_o:   5240 calls,  11.67 us/call  (61.1 ms)
+- ffn_shexp: 5109 calls,  52.09 us/call (266.1 ms)
+- ffn_out:    131 calls, 6703.51 us/call (878.2 ms)   <- MoE down-proj, longest GPU drain
+- other:    65669 calls,  57.71 us/call (3.79 s)      <- attention K/Q/V/norm dispatches
+- lmhead:    131 entries = exactly 1 per decode token, 12.76 us/call CPU gap (0.17% of cycle)
+
+Interpretation: CPU-side dispatch gaps partition ~5 s of wall time; 'other'
+(attention/norm ops) dominates at 76%, MoE down-proj (ffn_out) at 17.6% with
+6.7 ms per-call drains — the GPU is the bottleneck, CPU submit is cheap. The
+fused ffn_shexp/ffn_out/l_out names only appear for layer 39 (final fused
+group); lm_head fires exactly once per decode token. Decode = GPU memory-bound.
