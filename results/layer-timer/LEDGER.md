@@ -33,12 +33,15 @@ Also required: ONEAPI_DEVICE_SELECTOR=level_zero:gpu ZE_AFFINITY_MASK=0.
 [layer-timer] layer 39: 1672 us, 131 calls, 12.76 us/call
 
 Interpretation: the fused lm_head group (l_out-39, Q6_K, 168 MB) is dispatched
-131× (≈ 4 prefill + 128 decode − warmup), with a CPU-side submission gap of
-12.76 µs between successive entries. The CPU submits ~40 dispatches/token →
-~500 µs/token CPU submit (≈7% of the ~7.3 ms decode cycle) — decode is GPU
-memory-bound, NOT launch-bound. The 353.6 µs/token lm_head GPU time (skip-diff,
-lmhead-probe-ledger) is hidden behind async queueing in this probe, which is why
-the earlier sycl-trace per-kernel timing also came up empty.
+131× over the whole run (131 tokens ≈ 1 dispatch per decode token), CPU-side
+submission gap = 12.76 µs/token → **0.17% of the ~7.3 ms decode cycle**. Launch
+overhead is NOT the decode bottleneck — decode is GPU memory-bound. (Corrected:
+earlier "~500 µs/token ≈ 7%" guess was wrong arithmetic; per-layer dump shows
+only l_out-* dispatches are counted, 1/token.) The 353.6 µs/token lm_head GPU
+time (skip-diff, lmhead-probe-ledger) is hidden behind async queueing in this
+CPU-gap probe, which is why sycl-trace per-kernel timing also came up empty.
+Next probe (bucket timer, staged): category the CPU gaps across ALL fused
+dispatches (attn_o/ffn_shexp/ffn_out/lmhead) to bound total CPU submit.
 
 ## Status
 - instrumented champion .so installed in results/src-repro-20260806T035656Z/bin
