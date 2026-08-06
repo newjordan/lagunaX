@@ -61,3 +61,9 @@ Interpretation: CPU-side dispatch gaps partition ~5 s of wall time; 'other'
 6.7 ms per-call drains — the GPU is the bottleneck, CPU submit is cheap. The
 fused ffn_shexp/ffn_out/l_out names only appear for layer 39 (final fused
 group); lm_head fires exactly once per decode token. Decode = GPU memory-bound.
+
+## 2026-08-07 — bucket-instrumentation audit (run-20260806T111546Z)
+- Bucket call totals exactly match the per-suffix dispatch histogram: bucket 5240+5109+131+65687 = 76167 = histogram total. No dispatch is lost or double-counted.
+- The lmhead bucket (3) and tok_embd bucket (4) rows NEVER print — zero calls. Cause: the fused lm_head group's mul_mat node is NAMED "ffn_shexp-39" (fuse log: mm='ffn_shexp-39' add='ffn_out-39' add2='l_out-39'), and the classifier checks "ffn_shexp" before "l_out-" → all 917 fused lm_head GEMVs are counted in the ffn_shexp bucket. "l_out-" is unreachable as a mul_mat dst name in the fused regime; the 131 l_out-39 calls are the NON-fused fallback dispatches (bucket ffn_out = 131 calls, 6619.60 µs/call — resolves the 917-vs-131 mystery from the earlier lead).
+- Per-layer spans and bucket spans use different bases: per-layer sum 65,313,203 µs vs bucket sum 4,995,486 µs (~13×) — per-layer rows are token-cycle-phase counters (finding 39), bucket rows are dispatch-to-dispatch deltas.
+- lm_head's true wall contribution stays small: 917 × ~130 µs (probe) ≈ 0.12 s of the ~5.0 s dispatch span ≈ 2.4% — consistent with the +5.12% max / +1.5-2.5% realistic lm_head ceiling. The bucket audit explains WHY lm_head can never carry the 1.25 bar.
