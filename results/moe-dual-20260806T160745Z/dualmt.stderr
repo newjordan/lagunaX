@@ -1,0 +1,1 @@
+llama_bench: error: failed to load model 'models/7B/ggml-model-q4_0.gguf'

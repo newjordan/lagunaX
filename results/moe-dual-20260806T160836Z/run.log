@@ -1,0 +1,10 @@
+=== ARM ctrl at 16:08:55Z
+rc=0
+=== ARM dualmt at 16:09:19Z
+rc=0
+=== ARM dualdown at 16:09:42Z
+rc=134
+ARM dualdown rc=134 (wedge is per-process; continuing)
+=== ARM ctrl2 at 16:10:02Z
+rc=0
+done: results/moe-dual-20260806T160836Z

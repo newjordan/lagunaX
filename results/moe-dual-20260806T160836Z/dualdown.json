@@ -1,0 +1,41 @@
+[
+[New LWP 1491044]
+[New LWP 1490437]
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+To enable execution of this file add
+	add-auto-load-safe-path /opt/intel/oneapi/compiler/2026.0/lib/libsycl.so.9.0.0-gdb.py
+line to your configuration file "/home/frosty40/.config/gdb/gdbinit".
+To completely disable this security protection add
+	set auto-load safe-path /
+line to your configuration file "/home/frosty40/.config/gdb/gdbinit".
+For more information about this security protection see the
+"Auto-loading safe path" section in the GDB manual.  E.g., run from the shell:
+	info "(gdb)Auto-loading safe path"
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x000075fe4ef10913 in __GI___wait4 (pid=1491159, stat_loc=0x0, options=0, usage=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:30
+#0  0x000075fe4ef10913 in __GI___wait4 (pid=1491159, stat_loc=0x0, options=0, usage=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:30
+30	in ../sysdeps/unix/sysv/linux/wait4.c
+#1  0x000075fe53728bea in ggml_print_backtrace () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-base.so.0
+#2  0x000075fe53727d59 in ggml_abort () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-base.so.0
+#3  0x000075fe4f8269f6 in ggml_sycl_mul_mat_id_dual_down_multitoken(ggml_backend_sycl_context&, ggml_tensor*, ggml_tensor*, ggml_tensor*, ggml_tensor*, ggml_tensor const*, ggml_tensor*) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-sycl.so.0
+#4  0x000075fe4f8247dd in ggml_sycl_fuse_moe_dual_swiglu(ggml_backend_sycl_context&, ggml_cgraph*, int) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-sycl.so.0
+#5  0x000075fe4f9d053e in ggml_sycl_fuse(ggml_backend_sycl_context&, ggml_cgraph*, int) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-sycl.so.0
+#6  0x000075fe4f864b07 in ggml_backend_sycl_graph_compute_impl(ggml_backend_sycl_context*, ggml_cgraph*) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-sycl.so.0
+#7  0x000075fe4f863597 in ggml_backend_sycl_graph_compute(ggml_backend*, ggml_cgraph*) () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-sycl.so.0
+#8  0x000075fe5374fefc in ggml_backend_sched_graph_compute_async () from /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-base.so.0
+#9  0x000075fe538c1a81 in llama_context::graph_compute(ggml_cgraph*, bool) () from /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/libllama.so.0
+#10 0x000075fe538c12cb in llama_context::process_ubatch(llama_ubatch const&, llm_graph_type, llama_memory_context_i*, ggml_status&) () from /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/libllama.so.0
+#11 0x000075fe538c3295 in llama_context::decode(llama_batch const&) () from /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/libllama.so.0
+#12 0x000075fe538c85fb in llama_decode () from /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/libllama.so.0
+#13 0x000075fe54103cbf in test_prompt(llama_context*, int, int, int) () from /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/libllama-bench-impl.so
+#14 0x000075fe540fe312 in llama_bench(int, char**) () from /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/libllama-bench-impl.so
+#15 0x000075fe4ee2a1ca in __libc_start_call_main (main=main@entry=0x4054e0 <main>, argc=argc@entry=31, argv=argv@entry=0x7ffdd7e94708) at ../sysdeps/nptl/libc_start_call_main.h:58
+#16 0x000075fe4ee2a28b in __libc_start_main_impl (main=0x4054e0 <main>, argc=31, argv=0x7ffdd7e94708, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7ffdd7e946f8) at ../csu/libc-start.c:360
+#17 0x0000000000405415 in _start ()
+[Inferior 1 (process 1490429) detached]

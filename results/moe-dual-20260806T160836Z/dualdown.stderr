@@ -1,0 +1,25 @@
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=512
+[lx-control-fattn] kernel=ONEDNN Q=[128,512,48] K=[128,512]
+[lx-control-softplus-mul] fuse hit (xs2 per-head) hd=128 nh=48 T=512
+[lx-control-dense-dual] multi-col GEMM dual ncols_dst=512 nrows=8192
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu) ncols_dst=512
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused sigmoid+add n_experts=256 n_rows=512
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=512
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=512
+[lx-control-moe-dual] multi-token dual+down EXPERT-LOOP n_tokens=512 k=8 n_experts=256 packed_reduce=1
+[lx-control-moe-dual] fuse hit (dual+down multi-token) tokens=512 k=8
+[lx-control-add] fuse hit (add+add residual) nelt=1048576 ne0=2048 ne1=512
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 sgs=1 (first entry)
+[lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[lx-control-moe-dual] dual+down compose n_tokens=1 k=8 integrated=1
+[lx-control-dense-dual] mmvq dual n_rows=512 ncols=2048 ncols_dst=1 sgs=1 (first entry)
+[lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=1 wtype=q6_K alias_res=1 mm='ffn_shexp-39' add='ffn_out-39' add2='l_out-39'
+/home/frosty40/turbo/worktrees/treebeard-base-control-latest/ggml/src/ggml-sycl/ggml-sycl.cpp:6833: GGML_ASSERT(expert_row_offsets[n_as] == n_routed_rows) failed
+warning: opening /proc/PID/mem file for lwp 1490429.1490429 failed: Permission denied (13)
+warning: opening /proc/self/mem file failed: Permission denied (13)
+warning: File "/opt/intel/oneapi/compiler/2026.0/lib/libsycl.so.9.0.0-gdb.py" auto-loading has been declined by your `auto-load safe-path' set to "$debugdir:$datadir/auto-load".
+warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+warning: 58	../sysdeps/nptl/libc_start_call_main.h: No such file or directory
+warning: 360	../csu/libc-start.c: No such file or directory
