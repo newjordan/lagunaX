@@ -1,0 +1,4 @@
+thermal-gate: hwmon=/sys/class/drm/card0/device/hwmon/hwmon6 max_temp=58.0C
+thermal-gate: 0s/300s idle, waiting (cur=58C)
+thermal-gate: 15s/300s idle, waiting (cur=58C)
+thermal-gate: 30s/300s idle, waiting (cur=58C)
