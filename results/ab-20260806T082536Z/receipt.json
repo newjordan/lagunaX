@@ -1,0 +1,56 @@
+{
+  "stamp": "20260806T082536Z",
+  "champion_bin": "/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench",
+  "candidate_env": "GGML_SYCL_ENABLE_DNN=0",
+  "rounds": 2,
+  "note": "backend scheduler knobs (dmmv priority, dnn, vmm)",
+  "runs": [
+    {
+      "seq": 1,
+      "tag": "A",
+      "pp": 1169.119891,
+      "tg": 139.133449,
+      "pp_sd": 13.708403,
+      "tg_sd": 0.199075
+    },
+    {
+      "seq": 1,
+      "tag": "B",
+      "pp": 1179.556925,
+      "tg": 138.125308,
+      "pp_sd": 7.756564,
+      "tg_sd": 0.17535
+    },
+    {
+      "seq": 2,
+      "tag": "A",
+      "pp": 1166.081213,
+      "tg": 138.132338,
+      "pp_sd": 13.928139,
+      "tg_sd": 0.125595
+    },
+    {
+      "seq": 2,
+      "tag": "B",
+      "pp": 1181.321713,
+      "tg": 137.998214,
+      "pp_sd": 5.604452,
+      "tg_sd": 0.254846
+    }
+  ],
+  "champion": {
+    "pp": 1167.601,
+    "tg": 138.633
+  },
+  "candidate": {
+    "pp": 1180.439,
+    "tg": 138.062
+  },
+  "tg_delta_pct": -0.412,
+  "pp_delta_pct": 1.1,
+  "tg_jitter_sd_pct": 0.381,
+  "pp_jitter_sd_pct": 0.647,
+  "tg_signal_over_drift": 0.61,
+  "pp_signal_over_drift": 0.73,
+  "verdict": "NOISE"
+}
