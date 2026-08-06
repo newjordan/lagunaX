@@ -86,8 +86,34 @@ echo "== [cycle] official bench"
 # tg 135.9 / pp 1145 right after proof vs tg 137.9 / pp 1163 after cooldown).
 # Idle the card for a fixed window before the scored run.
 COOLDOWN_S="${COOLDOWN_S:-360}"
-echo "== [cycle] cooldown ${COOLDOWN_S}s before scored bench (proof-suite heat)"
+TARGET_C="${TARGET_C:-60}"
+MAX_COOLDOWN_S="${MAX_COOLDOWN_S:-1500}"
+HWMON="${THERMAL_HWMON:-}"
+if [ -z "$HWMON" ]; then
+  for d in /sys/class/drm/card*/device/hwmon/hwmon*; do
+    [ -d "$d" ] && HWMON="$d" && break
+  done
+fi
+max_temp_mc() { # hottest VRAM-channel temp in millidegrees; empty if unreadable
+  local f v max=0
+  for f in "$HWMON"/temp*_input; do
+    [ -r "$f" ] || continue
+    v="$(cat "$f" 2>/dev/null || true)"
+    [ -n "$v" ] && [ "$v" -gt "$max" ] 2>/dev/null && max="$v"
+  done
+  [ "$max" -gt 0 ] && echo "$max"
+}
+echo "== [cycle] cooldown min ${COOLDOWN_S}s then wait until max temp <= ${TARGET_C}C (cap ${MAX_COOLDOWN_S}s)"
 sleep "$COOLDOWN_S"
+if [ -n "$HWMON" ] && t="$(max_temp_mc)" && [ -n "$t" ]; then
+  t0="$(date +%s)"
+  while [ "$t" -gt $((TARGET_C * 1000)) ] && [ $(( $(date +%s) - t0 )) -lt "$MAX_COOLDOWN_S" ]; do
+    echo "  [cycle] cooling: $((t / 1000)).$((t % 1000 / 100))C > ${TARGET_C}C — wait 30s"
+    sleep 30
+    t="$(max_temp_mc)"
+  done
+  echo "== [cycle] cooled: $((t / 1000)).$((t % 1000 / 100))C (target ${TARGET_C}C)"
+fi
 EXTRA_ARGS=()
 if [ -n "$NOTE" ]; then EXTRA_ARGS+=(--note "$NOTE"); fi
 if ! bash scripts/bench-serial.sh "${EXTRA_ARGS[@]}"; then

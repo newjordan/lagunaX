@@ -1,0 +1,245 @@
+== [cycle] candidate binary: results/src-repro-20260806T035656Z/bin
+== [cycle] gates: golden-smoke
+[lx-gpu-lock] ACQUIRED pid=369439 reason=golden-smoke
+starting server on :18901 ...
+used /completion
+ The function should take an integer n as input and return the nth Fibonacci number. The Fibonacci sequence is defined as follows:
+F(0) = 0
+F(1) = 1
+F(n) = F(n-1) + F(n-2) for n > 1
+Your function
+GOLDEN OK (greedy smoke match)
+== [cycle] golden-smoke OK
+== [cycle] proof-suite skipped (not present or --skip-proof)
+== [cycle] official bench
+== [cycle] cooldown 360s before scored bench (proof-suite heat)
+[lx-gpu-lock] ACQUIRED pid=384342 reason=bench-serial:resubmit-cooled-champion-knob-surface-exhausted
+== lx serial bench ==
+  mode:    candidate
+  binary:  results/src-repro-20260806T035656Z/bin/llama-bench
+  bin sha: 730e7742cb0a18f4349f566f195dda471a38a2e475d83611ecf591794affb35a
+  model:   /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+  window:  pp512 / tg128  reps=5 combined_bench=0 delay=0 warmup_disabled=0 threads=16 threads_batch=16 cpu_moe_layers=0 no_kv_offload=0 no_op_offload=0 no_host=0 sycl_disable_graph=1 sycl_disable_dnn=1 priority=0 load=mmap poll=50 numa=disabled cpu_mask=0x0 cpu_strict=0 split=layer main_gpu=0 tensor_split=0 device=auto
+  device:  level_zero:gpu  ZE_AFFINITY_MASK=0
+  out:     /home/frosty40/turbo/lx/results/20260806T093857Z/metrics.json
+-- pp512 --
+-- tg128 --
+{
+  "stamp": "20260806T093857Z",
+  "track": "serial",
+  "mode": "candidate",
+  "pp512": 1145.483778,
+  "tg128": 135.725184,
+  "pp_samples": {
+    "stddev_ts": 8.649515,
+    "samples_ts": [
+      1134.36,
+      1142.32,
+      1142.4,
+      1155.77,
+      1152.56
+    ]
+  },
+  "tg_samples": {
+    "stddev_ts": 0.175803,
+    "samples_ts": [
+      136.038,
+      135.671,
+      135.651,
+      135.631,
+      135.635
+    ]
+  },
+  "window": {
+    "pp": 512,
+    "tg": 128,
+    "reps": 5,
+    "depth": 0
+  },
+  "combined_bench": false,
+  "binary": "results/src-repro-20260806T035656Z/bin/llama-bench",
+  "binary_sha256": "730e7742cb0a18f4349f566f195dda471a38a2e475d83611ecf591794affb35a",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "flags": {
+    "ngl": 99,
+    "threads": 16,
+    "threads_batch": 16,
+    "cpu_moe_layers": 0,
+    "cpu_mask": "0x0",
+    "cpu_strict": 0,
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "tensor_split": "0",
+    "device": "auto",
+    "ubatch": 2048,
+    "bbatch": 2048,
+    "ctx": 8192,
+    "ctk": "f16",
+    "ctv": "f16",
+    "no_kv_offload": 0,
+    "no_op_offload": 0,
+    "no_host": 0,
+    "flash_attn": -1,
+    "sycl_disable_graph": 1,
+    "sycl_disable_dnn": "1",
+    "priority": 0,
+    "load_mode": "mmap",
+    "poll": 50,
+    "delay_seconds": 0,
+    "numa": "disabled"
+  },
+  "env": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0",
+    "GGML_SYCL_DISABLE_GRAPH": "1",
+    "GGML_SYCL_DISABLE_DNN": "1"
+  },
+  "note": "resubmit-cooled-champion-knob-surface-exhausted",
+  "claim_boundary": [
+    "Serial only: one stream pp512 + tg128.",
+    "Not multi-slot aggregate tok/s.",
+    "Not comparable to mlx.fast M5 absolute tok/s (different quant/silicon).",
+    "Score is vs pinned B70 baseline only."
+  ]
+}
+
+wrote /home/frosty40/turbo/lx/results/20260806T093857Z/metrics.json
+  pp512=1145.483778  tg128=135.725184
+score=1.193944  increase=+19.39%  dec=1.2643x  pre=1.0056x
+{
+  "decode_tok_s": 135.725184,
+  "prefill_tok_s": 1145.483778,
+  "baseline_decode_tok_s": 107.353814,
+  "baseline_prefill_tok_s": 1139.150972,
+  "decode_speedup": 1.2642791060967802,
+  "prefill_speedup": 1.00555923328484,
+  "decode_floor": 0.95,
+  "prefill_floor": 0.95,
+  "floors_ok": true,
+  "score": 1.1939444884400816,
+  "score_se_rel": 0.000949040041337268,
+  "score_se": 0.0011331011266635784,
+  "gain_distinguishable": 171.16255899519936,
+  "increase_pct": 19.39444884400816,
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
+  "track": "serial",
+  "not": "multi-slot aggregate tok/s",
+  "baseline_path": "/home/frosty40/turbo/lx/baseline/baseline.json",
+  "candidate_path": "/home/frosty40/turbo/lx/results/20260806T093857Z/metrics.json",
+  "candidate_meta": {
+    "stamp": "20260806T093857Z",
+    "binary": "results/src-repro-20260806T035656Z/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "resubmit-cooled-champion-knob-surface-exhausted",
+    "flags": {
+      "ngl": 99,
+      "threads": 16,
+      "threads_batch": 16,
+      "cpu_moe_layers": 0,
+      "cpu_mask": "0x0",
+      "cpu_strict": 0,
+      "split_mode": "layer",
+      "main_gpu": 0,
+      "tensor_split": "0",
+      "device": "auto",
+      "ubatch": 2048,
+      "bbatch": 2048,
+      "ctx": 8192,
+      "ctk": "f16",
+      "ctv": "f16",
+      "no_kv_offload": 0,
+      "no_op_offload": 0,
+      "no_host": 0,
+      "flash_attn": -1,
+      "sycl_disable_graph": 1,
+      "sycl_disable_dnn": "1",
+      "priority": 0,
+      "load_mode": "mmap",
+      "poll": 50,
+      "delay_seconds": 0,
+      "numa": "disabled"
+    },
+    "env": {
+      "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+      "ZE_AFFINITY_MASK": "0",
+      "GGML_SYCL_DISABLE_GRAPH": "1",
+      "GGML_SYCL_DISABLE_DNN": "1"
+    }
+  },
+  "baseline_meta": {
+    "stamp": "20260729T183834Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "v0 control pin: serial track, Q4_K_M, base-control"
+  }
+}
+score → /home/frosty40/turbo/lx/results/20260806T093857Z/score.json
+== [cycle] RECEIPT: results/20260806T093857Z/score.json
+{
+ "decode_tok_s": 135.725184,
+ "prefill_tok_s": 1145.483778,
+ "baseline_decode_tok_s": 107.353814,
+ "baseline_prefill_tok_s": 1139.150972,
+ "decode_speedup": 1.2642791060967802,
+ "prefill_speedup": 1.00555923328484,
+ "decode_floor": 0.95,
+ "prefill_floor": 0.95,
+ "floors_ok": true,
+ "score": 1.1939444884400816,
+ "score_se_rel": 0.000949040041337268,
+ "score_se": 0.0011331011266635784,
+ "gain_distinguishable": 171.16255899519936,
+ "increase_pct": 19.39444884400816,
+ "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
+ "track": "serial",
+ "not": "multi-slot aggregate tok/s",
+ "baseline_path": "/home/frosty40/turbo/lx/baseline/baseline.json",
+ "candidate_path": "/home/frosty40/turbo/lx/results/20260806T093857Z/metrics.json",
+ "candidate_meta": {
+  "stamp": "20260806T093857Z",
+  "binary": "results/src-repro-20260806T035656Z/bin/llama-bench",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "note": "resubmit-cooled-champion-knob-surface-exhausted",
+  "flags": {
+   "ngl": 99,
+   "threads": 16,
+   "threads_batch": 16,
+   "cpu_moe_layers": 0,
+   "cpu_mask": "0x0",
+   "cpu_strict": 0,
+   "split_mode": "layer",
+   "main_gpu": 0,
+   "tensor_split": "0",
+   "device": "auto",
+   "ubatch": 2048,
+   "bbatch": 2048,
+   "ctx": 8192,
+   "ctk": "f16",
+   "ctv": "f16",
+   "no_kv_offload": 0,
+   "no_op_offload": 0,
+   "no_host": 0,
+   "flash_attn": -1,
+   "sycl_disable_graph": 1,
+   "sycl_disable_dnn": "1",
+   "priority": 0,
+   "load_mode": "mmap",
+   "poll": 50,
+   "delay_seconds": 0,
+   "numa": "disabled"
+  },
+  "env": {
+   "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+   "ZE_AFFINITY_MASK": "0",
+   "GGML_SYCL_DISABLE_GRAPH": "1",
+   "GGML_SYCL_DISABLE_DNN": "1"
+  }
+ },
+ "baseline_meta": {
+  "stamp": "20260729T183834Z",
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "note": "v0 control pin: serial track, Q4_K_M, base-control"
+ }
+}
+== [cycle] DONE

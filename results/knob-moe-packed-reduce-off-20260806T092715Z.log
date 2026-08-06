@@ -1,0 +1,1 @@
+== [knob] moe-packed-reduce-off : GGML_SYCL_DISABLE_MOE_PACKED_REDUCE=1 — waiting for GPU lock (deadline +480m)
