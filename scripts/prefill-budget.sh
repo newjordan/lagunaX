@@ -60,9 +60,12 @@ fi
 # 2) prefill-dominated official-geometry bench with the timer live.
 #    PP=512 matches the official prefill shape; NN=16 keeps tg noise tiny so
 #    the bucket totals are prefill-attributed. r=2 for a stable mean.
+#    NOTE: run DIRECTLY (not via with-gpu-lock) — the lock wrapper sources
+#    env.sh whose line 89 prepends $LX_BIN (timer-free mmadd-decode build)
+#    AHEAD of $BINTREE, so the instrumented .so is silently shadowed and the
+#    timer prints nothing. Direct invocation keeps $BINTREE first.
 cd "$ROOT" || exit 1
-GGML_SYCL_TIMER_ALL=1 ./scripts/with-gpu-lock --wait -- \
-  "$BINTREE/llama-bench" -m "$MODEL" -p 512 -n 16 \
+GGML_SYCL_TIMER_ALL=1 "$BINTREE/llama-bench" -m "$MODEL" -p 512 -n 16 \
   -t 16 -ub 2048 -b 2048 -ngl 99 -r 2 -ctk f16 -ctv f16 \
   >"$OUT/bench.log" 2>"$OUT/bench.stderr"
 echo "rc=$?" | tee "$OUT/rc.txt"

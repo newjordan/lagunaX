@@ -1,0 +1,8 @@
+[layer-timer] bucket order: 0=attn_o 1=ffn_shexp 2=ffn_out 3=lmhead 4=tok_embd 5=other
+[layer-timer] FINAL mul_mat dispatch budget by bucket (us, calls, us/call):
+[layer-timer] bucket attn_o:      23041 us        1440 calls     16.00 us/call
+[layer-timer] bucket ffn_shexp:     117056 us        1404 calls     83.37 us/call
+[layer-timer] bucket ffn_out:     867221 us          36 calls  24089.47 us/call
+[layer-timer] bucket other:    3732556 us       73029 calls     51.11 us/call
+[layer-timer] FINAL per-layer mul_mat decode budget (us, calls, us/call):
+[lmhead-probe] FINAL: 0 lm_head calls, 0 us, -nan us/cycle; max_suffix=39; per-suffix hits: 39:36
