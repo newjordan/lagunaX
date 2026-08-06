@@ -1,0 +1,201 @@
+== [tgate] gates: golden-smoke
+[lx-gpu-lock] ACQUIRED pid=4119840 reason=golden-smoke
+starting server on :18901 ...
+used /completion
+ The function should take an integer n as input and return the nth Fibonacci number. The Fibonacci sequence is defined as follows:
+F(0) = 0
+F(1) = 1
+F(n) = F(n-1) + F(n-2) for n > 1
+Your function
+GOLDEN OK (greedy smoke match)
+== [tgate] golden-smoke OK
+== [tgate] gates: proof-suite (this heats the card — cooldown follows)
+[lx-gpu-lock] ACQUIRED pid=4121217 reason=proof-suite
+=== LAGUNA TIP PROOF SUITE 20260806T064443Z ===
+OUT=/home/frosty40/turbo/lx/results/proof-20260806T064443Z BD=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin MODEL=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf SRV_CTX=16384
+stamp=20260806T064443Z
+binary=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench
+-rwxrwxr-x 1 frosty40 frosty40 564624 Jul 30 10:02 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench
+-rwxrwxr-x 1 frosty40 frosty40 570024 Jul 30 05:29 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-perplexity
+-rwxrwxr-x 1 frosty40 frosty40 662784 Jul 30 05:29 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-server
+2fb52e1bea8a21cf4a0d500caef33b78  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-sycl.so.0.17.0
+model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+model_sha256=771a73e1249b9bc08e17d3fca59f5c49b7b9c8a6a47b5a6ac82f95c6e76923c4
+wiki=/home/frosty40/data/wikitext-2-raw/wiki.test.raw
+srv_ctx=16384
+template=/home/frosty40/turbo/worktrees/treebeard-pr-private-latest/models/templates/poolside-Laguna-XS-2.1.jinja
+INFO: Output filtered by ONEAPI_DEVICE_SELECTOR environment variable, which is set to level_zero:gpu.
+To see device ids, use the --ignore-device-selectors CLI option.
+
+[level_zero:gpu] Intel(R) oneAPI Unified Runtime over Level-Zero V2, Intel(R) Arc(TM) Pro B70 Graphics 20.2.0 [1.15.38308+1]
+
+[2026-08-06T01:44:53-05:00] PHASE prefill ladder (llama-bench)
+ladder_exit=0
+# Prefill / decode ladder
+
+| test | n_prompt | n_gen | t/s |
+|------|--------:|------:|----:|
+|  | 512 | 0 | 1163.56 |
+|  | 2048 | 0 | 2000.21 |
+|  | 4096 | 0 | 1980.11 |
+|  | 8192 | 0 | 1935.79 |
+|  | 0 | 128 | 137.47 |
+
+
+[2026-08-06T01:45:44-05:00] PHASE perplexity wikitext-2 (chunks=32 ctx=2048)
+1.67 minutes
+[1]10.9717,[2]13.9909,[3]15.9753,[4]14.8342,[5]14.6555,[6]12.9429,[7]11.0337,[8]10.8307,[9]11.2068,[10]11.4131,[11]11.5327,[12]11.3397,[13]11.5141,[14]11.7605,[15]11.9527,[16]12.1707,[17]12.6882,[18]12.7063,[19]12.9827,[20]12.8961,[21]12.7192,[22]12.7416,[23]12.7690,[24]12.7565,[25]12.7851,[26]12.7998,[27]12.8557,[28]13.1367,[29]13.5857,[30]13.9963,[31]13.9331,[32]13.7970,
+
+ppl_exit=0
+/home/frosty40/turbo/lx/results/proof-20260806T064443Z/ppl/ppl.err:22:0.15.305.306 I perplexity: tokenizing the input ..
+/home/frosty40/turbo/lx/results/proof-20260806T064443Z/ppl/ppl.err:23:0.15.742.770 I perplexity: tokenization took 437.458 ms
+/home/frosty40/turbo/lx/results/proof-20260806T064443Z/ppl/ppl.err:24:0.15.742.978 I perplexity: calculating perplexity over 32 chunks, n_ctx=2048, batch_size=2048, n_seq=1
+/home/frosty40/turbo/lx/results/proof-20260806T064443Z/ppl/ppl.err:27:0.18.870.119 I perplexity: 3.13 seconds per pass - ETA 1.20.951.326 I Final estimate: PPL = 13.7970 +/- 0.27340
+
+[2026-08-06T01:47:05-05:00] PHASE long-context needles + dossier
+start server ctx=16384 alias=laguna-tip-proof
+pid=4128611
+health ok after ~18s
+model=laguna-tip-proof base=http://127.0.0.1:18911
+
+=== PREFILL LADDER ===
+  prefill ladder chars≈2000 ...
+    -> {'target_chars': 2000, 'ok': True, 'prompt_n': 359, 'pp_tps': 410.9705085731424, 'tg_tps': 44.07276413358455, 'wall_s': 1.601555585861206, 'preview': ' Broadway decade notes.\n</think>\nThe repeated phrase "Broadway decade notes" lacks sufficient context to summarize the t'}
+  prefill ladder chars≈8000 ...
+    -> {'target_chars': 8000, 'ok': True, 'prompt_n': 1402, 'pp_tps': 1777.730439259186, 'tg_tps': 122.54948893033443, 'wall_s': 1.0534031391143799, 'preview': ' Broadway decade notes. Broadway decade notes. Broadway decade notes. Broadway decade notes. Broadway decade notes. Broa'}
+  prefill ladder chars≈16000 ...
+    -> {'target_chars': 16000, 'ok': True, 'prompt_n': 2793, 'pp_tps': 2144.232452301768, 'tg_tps': 112.1260857834635, 'wall_s': 1.5936424732208252, 'preview': ' Broadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroa'}
+  prefill ladder chars≈32000 ...
+    -> {'target_chars': 32000, 'ok': True, 'prompt_n': 5577, 'pp_tps': 2371.332768102619, 'tg_tps': 107.11010249097933, 'wall_s': 2.66064453125, 'preview': ' Broadway decade notes.\nBroadway decade notes.\n</assistant>\n</think>\nThe repeated phrase "Broadway decade notes" lacks s'}
+  prefill ladder chars≈48000 ...
+    -> {'target_chars': 48000, 'ok': True, 'prompt_n': 8359, 'pp_tps': 2347.2589805331104, 'tg_tps': 101.94426834280034, 'wall_s': 3.8891146183013916, 'preview': ' Broadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroadway decade notes.\nBroa'}
+
+=== NEEDLE RETRIEVAL ===
+  needle Carousel depth=0.1 para=7 ...
+    ok=True answer='TB-CAR-1945-X\n'
+  needle Company depth=0.5 para=39 ...
+    ok=True answer='TB-COM-1970-Q\n'
+  needle Hadestown depth=0.9 para=71 ...
+    ok=True answer='TB-HAD-2019-Z\n'
+
+=== BROADWAY DOSSIER QA ===
+  dossier Q1: What year did Oklahoma! open?...
+    ok=True answer='Oklahoma! opened in 1943.\n'
+  dossier Q2: Who were the writers associated with Oklahoma! in this dossi...
+    ok=True answer='Rodgers and Hammerstein.\n'
+  dossier Q3: In what year did West Side Story premiere on Broadway accord...
+    ok=True answer='West Side Story premiered on Broadway in 1957.\n'
+  dossier Q4: Who wrote the lyrics for West Side Story per the dossier?...
+    ok=True answer='Stephen Sondheim wrote the lyrics for West Side Story per the dossier.\n'
+  dossier Q5: Which 1968 musical is linked to counterculture rock energy i...
+    ok=True answer='Hair (1968) brought rock and counterculture energy onto Broadway stages.\n'
+  dossier Q6: Which 1975 show about dancers is mentioned as a long-running...
+    ok=True answer='A Chorus Line\n'
+  dossier Q7: Which composer is tied to mega-musicals like Phantom in the ...
+    ok=True answer='Andrew Lloyd Webber\n'
+  dossier Q8: What year does the dossier give for Phantom on Broadway?...
+    ok=False answer='The dossier does not provide a specific year for The Phantom of the Opera on Broadway.\n'
+  dossier Q9: Who wrote Rent according to the dossier?...
+    ok=False answer='The dossier does not specify who wrote Rent.\n'
+  dossier Q10: What year did Rent open per the dossier?...
+    ok=True answer='Rent opened in 1996 per the dossier.\n'
+  dossier Q11: Which 2003 fantasy blockbuster is named in the dossier?...
+    ok=True answer='The 2003 fantasy blockbuster named in the dossier is **Wicked**.\n'
+  dossier Q12: What year did Hamilton open on Broadway per the dossier?...
+    ok=True answer='Hamilton opened on Broadway in 2015.\n'
+  dossier Q13: Who is credited with book, music, and lyrics for Hamilton he...
+    ok=True answer='Lin-Manuel Miranda is credited with book, music, and lyrics for Hamilton.\n'
+  dossier Q14: What major disruption to Broadway does the 2020s section men...
+    ok=True answer='The 2020s section mentions "pandemic shutdowns" as the major disruption to Broadway.\n'
+
+# Long-context package eval
+
+- base: `http://127.0.0.1:18911`
+- model: `laguna-tip-proof`
+
+## Prefill / short decode ladder
+
+| chars | prompt_n | pp tok/s | tg tok/s | wall_s | ok |
+|------:|---------:|---------:|---------:|-------:|:--:|
+| 2000 | 359 | 410.9705085731424 | 44.07276413358455 | 1.6 | yes |
+| 8000 | 1402 | 1777.730439259186 | 122.54948893033443 | 1.1 | yes |
+| 16000 | 2793 | 2144.232452301768 | 112.1260857834635 | 1.6 | yes |
+| 32000 | 5577 | 2371.332768102619 | 107.11010249097933 | 2.7 | yes |
+| 48000 | 8359 | 2347.2589805331104 | 101.94426834280034 | 3.9 | yes |
+
+## Needle-in-haystack
+
+- doc_chars: 34044
+- paragraphs: 80
+- score: **3/3**
+
+- depth 0.1: PASS — Carousel → 'TB-CAR-1945-X\n'
+- depth 0.5: PASS — Company → 'TB-COM-1970-Q\n'
+- depth 0.9: PASS — Hadestown → 'TB-HAD-2019-Z\n'
+
+## Broadway long dossier QA
+
+- doc_chars: 61092
+- score: **12/14**
+
+- PASS: What year did Oklahoma! open? → 'Oklahoma! opened in 1943.\n'
+- PASS: Who were the writers associated with Oklahoma! in this dossier? → 'Rodgers and Hammerstein.\n'
+- PASS: In what year did West Side Story premiere on Broadway according to the dossier? → 'West Side Story premiered on Broadway in 1957.\n'
+- PASS: Who wrote the lyrics for West Side Story per the dossier? → 'Stephen Sondheim wrote the lyrics for West Side Story per the dossier.\n'
+- PASS: Which 1968 musical is linked to counterculture rock energy in the dossier? → 'Hair (1968) brought rock and counterculture energy onto Broadway stages.\n'
+- PASS: Which 1975 show about dancers is mentioned as a long-running phenomenon? → 'A Chorus Line\n'
+- PASS: Which composer is tied to mega-musicals like Phantom in the dossier? → 'Andrew Lloyd Webber\n'
+- FAIL: What year does the dossier give for Phantom on Broadway? → 'The dossier does not provide a specific year for The Phantom of the Opera on Broadway.\n'
+- FAIL: Who wrote Rent according to the dossier? → 'The dossier does not specify who wrote Rent.\n'
+- PASS: What year did Rent open per the dossier? → 'Rent opened in 1996 per the dossier.\n'
+- PASS: Which 2003 fantasy blockbuster is named in the dossier? → 'The 2003 fantasy blockbuster named in the dossier is **Wicked**.\n'
+- PASS: What year did Hamilton open on Broadway per the dossier? → 'Hamilton opened on Broadway in 2015.\n'
+- PASS: Who is credited with book, music, and lyrics for Hamilton here? → 'Lin-Manuel Miranda is credited with book, music, and lyrics for Hamilton.\n'
+- PASS: What major disruption to Broadway does the 2020s section mention? → 'The 2020s section mentions "pandemic shutdowns" as the major disruption to Broadway.\n'
+
+## Verdict
+
+**STRONG — long-context speed path + retrieval/comprehension held**
+
+longctx_exit=0
+
+[2026-08-06T01:47:57-05:00] PHASE agent throughput (chat completions)
+{"tag": "tool0_r0", "ok": true, "wall_s": 1.6462805271148682, "prompt_n": 108, "predicted_n": 96, "pp_tps": 288.0453191302098, "tg_tps": 136.89781006284466, "preview": ""}
+{"tag": "tool0_r1", "ok": true, "wall_s": 1.0597336292266846, "prompt_n": 108, "predicted_n": 96, "pp_tps": 308.8281971582087, "tg_tps": 136.8384892460627, "preview": ""}
+{"tag": "tool1_r0", "ok": true, "wall_s": 1.0647735595703125, "prompt_n": 88, "predicted_n": 96, "pp_tps": 273.4549793665788, "tg_tps": 136.39366621912495, "preview": " "}
+{"tag": "tool1_r1", "ok": true, "wall_s": 1.0615675449371338, "prompt_n": 88, "predicted_n": 96, "pp_tps": 272.89444876871886, "tg_tps": 136.47296982241454, "preview": " The"}
+{"tag": "tool2_r0", "ok": true, "wall_s": 1.0526001453399658, "prompt_n": 83, "predicted_n": 96, "pp_tps": 262.7255720611929, "tg_tps": 136.8843412868839, "preview": ""}
+{"tag": "tool2_r1", "ok": true, "wall_s": 1.0485405921936035, "prompt_n": 83, "predicted_n": 96, "pp_tps": 267.2823822266877, "tg_tps": 136.5675177004306, "preview": ""}
+{"tag": "depth_2048", "ok": true, "wall_s": 2.4878129959106445, "prompt_n": 3161, "predicted_n": 64, "pp_tps": 1672.8107136090905, "tg_tps": 108.95044967595753, "preview": ""}
+{"tag": "depth_8192", "ok": true, "wall_s": 8.051207304000854, "prompt_n": 13955, "predicted_n": 64, "pp_tps": 1903.3255209015283, "tg_tps": 91.30387642020327, "preview": ""}
+SUMMARY {
+  "n_ok": 8,
+  "n_total": 8,
+  "tool_tg_tps": {
+    "n": 6,
+    "mean": 136.67579905629356,
+    "p50": 136.70300347324667,
+    "min": 136.39366621912495,
+    "max": 136.89781006284466
+  },
+  "depth_pp_tps": {
+    "n": 2,
+    "mean": 1788.0681172553095,
+    "values": [
+      [
+        "depth_2048",
+        3161,
+        1672.8107136090905,
+        108.95044967595753
+      ],
+      [
+        "depth_8192",
+        13955,
+        1903.3255209015283,
+        91.30387642020327
+      ]
+    ]
+  }
+}
+
+[2026-08-06T01:48:14-05:00] PHASE held-out ho-pack

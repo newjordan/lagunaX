@@ -1,0 +1,82 @@
+[
+  {
+    "tag": "tool0_r0",
+    "ok": true,
+    "wall_s": 1.6462805271148682,
+    "prompt_n": 108,
+    "predicted_n": 96,
+    "pp_tps": 288.0453191302098,
+    "tg_tps": 136.89781006284466,
+    "preview": ""
+  },
+  {
+    "tag": "tool0_r1",
+    "ok": true,
+    "wall_s": 1.0597336292266846,
+    "prompt_n": 108,
+    "predicted_n": 96,
+    "pp_tps": 308.8281971582087,
+    "tg_tps": 136.8384892460627,
+    "preview": ""
+  },
+  {
+    "tag": "tool1_r0",
+    "ok": true,
+    "wall_s": 1.0647735595703125,
+    "prompt_n": 88,
+    "predicted_n": 96,
+    "pp_tps": 273.4549793665788,
+    "tg_tps": 136.39366621912495,
+    "preview": " "
+  },
+  {
+    "tag": "tool1_r1",
+    "ok": true,
+    "wall_s": 1.0615675449371338,
+    "prompt_n": 88,
+    "predicted_n": 96,
+    "pp_tps": 272.89444876871886,
+    "tg_tps": 136.47296982241454,
+    "preview": " The"
+  },
+  {
+    "tag": "tool2_r0",
+    "ok": true,
+    "wall_s": 1.0526001453399658,
+    "prompt_n": 83,
+    "predicted_n": 96,
+    "pp_tps": 262.7255720611929,
+    "tg_tps": 136.8843412868839,
+    "preview": ""
+  },
+  {
+    "tag": "tool2_r1",
+    "ok": true,
+    "wall_s": 1.0485405921936035,
+    "prompt_n": 83,
+    "predicted_n": 96,
+    "pp_tps": 267.2823822266877,
+    "tg_tps": 136.5675177004306,
+    "preview": ""
+  },
+  {
+    "tag": "depth_2048",
+    "ok": true,
+    "wall_s": 2.4878129959106445,
+    "prompt_n": 3161,
+    "predicted_n": 64,
+    "pp_tps": 1672.8107136090905,
+    "tg_tps": 108.95044967595753,
+    "preview": ""
+  },
+  {
+    "tag": "depth_8192",
+    "ok": true,
+    "wall_s": 8.051207304000854,
+    "prompt_n": 13955,
+    "predicted_n": 64,
+    "pp_tps": 1903.3255209015283,
+    "tg_tps": 91.30387642020327,
+    "preview": ""
+  }
+]
