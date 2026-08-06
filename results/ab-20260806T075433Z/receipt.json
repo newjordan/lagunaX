@@ -1,0 +1,56 @@
+{
+  "stamp": "20260806T075433Z",
+  "champion_bin": "/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench",
+  "candidate_env": "GGML_SYCL_TOPK_MOE_HYBRID_MODE=9",
+  "rounds": 2,
+  "note": "router decode-path probes (hybrid mode 9, gemv fuse off, true-topk off, norm off)",
+  "runs": [
+    {
+      "seq": 1,
+      "tag": "A",
+      "pp": 1162.982578,
+      "tg": 138.041791,
+      "pp_sd": 9.517844,
+      "tg_sd": 0.192958
+    },
+    {
+      "seq": 1,
+      "tag": "B",
+      "pp": 1163.152027,
+      "tg": 138.170954,
+      "pp_sd": 11.425058,
+      "tg_sd": 0.215637
+    },
+    {
+      "seq": 2,
+      "tag": "A",
+      "pp": 1165.799971,
+      "tg": 138.199711,
+      "pp_sd": 11.213605,
+      "tg_sd": 0.243962
+    },
+    {
+      "seq": 2,
+      "tag": "B",
+      "pp": 1167.720495,
+      "tg": 138.067606,
+      "pp_sd": 15.625273,
+      "tg_sd": 0.212038
+    }
+  ],
+  "champion": {
+    "pp": 1164.391,
+    "tg": 138.121
+  },
+  "candidate": {
+    "pp": 1165.436,
+    "tg": 138.119
+  },
+  "tg_delta_pct": -0.001,
+  "pp_delta_pct": 0.09,
+  "tg_jitter_sd_pct": 0.056,
+  "pp_jitter_sd_pct": 0.195,
+  "tg_signal_over_drift": 0.0,
+  "pp_signal_over_drift": 0.06,
+  "verdict": "NOISE"
+}
