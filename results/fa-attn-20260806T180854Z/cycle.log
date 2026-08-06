@@ -1,0 +1,13 @@
+=== arm ctrl-auto (-fa auto) ===
+[lx-gpu-lock] ACQUIRED pid=1827866 reason=with-gpu-lock
+arm ctrl-auto rc=0
+=== arm fa-on (-fa on) ===
+[lx-gpu-lock] ACQUIRED pid=1829919 reason=with-gpu-lock
+arm fa-on rc=0
+=== arm fa-off (-fa off) ===
+[lx-gpu-lock] ACQUIRED pid=1832103 reason=with-gpu-lock
+arm fa-off rc=0
+=== receipts ===
+-- ctrl-auto: "avg_ts": "avg_ts": 
+-- fa-on: "avg_ts": "avg_ts": 
+-- fa-off: "avg_ts": "avg_ts": 
