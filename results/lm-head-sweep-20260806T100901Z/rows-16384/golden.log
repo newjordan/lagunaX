@@ -1,0 +1,13 @@
+[lx-gpu-lock] ACQUIRED pid=464129 reason=golden-smoke
+starting server on :18901 ...
+used /completion
+ TrueFirstForelettetoStringCR obtainMethodsCR:$ pickingord eas rate NO{e resolving NO NO NO NO NO NO NO NO NO eas NO eas NO thous independentlyassetsSupportCMake_ERROR menu_ERROR diussSupportCMakeireless nearly responses Queue dispatchassetsSupportMethodsSupportSupportSupportSupportCMakeCMakeCMakeSupportCMakeSupportCMakeSupportCMakeCMake
+GOLDEN MISMATCH
+--- want (first 400) ---
+The function should take an integer n as input and return the nth Fibonacci number. The Fibonacci sequence is defined as follows:
+F(0) = 0
+F(1) = 1
+F(n) = F(n-1) + F(n-2) for n > 1
+Your function
+--- got (first 400) ---
+TrueFirstForelettetoStringCR obtainMethodsCR:$ pickingord eas rate NO{e resolving NO NO NO NO NO NO NO NO NO eas NO eas NO thous independentlyassetsSupportCMake_ERROR menu_ERROR diussSupportCMakeireless nearly responses Queue dispatchassetsSupportMethodsSupportSupportSupportSupportCMakeCMakeCMakeSupportCMakeSupportCMakeSupportCMakeCMake

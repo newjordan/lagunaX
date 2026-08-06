@@ -1,0 +1,18 @@
+[
+  {
+    "arm": "full",
+    "pp512": 1167.820233,
+    "tg128": 137.903032,
+    "golden": "pass",
+    "metrics": "/home/frosty40/turbo/lx/results/lm-head-sweep-20260806T100901Z/full/20260806T101028Z/metrics.json",
+    "quality_safe": true
+  },
+  {
+    "arm": "rows-16384",
+    "pp512": 1166.657234,
+    "tg128": 142.548937,
+    "golden": "fail",
+    "metrics": "/home/frosty40/turbo/lx/results/lm-head-sweep-20260806T100901Z/rows-16384/20260806T100902Z/metrics.json",
+    "quality_safe": false
+  }
+]
