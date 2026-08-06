@@ -1,0 +1,6 @@
+[layer-timer] FINAL mul_mat dispatch budget by bucket (us, calls, us/call):
+[layer-timer] bucket attn_o:      10117 us         280 calls     36.13 us/call
+[layer-timer] bucket ffn_shexp:      73424 us         273 calls    268.95 us/call
+[layer-timer] bucket ffn_out:     864729 us           7 calls  123532.71 us/call
+[layer-timer] bucket other:    3031935 us       45696 calls     66.35 us/call
+[layer-timer] FINAL per-layer mul_mat decode budget (us, calls, us/call):

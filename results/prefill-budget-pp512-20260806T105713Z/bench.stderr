@@ -1,0 +1,8 @@
+warning: opening /proc/PID/mem file for lwp 1448804.1448804 failed: Permission denied (13)
+warning: opening /proc/self/mem file failed: Permission denied (13)
+warning: File "/opt/intel/oneapi/compiler/2026.0/lib/libsycl.so.9.0.0-gdb.py" auto-loading has been declined by your `auto-load safe-path' set to "$debugdir:$datadir/auto-load".
+warning: 30	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory
+warning: 58	../sysdeps/nptl/libc_start_call_main.h: No such file or directory
+warning: 360	../csu/libc-start.c: No such file or directory
+terminate called after throwing an instance of 'sycl::_V1::exception'
+  what():  No device of requested type available. Please check https://software.intel.com/content/www/us/en/develop/articles/intel-oneapi-dpcpp-system-requirements.html
