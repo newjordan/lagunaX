@@ -1,0 +1,82 @@
+[
+  {
+    "tag": "tool0_r0",
+    "ok": true,
+    "wall_s": 1.7526962757110596,
+    "prompt_n": 108,
+    "predicted_n": 96,
+    "pp_tps": 226.6422116922199,
+    "tg_tps": 134.8716190775905,
+    "preview": ""
+  },
+  {
+    "tag": "tool0_r1",
+    "ok": true,
+    "wall_s": 1.1822216510772705,
+    "prompt_n": 108,
+    "predicted_n": 96,
+    "pp_tps": 233.5044257736996,
+    "tg_tps": 134.90990547874748,
+    "preview": ""
+  },
+  {
+    "tag": "tool1_r0",
+    "ok": true,
+    "wall_s": 1.1502723693847656,
+    "prompt_n": 88,
+    "predicted_n": 96,
+    "pp_tps": 218.07764555443762,
+    "tg_tps": 134.93417742157655,
+    "preview": " The current weather in **Austin, TX** is **98\u00b0F** with **41% humidity**. It"
+  },
+  {
+    "tag": "tool1_r1",
+    "ok": true,
+    "wall_s": 1.1497783660888672,
+    "prompt_n": 88,
+    "predicted_n": 96,
+    "pp_tps": 218.54883573074784,
+    "tg_tps": 134.83373315280593,
+    "preview": ""
+  },
+  {
+    "tag": "tool2_r0",
+    "ok": true,
+    "wall_s": 1.1307549476623535,
+    "prompt_n": 83,
+    "predicted_n": 96,
+    "pp_tps": 216.8636293565421,
+    "tg_tps": 134.8469908051208,
+    "preview": ""
+  },
+  {
+    "tag": "tool2_r1",
+    "ok": true,
+    "wall_s": 1.1342952251434326,
+    "prompt_n": 83,
+    "predicted_n": 96,
+    "pp_tps": 216.45303881811427,
+    "tg_tps": 134.34051402039177,
+    "preview": ""
+  },
+  {
+    "tag": "depth_2048",
+    "ok": true,
+    "wall_s": 10.599442481994629,
+    "prompt_n": 3161,
+    "predicted_n": 64,
+    "pp_tps": 316.302813363929,
+    "tg_tps": 107.52344935225521,
+    "preview": ""
+  },
+  {
+    "tag": "depth_8192",
+    "ok": true,
+    "wall_s": 44.829012393951416,
+    "prompt_n": 13955,
+    "predicted_n": 64,
+    "pp_tps": 316.4360704467644,
+    "tg_tps": 90.15455872160835,
+    "preview": ""
+  }
+]

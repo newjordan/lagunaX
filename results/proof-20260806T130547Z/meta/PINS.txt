@@ -1,0 +1,15 @@
+stamp=20260806T130547Z
+binary=/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench
+-rwxrwxr-x 1 frosty40 frosty40 564624 Aug  6 07:58 /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench
+-rwxrwxr-x 2 frosty40 frosty40 570024 Aug  5 23:12 /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-perplexity
+-rwxrwxr-x 2 frosty40 frosty40 662784 Aug  5 23:12 /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-server
+45df4cc686ba1dfd4083a3c22da00c27  /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/libggml-sycl.so.0.17.0
+model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+model_sha256=771a73e1249b9bc08e17d3fca59f5c49b7b9c8a6a47b5a6ac82f95c6e76923c4
+wiki=/home/frosty40/data/wikitext-2-raw/wiki.test.raw
+srv_ctx=16384
+template=/home/frosty40/turbo/worktrees/treebeard-pr-private-latest/models/templates/poolside-Laguna-XS-2.1.jinja
+INFO: Output filtered by ONEAPI_DEVICE_SELECTOR environment variable, which is set to level_zero:gpu.
+To see device ids, use the --ignore-device-selectors CLI option.
+
+[level_zero:gpu] Intel(R) oneAPI Unified Runtime over Level-Zero V2, Intel(R) Arc(TM) Pro B70 Graphics 20.2.0 [1.15.38308+1]

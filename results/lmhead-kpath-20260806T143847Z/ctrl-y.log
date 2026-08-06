@@ -1,0 +1,185 @@
+thermal-gate: hwmon=/sys/class/drm/card0/device/hwmon/hwmon6 max_temp=56.0C
+thermal-gate: 0s/300s idle, waiting (cur=56C)
+thermal-gate: 15s/300s idle, waiting (cur=56C)
+thermal-gate: 30s/300s idle, waiting (cur=56C)
+thermal-gate: 45s/300s idle, waiting (cur=56C)
+thermal-gate: 60s/300s idle, waiting (cur=56C)
+thermal-gate: 75s/300s idle, waiting (cur=56C)
+thermal-gate: 90s/300s idle, waiting (cur=56C)
+thermal-gate: 105s/300s idle, waiting (cur=56C)
+thermal-gate: 120s/300s idle, waiting (cur=56C)
+thermal-gate: 135s/300s idle, waiting (cur=56C)
+thermal-gate: 150s/300s idle, waiting (cur=56C)
+thermal-gate: 165s/300s idle, waiting (cur=56C)
+thermal-gate: 180s/300s idle, waiting (cur=56C)
+thermal-gate: 196s/300s idle, waiting (cur=56C)
+thermal-gate: 211s/300s idle, waiting (cur=56C)
+thermal-gate: 226s/300s idle, waiting (cur=56C)
+thermal-gate: 241s/300s idle, waiting (cur=56C)
+thermal-gate: 256s/300s idle, waiting (cur=56C)
+thermal-gate: 271s/300s idle, waiting (cur=56C)
+thermal-gate: 286s/300s idle, waiting (cur=56C)
+thermal-gate: OK after 301s idle (cur=56C)
+bench-cold: card cold, running official bench
+[lx-gpu-lock] ACQUIRED pid=1254532 reason=bench-serial:lmhead-kpath-ctrl-y
+== lx serial bench ==
+  mode:    candidate
+  binary:  /home/frosty40/turbo/lx/src-lmhead-build/bin/llama-bench
+  bin sha: 730e7742cb0a18f4349f566f195dda471a38a2e475d83611ecf591794affb35a
+  model:   /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+  window:  pp512 / tg128  reps=5 combined_bench=0 delay=0 warmup_disabled=0 threads=16 threads_batch=16 cpu_moe_layers=0 no_kv_offload=0 no_op_offload=0 no_host=0 sycl_disable_graph=1 sycl_disable_dnn=1 priority=0 load=mmap poll=50 numa=disabled cpu_mask=0x0 cpu_strict=0 split=layer main_gpu=0 tensor_split=0 device=auto
+  device:  level_zero:gpu  ZE_AFFINITY_MASK=0
+  out:     /home/frosty40/turbo/lx/results/20260806T145516Z/metrics.json
+-- pp512 --
+-- tg128 --
+{
+  "stamp": "20260806T145516Z",
+  "track": "serial",
+  "mode": "candidate",
+  "pp512": 1123.48469,
+  "tg128": 136.348979,
+  "pp_samples": {
+    "stddev_ts": 11.337668,
+    "samples_ts": [
+      1117.14,
+      1113.17,
+      1117.34,
+      1140.79,
+      1128.99
+    ]
+  },
+  "tg_samples": {
+    "stddev_ts": 0.099609,
+    "samples_ts": [
+      136.524,
+      136.308,
+      136.276,
+      136.312,
+      136.325
+    ]
+  },
+  "window": {
+    "pp": 512,
+    "tg": 128,
+    "reps": 5,
+    "depth": 0
+  },
+  "combined_bench": false,
+  "binary": "/home/frosty40/turbo/lx/src-lmhead-build/bin/llama-bench",
+  "binary_sha256": "730e7742cb0a18f4349f566f195dda471a38a2e475d83611ecf591794affb35a",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "flags": {
+    "ngl": 99,
+    "threads": 16,
+    "threads_batch": 16,
+    "cpu_moe_layers": 0,
+    "cpu_mask": "0x0",
+    "cpu_strict": 0,
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "tensor_split": "0",
+    "device": "auto",
+    "ubatch": 2048,
+    "bbatch": 2048,
+    "ctx": 8192,
+    "ctk": "f16",
+    "ctv": "f16",
+    "no_kv_offload": 0,
+    "no_op_offload": 0,
+    "no_host": 0,
+    "flash_attn": -1,
+    "sycl_disable_graph": 1,
+    "sycl_disable_dnn": "1",
+    "priority": 0,
+    "load_mode": "mmap",
+    "poll": 50,
+    "delay_seconds": 0,
+    "numa": "disabled"
+  },
+  "env": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0",
+    "GGML_SYCL_DISABLE_GRAPH": "1",
+    "GGML_SYCL_DISABLE_DNN": "1"
+  },
+  "note": "lmhead-kpath-ctrl-y",
+  "claim_boundary": [
+    "Serial only: one stream pp512 + tg128.",
+    "Not multi-slot aggregate tok/s.",
+    "Not comparable to mlx.fast M5 absolute tok/s (different quant/silicon).",
+    "Score is vs pinned B70 baseline only."
+  ]
+}
+
+wrote /home/frosty40/turbo/lx/results/20260806T145516Z/metrics.json
+  pp512=1123.48469  tg128=136.348979
+score=1.192264  increase=+19.23%  dec=1.2701x  pre=0.9862x
+{
+  "decode_tok_s": 136.348979,
+  "prefill_tok_s": 1123.48469,
+  "baseline_decode_tok_s": 107.353814,
+  "baseline_prefill_tok_s": 1139.150972,
+  "decode_speedup": 1.270089752004526,
+  "prefill_speedup": 0.986247404966442,
+  "decode_floor": 0.95,
+  "prefill_floor": 0.95,
+  "floors_ok": true,
+  "score": 1.1922635785250542,
+  "score_se_rel": 0.0011545128968585216,
+  "score_se": 0.0013764836778618677,
+  "gain_distinguishable": 139.67733988949493,
+  "increase_pct": 19.226357852505416,
+  "formula": "decode_speedup^0.75 * prefill_speedup^0.25",
+  "track": "serial",
+  "not": "multi-slot aggregate tok/s",
+  "baseline_path": "/home/frosty40/turbo/lx/baseline/baseline.json",
+  "candidate_path": "/home/frosty40/turbo/lx/results/20260806T145516Z/metrics.json",
+  "candidate_meta": {
+    "stamp": "20260806T145516Z",
+    "binary": "/home/frosty40/turbo/lx/src-lmhead-build/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "lmhead-kpath-ctrl-y",
+    "flags": {
+      "ngl": 99,
+      "threads": 16,
+      "threads_batch": 16,
+      "cpu_moe_layers": 0,
+      "cpu_mask": "0x0",
+      "cpu_strict": 0,
+      "split_mode": "layer",
+      "main_gpu": 0,
+      "tensor_split": "0",
+      "device": "auto",
+      "ubatch": 2048,
+      "bbatch": 2048,
+      "ctx": 8192,
+      "ctk": "f16",
+      "ctv": "f16",
+      "no_kv_offload": 0,
+      "no_op_offload": 0,
+      "no_host": 0,
+      "flash_attn": -1,
+      "sycl_disable_graph": 1,
+      "sycl_disable_dnn": "1",
+      "priority": 0,
+      "load_mode": "mmap",
+      "poll": 50,
+      "delay_seconds": 0,
+      "numa": "disabled"
+    },
+    "env": {
+      "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+      "ZE_AFFINITY_MASK": "0",
+      "GGML_SYCL_DISABLE_GRAPH": "1",
+      "GGML_SYCL_DISABLE_DNN": "1"
+    }
+  },
+  "baseline_meta": {
+    "stamp": "20260729T183834Z",
+    "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-base-control/bin/llama-bench",
+    "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+    "note": "v0 control pin: serial track, Q4_K_M, base-control"
+  }
+}
+board: 1.1922635785250542 < prev 1.2181469734433867 → NOT downgraded (run preserved in results/; rejected copy at LATEST_SCORE_REJECTED.json)
+score → /home/frosty40/turbo/lx/results/20260806T145516Z/score.json
