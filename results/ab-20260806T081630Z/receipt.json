@@ -1,0 +1,56 @@
+{
+  "stamp": "20260806T081630Z",
+  "champion_bin": "/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench",
+  "candidate_env": "GGML_SYCL_ENABLE_MOE_DUAL_DOWN_LDS=1",
+  "rounds": 2,
+  "note": "dual-down pipeline variants (opt-in from source audit)",
+  "runs": [
+    {
+      "seq": 1,
+      "tag": "A",
+      "pp": 1162.134338,
+      "tg": 138.255011,
+      "pp_sd": 14.929703,
+      "tg_sd": 0.244924
+    },
+    {
+      "seq": 1,
+      "tag": "B",
+      "pp": 1155.215747,
+      "tg": 137.927972,
+      "pp_sd": 8.357696,
+      "tg_sd": 0.213511
+    },
+    {
+      "seq": 2,
+      "tag": "A",
+      "pp": 1165.416267,
+      "tg": 138.187461,
+      "pp_sd": 10.27678,
+      "tg_sd": 0.222493
+    },
+    {
+      "seq": 2,
+      "tag": "B",
+      "pp": 1167.611356,
+      "tg": 138.137975,
+      "pp_sd": 13.465234,
+      "tg_sd": 0.216629
+    }
+  ],
+  "champion": {
+    "pp": 1163.775,
+    "tg": 138.221
+  },
+  "candidate": {
+    "pp": 1161.414,
+    "tg": 138.033
+  },
+  "tg_delta_pct": -0.136,
+  "pp_delta_pct": -0.203,
+  "tg_jitter_sd_pct": 0.102,
+  "pp_jitter_sd_pct": 0.465,
+  "tg_signal_over_drift": 0.2,
+  "pp_signal_over_drift": 0.14,
+  "verdict": "NOISE"
+}
