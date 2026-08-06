@@ -1,0 +1,56 @@
+{
+  "stamp": "20260806T075133Z",
+  "champion_bin": "/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench",
+  "candidate_env": "GGML_SYCL_ENABLE_TOPK_MOE_BIAS=0",
+  "rounds": 2,
+  "note": "down/weighted-reduce + router norm probes",
+  "runs": [
+    {
+      "seq": 1,
+      "tag": "A",
+      "pp": 1162.837712,
+      "tg": 137.896012,
+      "pp_sd": 11.892583,
+      "tg_sd": 0.205001
+    },
+    {
+      "seq": 1,
+      "tag": "B",
+      "pp": 1155.017509,
+      "tg": 127.38829,
+      "pp_sd": 10.58497,
+      "tg_sd": 0.198033
+    },
+    {
+      "seq": 2,
+      "tag": "A",
+      "pp": 1162.192664,
+      "tg": 138.295073,
+      "pp_sd": 13.664245,
+      "tg_sd": 0.208798
+    },
+    {
+      "seq": 2,
+      "tag": "B",
+      "pp": 1159.267114,
+      "tg": 127.862049,
+      "pp_sd": 12.819862,
+      "tg_sd": 0.185855
+    }
+  ],
+  "champion": {
+    "pp": 1162.515,
+    "tg": 138.096
+  },
+  "candidate": {
+    "pp": 1157.142,
+    "tg": 127.625
+  },
+  "tg_delta_pct": -7.582,
+  "pp_delta_pct": -0.462,
+  "tg_jitter_sd_pct": 4.381,
+  "pp_jitter_sd_pct": 0.307,
+  "tg_signal_over_drift": 11.15,
+  "pp_signal_over_drift": 0.31,
+  "verdict": "REG"
+}
