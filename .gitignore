@@ -22,3 +22,6 @@ __pycache__/
 results/.b70-gpu.lock
 results/.b70-gpu.lock.meta
 results/.b70-gpu.lock.test.*
+src-lmhead/
+src-lmhead-build/
+results/src-repro-20260806T035656Z/tools/llama-bench/CMakeFiles/*/compiler_depend.internal

@@ -1,0 +1,68 @@
+4402,4468d4401
+<     // [LmheadProbe] env-gated source-level lm_head measurement. No-op in normal runs:
+<     // both branches require their GGML_SYCL_* env vars, so the default binary is
+<     // behaviorally identical (golden-safe). Diagnostic only; never part of scored runs.
+<     {
+<         static struct LmheadProbeState {
+<             std::chrono::steady_clock::time_point last{};
+<             uint64_t n = 0, us = 0;
+<             void * zeros = nullptr; size_t zeros_sz = 0;
+<             uint32_t hits[64] = {0}; uint32_t max_n = 0;
+<             ~LmheadProbeState() {
+<                 if (n == 0) return;
+<                 fprintf(stderr, "[lmhead-probe] FINAL: %llu lm_head calls, %llu us, %.2f us/cycle; max_suffix=%u; per-suffix hits:",
+<                         (unsigned long long) n, (unsigned long long) us, (double) us / (double) n, (unsigned) max_n);
+<                 for (int i = 0; i < 64; i++) if (hits[i]) fprintf(stderr, " %u:%u", i, (unsigned) hits[i]);
+<                 fprintf(stderr, "\n");
+<             }
+<         } st;
+<         // Suffix-aware: only the LAST fused group (l_out-<L>, L=39 on laguna B70 per
+<         // decode-trace) is the true lm_head. Histogram of every l_out-N dispatch is
+<         // logged so the real final suffix is visible; timer/skip only fire for the
+<         // configured layer (GGML_SYCL_LMHEAD_LAYER, default 39). All env-gated: the
+<         // default binary is behaviorally identical (golden-safe).
+<         uint32_t layer = 9999;
+<         const char * nm = dst && dst->name ? dst->name : "";
+<         const char * pp = strstr(nm, "l_out-");
+<         if (pp) { layer = (uint32_t) atoi(pp + 6); if (layer > 63) layer = 63; }
+<         else if (strstr(nm, "result_output")) { layer = 39; }
+<         if (layer != 9999) {
+<             st.hits[layer]++;
+<             if (layer > st.max_n) st.max_n = layer;
+<         }
+<         const char * ev = getenv("GGML_SYCL_LMHEAD_LAYER");
+<         const uint32_t lm_layer = ev ? (uint32_t) atoi(ev) : 39;
+<         const bool is_lmhead = layer == lm_layer;
+<         if (is_lmhead) {
+<             const bool timer = getenv("GGML_SYCL_LMHEAD_TIMER") != nullptr;
+<             const bool skip  = getenv("GGML_SYCL_SKIP_LMHEAD") != nullptr;
+<             if (timer) {
+<                 auto _now = std::chrono::steady_clock::now();
+<                 if (st.last.time_since_epoch().count()) {
+<                     st.us += (uint64_t) std::chrono::duration_cast<
+<                         std::chrono::microseconds>(_now - st.last).count();
+<                 }
+<                 st.last = _now;
+<                 st.n++;
+<             }
+<             if (skip) {
+<                 // Replace the lm_head GEMV (weight stream ~168 MB/token, never read here)
+<                 // with a fill of the small logits dst via the public backend API.
+<                 const size_t nb = ggml_nbytes(dst);
+<                 if (!st.zeros) { st.zeros = calloc(1, nb); st.zeros_sz = nb; }
+<                 if (st.zeros_sz < nb) { st.zeros = realloc(st.zeros, nb); st.zeros_sz = nb; memset(st.zeros, 0, nb); }
+<                 ggml_backend_tensor_set(dst, st.zeros, 0, nb);
+<                 if (timer) {
+<                     fprintf(stderr, "[lmhead-probe] skipped lm_head GEMV (dst=%s, %zu bytes)\n",
+<                             nm, nb);
+<                 }
+<                 return;
+<             }
+<             if (timer && st.n && (st.n % 64) == 0) {
+<                 fprintf(stderr, "[lmhead-probe] %llu lm_head dispatches, %llu us so far, %.2f us/cycle (max_suffix=%u)\n",
+<                         (unsigned long long) st.n, (unsigned long long) st.us,
+<                         (double) st.us / (double) st.n, (unsigned) st.max_n);
+<             }
+<         }
+<     }
+< 
