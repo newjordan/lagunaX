@@ -1,0 +1,59 @@
+[  0%] Built target llama-common-base
+[  1%] Built target llama-ui-embed
+[  1%] Built target cpp-httplib
+[  4%] Built target ggml-base
+[  4%] Provisioning UI assets
+[  8%] Built target ggml-cpu
+-- UI: npm output up-to-date, skipping build
+[ 32%] Built target ggml-sycl
+[ 32%] Built target ggml
+[ 75%] Built target llama
+[ 85%] Built target llama-common
+[ 95%] Built target mtmd
+[ 98%] Built target server-context
+-- UI: gzip compression applied (/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/dist/_gzip)
+[ 98%] Built target llama-ui-assets
+[ 98%] Built target llama-ui
+[100%] Built target llama-server-impl
+[100%] Linking CXX executable ../../bin/llama-server
+[100%] Built target llama-server
+[  0%] Built target llama-common-base
+[  0%] Built target cpp-httplib
+[  3%] Built target ggml-base
+[  7%] Built target ggml-cpu
+[ 35%] Built target ggml-sycl
+[ 35%] Built target ggml
+[ 86%] Built target llama
+[ 98%] Built target llama-common
+[100%] Building CXX object tools/perplexity/CMakeFiles/llama-perplexity-impl.dir/perplexity.cpp.o
+[100%] Linking CXX shared library ../../bin/libllama-perplexity-impl.so
+[100%] Built target llama-perplexity-impl
+[100%] Building CXX object tools/perplexity/CMakeFiles/llama-perplexity.dir/main.cpp.o
+[100%] Linking CXX executable ../../bin/llama-perplexity
+[100%] Built target llama-perplexity
+[  0%] Built target llama-common-base
+[  1%] Built target llama-ui-embed
+[  1%] Built target cpp-httplib
+[  4%] Built target ggml-base
+[  4%] Provisioning UI assets
+[  7%] Built target ggml-cpu
+-- UI: npm output up-to-date, skipping build
+[ 31%] Built target ggml-sycl
+[ 31%] Built target ggml
+[ 74%] Built target llama
+[ 84%] Built target llama-common
+[ 93%] Built target mtmd
+[ 96%] Built target server-context
+-- UI: gzip compression applied (/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/dist/_gzip)
+[ 96%] Built target llama-ui-assets
+[ 96%] Built target llama-ui
+[ 98%] Built target llama-server-impl
+[ 98%] Building CXX object tools/cli/CMakeFiles/llama-cli-impl.dir/cli.cpp.o
+[ 98%] Building CXX object tools/cli/CMakeFiles/llama-cli-impl.dir/cli-client.cpp.o
+[ 98%] Building CXX object tools/cli/CMakeFiles/llama-cli-impl.dir/cli-context.cpp.o
+[ 98%] Linking CXX shared library ../../bin/libllama-cli-impl.so
+[ 98%] Built target llama-cli-impl
+[ 98%] Building CXX object tools/cli/CMakeFiles/llama-cli.dir/main.cpp.o
+[100%] Linking CXX executable ../../bin/llama-cli
+[100%] Built target llama-cli
+BUILD_EXIT=0

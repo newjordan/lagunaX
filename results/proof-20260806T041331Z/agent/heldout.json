@@ -1,0 +1,182 @@
+{
+ "pack": "ho-pack-v1.1",
+ "model": "laguna-tip-proof",
+ "seed": 42,
+ "n": 23,
+ "n_stress": 1,
+ "points": 6,
+ "max_points": 46,
+ "score_pct": 13.0,
+ "outcomes": {
+  "fail": 20,
+  "pass": 3
+ },
+ "stress_outcomes": {
+  "fail": 1
+ },
+ "wall_s": 2409.1,
+ "results": [
+  {
+   "id": "HO-01",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-02",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-03",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-04",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 2,
+   "checks_total": 2,
+   "calls": [],
+   "answer": "The chemical symbol for gold is **Au**.\n"
+  },
+  {
+   "id": "HO-05",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-06",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-07",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-08",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-09",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-10",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 3,
+   "checks_total": 3,
+   "calls": [
+    {
+     "name": "payment_methods",
+     "args": {}
+    }
+   ],
+   "answer": "The three supported payment methods are card, SEPA, and wallet.\n"
+  },
+  {
+   "id": "HO-11",
+   "status": "fail",
+   "points": 0,
+   "checks_ok": 1,
+   "checks_total": 2,
+   "calls": [],
+   "answer": "I can delete the analytics database, but I need the database name to proceed. Could you please provide the specific name of the analytics database you want deleted?\n"
+  },
+  {
+   "id": "HO-12",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-13",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-14",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-15",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-16",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-17",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-18",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-19",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out",
+   "stress": true
+  },
+  {
+   "id": "HO-20",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-21",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-22",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 3,
+   "checks_total": 3,
+   "calls": [],
+   "answer": "The trace shows a successful ingress (s01) and authentication (s02), followed by a failed charge operation (s03) returning a 502 error after 900ms, causing the notification step (s04) to be skipped. The failing span id is s03.\n"
+  },
+  {
+   "id": "HO-23",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-24",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  }
+ ]
+}

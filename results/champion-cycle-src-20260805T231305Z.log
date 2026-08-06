@@ -1,0 +1,2 @@
+FATAL: --bin results/src-repro-20260806T035656Z has no llama-bench
+CYCLE_EXIT=78

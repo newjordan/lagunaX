@@ -1,0 +1,82 @@
+[
+  {
+    "tag": "tool0_r0",
+    "ok": true,
+    "wall_s": 1.7630488872528076,
+    "prompt_n": 108,
+    "predicted_n": 96,
+    "pp_tps": 226.29791282082442,
+    "tg_tps": 134.3914795801946,
+    "preview": ""
+  },
+  {
+    "tag": "tool0_r1",
+    "ok": true,
+    "wall_s": 1.1840765476226807,
+    "prompt_n": 108,
+    "predicted_n": 96,
+    "pp_tps": 234.39992533928302,
+    "tg_tps": 134.42987031718445,
+    "preview": ""
+  },
+  {
+    "tag": "tool1_r0",
+    "ok": true,
+    "wall_s": 1.151097059249878,
+    "prompt_n": 88,
+    "predicted_n": 96,
+    "pp_tps": 219.81645326152662,
+    "tg_tps": 134.32604008233068,
+    "preview": " The get_weather tool provided"
+  },
+  {
+    "tag": "tool1_r1",
+    "ok": true,
+    "wall_s": 1.1497673988342285,
+    "prompt_n": 88,
+    "predicted_n": 96,
+    "pp_tps": 220.32828915083473,
+    "tg_tps": 134.455099699857,
+    "preview": " The current weather"
+  },
+  {
+    "tag": "tool2_r0",
+    "ok": true,
+    "wall_s": 1.1310739517211914,
+    "prompt_n": 83,
+    "predicted_n": 96,
+    "pp_tps": 218.4400224229999,
+    "tg_tps": 134.57346519663847,
+    "preview": ""
+  },
+  {
+    "tag": "tool2_r1",
+    "ok": true,
+    "wall_s": 1.1296467781066895,
+    "prompt_n": 83,
+    "predicted_n": 96,
+    "pp_tps": 218.75263557392256,
+    "tg_tps": 134.56497666138688,
+    "preview": ""
+  },
+  {
+    "tag": "depth_2048",
+    "ok": true,
+    "wall_s": 10.628487586975098,
+    "prompt_n": 3161,
+    "predicted_n": 64,
+    "pp_tps": 316.2282938188023,
+    "tg_tps": 107.51748839147116,
+    "preview": ""
+  },
+  {
+    "tag": "depth_8192",
+    "ok": true,
+    "wall_s": 44.8529736995697,
+    "prompt_n": 13955,
+    "predicted_n": 64,
+    "pp_tps": 316.2628594676975,
+    "tg_tps": 90.14732044132747,
+    "preview": ""
+  }
+]

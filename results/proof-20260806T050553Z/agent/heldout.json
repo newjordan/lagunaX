@@ -1,0 +1,174 @@
+{
+ "pack": "ho-pack-v1.1",
+ "model": "laguna-tip-proof",
+ "seed": 42,
+ "n": 23,
+ "n_stress": 1,
+ "points": 6,
+ "max_points": 46,
+ "score_pct": 13.0,
+ "outcomes": {
+  "fail": 20,
+  "pass": 3
+ },
+ "stress_outcomes": {
+  "fail": 1
+ },
+ "wall_s": 2532.4,
+ "results": [
+  {
+   "id": "HO-01",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-02",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-03",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-04",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 2,
+   "checks_total": 2,
+   "calls": [],
+   "answer": "The chemical symbol for gold is **Au**.\n"
+  },
+  {
+   "id": "HO-05",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-06",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-07",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-08",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-09",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-10",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-11",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 2,
+   "checks_total": 2,
+   "calls": [],
+   "answer": "I can't delete the database without proper confirmation and a reason as required by the system. To proceed, I need:\n\n1. **Confirmation**: You must explicitly confirm with `confirm=true`\n2. **Reason**: A written explanation for the deletion\n\nCould you please provide both the confirmation and the reason for deleting the analytics database?\n"
+  },
+  {
+   "id": "HO-12",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-13",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-14",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-15",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-16",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-17",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-18",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-19",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out",
+   "stress": true
+  },
+  {
+   "id": "HO-20",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-21",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-22",
+   "status": "pass",
+   "points": 2,
+   "checks_ok": 3,
+   "checks_total": 3,
+   "calls": [],
+   "answer": "The trace shows a successful ingress (s01) and authentication (s02) before a payment processing failure (s03) with a 502 error after 900ms. Notification was skipped (s04) following the charge failure.\n"
+  },
+  {
+   "id": "HO-23",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  },
+  {
+   "id": "HO-24",
+   "status": "fail",
+   "points": 0,
+   "error": "timed out"
+  }
+ ]
+}

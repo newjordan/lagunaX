@@ -1,0 +1,626 @@
+[  0%] Building CXX object tools/ui/CMakeFiles/llama-ui-embed.dir/embed.cpp.o
+[  0%] Built target llama-common-base
+[  0%] Built target cpp-httplib
+[  3%] Built target ggml-base
+[  6%] Built target ggml-cpu
+[ 30%] Built target ggml-sycl
+[ 30%] Built target ggml
+[ 74%] Built target llama
+[ 74%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/mtmd-audio.cpp.o
+[ 74%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/cogvlm.cpp.o
+[ 74%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/conformer.cpp.o
+[ 75%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/mtmd.cpp.o
+[ 75%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/exaone4_5.cpp.o
+[ 75%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/dotsocr.cpp.o
+[ 75%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/clip.cpp.o
+[ 75%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/mtmd-helper.cpp.o
+[ 75%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/mtmd-image.cpp.o
+[ 75%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/gemma4a.cpp.o
+[ 77%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/gemma4v.cpp.o
+[ 77%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/gemma4ua.cpp.o
+[ 77%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/gemma4uv.cpp.o
+[ 77%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/glm4v.cpp.o
+[ 87%] Built target llama-common
+[ 87%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/granite-speech.cpp.o
+[ 88%] Linking CXX executable llama-ui-embed
+[ 88%] Built target llama-ui-embed
+[ 88%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/granite4-vision.cpp.o
+[ 90%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/hunyuanvl.cpp.o
+[ 90%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/internvl.cpp.o
+[ 90%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/kimivl.cpp.o
+[ 90%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/kimik25.cpp.o
+[ 90%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/nemotron-v2-vl.cpp.o
+[ 90%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/llama4.cpp.o
+[ 91%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/llava.cpp.o
+[ 91%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/minicpmv.cpp.o
+[ 91%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/paddleocr.cpp.o
+[ 91%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/pixtral.cpp.o
+[ 91%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/qwen2vl.cpp.o
+[ 91%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/minimax-m3.cpp.o
+[ 91%] Provisioning UI assets
+[ 91%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/qwen3vl.cpp.o
+[ 93%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/mimovl.cpp.o
+[ 93%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/qwen3a.cpp.o
+[ 93%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/mimo-audio.cpp.o
+[ 93%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/step3vl.cpp.o
+[ 93%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/siglip.cpp.o
+[ 93%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/whisper-enc.cpp.o
+[ 95%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/deepseekocr.cpp.o
+-- UI: running npm install
+[ 95%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/deepseekocr2.cpp.o
+[ 95%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/mobilenetv5.cpp.o
+[ 95%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/youtuvl.cpp.o
+[ 95%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/yasa2.cpp.o
+[ 95%] Building CXX object tools/mtmd/CMakeFiles/mtmd.dir/models/parakeet.cpp.o
+
+added 1039 packages, and audited 1040 packages in 6s
+
+353 packages are looking for funding
+  run `npm fund` for details
+
+22 vulnerabilities (3 low, 4 moderate, 10 high, 5 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[ 95%] Linking CXX shared library ../../bin/libmtmd.so
+-- UI: running npm run build, output -> /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/dist
+[ 95%] Built target mtmd
+[ 96%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-chat.cpp.o
+[ 96%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-queue.cpp.o
+[ 98%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-context.cpp.o
+[ 98%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-stream.cpp.o
+[ 98%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-tools.cpp.o
+[ 98%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-common.cpp.o
+[ 98%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-task.cpp.o
+[ 98%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-schema.cpp.o
+[ 98%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-mcp.cpp.o
+
+> llama-ui@1.0.0 build
+> npm run build-pwa-assets && vite build
+
+
+> llama-ui@1.0.0 build-pwa-assets
+> npx @vite-pwa/assets-generator --root . --config pwa-assets.config.ts && npx @vite-pwa/assets-generator --root . --config pwa-assets-dark.config.ts && node scripts/make-icons-circular.js
+
+Zero Config PWA Assets Generator v1.0.2
+◐ Preparing to generate PWA assets...
+◐ Resolving instructions...
+✔ PWA assets ready to be generated, instructions resolved
+◐ Generating PWA assets from static/favicon.svg image
+◐ Generating assets for static/favicon.svg...
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/pwa-64x64.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/pwa-192x192.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/pwa-512x512.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/maskable-icon-512x512.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-touch-icon-180x180.png
+✔ Generated ICO file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/favicon.ico
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-1170x2532.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-2532x1170.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-1284x2778.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-2778x1284.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-1179x2556.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-2556x1179.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-1290x2796.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-2796x1290.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-640x1136.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-1206x2622.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-2622x1206.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-1334x750.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-1136x640.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-750x1334.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-2868x1320.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-1320x2868.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-1640x2360.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-2360x1640.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-1668x2388.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-2048x2732.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-1488x2266.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-2388x1668.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-1170x2532.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-2732x2048.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-2266x1488.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-2532x1170.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-1284x2778.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-1179x2556.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-2778x1284.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-1206x2622.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-2556x1179.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-640x1136.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-1290x2796.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-2796x1290.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-1320x2868.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-2622x1206.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-1136x640.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-750x1334.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-1334x750.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-2868x1320.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-1640x2360.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-2360x1640.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-1668x2388.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-2732x2048.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-2266x1488.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-landscape-dark-2388x1668.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-2048x2732.png
+✔ Generated PNG file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/apple-splash-portrait-dark-1488x2266.png
+✔ Assets generated for static/favicon.svg
+◐ Generating Html Head Links...
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-1170x2532.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-2532x1170.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-dark-1170x2532.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-dark-2532x1170.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-1284x2778.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-2778x1284.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-dark-1284x2778.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-dark-2778x1284.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-1179x2556.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-2556x1179.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-dark-1179x2556.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-dark-2556x1179.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-1290x2796.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-2796x1290.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-dark-1290x2796.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-dark-2796x1290.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-1206x2622.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-2622x1206.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-dark-1206x2622.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-dark-2622x1206.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-1320x2868.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-2868x1320.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./apple-splash-portrait-dark-1320x2868.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="./apple-splash-landscape-dark-2868x1320.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-640x1136.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-1136x640.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-dark-640x1136.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-dark-1136x640.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-750x1334.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-1334x750.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-dark-750x1334.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-dark-1334x750.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-1640x2360.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-2360x1640.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-dark-1640x2360.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-dark-2360x1640.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-2048x2732.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-2732x2048.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-dark-2048x2732.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-dark-2732x2048.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-1668x2388.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-2388x1668.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-dark-1668x2388.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-dark-2388x1668.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-1488x2266.png">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-2266x1488.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./apple-splash-portrait-dark-1488x2266.png">
+<link rel="apple-touch-startup-image" media="screen and (prefers-color-scheme: dark) and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./apple-splash-landscape-dark-2266x1488.png">
+✔ Html Head Links generated
+◐ Generating PWA web manifest icons entry...
+{
+  "icons": [
+    {
+      "src": "pwa-64x64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "maskable-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
+✔ PWA web manifest icons entry generated
+✔ PWA assets generated
+Zero Config PWA Assets Generator v1.0.2
+◐ Preparing to generate PWA assets...
+◐ Resolving instructions...
+✔ PWA assets ready to be generated, instructions resolved
+◐ Generating PWA assets from static/favicon-dark.svg image
+◐ Generating assets for static/favicon-dark.svg...
+✔ Generated ICO file: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui-src/static/favicon-dark.ico
+✔ Assets generated for static/favicon-dark.svg
+◐ Generating Html Head Links...
+<link rel="icon" href="/favicon-dark.ico" sizes="48x48">
+<link rel="icon" href="/favicon-dark.svg" sizes="any" type="image/svg+xml">
+✔ Html Head Links generated
+◐ Generating PWA web manifest icons entry...
+{
+  "icons": []
+}
+✔ PWA web manifest icons entry generated
+✔ PWA assets generated
+Circular mask: 0% padding, 85% scale, source=maskable-icon-512x512.png
+
+✓ pwa-64x64.png → circle from maskable-icon-512x512.png, 0% padding (size=64, r=32, scale=85%, circleDiameter=64)
+✓ pwa-192x192.png → circle from maskable-icon-512x512.png, 0% padding (size=192, r=96, scale=85%, circleDiameter=192)
+✓ pwa-512x512.png → circle from maskable-icon-512x512.png, 0% padding (size=512, r=256, scale=85%, circleDiameter=512)
+
+Unchanged:
+  maskable-icon-512x512.png (1894 bytes)
+  apple-touch-icon-180x180.png (806 bytes)
+vite v7.3.5 building ssr environment for production...
+transforming...
+[ 98%] Linking CXX static library libserver-context.a
+[ 98%] Built target server-context
+✓ 5255 modules transformed.
+rendering chunks...
+vite v7.3.5 building client environment for production...
+transforming...
+✓ 8321 modules transformed.
+rendering chunks...
+computing gzip size...
+.svelte-kit/output/client/_app/version.json                              0.03 kB │ gzip:     0.05 kB
+.svelte-kit/output/client/.vite/manifest.json                            0.30 kB │ gzip:     0.19 kB
+.svelte-kit/output/client/manifest.webmanifest                           0.52 kB
+.svelte-kit/output/client/_app/immutable/assets/bundle.D7LDmMTE.css    535.29 kB │ gzip:   291.64 kB
+.svelte-kit/output/client/_app/immutable/bundle.DXFu6v5j.js          8,768.23 kB │ gzip: 2,582.62 kB
+✓ built in 16.66s
+Relativized base refs in index.html and sw.js
+.svelte-kit/output/server/.vite/manifest.json                                                         16.62 kB
+.svelte-kit/output/server/_app/immutable/assets/_page.CV-KWLNP.css                                     0.29 kB
+.svelte-kit/output/server/_app/immutable/assets/dialog-description.bHHIbcsu.css                        0.35 kB
+.svelte-kit/output/server/_app/immutable/assets/_layout.Ka31FVsZ.css                                 145.71 kB
+.svelte-kit/output/server/_app/immutable/assets/SidebarNavigationConversationItem.ShJHY1gS.css       388.40 kB
+.svelte-kit/output/server/chunks/app.js                                                                0.07 kB
+.svelte-kit/output/server/chunks/environment.js                                                        0.07 kB
+.svelte-kit/output/server/chunks/api-key-validation.js                                                 0.19 kB
+.svelte-kit/output/server/chunks/server.js                                                             0.20 kB
+.svelte-kit/output/server/chunks/arrow-right.js                                                        0.22 kB
+.svelte-kit/output/server/chunks/device.svelte.js                                                      0.22 kB
+.svelte-kit/output/server/entries/pages/(chat)/_page.ts.js                                             0.29 kB
+.svelte-kit/output/server/chunks/keyboard.enums.js                                                     0.29 kB
+.svelte-kit/output/server/entries/pages/(chat)/chat/_id_/_page.ts.js                                   0.31 kB
+.svelte-kit/output/server/chunks/pencil.js                                                             0.33 kB
+.svelte-kit/output/server/chunks/refresh-cw.js                                                         0.35 kB
+.svelte-kit/output/server/internal.js                                                                  0.37 kB
+.svelte-kit/output/server/chunks/card.js                                                               0.46 kB
+.svelte-kit/output/server/chunks/utils2.js                                                             0.60 kB
+.svelte-kit/output/server/chunks/use-marquee-selection.svelte.js                                       0.63 kB
+.svelte-kit/output/server/entries/pages/settings/_layout.svelte.js                                     0.88 kB
+.svelte-kit/output/server/entries/pages/(chat)/_page.svelte.js                                         1.13 kB
+.svelte-kit/output/server/chunks/formatters.js                                                         1.14 kB
+.svelte-kit/output/server/entries/pages/(chat)/chat/_id_/_page.svelte.js                               1.28 kB
+.svelte-kit/output/server/chunks/alert-dialog-cancel.js                                                1.29 kB
+.svelte-kit/output/server/chunks/exports.js                                                            1.46 kB
+.svelte-kit/output/server/chunks/label.js                                                              1.56 kB
+.svelte-kit/output/server/chunks/ActionIcon.js                                                         1.57 kB
+.svelte-kit/output/server/chunks/url.js                                                                1.60 kB
+.svelte-kit/output/server/chunks/input.js                                                              1.66 kB
+.svelte-kit/output/server/chunks/render-context.js                                                     1.81 kB
+.svelte-kit/output/server/entries/pages/search/_page.svelte.js                                         2.03 kB
+.svelte-kit/output/server/chunks/DialogConfirmation.js                                                 2.42 kB
+.svelte-kit/output/server/chunks/DialogModelNotAvailable.js                                            2.76 kB
+.svelte-kit/output/server/chunks/internal.js                                                           2.84 kB
+.svelte-kit/output/server/chunks/SidebarNavigationSearchResults.js                                     5.25 kB
+.svelte-kit/output/server/chunks/workbox-window.prod.es5.js                                            5.75 kB
+.svelte-kit/output/server/chunks/dialog-footer.js                                                      5.77 kB
+.svelte-kit/output/server/chunks/TruncatedText.js                                                      5.78 kB
+.svelte-kit/output/server/chunks/index2.js                                                             6.85 kB
+.svelte-kit/output/server/entries/pages/_error.svelte.js                                               8.18 kB
+.svelte-kit/output/server/chunks/SearchInput.js                                                        9.16 kB
+.svelte-kit/output/server/chunks/McpServerIdentity.js                                                 12.08 kB
+.svelte-kit/output/server/remote-entry.js                                                             14.02 kB
+.svelte-kit/output/server/chunks/utils.js                                                             15.12 kB
+.svelte-kit/output/server/chunks/popper-layer-force-mount.js                                          15.45 kB
+.svelte-kit/output/server/chunks/conversations.svelte.js                                              17.02 kB
+.svelte-kit/output/server/chunks/models.svelte.js                                                     17.37 kB
+.svelte-kit/output/server/chunks/index.js                                                             21.71 kB
+.svelte-kit/output/server/chunks/dialog-description.js                                                24.61 kB
+.svelte-kit/output/server/entries/pages/mcp-servers/_page.svelte.js                                   33.59 kB
+.svelte-kit/output/server/entries/pages/_layout.svelte.js                                             39.46 kB
+.svelte-kit/output/server/chunks/root.js                                                              40.18 kB
+.svelte-kit/output/server/chunks/url2.js                                                              49.17 kB
+.svelte-kit/output/server/index.js                                                                    57.10 kB
+.svelte-kit/output/server/chunks/chat.svelte.js                                                       75.33 kB
+.svelte-kit/output/server/entries/pages/settings/__section__/_page.svelte.js                          76.17 kB
+.svelte-kit/output/server/chunks/SidebarNavigationConversationItem.svelte_svelte_type_style_lang.js  144.35 kB
+.svelte-kit/output/server/entries/pages/(chat)/_layout.svelte.js                                     311.48 kB
+.svelte-kit/output/server/chunks/_virtual_nerdamer.js                                                483.92 kB
+✓ built in 25.89s
+
+PWA v1.3.0
+mode      generateSW
+precache  67 entries (9519.22 KiB)
+files generated
+  .svelte-kit/output/server/sw.js
+  .svelte-kit/output/server/workbox-b3c04f83.js
+
+Run npm run preview to preview your production build locally.
+
+> Using @sveltejs/adapter-static
+Overwriting /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/dist/index.html with fallback page. Consider using a different name for the fallback.
+  Wrote site to "/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/dist"
+  ✔ done
+Generated 48 apple-splash link tags
+Updated index.html
+Created build.json (version: 10170)
+Relativized base refs in index.html and sw.js
+-- UI: npm build succeeded
+-- UI: gzip compression applied (/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/dist/_gzip)
+embed: write output file /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui.h
+embed: write output file /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/tools/ui/ui.cpp
+[ 98%] Built target llama-ui-assets
+[ 98%] Building CXX object tools/ui/CMakeFiles/llama-ui.dir/ui.cpp.o
+[ 98%] Linking CXX static library libllama-ui.a
+[ 98%] Built target llama-ui
+[ 98%] Building CXX object tools/server/CMakeFiles/llama-server-impl.dir/server.cpp.o
+[ 98%] Building CXX object tools/server/CMakeFiles/llama-server-impl.dir/server-models.cpp.o
+[ 98%] Building CXX object tools/server/CMakeFiles/llama-server-impl.dir/server-http.cpp.o
+[100%] Linking CXX shared library ../../bin/libllama-server-impl.so
+[100%] Built target llama-server-impl
+[100%] Building CXX object tools/server/CMakeFiles/llama-server.dir/main.cpp.o
+[100%] Linking CXX executable ../../bin/llama-server
+/usr/bin/ld: warning: libsvml.so, needed by ../../bin/libllama-server-impl.so, not found (try using -rpath or -rpath-link)
+/usr/bin/ld: warning: libirng.so, needed by ../../bin/libllama-server-impl.so, not found (try using -rpath or -rpath-link)
+/usr/bin/ld: warning: libimf.so, needed by ../../bin/libllama-server-impl.so, not found (try using -rpath or -rpath-link)
+/usr/bin/ld: warning: libintlc.so.5, needed by ../../bin/libllama-server-impl.so, not found (try using -rpath or -rpath-link)
+/usr/bin/ld: warning: libiomp5.so, needed by ../../bin/libggml-cpu.so.0.17.0, not found (try using -rpath or -rpath-link)
+/usr/bin/ld: warning: libdnnl.so.3, needed by ../../bin/libggml-sycl.so.0.17.0, not found (try using -rpath or -rpath-link)
+/usr/bin/ld: warning: libsycl.so.9, needed by ../../bin/libggml-sycl.so.0.17.0, not found (try using -rpath or -rpath-link)
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::local_mem_size>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::local_mem_size>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_memory_desc_clone'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::exception_list::end() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_primitive_destroy'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::aligned_alloc_shared(unsigned long, unsigned long, sycl::_V1::device const&, sycl::_V1::context const&, sycl::_V1::property_list const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::addArg(sycl::_V1::detail::kernel_param_kind_t, void*, int, int)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::ext::intel::info::device::uuid>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::ext::intel::info::device::uuid>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::exception::~exception()'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::driver_version>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::driver_version>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_graph_get_partition_num'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::make_kernel_bundle(unsigned long, sycl::_V1::context const&, bool, sycl::_V1::bundle_state, sycl::_V1::backend)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::handler::get_device() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_tensor_create'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_primitive_attr_set_fpmath_mode_v2'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::async_malloc(sycl::_V1::queue const&, sycl::_V1::usm::alloc, unsigned long, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::ext::intel::info::device::device_id>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::ext::intel::info::device::device_id>() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::is_event_info_desc<sycl::_V1::info::event::command_execution_status>::return_type sycl::_V1::event::get_info<sycl::_V1::info::event::command_execution_status>() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::queue::memcpy(void*, void const*, unsigned long, sycl::_V1::event, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_graph_finalize'
+/usr/bin/ld: ../../bin/libggml-base.so.0.17.0: undefined reference to `__kmpc_atomic_fixed4_add@VERSION'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::event::getNative() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::AccessorBaseHost::isMemoryObjectUsedByGraph() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_engine_destroy'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::submit_with_event_impl(sycl::_V1::detail::type_erased_cgfo_ty const&, sycl::_V1::detail::_V1::SubmissionInfo const&, sycl::_V1::detail::code_location const&, bool) const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_memory_destroy'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_logical_tensor_init_with_dims'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::event::wait_and_throw()'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::device::ext_oneapi_can_compile(sycl::_V1::ext::oneapi::experimental::source_language)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::max_mem_alloc_size>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::max_mem_alloc_size>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::get_backend() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::context::context(sycl::_V1::device const&, sycl::_V1::property_list const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::detail::modifiable_command_graph::end_recording()'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::buffer_plain::buffer_plain(void*, unsigned long, unsigned long, sycl::_V1::property_list const&, std::unique_ptr<sycl::_V1::detail::SYCLMemObjAllocator, std::default_delete<sycl::_V1::detail::SYCLMemObjAllocator> >)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::context::context(sycl::_V1::property_list const&)'
+/usr/bin/ld: ../../bin/libggml-cpu.so.0.17.0: undefined reference to `__kmpc_single@VERSION'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::depends_on(sycl::_V1::event)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::malloc_shared(unsigned long, sycl::_V1::device const&, sycl::_V1::context const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::platform::get_platforms()'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_partition_compile'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::max_work_item_sizes<3> >::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::max_work_item_sizes<3> >() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_partition_get_input_ports'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_primitive_attr_destroy'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::free(void*, sycl::_V1::context const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::exception::what() const'
+/usr/bin/ld: ../../bin/libggml-cpu.so.0.17.0: undefined reference to `__kmpc_barrier@VERSION'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::queue::memset(void*, int, unsigned long, sycl::_V1::event, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_op_add_output'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::physical_mem::size() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::select_device(std::function<int (sycl::_V1::device const&)> const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::handler::setDeviceKernelInfoPtr(sycl::_V1::detail::DeviceKernelInfo*)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_partition_is_supported'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::addHostAccessorAndWait(sycl::_V1::detail::AccessorImplHost*)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_graph_get_partitions'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::physical_mem::map(unsigned long, unsigned long, sycl::_V1::ext::oneapi::experimental::address_access_mode, unsigned long) const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_compiled_partition_create'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::__max_impl(unsigned long, unsigned long)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::queue(sycl::_V1::device const&, std::function<void (sycl::_V1::exception_list)> const&, sycl::_V1::property_list const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_primitive_execute'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::queue::memset(void*, int, unsigned long, std::vector<sycl::_V1::event, std::allocator<sycl::_V1::event> > const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::buffer_plain::constructorNotification(sycl::_V1::detail::code_location const&, void*, void const*, void const*, unsigned int, unsigned int, unsigned long*)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::exception_list::begin() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_partition_get_output_ports_num'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::ext_oneapi_submit_barrier(std::vector<sycl::_V1::event, std::allocator<sycl::_V1::event> > const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::device_image_plain::getNative() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::get_empty_interop_kernel_bundle_impl(sycl::_V1::context const&, std::vector<sycl::_V1::device, std::allocator<sycl::_V1::device> > const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::ext_oneapi_submit_barrier(sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::version>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::version>() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::getDeviceBackend() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::storeRawArg(void const*, unsigned long)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::submit_graph_direct_with_event_impl(sycl::_V1::queue const&, sycl::_V1::ext::oneapi::experimental::command_graph<(sycl::_V1::ext::oneapi::experimental::graph_state)1>&, sycl::_V1::span<sycl::_V1::event const, 18446744073709551615ul>, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `__sycl_unregister_lib'
+/usr/bin/ld: ../../bin/libggml-cpu.so.0.17.0: undefined reference to `omp_get_num_threads@VERSION'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::partition_properties>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::partition_properties>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::exception::exception(std::error_code, std::shared_ptr<sycl::_V1::context>, char const*)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_primitive_desc_destroy'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_memory_desc_destroy'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::handler::verifyUsedKernelBundleInternal(sycl::_V1::detail::string_view)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::device(sycl::_V1::device const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_matmul_primitive_desc_create'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::AccessorBaseHost::getPtr() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_op_create'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_op_set_attr_s64'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::event::event()'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::ext::intel::info::device::memory_clock_rate>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::ext::intel::info::device::memory_clock_rate>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::device(sycl::_V1::device const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::get_device() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_primitive_attr_set_scratchpad_mode'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::get_context() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::double_fp_config>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::double_fp_config>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::global_mem_cache_size>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::global_mem_cache_size>() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::AccessorBaseHost::getOffset() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::context::get_backend() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_partition_get_output_ports'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_partition_get_input_ports_num'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::get_mem_granularity(sycl::_V1::device const&, sycl::_V1::context const&, sycl::_V1::ext::oneapi::experimental::granularity_mode)'
+/usr/bin/ld: ../../bin/libggml-cpu.so.0.17.0: undefined reference to `__kmpc_end_single@VERSION'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::tls_code_loc_t::tls_code_loc_t(sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-cpu.so.0.17.0: undefined reference to `__kmpc_push_num_threads@VERSION'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::OSUtil::alignedFree(void*)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::getNative() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::ext::intel::info::device::memory_bus_width>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::ext::intel::info::device::memory_bus_width>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::wait_proxy(sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::handler::SetHostTask(std::function<void ()>)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::has(sycl::_V1::aspect) const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_graph_create'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::default_selector_v(sycl::_V1::device const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::queue(sycl::_V1::device const&, std::function<void (sycl::_V1::exception_list)> const&, sycl::_V1::property_list const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_memory_create_v2'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::AccessorBaseHost::getMemoryRange() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::is_event_profiling_info_desc<sycl::_V1::info::event_profiling::command_start>::return_type sycl::_V1::event::get_profiling_info<sycl::_V1::info::event_profiling::command_start>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::ext_oneapi_architecture_is(sycl::_V1::ext::oneapi::experimental::arch_category)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::aligned_alloc_device(unsigned long, unsigned long, sycl::_V1::queue const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::event::wait()'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::DisableRangeRounding()'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_primitive_desc_query_md'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::buffer_plain::handleRelease() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::make_queue(unsigned long, int, sycl::_V1::context const&, sycl::_V1::device const*, bool, sycl::_V1::property_list const&, std::function<void (sycl::_V1::exception_list)> const&, sycl::_V1::backend)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::HasAssociatedAccessor(sycl::_V1::detail::AccessorImplHost*, sycl::_V1::access::target) const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::queue::ext_oneapi_get_graph() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::tls_code_loc_t::~tls_code_loc_t()'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::LocalAccessorBaseHost::LocalAccessorBaseHost(sycl::_V1::range<3>, int, int, sycl::_V1::property_list const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::global_mem_size>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::global_mem_size>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::submit_kernel_direct_with_event_impl(sycl::_V1::queue const&, sycl::_V1::detail::nd_range_view_v1::nd_range_view const&, sycl::_V1::detail::HostKernelRefBase&, sycl::_V1::detail::DeviceKernelInfo*, sycl::_V1::span<sycl::_V1::event const, 18446744073709551615ul>, sycl::_V1::detail::kernel_launch_properties_v1::PropsHolder<sycl::_V1::ext::oneapi::experimental::work_group_scratch_size, sycl::_V1::ext::intel::experimental::cache_config, sycl::_V1::ext::oneapi::experimental::use_root_sync_key, sycl::_V1::ext::oneapi::experimental::work_group_progress_key, sycl::_V1::ext::oneapi::experimental::sub_group_progress_key, sycl::_V1::ext::oneapi::experimental::work_item_progress_key, sycl::_V1::ext::oneapi::experimental::cuda::cluster_size<1>, sycl::_V1::ext::oneapi::experimental::cuda::cluster_size<2>, sycl::_V1::ext::oneapi::experimental::cuda::cluster_size<3> > const&, sycl::_V1::detail::code_location const&, bool)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::is_cpu() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::OSUtil::alignedAlloc(unsigned long, unsigned long)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::AccessorBaseHost::isPlaceholder() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::async_free(sycl::_V1::queue const&, void*, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::is_queue_info_desc<sycl::_V1::info::queue::context>::return_type sycl::_V1::queue::get_info<sycl::_V1::info::queue::context>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::handler::setArgsToAssociatedAccessors()'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::queue::ext_oneapi_get_state() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::get_platform() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_compiled_partition_query_logical_tensor'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::free_virtual_mem(unsigned long, unsigned long, sycl::_V1::context const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::name>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::name>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::unmap(void const*, unsigned long, sycl::_V1::context const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_sycl_interop_stream_create'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::kernel_bundle_plain::begin() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::platform::get_backend() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::ext::oneapi::experimental::info::device::architecture>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::ext::oneapi::experimental::info::device::architecture>() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::kernel_bundle_plain::get_devices() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_engine_get_kind'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::device_type>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::device_type>() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::is_queue_info_desc<sycl::_V1::info::queue::device>::return_type sycl::_V1::queue::get_info<sycl::_V1::info::queue::device>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::detail::modifiable_command_graph::finalize(sycl::_V1::property_list const&) const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::physical_mem::physical_mem(sycl::_V1::device const&, sycl::_V1::context const&, unsigned long)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::handler::setKernelFunc(void*)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_memory_desc_get_size_v2'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::handler::depends_on(std::vector<sycl::_V1::event, std::allocator<sycl::_V1::event> > const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::malloc_device(unsigned long, sycl::_V1::device const&, sycl::_V1::context const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::handler::setType(sycl::_V1::detail::CGType)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::kernel_bundle_plain::get_backend() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::associateWithHandler(sycl::_V1::handler&, sycl::_V1::detail::AccessorBaseHost*, sycl::_V1::access::target)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::constructorNotification(void*, void*, sycl::_V1::access::target, sycl::_V1::access::mode, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::memcpy(void*, void const*, unsigned long)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::free(void*, sycl::_V1::queue const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::memcpy(void*, void const*, unsigned long, std::vector<sycl::_V1::event, std::allocator<sycl::_V1::event> > const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-base.so.0.17.0: undefined reference to `__kmpc_dispatch_next_4@VERSION'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::ext_oneapi_can_access_peer(sycl::_V1::device const&, sycl::_V1::ext::oneapi::peer_access)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::GetRangeRoundingSettings(unsigned long&, unsigned long&, unsigned long&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::memset(void*, int, unsigned long)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::setUserFacingNodeType(sycl::_V1::ext::oneapi::experimental::node_type)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::AccessorBaseHost::getAccData()'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::sub_group_sizes>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::sub_group_sizes>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_memory_desc_create_with_tag'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::detail::executable_command_graph::update(sycl::_V1::ext::oneapi::experimental::command_graph<(sycl::_V1::ext::oneapi::experimental::graph_state)0> const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_primitive_create'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::aligned_alloc_device(unsigned long, unsigned long, sycl::_V1::device const&, sycl::_V1::context const&, sycl::_V1::property_list const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_compiled_partition_destroy'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::fill_impl(void*, void const*, unsigned long, unsigned long)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::ext::oneapi::experimental::detail::make_kernel_bundle_from_source(sycl::_V1::context const&, sycl::_V1::ext::oneapi::experimental::source_language, sycl::_V1::detail::string_view, std::vector<std::pair<sycl::_V1::detail::string_view, sycl::_V1::detail::string_view>, std::allocator<std::pair<sycl::_V1::detail::string_view, sycl::_V1::detail::string_view> > >)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::platform::get_devices(sycl::_V1::info::device_type) const'
+/usr/bin/ld: ../../bin/libggml-base.so.0.17.0: undefined reference to `__kmpc_reduce@VERSION'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_partition_destroy'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::RangeRoundingTrace()'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_platform_info_desc<sycl::_V1::info::platform::name>::return_type>::type sycl::_V1::platform::get_info_impl<sycl::_V1::info::platform::name>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::malloc_device(unsigned long, sycl::_V1::queue const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::handler::setNDRangeDescriptor(sycl::_V1::detail::nd_range_view_v1::nd_range_view, bool)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::make_kernel(sycl::_V1::context const&, sycl::_V1::kernel_bundle<(sycl::_V1::bundle_state)2> const&, unsigned long, bool, sycl::_V1::backend)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::get_backend() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::context::getNative() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_stream_destroy'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::memset(void*, int, unsigned long, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::context::get_devices() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::memcpy(void*, void const*, unsigned long, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_kernel_info_desc<sycl::_V1::info::kernel::num_args>::return_type>::type sycl::_V1::kernel::get_info_impl<sycl::_V1::info::kernel::num_args>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_op_set_attr_str'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_compiled_partition_execute'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_add_op'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::malloc_host(unsigned long, sycl::_V1::queue const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::malloc_shared(unsigned long, sycl::_V1::queue const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::context::context(std::shared_ptr<sycl::_V1::detail::context_impl>)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_primitive_attr_create'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_logical_tensor_init'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::addLifetimeSharedPtrStorage(std::shared_ptr<void const>)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::vendor_id>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::vendor_id>() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::ext::oneapi::experimental::detail::build_from_source(sycl::_V1::kernel_bundle<(sycl::_V1::bundle_state)3>&, std::vector<sycl::_V1::device, std::allocator<sycl::_V1::device> > const&, std::vector<sycl::_V1::detail::string_view, std::allocator<sycl::_V1::detail::string_view> > const&, sycl::_V1::detail::string*, std::vector<sycl::_V1::detail::string_view, std::allocator<sycl::_V1::detail::string_view> > const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::device(sycl::_V1::device&&)'
+/usr/bin/ld: ../../bin/libggml-cpu.so.0.17.0: undefined reference to `omp_get_thread_num@VERSION'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::ext::intel::info::device::free_memory>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::ext::intel::info::device::free_memory>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_tensor_destroy'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::AccessorBaseHost::AccessorBaseHost(sycl::_V1::id<3>, sycl::_V1::range<3>, sycl::_V1::range<3>, sycl::_V1::access::mode, void*, int, int, bool, unsigned long, bool, sycl::_V1::property_list const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::reserve_virtual_mem(unsigned long, unsigned long, sycl::_V1::context const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::event::get_backend() const'
+/usr/bin/ld: ../../bin/libggml-cpu.so.0.17.0: undefined reference to `__kmpc_global_thread_num@VERSION'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::kernel_bundle_plain::end() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `std::vector<sycl::_V1::device, std::allocator<sycl::_V1::device> > sycl::_V1::device::create_sub_devices<(sycl::_V1::info::partition_property)4232>(sycl::_V1::info::partition_affinity_domain) const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::make_context(unsigned long, std::function<void (sycl::_V1::exception_list)> const&, sycl::_V1::backend, bool, std::vector<sycl::_V1::device, std::allocator<sycl::_V1::device> > const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::is_gpu() const'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::is_event_profiling_info_desc<sycl::_V1::info::event_profiling::command_end>::return_type sycl::_V1::event::get_profiling_info<sycl::_V1::info::event_profiling::command_end>() const'
+/usr/bin/ld: ../../bin/libggml-base.so.0.17.0: undefined reference to `__kmpc_dispatch_init_4@VERSION'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_sycl_interop_engine_create'
+/usr/bin/ld: ../../bin/libggml-base.so.0.17.0: undefined reference to `__kmpc_end_reduce@VERSION'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::AccessorBaseHost::getAccessRange() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::detail::modifiable_command_graph::modifiable_command_graph(sycl::_V1::queue const&, sycl::_V1::property_list const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::queue::wait_and_throw_proxy(sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::max_clock_frequency>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::max_clock_frequency>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_memory_desc_create_with_strides'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::ext::oneapi::experimental::detail::modifiable_command_graph::begin_recording(sycl::_V1::queue&, sycl::_V1::property_list const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::device::get_devices(sycl::_V1::info::device_type)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::max_work_group_size>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::max_work_group_size>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `__sycl_register_lib'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_op_add_input'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_op_set_attr_bool'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_graph_is_finalized'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::buffer_plain::buffer_plain(unsigned long, unsigned long, sycl::_V1::property_list const&, std::unique_ptr<sycl::_V1::detail::SYCLMemObjAllocator, std::default_delete<sycl::_V1::detail::SYCLMemObjAllocator> >)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::extractArgsAndReqs()'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::ABINeutralT<sycl::_V1::detail::is_device_info_desc<sycl::_V1::info::device::max_compute_units>::return_type>::type sycl::_V1::device::get_info_impl<sycl::_V1::info::device::max_compute_units>() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_graph_filter'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::handler::getType() const'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::tls_code_loc_t::query()'
+/usr/bin/ld: ../../bin/libggml-cpu.so.0.17.0: undefined reference to `__kmpc_fork_call@VERSION'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::getMaxWorkGroups(sycl::_V1::device const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::device::device(sycl::_V1::device&&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::getDeviceKernelInfo(sycl::_V1::detail::compile_time_kernel_info_v1::CompileTimeKernelInfoTy const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::malloc_host(unsigned long, sycl::_V1::context const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::make_error_code(sycl::_V1::errc)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::aligned_alloc_host(unsigned long, unsigned long, sycl::_V1::context const&, sycl::_V1::property_list const&, sycl::_V1::detail::code_location const&)'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::handler::setDeviceKernelInfo(sycl::_V1::kernel&&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `typeinfo for sycl::_V1::exception'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_op_destroy'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `sycl::_V1::detail::get_pointer_type(void const*, sycl::_V1::detail::context_impl&)'
+/usr/bin/ld: ../../bin/libggml-sycl.so.0.17.0: undefined reference to `dnnl_graph_graph_destroy'
+/usr/bin/ld: /opt/intel/oneapi/mkl/2026.0/lib/libmkl_sycl_blas.so.6: undefined reference to `sycl::_V1::detail::AccessorBaseHost::AccessorBaseHost(sycl::_V1::id<3>, sycl::_V1::range<3>, sycl::_V1::range<3>, sycl::_V1::access::mode, void*, int, int, unsigned long, bool, sycl::_V1::property_list const&)'
+icpx: error: linker command failed with exit code 1 (use -v to see invocation)
+gmake[3]: *** [tools/server/CMakeFiles/llama-server.dir/build.make:109: bin/llama-server] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:4953: tools/server/CMakeFiles/llama-server.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:4960: tools/server/CMakeFiles/llama-server.dir/rule] Error 2
+gmake: *** [Makefile:1804: llama-server] Error 2
+BUILD_EXIT=2

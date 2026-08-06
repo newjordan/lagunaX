@@ -1,0 +1,4 @@
+/home/frosty40/turbo/lx/results/proof-20260806T040305Z/ppl/ppl.err:22:0.15.534.307 I perplexity: tokenizing the input ..
+/home/frosty40/turbo/lx/results/proof-20260806T040305Z/ppl/ppl.err:23:0.15.968.149 I perplexity: tokenization took 433.837 ms
+/home/frosty40/turbo/lx/results/proof-20260806T040305Z/ppl/ppl.err:24:0.15.968.340 I perplexity: calculating perplexity over 32 chunks, n_ctx=2048, batch_size=2048, n_seq=1
+/home/frosty40/turbo/lx/results/proof-20260806T040305Z/ppl/ppl.err:27:0.19.101.478 I perplexity: 3.13 seconds per pass - ETA 1.21.084.050 I Final estimate: PPL = 13.8060 +/- 0.27369

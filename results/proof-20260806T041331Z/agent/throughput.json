@@ -1,0 +1,82 @@
+[
+  {
+    "tag": "tool0_r0",
+    "ok": true,
+    "wall_s": 1.7618145942687988,
+    "prompt_n": 108,
+    "predicted_n": 96,
+    "pp_tps": 226.5119673822767,
+    "tg_tps": 134.6393348816857,
+    "preview": ""
+  },
+  {
+    "tag": "tool0_r1",
+    "ok": true,
+    "wall_s": 1.1829533576965332,
+    "prompt_n": 108,
+    "predicted_n": 96,
+    "pp_tps": 234.09000760792526,
+    "tg_tps": 134.62328618246224,
+    "preview": ""
+  },
+  {
+    "tag": "tool1_r0",
+    "ok": true,
+    "wall_s": 1.1514573097229004,
+    "prompt_n": 88,
+    "predicted_n": 96,
+    "pp_tps": 219.88675831946546,
+    "tg_tps": 134.36627406520964,
+    "preview": ""
+  },
+  {
+    "tag": "tool1_r1",
+    "ok": true,
+    "wall_s": 1.1494123935699463,
+    "prompt_n": 88,
+    "predicted_n": 96,
+    "pp_tps": 219.9774523111381,
+    "tg_tps": 134.65500965728899,
+    "preview": " The get_weather tool provided"
+  },
+  {
+    "tag": "tool2_r0",
+    "ok": true,
+    "wall_s": 1.1302158832550049,
+    "prompt_n": 83,
+    "predicted_n": 96,
+    "pp_tps": 218.39863803451752,
+    "tg_tps": 134.64311160230912,
+    "preview": ""
+  },
+  {
+    "tag": "tool2_r1",
+    "ok": true,
+    "wall_s": 1.1279118061065674,
+    "prompt_n": 83,
+    "predicted_n": 96,
+    "pp_tps": 218.74110540685845,
+    "tg_tps": 134.5751630322027,
+    "preview": ""
+  },
+  {
+    "tag": "depth_2048",
+    "ok": true,
+    "wall_s": 10.624627828598022,
+    "prompt_n": 3161,
+    "predicted_n": 64,
+    "pp_tps": 316.3506129555834,
+    "tg_tps": 107.46116286410864,
+    "preview": ""
+  },
+  {
+    "tag": "depth_8192",
+    "ok": true,
+    "wall_s": 44.826650857925415,
+    "prompt_n": 13955,
+    "predicted_n": 64,
+    "pp_tps": 316.45132594239396,
+    "tg_tps": 90.15963891064617,
+    "preview": ""
+  }
+]

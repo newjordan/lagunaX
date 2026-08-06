@@ -1,0 +1,15 @@
+stamp=20260806T040305Z
+binary=/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench
+-rwxrwxr-x 1 frosty40 frosty40 564624 Jul 30 10:02 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench
+-rwxrwxr-x 1 frosty40 frosty40 570024 Jul 30 05:29 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-perplexity
+-rwxrwxr-x 1 frosty40 frosty40 662784 Jul 30 05:29 /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-server
+2fb52e1bea8a21cf4a0d500caef33b78  /home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/libggml-sycl.so.0.17.0
+model=/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+model_sha256=771a73e1249b9bc08e17d3fca59f5c49b7b9c8a6a47b5a6ac82f95c6e76923c4
+wiki=/home/frosty40/data/wikitext-2-raw/wiki.test.raw
+srv_ctx=16384
+template=/home/frosty40/turbo/worktrees/treebeard-pr-private-latest/models/templates/poolside-Laguna-XS-2.1.jinja
+INFO: Output filtered by ONEAPI_DEVICE_SELECTOR environment variable, which is set to level_zero:gpu.
+To see device ids, use the --ignore-device-selectors CLI option.
+
+[level_zero:gpu] Intel(R) oneAPI Unified Runtime over Level-Zero V2, Intel(R) Arc(TM) Pro B70 Graphics 20.2.0 [1.15.38308+1]
