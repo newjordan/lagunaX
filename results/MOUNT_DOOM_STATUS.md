@@ -44,3 +44,16 @@ GPU is FREE (only a CPU-side embeddings server runs).
 - `GGML_SYCL_ENABLE_OPT=0` — kills decode (tg 99 < floor).
 - Re-add `--threads-batch` or unconditional `-fa -1` to bench-serial.sh.
 - Re-pin baseline/golden; FA-off; graph-on; concurrent GPU jobs.
+
+## 2026-08-06 — CHAMPION IS NOW SOURCE-REPRODUCIBLE (commit acad55b)
+
+- `scripts/build-source-repro.sh` mirrors the pinned cmake flags + icpx/icx toolchain
+  and builds the CURRENT worktree source out-of-tree (results/src-repro-<stamp>/).
+- Official bench of that clean build: **score 1.2151** — decode 137.82 t/s (+28.4%),
+  prefill 1173.62 t/s (+3.0%) — parity with the binary-patched champion (1.2128 anchor).
+  Receipt: results/20260806T035917Z/score.json.
+- Consequence: the 4114-line unshipped SYCL diff (multitoken/dual_down/topk) is NOT a
+  speed regression at source level; champion speed lives in current source. Iteration
+  can now happen at source level with every bench a legitimate candidate.
+- Ops: killed a rogue GPU llama-server (pid 3389034, build-positive-package, :8092);
+  GPU fully free for laguna benches.
