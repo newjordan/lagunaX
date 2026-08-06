@@ -48,21 +48,24 @@ resolve_artifacts() {
 
 declare -A ARM_ENV=(
   [CTRL]=""
-  [USM_DEVICE_RESIDENT]="SYCL_PI_LEVEL_ZERO_USM_RESIDENT_DEVICE=1"
-  [USM_ALLOCATOR]="SYCL_PI_LEVEL_ZERO_USE_USM_ALLOCATOR=1"
+  [USM_RESIDENT]="SYCL_PI_LEVEL_ZERO_USM_RESIDENT=1"
+  [USM_ALLOCATOR_OFF]="SYCL_PI_LEVEL_ZERO_DISABLE_USM_ALLOCATOR=1"
+  [SINGLE_THREAD]="SYCL_PI_LEVEL_ZERO_SINGLE_THREAD_MODE=1"
   [POLL_0]="LX_POLL=0"
 )
 declare -A ARM_NOTE=(
   [CTRL]="same-window control (no extra env) — bounds ambient drift"
-  [USM_DEVICE_RESIDENT]="pin device allocations device-resident (USM_RESIDENT_DEVICE=1)"
-  [USM_ALLOCATOR]="plugin-managed USM allocator (USE_USM_ALLOCATOR=1)"
+  [USM_RESIDENT]="pin ALL USM device-resident (USM_RESIDENT=1, adapter-read)"
+  [USM_ALLOCATOR_OFF]="bypass USM allocator (DISABLE_USM_ALLOCATOR=1)"
+  [SINGLE_THREAD]="adapter host single-thread mode (SINGLE_THREAD_MODE=1)"
+  [POLL_0]="host submission busy-poll (LX_POLL=0 vs default 50)"
 )
 
 run_arm() {
   local arm="$1" stamp bin model
   bin="${ARTIFACTS%%|*}"; model="${ARTIFACTS##*|}"
   if [ "$arm" = "CTRL" ]; then
-    unset SYCL_PI_LEVEL_ZERO_USM_RESIDENT_DEVICE SYCL_PI_LEVEL_ZERO_USE_USM_ALLOCATOR
+    unset SYCL_PI_LEVEL_ZERO_USM_RESIDENT SYCL_PI_LEVEL_ZERO_DISABLE_USM_ALLOCATOR SYCL_PI_LEVEL_ZERO_SINGLE_THREAD_MODE LX_POLL
     stamp="$(date -u +%Y%m%dT%H%M%SZ)"
     echo "== CTRL arm: $stamp" 
     bash "$BENCH_SERIAL" || { echo "CTRL arm FAILED (rc $?)" >&2; return 1; }
@@ -111,11 +114,13 @@ fi
 }
 
 case "$MODE" in
-  CTRL|USM_DEVICE_RESIDENT|USM_ALLOCATOR) run_arm "$MODE" ;;
+  CTRL|USM_RESIDENT|USM_ALLOCATOR_OFF|SINGLE_THREAD|POLL_0) run_arm "$MODE" ;;
   ALL|--all)
     run_arm CTRL
-    run_arm USM_DEVICE_RESIDENT
-    run_arm USM_ALLOCATOR
+    run_arm USM_RESIDENT
+    run_arm USM_ALLOCATOR_OFF
+    run_arm SINGLE_THREAD
+    run_arm POLL_0
     ;;
-  *) echo "unknown arm: $MODE (CTRL|USM_DEVICE_RESIDENT|USM_ALLOCATOR|ALL)" >&2; exit 2 ;;
+  *) echo "unknown arm: $MODE (CTRL|USM_RESIDENT|USM_ALLOCATOR_OFF|SINGLE_THREAD|POLL_0|ALL)" >&2; exit 2 ;;
 esac
