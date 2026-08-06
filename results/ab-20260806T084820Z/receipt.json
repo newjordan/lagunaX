@@ -1,0 +1,56 @@
+{
+  "stamp": "20260806T084820Z",
+  "champion_bin": "/home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench",
+  "candidate_env": "GGML_SYCL_DISABLE_MOE_DOWN_WEIGHTED=1",
+  "rounds": 2,
+  "note": "confirmatory re-probe on COOL card (weighted-down/topk-bias regression checks)",
+  "runs": [
+    {
+      "seq": 1,
+      "tag": "A",
+      "pp": 1162.334492,
+      "tg": 137.978495,
+      "pp_sd": 11.895653,
+      "tg_sd": 0.175121
+    },
+    {
+      "seq": 1,
+      "tag": "B",
+      "pp": 1147.211686,
+      "tg": 133.754483,
+      "pp_sd": 12.638973,
+      "tg_sd": 0.195275
+    },
+    {
+      "seq": 2,
+      "tag": "A",
+      "pp": 1147.128555,
+      "tg": 138.376458,
+      "pp_sd": 10.836728,
+      "tg_sd": 0.211129
+    },
+    {
+      "seq": 2,
+      "tag": "B",
+      "pp": 1151.781058,
+      "tg": 133.668488,
+      "pp_sd": 6.63097,
+      "tg_sd": 0.201161
+    }
+  ],
+  "champion": {
+    "pp": 1154.732,
+    "tg": 138.177
+  },
+  "candidate": {
+    "pp": 1149.496,
+    "tg": 133.711
+  },
+  "tg_delta_pct": -3.232,
+  "pp_delta_pct": -0.453,
+  "tg_jitter_sd_pct": 1.87,
+  "pp_jitter_sd_pct": 0.619,
+  "tg_signal_over_drift": 4.75,
+  "pp_signal_over_drift": 0.3,
+  "verdict": "REG"
+}
