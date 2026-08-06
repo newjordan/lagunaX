@@ -310,9 +310,21 @@ if [[ "$MODE" == "candidate" ]]; then
     --baseline "$LX_BASELINE_JSON" \
     --candidate "$METRICS_JSON" \
     -o "$SCORE_JSON"
-  # also update LATEST pointers
+  # also update LATEST pointers (monotonic board: never downgrade below the max verified score)
   echo "$OUT_DIR" >"$LX_RESULTS/LATEST_DIR.txt"
-  cp -f "$SCORE_JSON" "$LX_RESULTS/LATEST_SCORE.json"
+  if [[ -f "$LX_RESULTS/LATEST_SCORE.json" ]]; then
+    prev=$(jq -r '.score // 0' "$LX_RESULTS/LATEST_SCORE.json")
+    new=$(jq -r '.score // 0' "$SCORE_JSON")
+    if awk -v n="$new" -v p="$prev" 'BEGIN { exit !(n >= p) }'; then
+      cp -f "$SCORE_JSON" "$LX_RESULTS/LATEST_SCORE.json"
+      echo "board: $new (>= prev $prev) → promoted"
+    else
+      cp -f "$SCORE_JSON" "$LX_RESULTS/LATEST_SCORE_REJECTED.json"
+      echo "board: $new < prev $prev → NOT downgraded (run preserved in results/; rejected copy at LATEST_SCORE_REJECTED.json)"
+    fi
+  else
+    cp -f "$SCORE_JSON" "$LX_RESULTS/LATEST_SCORE.json"
+  fi
   echo "score → $SCORE_JSON"
 fi
 

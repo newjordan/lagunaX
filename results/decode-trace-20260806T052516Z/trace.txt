@@ -1,0 +1,2 @@
+sycl-trace: Unknown command line argument '-m'.  Try: '/opt/intel/oneapi/compiler/latest/bin/sycl-trace --help'
+sycl-trace: Did you mean '-h'?

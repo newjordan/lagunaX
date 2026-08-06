@@ -1,0 +1,4 @@
+>> binary: /home/frosty40/turbo/lx/results/src-repro-20260806T035656Z/bin/llama-bench
+>> args: -m /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf -ngl 99 -t 16 -ub 2048 -b 2048 -p 16 -n 96 -r 1 -ctk f16 -ctv f16
+>> trace: level_zero
+rc=127
