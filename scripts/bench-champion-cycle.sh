@@ -85,7 +85,7 @@ echo "== [cycle] official bench"
 # load), and a bench run immediately after measures ~1.7% low (observed:
 # tg 135.9 / pp 1145 right after proof vs tg 137.9 / pp 1163 after cooldown).
 # Idle the card for a fixed window before the scored run.
-COOLDOWN_S="${COOLDOWN_S:-120}"
+COOLDOWN_S="${COOLDOWN_S:-360}"
 echo "== [cycle] cooldown ${COOLDOWN_S}s before scored bench (proof-suite heat)"
 sleep "$COOLDOWN_S"
 EXTRA_ARGS=()
