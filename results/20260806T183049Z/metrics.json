@@ -1,0 +1,78 @@
+{
+  "stamp": "20260806T183049Z",
+  "track": "serial",
+  "mode": "candidate",
+  "pp512": 1161.853925,
+  "tg128": 138.056801,
+  "pp_samples": {
+    "stddev_ts": 11.664256,
+    "samples_ts": [
+      1151.84,
+      1153.06,
+      1155.71,
+      1177.29,
+      1171.37
+    ]
+  },
+  "tg_samples": {
+    "stddev_ts": 0.230873,
+    "samples_ts": [
+      138.468,
+      137.916,
+      137.976,
+      137.962,
+      137.962
+    ]
+  },
+  "window": {
+    "pp": 512,
+    "tg": 128,
+    "reps": 5,
+    "depth": 0
+  },
+  "combined_bench": false,
+  "binary": "/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin/llama-bench",
+  "binary_sha256": "45e07d098300d6ffaf5fdc211c1cfe58d263083aa31c18c7ffa109ebd78c0ac1",
+  "model": "/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf",
+  "flags": {
+    "ngl": 99,
+    "threads": 16,
+    "threads_batch": 16,
+    "cpu_moe_layers": 0,
+    "cpu_mask": "0x0",
+    "cpu_strict": 0,
+    "split_mode": "layer",
+    "main_gpu": 0,
+    "tensor_split": "0",
+    "device": "auto",
+    "ubatch": 2048,
+    "bbatch": 2048,
+    "ctx": 8192,
+    "ctk": "f16",
+    "ctv": "f16",
+    "no_kv_offload": 0,
+    "no_op_offload": 0,
+    "no_host": 0,
+    "flash_attn": -1,
+    "sycl_disable_graph": 0,
+    "sycl_disable_dnn": "1",
+    "priority": 0,
+    "load_mode": "mmap",
+    "poll": 50,
+    "delay_seconds": 0,
+    "numa": "disabled"
+  },
+  "env": {
+    "ONEAPI_DEVICE_SELECTOR": "level_zero:gpu",
+    "ZE_AFFINITY_MASK": "0",
+    "GGML_SYCL_DISABLE_GRAPH": "0",
+    "GGML_SYCL_DISABLE_DNN": "1"
+  },
+  "note": "graph-enable",
+  "claim_boundary": [
+    "Serial only: one stream pp512 + tg128.",
+    "Not multi-slot aggregate tok/s.",
+    "Not comparable to mlx.fast M5 absolute tok/s (different quant/silicon).",
+    "Score is vs pinned B70 baseline only."
+  ]
+}
