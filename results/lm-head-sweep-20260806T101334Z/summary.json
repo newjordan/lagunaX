@@ -1,0 +1,34 @@
+[
+  {
+    "arm": "full",
+    "pp512": 1158.377224,
+    "tg128": 137.955972,
+    "golden": "pass",
+    "metrics": "/home/frosty40/turbo/lx/results/lm-head-sweep-20260806T101334Z/full/20260806T101335Z/metrics.json",
+    "quality_safe": true
+  },
+  {
+    "arm": "full",
+    "pp512": 1159.172089,
+    "tg128": 137.895727,
+    "golden": "pass",
+    "metrics": "/home/frosty40/turbo/lx/results/lm-head-sweep-20260806T101334Z/full/20260806T101824Z/metrics.json",
+    "quality_safe": true
+  },
+  {
+    "arm": "rows-32768",
+    "pp512": 1170.710446,
+    "tg128": 141.702422,
+    "golden": "fail",
+    "metrics": "/home/frosty40/turbo/lx/results/lm-head-sweep-20260806T101334Z/rows-32768/20260806T101628Z/metrics.json",
+    "quality_safe": false
+  },
+  {
+    "arm": "rows-65536",
+    "pp512": 1164.363837,
+    "tg128": 139.775974,
+    "golden": "fail",
+    "metrics": "/home/frosty40/turbo/lx/results/lm-head-sweep-20260806T101334Z/rows-65536/20260806T101431Z/metrics.json",
+    "quality_safe": false
+  }
+]

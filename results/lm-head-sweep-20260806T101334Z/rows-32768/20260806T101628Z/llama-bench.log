@@ -19,6 +19,7 @@
 [lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
 [lx-control-dense-dual] mmvq dual n_rows=512 ncols=2048 ncols_dst=1 sgs=1 (first entry)
 [lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=1 wtype=q6_K alias_res=1 mm='ffn_shexp-39' add='ffn_out-39' add2='l_out-39'
+[lx-lm-head] ROW_LIMIT=32768 of nrows=100352 ncols=2048 (research ceiling; not golden-safe)
 [
   {
     "build_commit": "7e1e28cae",
@@ -56,13 +57,13 @@
     "n_prompt": 512,
     "n_gen": 0,
     "n_depth": 0,
-    "test_time": "2026-08-06T10:13:48Z",
-    "avg_ns": 442030349,
-    "stddev_ns": 4240392,
-    "avg_ts": 1158.377224,
-    "stddev_ts": 11.169320,
-    "samples_ns": [ 445562830, 445004475, 444429159, 435966649, 439188634 ],
-    "samples_ts": [ 1149.11, 1150.55, 1152.04, 1174.4, 1165.79 ]
+    "test_time": "2026-08-06T10:16:41Z",
+    "avg_ns": 437382944,
+    "stddev_ns": 4763500,
+    "avg_ts": 1170.710446,
+    "stddev_ts": 12.801701,
+    "samples_ns": [ 441365852, 442130135, 437893855, 430594292, 434930590 ],
+    "samples_ts": [ 1160.04, 1158.03, 1169.23, 1189.05, 1177.2 ]
   }
 ]
 -- tg128 --
@@ -82,6 +83,7 @@
 [lx-control-moe-down] fuse hit (integrated weighted-mmvq) embd=2048 k=8 tokens=1
 [lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=1 wtype=q6_K alias_res=1 mm='ffn_shexp-1' add='ffn_out-1' add2='l_out-1'
 [lx-control-moe-down] weighted-mmvq n_experts=8 nrows=2048 ncols=512 sgs=8 n_tokens=1 (first entry)
+[lx-lm-head] ROW_LIMIT=32768 of nrows=100352 ncols=2048 (research ceiling; not golden-safe)
 [
   {
     "build_commit": "7e1e28cae",
@@ -119,12 +121,12 @@
     "n_prompt": 0,
     "n_gen": 128,
     "n_depth": 0,
-    "test_time": "2026-08-06T10:14:06Z",
-    "avg_ns": 927832556,
-    "stddev_ns": 595119,
-    "avg_ts": 137.955972,
-    "stddev_ts": 0.088242,
-    "samples_ns": [ 927193292, 928455064, 927449245, 928471976, 927593207 ],
-    "samples_ts": [ 138.051, 137.863, 138.013, 137.861, 137.992 ]
+    "test_time": "2026-08-06T10:16:59Z",
+    "avg_ns": 903301572,
+    "stddev_ns": 403810,
+    "avg_ts": 141.702422,
+    "stddev_ts": 0.063261,
+    "samples_ns": [ 902776471, 903805734, 903370192, 903517199, 903038265 ],
+    "samples_ts": [ 141.785, 141.623, 141.692, 141.669, 141.744 ]
   }
 ]
