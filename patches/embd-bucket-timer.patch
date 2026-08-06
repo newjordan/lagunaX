@@ -1,0 +1,44 @@
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp
+@@ -3300,9 +3300,41 @@
+     ggml_sycl_op_repeat_back(ctx, dst);
+ }
+ 
++// [GetRowsTimer] env-gated (GGML_SYCL_TIMER_ALL=1) chrono probe for the embedding
++// gather path. The mul_mat bucket timer (LmheadProbeState teardown) never sees
++// tok_embd because embedding runs through ggml_sycl_get_rows, not mul_mat - this
++// closes that blind spot (batch-512 embedding cost at pp512). Inert by default:
++// one getenv per dispatch, zero work when unset, no output, no behavior change.
++static struct GetRowsTimerState {
++    std::chrono::steady_clock::time_point last{};
++    uint64_t n = 0, us = 0, calls = 0;
++    ~GetRowsTimerState() {
++        if (getenv("GGML_SYCL_TIMER_ALL") != nullptr && calls > 0) {
++            fprintf(stderr,
++                    "[layer-timer] get_rows (embedding gather): %10llu us  %10llu calls  %8.2f us/call\n",
++                    (unsigned long long) us,
++                    (unsigned long long) calls,
++                    (double) us / (double) calls);
++        }
++    }
++} g_getrows_timer;
++
+ static void ggml_sycl_get_rows(ggml_backend_sycl_context & ctx, ggml_tensor * dst) {
+     scope_op_debug_print scope_dbg_print(__func__, dst, /*num_src=*/2);
++    if (getenv("GGML_SYCL_TIMER_ALL") == nullptr) {
++        ggml_sycl_op_get_rows(ctx, dst);
++        return;
++    }
++    // Timer-live path: measure the full dispatch+enqueue wall of the gather.
++    auto _t0 = std::chrono::steady_clock::now();
+     ggml_sycl_op_get_rows(ctx, dst);
++    auto _t1 = std::chrono::steady_clock::now();
++    uint64_t _d = (uint64_t) std::chrono::duration_cast<
++        std::chrono::microseconds>(_t1 - _t0).count();
++    g_getrows_timer.us += _d;
++    g_getrows_timer.calls++;
++    g_getrows_timer.n++;
++    (void) g_getrows_timer.last; // reserved for inter-call delta if needed later
+ }
+ 
+ static void ggml_sycl_norm(ggml_backend_sycl_context & ctx, ggml_tensor * dst) {

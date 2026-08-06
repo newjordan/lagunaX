@@ -1,0 +1,7 @@
+patch rc=0, timer marker present: 0
+probe lib installed: 5114db1171a26e96
+GOLDEN OK
+BENCH rc=0
+probe reverted; champion .so restored
+CYCLE_STAMP=20260806T163325Z
+BUCKET_FILE=/home/frosty40/turbo/lx/results/embd-probe-20260806T163325Z/bench.stderr
