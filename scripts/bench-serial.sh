@@ -312,19 +312,20 @@ if [[ "$MODE" == "candidate" ]]; then
     -o "$SCORE_JSON"
   # also update LATEST pointers (monotonic board: never downgrade below the max verified score)
   echo "$OUT_DIR" >"$LX_RESULTS/LATEST_DIR.txt"
-  if [[ -f "$LX_RESULTS/LATEST_SCORE.json" ]]; then
-    prev=$(jq -r '.score // 0' "$LX_RESULTS/LATEST_SCORE.json")
-    new=$(jq -r '.score // 0' "$SCORE_JSON")
-    if awk -v n="$new" -v p="$prev" 'BEGIN { exit !(n >= p) }'; then
-      cp -f "$SCORE_JSON" "$LX_RESULTS/LATEST_SCORE.json"
-      echo "board: $new (>= prev $prev) → promoted"
-    else
-      cp -f "$SCORE_JSON" "$LX_RESULTS/LATEST_SCORE_REJECTED.json"
-      echo "board: $new < prev $prev → NOT downgraded (run preserved in results/; rejected copy at LATEST_SCORE_REJECTED.json)"
-    fi
-  else
-    cp -f "$SCORE_JSON" "$LX_RESULTS/LATEST_SCORE.json"
-  fi
+  # Promotion is not "score went up". A candidate may legitimately change its
+  # own runtime config, but changing the config changes what the two speedup
+  # terms mean — on 2026-08-06 a ub=2048 change took the board with prefill
+  # 1.02 -> 2.97 while decode went 1.2932 -> 1.2851, i.e. the 0.75-weight term
+  # regressed and the board still moved. So:
+  #   same measurement geometry -> a plain score win promotes
+  #   changed geometry          -> decode must ALSO not regress
+  #   either way                -> the KLD quality gate must have passed
+  # scripts/promote-gate.py owns the decision so every caller shares it.
+  python3 "$ROOT/scripts/promote-gate.py" \
+    --candidate "$SCORE_JSON" \
+    --board "$LX_RESULTS/LATEST_SCORE.json" \
+    --kld "$LX_RESULTS/LATEST_KLD.json" \
+    --rejected "$LX_RESULTS/LATEST_SCORE_REJECTED.json"
   echo "score → $SCORE_JSON"
 fi
 
