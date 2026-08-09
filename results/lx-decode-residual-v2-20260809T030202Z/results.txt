@@ -1,0 +1,5 @@
+bin sha: 55d9290d37867dba24b2b6720808308ac2fbbacd3575ba8fc8e449eda23c2caf
+skip0 tg=144.33
+skip15 tg=341.91
+skip15f tg=342.67
+skip0b tg=143.99

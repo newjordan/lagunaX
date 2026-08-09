@@ -1,0 +1,20 @@
+[lx-control-rms] fuse hit (rms_norm+mul) ne0=2048 ne1=1
+[lx-control-qkv] fuse hit q=reordered[6144] v=reordered[1024] k=reordered[1024] gate=-[0] ncols=2048
+[lx-control-rope] fuse hit (rope+view+set_rows) mode=2 ne0=128 ne1=8 type=f16
+[lx-control-fattn] vec nthreads=256 nbatch=256 single-block K (no combine, no dead WG)
+[lx-gate-softplus] fuse hit hd=128 nh=48 wtype=q4_K mm='attn_gate_proj-0'
+[lx-control-mm-add] fuse hit (mul_mat+add) ne0=2048 ne1=1 wtype=q4_K alias_res=0 mm='attn_o_proj-0' add='ffn_inp-0' add2='-'
+[lx-control-dense-dual] fuse hit (shared gate+up+swiglu)
+[lx-control-topk-moe] laguna bias fuse HIT (mul_mat+hybrid mode=8)
+[lx-control-topk-moe] fused gemv+sigmoid+add n_experts=256 ncols=2048 n_rows=1
+[lx-control-topk-moe] true top-k+gather+sum+norm n_experts=256 k=8 n_rows=1
+[lx-control-topk-moe] hybrid mode=8 topk full-norm (skip clamp+div+scale kernel) k=8 n_rows=1
+[lx-control-moe-dual] n_experts=8 nrows=512 ncols=2048 (first entry)
+[lx-control-moe-dual] fuse hit (gate+up+swiglu)
+[lx-control-moe-down] fuse hit (weighted reduce) embd=2048 k=8 tokens=1
+[lx-control-mm-add] fuse hit (mul_mat+add+add) ne0=2048 ne1=1 wtype=q6_K alias_res=1 mm='ffn_shexp-1' add='ffn_out-1' add2='l_out-1'
+| model                          |       size |     params | backend    | ngl | n_ubatch |            test |                  t/s |
+| ------------------------------ | ---------: | ---------: | ---------- | --: | -------: | --------------: | -------------------: |
+| laguna 30B.A3B Q4_K - Medium   |  18.88 GiB |    33.44 B | SYCL       |  99 |     2048 |           tg128 |        150.70 ± 0.21 |
+
+build: 582a7c2 (184)

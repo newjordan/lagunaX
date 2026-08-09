@@ -76,6 +76,14 @@ unset GGML_SYCL_ENABLE_MOE_DOWN_GROUPED 2>/dev/null || true
 export LX_SYCL_DISABLE_GRAPH="${LX_SYCL_DISABLE_GRAPH:-1}"
 export GGML_SYCL_DISABLE_GRAPH="$LX_SYCL_DISABLE_GRAPH"
 
+# K norm+rope+set_rows single-launch fuse (rope.cpp rope_neox_normed_sycl).
+# The kernel gate defaults OFF in source; the board entry 20260809T072508Z
+# (score 1.278, decode 148.03) was measured WITH it on. Without this env,
+# bench-serial re-measures the unfused path at ~144.0 and the board looks
+# like a 2.8% environmental regression — it is not (A/B on sha 55d9290d:
+# 143.93 off vs 147.47 on, same flags, back-to-back). Keep it default-on.
+export GGML_SYCL_FUSE_NORM_ROPE="${GGML_SYCL_FUSE_NORM_ROPE:-1}"
+
 # Quality-safe tip (2026-07-31 champion): dual_down + dual_multitoken stay killed
 # (neg logprob / multitoken MoE). MUL_MAT_ADD reclaimed **decode-only** via
 # patched tip lib (scripts/patch-mmadd-decode-only.py) — any-batch prefill
