@@ -44,18 +44,37 @@ NOT for the PR body (private model) — internal confirmation only:
 | master `dd1ea5243` | 111.31 t/s | 1147.3 (1.0071×) | `results/20260810T151824Z` |
 | PR-A | **113.78 t/s (+2.22%)** | 1151.8 (1.0111×) | `results/20260810T151906Z` |
 
-## Performance — public models (FOR the PR body)
+## Performance — public models
 
-llama-bench `-ngl 99 -fa 1 -p 512 -n 128 -r 5`, same box:
+llama-bench `-ngl 99 -fa 1 -p 512 -n 128 -r 5` (depth runs `-r 3`), same box.
+Receipts: `results/lx-pra-public-ab-20260810T152747Z/`.
+
+Depth 0 (shallow KV — deltas within noise):
 
 | model | metric | master | PR-A | delta |
 |---|---|---|---|---|
-| Qwen3.5-35B-A3B Q4_K_M (MoE, GQA) | tg128 | PENDING | PENDING | |
-| Qwen3.5-35B-A3B Q4_K_M | pp512 | PENDING | PENDING | |
-| Qwen3.5-4B Q4_K_M (dense) | tg128 | PENDING | PENDING | |
-| Qwen3.5-4B Q4_K_M | pp512 | PENDING | PENDING | |
+| Qwen3.5-35B-A3B Q4_K_M (MoE) | tg128 | 86.20 | 86.00 | −0.2% |
+| Qwen3.5-35B-A3B Q4_K_M | pp512 | 1286.47 | 1299.62 | +1.0% |
+| Qwen3.5-4B Q4_K_M (dense) | tg128 | 108.90 | 109.33 | +0.4% |
+| Qwen3.5-4B Q4_K_M | pp512 | 4372.31 | 4405.51 | +0.8% |
 
-Receipts: `results/lx-pra-public-ab-<stamp>/{moe,dense}-{master,pra}.json`.
+**Depth sweep (MoE) — BLOCKING FINDING, 2026-08-10:**
+
+| depth | metric | master | PR-A | delta |
+|---|---|---|---|---|
+| 4096 | tg128 | 81.59 ±0.15 | 79.73 ±0.25 | **−2.3%** |
+| 16384 | tg128 | 74.47 ±0.06 | 66.89 ±0.28 | **−10.2%** |
+| 4096 | pp512 | 1062.80 | 1212.96 | +14.1% (unexplained, investigate) |
+| 16384 | pp512 | 968.74 | 884.85 | −8.7% (unexplained, investigate) |
+
+PR-A AS CUT MUST NOT BE FILED: decode regresses monotonically with KV depth
+on Qwen MoE. TILE's GQA optimization wins at long K; the VEC-always dispatch
+and/or nbatch=256 stride only pay off at shallow K. In-flight attribution:
+(a) Laguna champion A/B via GGML_SYCL_FATTN_FORCE_TILE at depth (also decides
+whether the CHAMPION stack itself loses long-context decode to this unit);
+(b) isolation builds — dispatch-only and nbatch-only — depth-swept on MoE.
+Likely fix: keep VEC-when-gqa_opt only under a K-length bound (crossover
+< 4096 per this data), and/or bound the 256-stride similarly.
 
 ## Pre-push checklist
 
