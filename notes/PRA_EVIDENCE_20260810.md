@@ -31,8 +31,9 @@ AI-usage disclosure line in the PR template.
 | check | result | receipt |
 |---|---|---|
 | `test-backend-ops test -b SYCL0 -o FLASH_ATTN_EXT` (PR-A build) | **OK, 0 FAIL** | task log bn00pfdh7, 2026-08-10 |
-| full `test-backend-ops test -b SYCL0` (PR-A build) | PENDING | `results/lx-pra-public-ab-*/pra-full-ops.log` |
-| KLD gate vs pinned base (internal, Laguna) | PENDING (run after public chain) | |
+| full `test-backend-ops test -b SYCL0` (PR-A build) | 17 fails, IDENTICAL to clean master's (16 CONV_2D + CPY, pre-existing B70/driver; same abort signature). Zero new failures. | `results/lx-pra-public-ab-*/{pra,master}-full-ops.log` |
+| FLASH_ATTN_EXT on re-scoped branch (`a9751d6c0`) | **OK, 0 FAIL** | `results/lx-pra-public-ab-*/pra2-fattn-ops.log` |
+| KLD gate | **NOT APPLICABLE at master base** — upstream master's prefill is run-to-run nondeterministic on this model/device; master fails against its own fresh reference (~94% same-top) and PR-A's divergence sits inside that noise band. See `FINDING_20260810_master_prefill_nondeterminism.md`. Quality evidence for this PR = test-backend-ops parity above. | `results/kld-20260810T1553*..1559*` |
 | context: `-o MUL_MAT_ID` on clean master | OK (issue #25455 does not reproduce here) | `notes/RECEIPT_20260810_mmid_precheck_master.md` |
 
 ## Performance — internal (Laguna XS 2.1 Q4_K_M, serial pp512+tg128, 5 reps)
