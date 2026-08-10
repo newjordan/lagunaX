@@ -14,9 +14,12 @@ eval "$__lx_oldopts"; unset __lx_oldopts
 
 export LX_ROOT="${LX_ROOT:-/home/frosty40/turbo/lx}"
 
-# Solo-fast binary — quality-safe champion (decode-only mm-add patch on tip lib)
-# Unpatched tip: treebeard-base-control-latest/build-base-control/bin
-export LX_BIN="${LX_BIN:-/home/frosty40/turbo/worktrees/treebeard-base-control-latest/build-mmadd-decode/bin}"
+# Solo-fast binary — canonical champion build from the git-preserved source
+# (tag lx-champion-1.3105-20260810; board repro receipt 20260810T145715Z:
+# decode 152.54). Older tiers: treebeard-base-control-latest/build-*.
+# NOTE: LX_BIN must be exported BEFORE sourcing env.sh — LD_LIBRARY_PATH is
+# captured from it at source time (FINDING_20260810).
+export LX_BIN="${LX_BIN:-/home/frosty40/turbo/worktrees/lx-champion-tier12/build/bin}"
 export LX_LLAMA_BENCH="${LX_LLAMA_BENCH:-$LX_BIN/llama-bench}"
 export LX_LLAMA_CLI="${LX_LLAMA_CLI:-$LX_BIN/llama-cli}"
 export LX_LLAMA_SERVER="${LX_LLAMA_SERVER:-$LX_BIN/llama-server}"

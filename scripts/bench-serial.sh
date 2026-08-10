@@ -51,6 +51,17 @@ else
   RAW_LOG="$OUT_DIR/llama-bench.log"
 fi
 BENCH_SHA256="$(sha256sum "$LX_LLAMA_BENCH" | awk '{print $1}')"
+# The kernel code lives in libggml-sycl, not llama-bench: hash the .so too, and
+# assert the loader resolves it from LX_BIN (guards against the LD_LIBRARY_PATH
+# capture-order contamination in FINDING_20260810_lxbin_env_order_contamination).
+SO_SHA256=""
+[[ -f "$LX_BIN/libggml-sycl.so.0.17.0" ]] && SO_SHA256="$(sha256sum "$LX_BIN/libggml-sycl.so.0.17.0" | awk '{print $1}')"
+RESOLVED_SO="$(ldd "$LX_LLAMA_BENCH" 2>/dev/null | awk '/libggml-sycl/ {print $3; exit}')"
+if [[ -n "$RESOLVED_SO" && "$RESOLVED_SO" != "$LX_BIN"/* ]]; then
+  echo "FATAL: llama-bench resolves libggml-sycl from $RESOLVED_SO, not \$LX_BIN ($LX_BIN)" >&2
+  echo "       export LX_BIN before sourcing env.sh (LD_LIBRARY_PATH is captured at source time)" >&2
+  exit 3
+fi
 
 # Keep disabled as the true llama-bench default; pass a value only for explicit trials.
 NUMA_ARGS=()
@@ -249,6 +260,7 @@ payload = {
       "combined_bench": bool(int("$LX_COMBINED_BENCH")),
     "binary": "$LX_LLAMA_BENCH",
     "binary_sha256": "$BENCH_SHA256",
+    "so_sha256": "$SO_SHA256",
     "model": "$LX_MODEL",
     "flags": {
         "ngl": int("$NGL"),
