@@ -67,14 +67,35 @@ Depth 0 (shallow KV — deltas within noise):
 | 4096 | pp512 | 1062.80 | 1212.96 | +14.1% (unexplained, investigate) |
 | 16384 | pp512 | 968.74 | 884.85 | −8.7% (unexplained, investigate) |
 
-PR-A AS CUT MUST NOT BE FILED: decode regresses monotonically with KV depth
-on Qwen MoE. TILE's GQA optimization wins at long K; the VEC-always dispatch
-and/or nbatch=256 stride only pay off at shallow K. In-flight attribution:
-(a) Laguna champion A/B via GGML_SYCL_FATTN_FORCE_TILE at depth (also decides
-whether the CHAMPION stack itself loses long-context decode to this unit);
-(b) isolation builds — dispatch-only and nbatch-only — depth-swept on MoE.
-Likely fix: keep VEC-when-gqa_opt only under a K-length bound (crossover
-< 4096 per this data), and/or bound the 256-stride similarly.
+**RESOLVED 2026-08-10 — attribution complete, PR-A re-scoped.**
+
+Isolation depth sweep, Qwen MoE tg128 @ d4096 / d16384:
+
+| variant | @4096 | @16384 | verdict |
+|---|---|---|---|
+| master | 81.59 ±0.15 | 74.47 ±0.06 | reference |
+| nbatch-only | **82.41 ±0.03** | **75.27 ±0.02** | +1.0% / +1.1% — unconditional win |
+| dispatch-only | 79.91 ±0.51 | 67.50 ±0.06 | reproduces the full regression |
+
+Laguna champion (via `GGML_SYCL_FATTN_FORCE_TILE`), tg128:
+VEC 102.71 vs TILE 79.55 at d16384 → **VEC +29.1% on Laguna** — the same
+dispatch that loses 10% on Qwen. Kernel choice is model-shape-dependent
+(GQA ratio / SWA mix / head geometry).
+
+Decisions:
+- **PR-A re-scoped to the nbatch fix alone**: branch amended to `a9751d6c0`
+  "sycl: fix flash-attention vec nbatch_fa to match the kernel K stride",
+  1 file, +7/−1. Wins or is neutral on every model/depth measured.
+- **VEC-for-GQA-decode dispatch DEFERRED** (removed from the series): needs a
+  cross-model heuristic (crossover data above), not a constant policy. Stays
+  in the champion tree (correct for Laguna; +29% at 16K depth strengthens the
+  serving package's long-context claims). Revisit with a gqa_ratio/K-length
+  model after the main series lands.
+
+Full-ops context: full `test-backend-ops -b SYCL0` aborts identically on
+clean master and PR-A (16 CONV_2D + CPY pre-existing B70/driver failures,
+same crash signature; receipts `master-full-ops.log` / `pra-full-ops.log`).
+PR-A introduces zero new failures; FLASH_ATTN_EXT green.
 
 ## Pre-push checklist
 
