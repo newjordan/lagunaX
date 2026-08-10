@@ -41,3 +41,15 @@ Chain that got here (all receipted in scratchpad + results):
 - DNN-off (env.sh line 126) is a DECODE-era verdict; for serving prefill it
   disables the exact paths that win 4.8x. Serve env must diverge from bench
   env once the backport lands.
+
+## Backport v1 attempt (2026-08-10, branch lx/mmid-device-batched-sgemm @ lx-dev-mmid-batch)
+
+Cherry-picked 9d9a6d29f + 66fa168a5 alone onto the champion tag (clean
+auto-merge, .so 0ddbff80). Real-text 23K A/B (DNN on, champion env):
+**prefill 273.3 / decode 84.6 — WORSE than plain champion (308.8/92.4)**,
+champion fuses still firing. Verdict: the two commits without the
+intermediate fattn dispatch chain (eef5f3e34 and kin) misroute; a proper
+backport must bring the full fattn commit sequence 7e1e28cae..dd1ea5243
+(fattn.cpp/fattn-onednn.cpp/fattn-mkl.cpp/fattn-vec.hpp) or the serving
+build should simply wait for sycl/all-stack (master + PR series) instead.
+Branch kept for the follow-up; do NOT serve from it.
