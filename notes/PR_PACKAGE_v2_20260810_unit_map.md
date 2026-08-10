@@ -174,3 +174,32 @@ full `test-backend-ops test -b SYCL0` green ×2 (default + kill switch) →
 golden-smoke → quality-gate-kld (≤0.010 / ≥99.0) → bench-serial vs stack →
 public-model llama-bench + llama-perplexity A/B → local `ci/run.sh` →
 attribution grep → file.
+
+---
+
+## v2.1 addendum (2026-08-10): drift survey verdicts, base = origin/master dd1ea5243
+
+185 commits since 7e1e28cae; 18 touch SYCL (+2542/−225 in ggml-sycl). Per-PR:
+
+| PR | verdict | notes |
+|---|---|---|
+| A | minor rebase | fattn.cpp VEC/TILE block byte-identical; new ONEDNN/MKL paths are prefill-gated (Q->ne[1]>=32) so decode untouched. nbatch one-liner re-cut into eef5f3e34's `if constexpr` restructure. On BMG decode is now the ONLY VEC/TILE consumer — strengthens the case. |
+| B | MUL half OBSOLETE | upstream 155372596 shipped `ggml_sycl_op_rms_norm_fused` (same symbol!) with a better kernel (compile-time template, no inner-loop modulo). Do NOT port ours. Re-cut only the fused-ADD arm as `template<bool do_multiply, bool do_add>` on upstream's kernel + a {RMS_NORM,MUL,ADD} branch in the NEW ggml/src/ggml-sycl/fusion.cpp (ggml_sycl_can_fuse, dispatch at graph_compute_impl:5424). CUDA precedent `ggml_cuda_op_rms_norm_fused_add` + test_rms_norm_mul_add exist. ADD+ADD survives; predicate goes in fusion.cpp. Freebie: fix stale SYCL.md:806 fusion description. |
+| C | unchanged base | quantize.hpp zero commits; common.hpp +19 unrelated. |
+| D | unchanged base, but RE-SCOPE | topk-moe.{cpp,hpp} zero commits. CAUTION: upstream's ggml_sycl_fuse_topk_moe already handles sigmoid gating + bias ADD + norm/scale arms; test_topk_moe already has bias_probs/gating_func (10 cases). Re-read upstream before claiming novelty — our true top-k, router GEMV fuse, and ids-once are the likely-novel parts. |
+| E | minor rebase + RE-MEASURE | mmvq.cpp only +79 additive (Q2_0 switch case). But 6b5c2efb4 (*glu flat path) improved unfused split-SWIGLU +14% f16 on B70 — the dual-SwiGLU deltas (+1.63%/−2.77%) must be re-measured vs new baseline. Decide Q2_0 in/out of fused coverage. |
+| F | minor rebase + RE-MEASURE | same; CUDA precedent for {mm,mm,GLU} and {mm,bias,mm,bias,GLU} exists (ggml-cuda.cu:3724/3663 master). |
+| G | EASIER — port CUDA 687e77892 | CUDA merged {RMS_NORM,MUL,ROPE} and {RMS_NORM,MUL,ROPE,VIEW,SET_ROWS} with matching one-entry-point signature; frame as SYCL port. Slot into fusion.cpp instead of hand-rolled predicates. llama-graph.cpp: base ALREADY has k-last expand in 3 overloads (a90eb94ca); ours is the 4th (ISWA) at master:3013 — one-paragraph justification now (2 more overloads at :3096/:3168 could be swept). NEW obligations: mirror ggml_cuda_check_fusion_memory_ranges; pass the new broadcast test axis (1-D weight); predicate must cleanly reject NORMAL rope (our kernel is NEOX-only); c074cb3f7 widened SET_ROWS dtypes — fused predicate must reject types the fallback newly supports but our kernel doesn't. Merged-QK + 64-thread WG + V-cache publication remain novel. |
+| H | unchanged base | predicate moves into fusion.cpp. |
+
+Cross-cutting:
+- #25455 STILL OPEN (no fix in the 185). Pre-check receipt required before D/E.
+- ALL pp512/prefill claims re-baseline: BMG prefill now routes to oneDNN/MKL FA
+  (GGML_SYCL_ENABLE_MKL_FA default 1), not TILE. Decode claims unaffected.
+- Kill-switch layering: put per-feature GGML_SYCL_DISABLE_* under the canonical
+  g_ggml_sycl_enable_fusion (GGML_SYCL_ENABLE_FUSION, default 1).
+- Softplus HOLD likely liftable: CUDA already fuses {UNARY(SOFTPLUS),MUL}
+  (base ggml-cuda.cu:3851). Confirm with src/models/ grep, then un-hold.
+- Warm-up option: CUDA-parity fusion ports SYCL lacks entirely ({ROPE,VIEW,
+  SET_ROWS}, {mm,bias,mm,bias,GLU}, {SSM_CONV,ADD,SILU}, …) — low-risk track-
+  record builders before the big PR-D.
