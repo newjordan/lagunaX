@@ -55,7 +55,7 @@ BENCH_SHA256="$(sha256sum "$LX_LLAMA_BENCH" | awk '{print $1}')"
 # assert the loader resolves it from LX_BIN (guards against the LD_LIBRARY_PATH
 # capture-order contamination in FINDING_20260810_lxbin_env_order_contamination).
 SO_SHA256=""
-[[ -f "$LX_BIN/libggml-sycl.so.0.17.0" ]] && SO_SHA256="$(sha256sum "$LX_BIN/libggml-sycl.so.0.17.0" | awk '{print $1}')"
+[[ -e "$LX_BIN/libggml-sycl.so.0" ]] && SO_SHA256="$(sha256sum "$(readlink -f "$LX_BIN/libggml-sycl.so.0")" | awk '{print $1}')"
 RESOLVED_SO="$(ldd "$LX_LLAMA_BENCH" 2>/dev/null | awk '/libggml-sycl/ {print $3; exit}')"
 if [[ -n "$RESOLVED_SO" && "$RESOLVED_SO" != "$LX_BIN"/* ]]; then
   echo "FATAL: llama-bench resolves libggml-sycl from $RESOLVED_SO, not \$LX_BIN ($LX_BIN)" >&2
