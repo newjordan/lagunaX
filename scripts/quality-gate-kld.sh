@@ -74,6 +74,19 @@ done
   echo "== [kld] SETUP FAIL — no llama-perplexity in $LX_BASE_BIN"; exit 2; }
 [[ -x "$LX_BIN/llama-perplexity" ]] || {
   echo "== [kld] SETUP FAIL — no llama-perplexity in $LX_BIN"; exit 2; }
+# Loader-resolution assert (FINDING_20260810, 4th sighting 2026-08-10: a
+# capture ran the base binary against the champion .so via env.sh's
+# LD_LIBRARY_PATH capture). Each perplexity binary must resolve libggml-sycl
+# from ITS OWN bin dir when invoked with LD_LIBRARY_PATH set to that dir.
+kld_assert_so() { # <bindir>
+  local so
+  so="$(LD_LIBRARY_PATH="$1:${LD_LIBRARY_PATH:-}" ldd "$1/llama-perplexity" 2>/dev/null | awk '/libggml-sycl/ {print $3; exit}')"
+  if [[ -n "$so" && "$so" != "$1"/* ]]; then
+    echo "== [kld] SETUP FAIL — $1/llama-perplexity resolves libggml-sycl from $so (not its own dir)"; exit 2
+  fi
+}
+kld_assert_so "$LX_BIN"
+[[ "$CAPTURE_BASE" -eq 1 ]] && kld_assert_so "$LX_BASE_BIN"
 
 # Exclusive B70 — never share the card with a bench (see B70_NO_CONCURRENT_GPU).
 lx_gpu_lock_enter "quality-gate-kld" || exit $?
