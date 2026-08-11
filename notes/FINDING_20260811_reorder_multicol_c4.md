@@ -59,12 +59,23 @@ Three facts, in evidence order:
    (driver-ppl64.sh): **OFF 14.7836 ± 0.42131, ON 14.7339 ± 0.41888** (−0.34%,
    within error, direction consistent).
 
-Mechanism of the residual (why knob-ON ≠ canonical exactly): the
-`[lx-control-qkv]` fused prefill path intercepts the dense Q/K/V projections at
-graph level *before* the `ggml_sycl_mul_mat` guard (marker present in both
-ab-on.err and ab-off.err), so the dense projections stay on reordered-MMVQ
-(q8_1-quantized activations) under the knob. Same residual explains the prefill
-gap to the OPT=0 ceiling (1535.6 vs 1610.8 t/s).
+Mechanism of the residual (why knob-ON ≠ canonical exactly) — CORRECTED
+2026-08-11T21:40Z after a path census; the first version of this note blamed
+the `[lx-control-qkv]` fuse, which is wrong: that fuse is decode-only
+(`ggml-sycl.cpp:8085`, `ne[1] != 1 → return 0`) and its one-shot marker in the
+A/B logs is the warmup decode. The census (census-on.log / census-opt0.log,
+`GGML_SYCL_DIAG_NAME_QUANT=1` at the gate geometry) shows knob-ON and
+canonical are **call-for-call congruent on every wide matmul** — all dense
+projections (Qcur/Kcur/Vcur/attn_o_proj/attn_gate_proj/ffn_gate/ffn_up/shexp)
+identical counts and rows, oneMKL totals 196,975 vs 197,074 (Δ0.05%, routing
+jitter). The residual is the **N ≤ 8 expert slices**, which stay on MMVQ by
+design (that is the decode-preserving half of C4): knob-ON runs them as
+reorder-MMVQ (q8_1 activations); canonical runs linear-MMVQ (q8_1) for
+N 2–8 and DMMV (fp16, no activation quantization) for N == 1 — the DMMV/MMVQ
+asymmetry is pre-existing dispatch behavior (`4703-4712` demotes DMMV only
+when reorder is enabled). At c512 gate geometry those slices carry ~8% of MoE
+rows; at ub2048 serving geometry ~1–2% (step-0 N-histogram) — so the gate
+geometry *overstates* the serving-time distance to canonical.
 
 The reorder-aware fp16 dequant kernels were audited read-vs-write for q4_K and
 q6_K, dense and MoE layouts (`convert.cpp`/`dequantize.hpp` vs
@@ -91,6 +102,13 @@ is the operator's, with three options:
   serve-laguna.sh.
 
 Until that decision: the knob stays OFF everywhere; serve-laguna.sh untouched;
-no promotion recorded. Follow-up candidate **C4b**: width-gate the
-`lx-control-qkv` fuse (decode-only) or extend the bypass to it — expected to
-close most of the residual KLD-to-canonical and ~5% more prefill.
+no promotion recorded. The originally proposed follow-up ("C4b: width-gate the
+QKV fuse") is VOID — the fuse is decode-only and the census shows dense prefill
+already rides the bypass. The only remaining divergence-from-canonical is the
+narrow expert slices, a deliberate speed tradeoff; unifying them (routing
+prefill-context N≤8 slices to oneMKL via a caller flag from the expert loop)
+is a quality-convergence option, expected speed-neutral at best, contingent on
+the gate-policy decision. The residual prefill gap to the OPT=0 ceiling
+(1535.6 vs 1610.8, −4.7%) is likewise mostly NOT narrow slices (~1-2% of rows
+at serving geometry) — reorder-aware dequant kernel efficiency vs linear, or
+session variance; unattributed-minor.
