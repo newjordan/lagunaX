@@ -51,4 +51,12 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
   (308→1540 t/s prefill, decode held, ON closer to canonical than ship at all
   geometries). Ship-blocked on gate policy only. Receipts:
   results/reorder-multicol-20260811T201630Z. B70 healthy post-reboot.
-- Next iteration starts at P1 attribution.
+- 2026-08-11 iter 1 (P1 attribution) DONE: decode-at-depth is FA-kernel-bound
+  (~42% of peak BW on the ~10 full-attention layers; Laguna is interleaved
+  SWA-512, GGUF-decoded). q8_0 KV = DEAD (-27% d0, -69% d24.5K). Power 139 W
+  of 230 W cap. Prize: +24% decode at 24.5K, ~+65% at 100K if BW-ideal.
+  FINDING_20260811_p1_decode_depth_attribution. Receipts:
+  results/p1-decode-depth-20260811T214831Z.
+- Next (iter 2): read TILE-FA decode path for the at-depth GQA shape
+  (48Q/8KV, hd128, ne1=1); locate the 42%-BW inefficiency; mutations behind
+  env knobs. Subagents fine for the source recon.
