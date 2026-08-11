@@ -80,7 +80,10 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
   patch in results/p2-c1-tile-*/. Lesson: C1 v2 must be XMX/joint_matrix with
   SLM-staged dequant, preceded by a dst-parity verify mode and a standalone
   XMX microbenchmark.
-- Next (iter 7): C1 v2 prerequisite #1-2 (verify harness + XMX tile
-  microbench), or operator-directed pivot. Loop day-1 net: C4 +400% prefill
-  @131K, M1 +10% at-depth decode, three falsifications receipted (M2, C1v1,
-  q8_0 KV), gate-policy decision still pending with operator.
+- 2026-08-11 iter 7 DONE: XMX microbench GO — fused XMX beats MKL 1.33x@N16
+  / 1.21x@N32, tie@64, lose@128; numerics better than MKL. Revised C1 v2
+  prize: +15-20% prefill@131K (band N<=32). benchmark/xmx-dequant-gemm/.
+- Next (iter 8): integrated C1 v2 = v1 skeleton + microbench XMX kernel +
+  dst-parity VERIFY mode, band N<=32, full gate battery. Day-1 net: C4 +400%
+  prefill@131K, M1 +10% at-depth decode, 4 receipts (M2, C1v1, q8_0-KV,
+  FORCE_TILE dead; XMX GO). Gate-policy decision still with operator.

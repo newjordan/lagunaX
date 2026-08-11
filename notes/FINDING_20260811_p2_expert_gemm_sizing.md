@@ -63,3 +63,21 @@ C4+M1 (d61bdf435, .so 94015650). v2 prerequisites, in order:
 1. dst-parity verify mode (kernel + oneMKL both run, max-abs-err report);
 2. XMX tile microbenchmark standalone (prove ≥oneMKL on one shape first);
 3. only then the integrated kernel.
+
+## XMX microbenchmark (C1 v2 prerequisite #2) — GO at N≤32, revised prize
+
+Standalone bench `benchmark/xmx-dequant-gemm/` (M=512 K=2048, q4_K, B70):
+fused XMX (16x16x16 fp16→fp32 joint_matrix, VNNI-packed SLM dequant tiles,
+oversubscribed dequant sub-groups) vs MKL dequant-then-GEMM:
+N=16 **1.33x**, N=32 **1.21x**, N=64 1.01x, N=128 0.78x. XMX numerics BETTER
+than MKL (rel-err 2e-4 vs 3.5e-4; fp32 accum). Device caveat: only 16x16x16 /
+8x16x16 joint_matrix combos are hardware-real; 32x64x* are emulated (300µs+).
+Two load-bearing kernel tricks recorded in results.txt: oversubscribed
+dequant (16 SG dequant / 4 SG MAD) and split-K with quarter-block KB=64.
+
+Prize revision (honest): the naive 5x ceiling assumed the whole 264K-call
+apparatus vanishes; measured XMX efficiency says the win is the launch-floor
+deletion + fp16 round-trip on the N≤32 band (39.4% of calls, 8.7% of rows)
+at kernel parity+ ≈ **+15-20% prefill at 131K**, more if the band widens to
+64 after verify. C1 v2 = v1's integration skeleton (engagement/skip/metadata
+were correct) + the microbench kernel + a dst-parity VERIFY mode, band ≤32.

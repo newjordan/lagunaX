@@ -1,0 +1,226 @@
+[lx-gpu-lock] waiting up to 3600s for exclusive B70 lock (xmx-microbench)...
+[lx-gpu-lock] ACQUIRED pid=402530 reason=xmx-microbench
+device        : Intel(R) Arc(TM) Pro B70 Graphics
+compute units : 256
+max clock     : 2800 MHz
+local mem     : 131072 bytes
+sub-group szs : 16 32
+joint_matrix supported combinations (msize x nsize x ksize, a/b/c/d types):
+   0 x 16 x 32 (max 8 x 0 x 0)  a=uint8 b=uint8 c=sint32 d=sint32
+   0 x 16 x 32 (max 8 x 0 x 0)  a=uint8 b=sint8 c=sint32 d=sint32
+   0 x 16 x 32 (max 8 x 0 x 0)  a=sint8 b=uint8 c=sint32 d=sint32
+   0 x 16 x 32 (max 8 x 0 x 0)  a=sint8 b=sint8 c=sint32 d=sint32
+   0 x 16 x 16 (max 8 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp32
+   0 x 16 x 16 (max 8 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp32
+   0 x 16 x 16 (max 8 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp16
+   0 x 16 x 16 (max 8 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp16
+  16 x 16 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp32
+  16 x 16 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp16
+  16 x 16 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp32
+  16 x 16 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp16
+   1 x 64 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp32
+   1 x 64 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp32
+   1 x 64 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp16
+   1 x 64 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp16
+  32 x 64 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp32
+  32 x 64 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp32
+  32 x 64 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp16
+  32 x 64 x 16 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp16
+   1 x 64 x 32 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp32
+   1 x 64 x 32 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp32
+   1 x 64 x 32 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp16
+   1 x 64 x 32 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp16
+  32 x 64 x 32 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp32
+  32 x 64 x 32 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp32
+  32 x 64 x 32 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp32 d=fp16
+  32 x 64 x 32 (max 0 x 0 x 0)  a=fp16 b=fp16 c=fp16 d=fp16
+   0 x 16 x 16 (max 8 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=bf16
+   0 x 16 x 16 (max 8 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=bf16
+   0 x 16 x 16 (max 8 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=fp32
+   0 x 16 x 16 (max 8 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=fp32
+  16 x 16 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=fp32
+  16 x 16 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=fp32
+  16 x 16 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=bf16
+  16 x 16 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=bf16
+   1 x 64 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=fp32
+   1 x 64 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=fp32
+   1 x 64 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=bf16
+   1 x 64 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=bf16
+  32 x 64 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=fp32
+  32 x 64 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=fp32
+  32 x 64 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=bf16
+  32 x 64 x 16 (max 0 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=bf16
+   1 x 64 x 32 (max 0 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=fp32
+   1 x 64 x 32 (max 0 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=fp32
+   1 x 64 x 32 (max 0 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=bf16
+   1 x 64 x 32 (max 0 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=bf16
+  32 x 64 x 32 (max 0 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=fp32
+  32 x 64 x 32 (max 0 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=fp32
+  32 x 64 x 32 (max 0 x 0 x 0)  a=bf16 b=bf16 c=fp32 d=bf16
+  32 x 64 x 32 (max 0 x 0 x 0)  a=bf16 b=bf16 c=bf16 d=bf16
+   0 x 16 x  8 (max 8 x 0 x 0)  a=tf32 b=tf32 c=fp32 d=fp32
+using tile    : TM=8 TN=16 TK=16 fp16*fp16+fp32, sub-group 16
+
+######## PASS 1/2 (warm-up pass) ########
+
+================ shape M=512 K=2048 N=16 ================
+BASELINE-MKL : dequant     4.66 us | gemm     5.50 us | cvt   1.37 us | total    11.53 us |  2.910 TFLOPS(total) | maxabs 1.223e+00 relscale 3.486e-04
+SIMT-REF     :                                        total    96.55 us |  0.348 TFLOPS        | maxabs 6.316e-03 relscale 1.800e-06
+XMX t16x16x16-wgm64-sgc16-nb16-sk32-kb64-sg4: fused     9.80 us | reduce   2.27 us | total    12.06 us |  2.782 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb16-sk16-kb64-sg16: fused     8.38 us | reduce   1.31 us | total     9.70 us |  3.461 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: fused     5.28 us | reduce   1.08 us | total     6.37 us |  5.270 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16: fused     6.07 us | reduce   0.91 us | total     6.98 us |  4.805 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb64-sg16: fused     9.47 us | reduce   0.78 us | total    10.25 us |  3.275 TFLOPS | maxabs 6.717e-01 relscale 1.914e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk16-kb64-sg16: fused     6.02 us | reduce   0.92 us | total     6.94 us |  4.834 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg8-ni: fused     9.45 us | reduce   0.80 us | total    10.25 us |  3.272 TFLOPS | maxabs 6.717e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg16-ni: fused     7.44 us | reduce   0.69 us | total     8.13 us |  4.126 TFLOPS | maxabs 6.717e-01 relscale 1.914e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb256-sg16-ni: fused     9.47 us | reduce   0.77 us | total    10.24 us |  3.276 TFLOPS | maxabs 6.717e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg8-ni: fused     7.10 us | reduce   0.88 us | total     7.98 us |  4.204 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16-ni: fused     6.09 us | reduce   1.02 us | total     7.11 us |  4.722 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: fused     5.67 us | reduce   1.47 us | total     7.14 us |  4.701 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg8-ni: fused     5.25 us | reduce   1.57 us | total     6.82 us |  4.921 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+BASELINE-MKL (re-run): dequant     3.84 us | gemm     3.72 us | cvt   1.05 us | total     8.61 us
+--> best XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: 6.37 us vs MKL total 8.61 us => XMX is 1.35x FASTER
+
+================ shape M=512 K=2048 N=32 ================
+BASELINE-MKL : dequant     4.28 us | gemm     4.27 us | cvt   1.04 us | total     9.59 us |  7.000 TFLOPS(total) | maxabs 1.291e+00 relscale 3.500e-04
+SIMT-REF     :                                        total    64.11 us |  1.047 TFLOPS        | maxabs 6.316e-03 relscale 1.713e-06
+XMX t16x16x16-wgm64-sgc16-nb16-sk32-kb64-sg4: fused     8.34 us | reduce   1.45 us | total     9.79 us |  6.854 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb16-sk16-kb64-sg16: fused    10.34 us | reduce   0.97 us | total    11.31 us |  5.933 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: fused     6.56 us | reduce   0.94 us | total     7.50 us |  8.948 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16: fused     7.08 us | reduce   0.98 us | total     8.06 us |  8.328 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb64-sg16: fused    10.51 us | reduce   0.69 us | total    11.20 us |  5.993 TFLOPS | maxabs 8.151e-01 relscale 2.210e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk16-kb64-sg16: fused     6.76 us | reduce   0.97 us | total     7.73 us |  8.682 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg8-ni: fused    10.85 us | reduce   0.69 us | total    11.54 us |  5.815 TFLOPS | maxabs 8.151e-01 relscale 2.210e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg16-ni: fused     8.85 us | reduce   0.79 us | total     9.64 us |  6.963 TFLOPS | maxabs 8.151e-01 relscale 2.210e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb256-sg16-ni: fused    10.67 us | reduce   0.69 us | total    11.36 us |  5.908 TFLOPS | maxabs 8.151e-01 relscale 2.210e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg8-ni: fused     8.30 us | reduce   0.97 us | total     9.27 us |  7.242 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16-ni: fused     7.25 us | reduce   0.86 us | total     8.12 us |  8.266 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: fused     6.51 us | reduce   1.55 us | total     8.06 us |  8.324 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg8-ni: fused     6.43 us | reduce   1.45 us | total     7.89 us |  8.508 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+BASELINE-MKL (re-run): dequant     3.67 us | gemm     4.16 us | cvt   1.03 us | total     8.85 us
+--> best XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: 7.50 us vs MKL total 8.85 us => XMX is 1.18x FASTER
+
+================ shape M=512 K=2048 N=64 ================
+BASELINE-MKL : dequant     3.50 us | gemm     5.23 us | cvt   1.06 us | total     9.79 us | 13.713 TFLOPS(total) | maxabs 1.522e+00 relscale 3.357e-04
+SIMT-REF     :                                        total    64.61 us |  2.077 TFLOPS        | maxabs 6.316e-03 relscale 1.393e-06
+XMX t16x16x16-wgm64-sgc16-nb16-sk32-kb64-sg4: fused    15.14 us | reduce   1.46 us | total    16.60 us |  8.085 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb16-sk16-kb64-sg16: fused    19.83 us | reduce   1.01 us | total    20.83 us |  6.442 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: fused    11.84 us | reduce   0.88 us | total    12.72 us | 10.549 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16: fused    13.07 us | reduce   0.99 us | total    14.06 us |  9.544 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb64-sg16: fused    11.74 us | reduce   0.72 us | total    12.46 us | 10.773 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk16-kb64-sg16: fused     8.99 us | reduce   1.00 us | total     9.99 us | 13.436 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg8-ni: fused    15.17 us | reduce   0.70 us | total    15.86 us |  8.461 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg16-ni: fused    13.16 us | reduce   0.80 us | total    13.96 us |  9.611 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb256-sg16-ni: fused    14.86 us | reduce   0.70 us | total    15.55 us |  8.629 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg8-ni: fused    11.01 us | reduce   1.01 us | total    12.02 us | 11.163 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16-ni: fused    10.07 us | reduce   0.90 us | total    10.97 us | 12.232 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: fused     8.29 us | reduce   1.55 us | total     9.84 us | 13.638 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg8-ni: fused     9.09 us | reduce   1.47 us | total    10.56 us | 12.707 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+BASELINE-MKL (re-run): dequant     3.46 us | gemm     5.17 us | cvt   1.06 us | total     9.68 us
+--> best XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: 9.84 us vs MKL total 9.68 us => XMX is 1.02x slower
+
+================ shape M=512 K=2048 N=128 ================
+BASELINE-MKL : dequant     3.88 us | gemm     7.45 us | cvt   1.20 us | total    12.53 us | 21.425 TFLOPS(total) | maxabs 1.522e+00 relscale 3.357e-04
+SIMT-REF     :                                        total   153.06 us |  1.754 TFLOPS        | maxabs 6.316e-03 relscale 1.393e-06
+XMX t16x16x16-wgm64-sgc16-nb16-sk32-kb64-sg4: fused    35.47 us | reduce   2.92 us | total    38.39 us |  6.993 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb16-sk16-kb64-sg16: fused    46.12 us | reduce   1.57 us | total    47.69 us |  5.629 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: fused    26.55 us | reduce   1.67 us | total    28.22 us |  9.511 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16: fused    29.87 us | reduce   1.57 us | total    31.44 us |  8.539 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb64-sg16: fused    18.72 us | reduce   1.19 us | total    19.91 us | 13.485 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk16-kb64-sg16: fused    20.51 us | reduce   1.56 us | total    22.07 us | 12.165 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg8-ni: fused    23.78 us | reduce   1.10 us | total    24.88 us | 10.790 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg16-ni: fused    21.72 us | reduce   1.00 us | total    22.72 us | 11.816 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb256-sg16-ni: fused    23.17 us | reduce   1.10 us | total    24.28 us | 11.057 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg8-ni: fused    16.44 us | reduce   1.40 us | total    17.84 us | 15.047 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16-ni: fused    15.56 us | reduce   1.50 us | total    17.06 us | 15.736 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: fused    11.80 us | reduce   2.22 us | total    14.02 us | 19.151 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg8-ni: fused    14.21 us | reduce   2.37 us | total    16.57 us | 16.195 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+BASELINE-MKL (re-run): dequant     3.21 us | gemm     6.72 us | cvt   0.95 us | total    10.88 us
+--> best XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: 14.02 us vs MKL total 10.88 us => XMX is 1.29x slower
+
+######## PASS 2/2 (scored) ########
+
+================ shape M=512 K=2048 N=16 ================
+BASELINE-MKL : dequant     4.00 us | gemm     3.75 us | cvt   1.06 us | total     8.81 us |  3.809 TFLOPS(total) | maxabs 1.223e+00 relscale 3.486e-04
+SIMT-REF     :                                        total    63.63 us |  0.527 TFLOPS        | maxabs 6.316e-03 relscale 1.800e-06
+XMX t16x16x16-wgm64-sgc16-nb16-sk32-kb64-sg4: fused     6.58 us | reduce   1.52 us | total     8.09 us |  4.146 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb16-sk16-kb64-sg16: fused     5.65 us | reduce   1.02 us | total     6.66 us |  5.035 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: fused     5.29 us | reduce   1.10 us | total     6.38 us |  5.257 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16: fused     6.11 us | reduce   0.92 us | total     7.03 us |  4.774 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb64-sg16: fused     9.46 us | reduce   0.78 us | total    10.24 us |  3.276 TFLOPS | maxabs 6.717e-01 relscale 1.914e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk16-kb64-sg16: fused     5.99 us | reduce   0.91 us | total     6.90 us |  4.863 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg8-ni: fused     9.46 us | reduce   0.78 us | total    10.24 us |  3.277 TFLOPS | maxabs 6.717e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg16-ni: fused     7.44 us | reduce   0.68 us | total     8.12 us |  4.133 TFLOPS | maxabs 6.717e-01 relscale 1.914e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb256-sg16-ni: fused     9.49 us | reduce   0.77 us | total    10.25 us |  3.272 TFLOPS | maxabs 6.717e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg8-ni: fused     7.14 us | reduce   0.87 us | total     8.02 us |  4.186 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16-ni: fused     6.06 us | reduce   1.00 us | total     7.07 us |  4.748 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: fused     5.66 us | reduce   1.48 us | total     7.15 us |  4.696 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg8-ni: fused     5.26 us | reduce   1.56 us | total     6.83 us |  4.915 TFLOPS | maxabs 6.715e-01 relscale 1.914e-04
+BASELINE-MKL (re-run): dequant     3.75 us | gemm     3.69 us | cvt   1.03 us | total     8.48 us
+--> best XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: 6.38 us vs MKL total 8.48 us => XMX is 1.33x FASTER
+
+================ shape M=512 K=2048 N=32 ================
+BASELINE-MKL : dequant     3.95 us | gemm     4.40 us | cvt   1.72 us | total    10.07 us |  6.662 TFLOPS(total) | maxabs 1.291e+00 relscale 3.500e-04
+SIMT-REF     :                                        total    63.99 us |  1.049 TFLOPS        | maxabs 6.316e-03 relscale 1.713e-06
+XMX t16x16x16-wgm64-sgc16-nb16-sk32-kb64-sg4: fused     8.37 us | reduce   1.43 us | total     9.80 us |  6.848 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb16-sk16-kb64-sg16: fused    10.35 us | reduce   0.97 us | total    11.32 us |  5.929 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: fused     6.50 us | reduce   0.90 us | total     7.40 us |  9.064 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16: fused     7.05 us | reduce   0.99 us | total     8.05 us |  8.341 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb64-sg16: fused    10.52 us | reduce   0.68 us | total    11.20 us |  5.994 TFLOPS | maxabs 8.151e-01 relscale 2.210e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk16-kb64-sg16: fused     6.76 us | reduce   0.97 us | total     7.73 us |  8.685 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg8-ni: fused    10.86 us | reduce   0.68 us | total    11.54 us |  5.813 TFLOPS | maxabs 8.151e-01 relscale 2.210e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg16-ni: fused     8.84 us | reduce   0.78 us | total     9.63 us |  6.972 TFLOPS | maxabs 8.151e-01 relscale 2.210e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb256-sg16-ni: fused    10.68 us | reduce   0.69 us | total    11.37 us |  5.901 TFLOPS | maxabs 8.151e-01 relscale 2.210e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg8-ni: fused     8.27 us | reduce   0.97 us | total     9.24 us |  7.265 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16-ni: fused     7.25 us | reduce   0.87 us | total     8.12 us |  8.268 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: fused     6.49 us | reduce   1.54 us | total     8.03 us |  8.356 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg8-ni: fused     6.44 us | reduce   1.45 us | total     7.89 us |  8.508 TFLOPS | maxabs 8.153e-01 relscale 2.211e-04
+BASELINE-MKL (re-run): dequant     3.68 us | gemm     4.19 us | cvt   1.06 us | total     8.92 us
+--> best XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: 7.40 us vs MKL total 8.92 us => XMX is 1.21x FASTER
+
+================ shape M=512 K=2048 N=64 ================
+BASELINE-MKL : dequant     3.75 us | gemm     5.54 us | cvt   1.09 us | total    10.38 us | 12.934 TFLOPS(total) | maxabs 1.522e+00 relscale 3.357e-04
+SIMT-REF     :                                        total    64.58 us |  2.078 TFLOPS        | maxabs 6.316e-03 relscale 1.393e-06
+XMX t16x16x16-wgm64-sgc16-nb16-sk32-kb64-sg4: fused    15.17 us | reduce   1.46 us | total    16.62 us |  8.073 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb16-sk16-kb64-sg16: fused    19.84 us | reduce   0.99 us | total    20.82 us |  6.445 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: fused    11.85 us | reduce   0.89 us | total    12.74 us | 10.536 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16: fused    13.04 us | reduce   1.00 us | total    14.04 us |  9.561 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb64-sg16: fused    11.75 us | reduce   0.70 us | total    12.45 us | 10.781 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk16-kb64-sg16: fused     9.00 us | reduce   1.00 us | total    10.00 us | 13.427 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg8-ni: fused    15.18 us | reduce   0.70 us | total    15.88 us |  8.450 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg16-ni: fused    13.15 us | reduce   0.82 us | total    13.97 us |  9.606 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb256-sg16-ni: fused    14.85 us | reduce   0.70 us | total    15.56 us |  8.628 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg8-ni: fused    11.00 us | reduce   1.02 us | total    12.03 us | 11.162 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16-ni: fused    10.07 us | reduce   0.90 us | total    10.98 us | 12.225 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: fused     8.31 us | reduce   1.56 us | total     9.86 us | 13.609 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg8-ni: fused     9.11 us | reduce   1.48 us | total    10.58 us | 12.682 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+BASELINE-MKL (re-run): dequant     3.59 us | gemm     5.35 us | cvt   1.05 us | total     9.99 us
+--> best XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: 9.86 us vs MKL total 9.99 us => XMX is 1.01x FASTER
+
+================ shape M=512 K=2048 N=128 ================
+BASELINE-MKL : dequant     4.07 us | gemm     7.68 us | cvt   1.26 us | total    13.01 us | 20.626 TFLOPS(total) | maxabs 1.522e+00 relscale 3.357e-04
+SIMT-REF     :                                        total   159.64 us |  1.682 TFLOPS        | maxabs 6.316e-03 relscale 1.393e-06
+XMX t16x16x16-wgm64-sgc16-nb16-sk32-kb64-sg4: fused    37.82 us | reduce   3.10 us | total    40.93 us |  6.559 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb16-sk16-kb64-sg16: fused    48.33 us | reduce   1.63 us | total    49.97 us |  5.372 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16: fused    27.68 us | reduce   1.73 us | total    29.41 us |  9.126 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16: fused    31.18 us | reduce   1.62 us | total    32.80 us |  8.185 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb64-sg16: fused    19.58 us | reduce   1.24 us | total    20.81 us | 12.897 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk16-kb64-sg16: fused    21.34 us | reduce   1.62 us | total    22.96 us | 11.689 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg8-ni: fused    28.98 us | reduce   1.53 us | total    30.51 us |  8.798 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk8-kb256-sg16-ni: fused    21.70 us | reduce   1.01 us | total    22.71 us | 11.818 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm128-sgc16-nb32-sk8-kb256-sg16-ni: fused    23.17 us | reduce   1.10 us | total    24.27 us | 11.060 TFLOPS | maxabs 8.151e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg8-ni: fused    16.49 us | reduce   1.41 us | total    17.90 us | 15.000 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk16-kb128-sg16-ni: fused    15.58 us | reduce   1.50 us | total    17.07 us | 15.723 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: fused    11.81 us | reduce   2.22 us | total    14.02 us | 19.140 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg8-ni: fused    14.19 us | reduce   2.38 us | total    16.58 us | 16.195 TFLOPS | maxabs 8.153e-01 relscale 1.798e-04
+BASELINE-MKL (re-run): dequant     3.22 us | gemm     6.75 us | cvt   0.96 us | total    10.93 us
+--> best XMX t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni: 14.02 us vs MKL total 10.93 us => XMX is 1.28x slower
+
+==================== SUMMARY (M=512 K=2048, 50 iters) ====================
+   N | mkl-deq us   mkl-gemm  mkl-cvt  mkl-total |  xmx-total   xmx-TF |  speedup | best-cfg             | mkl-maxabs xmx-maxabs
+  16 |       3.75       3.69     1.03       8.48 |       6.38    5.257 |    1.33x | t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16 |  1.223e+00  6.715e-01
+  32 |       3.68       4.19     1.06       8.92 |       7.40    9.064 |    1.21x | t16x16x16-wgm64-sgc16-nb32-sk16-kb64-sg16 |  1.291e+00  8.153e-01
+  64 |       3.59       5.35     1.05       9.99 |       9.86   13.609 |    1.01x | t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni |  1.522e+00  8.153e-01
+ 128 |       3.22       6.75     0.96      10.93 |      14.02   19.140 |    0.78x | t16x16x16-wgm64-sgc16-nb32-sk32-kb64-sg4-ni |  1.522e+00  8.153e-01
+rc=0
