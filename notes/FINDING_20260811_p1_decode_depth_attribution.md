@@ -92,3 +92,31 @@ Ranked mutations (iteration 3+, all env-gated default-OFF on the C4 branch):
      fix; kernel surgery in fattn-vec.hpp + launch_fattn ncols2 plumbing)
   M3 K-load lane mapping → one contiguous 256 B segment per SIMD16
 Prize bound unchanged: +24% decode at 24.5K, more at 100K+.
+
+## Iteration 3 — M1 LANDED: split-K width override, +10% at-depth decode
+
+Commit `d61bdf435` (lx-reorder-multicol branch, stacks on C4), .so
+`94015650…`. `GGML_SYCL_LX_FATTN_PARALLEL_BLOCKS=<N>`, default 0 = stock
+(pb=0 leg re-measured bit-consistent with the pre-mutation binary: 86.51 vs
+86.54). Receipts: `results/p1-m1-pb-20260811T220715Z/`.
+
+| pb | tg128 d0 | d8192 | d24576 |
+|---|---|---|---|
+| 0 (stock) | 152.67 | 114.38 | 86.51 |
+| 8 | 152.55 | 117.00 | 92.53 |
+| **16** | **152.79** | **118.29** | **95.60 (+10.5%)** |
+| 32 | 152.69 | 115.90 | 94.73 |
+| 96 | 152.81 | 116.29 | 85.12 (over-split: combine tax) |
+
+Real-text 23K (llama-cli, ship env + C4 knob): decode **81.8 → 89.7 t/s
+(+9.7%)**, prefill unchanged (1542.8 vs 1537.7). Gates: golden-smoke PASS in
+both knob states (short-kv geometry is unchanged by construction:
+ntiles_KQ=1). 23K greedy A/B: one near-tie flip ~40 tokens in, both
+continuations coherent — reduction-order class (stock already fp-combines 4
+split-K partials; pb=16 combines 16; same mechanism, different grouping).
+**Instrument gap recorded: the pinned KLD gate is prefill-only and cannot see
+decode-FA numerics; no decode-logit-distance instrument exists yet.** M1 ships
+env-gated default-OFF like C4.
+
+Next: M2 — vec-kernel ncols2=2 GQA batching (halve the 6× KV re-read).
+Post-M1 estimate: ~+9-12% more at 24.5K.

@@ -62,6 +62,10 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
   + parallel_blocks capped at 4. Env probes: FORCE_TILE dead (−26% at depth);
   DECODE_NTHREADS=128 marginal (+2.4% depth, −0.7% d0). Finding addendum in
   FINDING_20260811_p1_decode_depth_attribution.
-- Next (iter 3): M1 parallel_blocks env override (build+gate), then M2
-  vec-kernel ncols2=2 GQA batching. Both stack on the C4 branch, env-gated
-  default-OFF, d0 floor 152.5 mandatory.
+- 2026-08-11 iter 3 DONE: M1 landed (d61bdf435, GGML_SYCL_LX_FATTN_PARALLEL_BLOCKS,
+  pb=16): +10.5% tg128 at d24576 (86.5->95.6), +9.7% real-text 23K decode
+  (81.8->89.7), d0 floor intact, stock path bit-identical when unset. Golden
+  PASS; greedy-at-depth near-tie flip = reduction-order class. INSTRUMENT GAP:
+  pinned KLD gate is prefill-only, cannot see decode-FA numerics.
+- Next (iter 4): M2 vec-kernel ncols2=2 GQA batching (halve 6x KV re-read,
+  est +9-12% more at 24.5K). Then consider a decode-logit-distance instrument.
