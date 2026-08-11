@@ -120,3 +120,34 @@ env-gated default-OFF like C4.
 
 Next: M2 — vec-kernel ncols2=2 GQA batching (halve the 6× KV re-read).
 Post-M1 estimate: ~+9-12% more at 24.5K.
+
+## Iteration 4 — M2 (vec GQA head-batching) FALSIFIED and reverted
+
+Implemented ncols2=2 head-pair batching for the vec decode kernel (2 Q heads
+sharing a KV head per workgroup, one K/V read for both; engage marker
+confirmed firing). Receipts: `results/p1-m2-gqa-20260811T*/` (m2-gqa.patch
+preserves the full diff; .so c7f8b947). Measured, tg128:
+
+| config | d0 | d24576 |
+|---|---|---|
+| stock | 152.11 | 86.53 |
+| gqa2 | 144.41 (−5%, FLOOR VIOLATION) | 88.27 |
+| gqa2+pb16 | 144.82 | 91.45 |
+| gqa2+pb32 | — | 90.64 |
+| gqa2+pb64 | — | 88.87 |
+| **M1-only pb16 (reference)** | **152.79** | **95.60** |
+
+GQA batching loses to per-head workgroups at every split width. Mechanism:
+the 6× KV re-read was already largely served from L2 (known: stock slope is
+2.4× BW-ideal, not 6×), so halving DRAM re-reads bought little, while
+halving z-parallelism (48 → 24 head-pair groups) and doubling per-WG state
+(2× Q registers, KQ scratch, softmax bookkeeping) cost real occupancy — the
+d0 −5% is the per-WG overhead alone. Reverted from the tree (patch kept in
+the receipt dir); branch stays at d61bdf435 (C4+M1).
+
+P1 standing after iteration 4: **M1 (+10% at-depth) is the P1 win**; M3
+(K-load lane contiguity: one 256 B row per SIMD16 instead of 2×128 B
+segments) is the remaining bounded FA idea. The L2-absorption evidence also
+lowers M3's expected value — the loads may already coalesce adequately at
+the L2 interface. Next iteration: M3 only if cheap; otherwise pivot to P2
+(expert-tile GEMM evidence unit at serving geometry).

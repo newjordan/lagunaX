@@ -67,5 +67,11 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
   (81.8->89.7), d0 floor intact, stock path bit-identical when unset. Golden
   PASS; greedy-at-depth near-tie flip = reduction-order class. INSTRUMENT GAP:
   pinned KLD gate is prefill-only, cannot see decode-FA numerics.
-- Next (iter 4): M2 vec-kernel ncols2=2 GQA batching (halve 6x KV re-read,
-  est +9-12% more at 24.5K). Then consider a decode-logit-distance instrument.
+- 2026-08-11 iter 4 DONE: M2 (vec GQA head-batching) FALSIFIED — loses to
+  M1-only at every split width (best 91.5 vs 95.6) and violates the d0 floor
+  (−5%); L2 was already absorbing the KV re-reads. Reverted; patch preserved
+  in results/p1-m2-gqa-*/. Branch = C4+M1 (d61bdf435, .so 94015650).
+- Next (iter 5): P2 evidence unit — census the post-C4 oneMKL expert calls at
+  serving geometry (ub2048 real text, DIAG_NAME_QUANT, knob ON) to size the
+  expert-tile GEMM (C1-class) prize; M3 (K-load lane contiguity) parked as
+  low-expected-value after the L2 finding.
