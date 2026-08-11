@@ -71,7 +71,9 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
   M1-only at every split width (best 91.5 vs 95.6) and violates the d0 floor
   (−5%); L2 was already absorbing the KV re-reads. Reverted; patch preserved
   in results/p1-m2-gqa-*/. Branch = C4+M1 (d61bdf435, .so 94015650).
-- Next (iter 5): P2 evidence unit — census the post-C4 oneMKL expert calls at
-  serving geometry (ub2048 real text, DIAG_NAME_QUANT, knob ON) to size the
-  expert-tile GEMM (C1-class) prize; M3 (K-load lane contiguity) parked as
-  low-expected-value after the L2 finding.
+- 2026-08-11 iter 5 DONE: P2 census at serving geometry — 264,339 expert
+  oneMKL calls / 22.8M rows per 23K pass, mean N=86; C1 ceiling ~5x further
+  prefill (FINDING_20260811_p2_expert_gemm_sizing has the design constraints).
+- Next (iter 6): C1 draft — fused expert-blocked dequant-GEMM kernel,
+  env-gated GGML_SYCL_LX_EXPERT_TILE_GEMM, staged N<=64 engagement first,
+  reorder-layout q4_K/q6_K dequant in-register. Then full gate battery.
