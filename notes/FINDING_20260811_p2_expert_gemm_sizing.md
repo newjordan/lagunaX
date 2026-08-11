@@ -41,3 +41,25 @@ pool allocs — against an irreducible floor of ~2.6 s FLOPs (52 TFLOP at
 Gate battery: build → golden (both knob states) → KLD pinned + canonical
 triangulation → real-text A/B at -c 131072 (beat 1540 prefill, hold 90 decode)
 → tg128 d0 ≥ 152.5.
+
+## C1 v1 (SIMT dequant-GEMM) — FALSIFIED as drafted; XMX is the requirement
+
+Draft (patch: `results/p2-c1-tile-20260811T*/c1-expert-tile.patch`, +326 lines,
+band N≤64, reorder+linear q4_K/q6_K dequant in-register, fp32 accum, one
+launch per dispatch): builds clean, engages correctly, and is **~2x slower
+than the per-expert oneMKL path it replaces in-band**: pp512 1160 → 558
+(band ≈ all experts at T=512), 131K real-text prefill 1553.7 → 1108.3 (−29%).
+tg128 d0 unaffected (153.19). Numerics also unproven: golden diverges knob-ON
+and canonical-KLD distance worsens (0.0340 → 0.0396) where fp32 accumulation
+should improve it — do not optimize before a dst-parity verify harness exists.
+
+Lesson (bounds the whole C1 family): a scalar-SIMT fused dequant-GEMM cannot
+beat oneMKL's XMX systolic path even at N∈[9,64] where oneMKL pays full
+per-call overheads — the 8-lane-redundant dequant ALU and L1-broadcast
+activation reads burn the compute the tile saves in traffic. **C1 v2 must be
+joint_matrix (XMX) based**: SLM-staged dequant tiles feeding sub-group
+matrix-multiply-accumulate, or it will lose again. Reverted; branch stays
+C4+M1 (d61bdf435, .so 94015650). v2 prerequisites, in order:
+1. dst-parity verify mode (kernel + oneMKL both run, max-abs-err report);
+2. XMX tile microbenchmark standalone (prove ≥oneMKL on one shape first);
+3. only then the integrated kernel.

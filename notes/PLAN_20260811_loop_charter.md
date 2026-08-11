@@ -74,6 +74,13 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
 - 2026-08-11 iter 5 DONE: P2 census at serving geometry — 264,339 expert
   oneMKL calls / 22.8M rows per 23K pass, mean N=86; C1 ceiling ~5x further
   prefill (FINDING_20260811_p2_expert_gemm_sizing has the design constraints).
-- Next (iter 6): C1 draft — fused expert-blocked dequant-GEMM kernel,
-  env-gated GGML_SYCL_LX_EXPERT_TILE_GEMM, staged N<=64 engagement first,
-  reorder-layout q4_K/q6_K dequant in-register. Then full gate battery.
+- 2026-08-11 iter 6 DONE: C1 v1 (SIMT dequant-GEMM) FALSIFIED — ~2x slower
+  in-band than per-expert oneMKL (pp512 1160->558; 131K prefill 1554->1108),
+  numerics unproven (golden diverges, canonical distance worsens). Reverted;
+  patch in results/p2-c1-tile-*/. Lesson: C1 v2 must be XMX/joint_matrix with
+  SLM-staged dequant, preceded by a dst-parity verify mode and a standalone
+  XMX microbenchmark.
+- Next (iter 7): C1 v2 prerequisite #1-2 (verify harness + XMX tile
+  microbench), or operator-directed pivot. Loop day-1 net: C4 +400% prefill
+  @131K, M1 +10% at-depth decode, three falsifications receipted (M2, C1v1,
+  q8_0 KV), gate-policy decision still pending with operator.
