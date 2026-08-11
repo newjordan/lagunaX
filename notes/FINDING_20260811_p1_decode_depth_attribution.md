@@ -65,3 +65,30 @@ Read the TILE-FA decode path for the at-depth shape (which kernel, workgroup
 geometry, KV access pattern per 8-KV-head/128-dim GQA at ne1=1); find why
 effective BW is 42%; candidate mutations behind env knobs, gated per AGENTS.md
 + canonical triangulation.
+
+## Iteration 2 addendum — mechanism located; env levers measured
+
+Recon (fattn.cpp / fattn-vec.hpp / fattn-common.hpp, C4 tree): decode (ne1=1)
+runs `flash_attn_ext_vec` D=128 WG=256 warp16 — NOT tile. Mechanism of the 42%
+efficiency: `ncols2` is hardcoded 1 in the vec launch (fattn-vec.hpp:623,630)
+⇒ one workgroup per Q head ⇒ the shared KV head is re-read gqa_ratio (6)×:
+at 24.5K depth, 604 MB fetched per token where 100.7 MB is unique (L2 absorbs
+part — that is why the slope is 2.4× ideal rather than 6×). Split-K exists but
+`parallel_blocks` is capped at max_wg_per_cu=4 (fattn-common.hpp:1048-1092;
+a commented-out uncap sits at :1070) ⇒ 192 WGs at 48 heads, each serially
+walking 6144 KV rows at 24.5K. No mask early-exit at decode (KV_max null,
+gate at fattn-common.hpp:1013). K-pass SIMD16 issues two disjoint 128 B
+segments per load (lanes split across rows 8 apart) — secondary suspect.
+
+Env-only probes at d {0, 8192, 24576} (fa-tile.md, fa-nt128.md):
+  baseline           152.52 / 114.24 / 86.54
+  FORCE_TILE=1       147.82 /  97.49 / 63.61   DEAD (tile kernel loses more
+                                               than GQA batching saves)
+  DECODE_NTHREADS=128 151.45 / 115.92 / 88.63  +2.4% at depth, −0.7% d0 —
+                                               marginal, floor-grazing
+Ranked mutations (iteration 3+, all env-gated default-OFF on the C4 branch):
+  M1 parallel_blocks env override (3-line; more split-K, shorter serial walks)
+  M2 vec-kernel ncols2=2 for gqa%2==0 (halves KV re-read 6→3×; the principled
+     fix; kernel surgery in fattn-vec.hpp + launch_fattn ncols2 plumbing)
+  M3 K-load lane mapping → one contiguous 256 B segment per SIMD16
+Prize bound unchanged: +24% decode at 24.5K, more at 100K+.

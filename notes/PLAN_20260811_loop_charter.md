@@ -57,6 +57,11 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
   of 230 W cap. Prize: +24% decode at 24.5K, ~+65% at 100K if BW-ideal.
   FINDING_20260811_p1_decode_depth_attribution. Receipts:
   results/p1-decode-depth-20260811T214831Z.
-- Next (iter 2): read TILE-FA decode path for the at-depth GQA shape
-  (48Q/8KV, hd128, ne1=1); locate the 42%-BW inefficiency; mutations behind
-  env knobs. Subagents fine for the source recon.
+- 2026-08-11 iter 2 DONE: decode FA is the VEC kernel (not tile); mechanism
+  = ncols2=1 ⇒ 6× KV re-read per token (604 MB vs 100.7 MB unique at 24.5K)
+  + parallel_blocks capped at 4. Env probes: FORCE_TILE dead (−26% at depth);
+  DECODE_NTHREADS=128 marginal (+2.4% depth, −0.7% d0). Finding addendum in
+  FINDING_20260811_p1_decode_depth_attribution.
+- Next (iter 3): M1 parallel_blocks env override (build+gate), then M2
+  vec-kernel ncols2=2 GQA batching. Both stack on the C4 branch, env-gated
+  default-OFF, d0 floor 152.5 mandatory.
