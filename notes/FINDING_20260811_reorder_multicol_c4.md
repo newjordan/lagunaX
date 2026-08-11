@@ -82,6 +82,16 @@ q6_K, dense and MoE layouts (`convert.cpp`/`dequantize.hpp` vs
 `reorder_qw_*`): consistent. Note these kernels were dead code in the DNN-off
 ship config until this bypass — the guard always diverted before them.
 
+## Max-context certification (added 21:44Z)
+
+At `-c 131072` (the exact serve-laguna.sh context), 23K real text:
+OFF 308.2 prefill / 81.5 decode → ON **1540.1 prefill / 81.4 decode**. The
++400% is context-invariant; 23K ingest wall 99 s → 34 s. c2048-geometry
+triangulation: ON 0.026986 / 94.208% vs OFF 0.042023 / 92.693% against a
+c2048 canonical base — the "ON is ~35% closer to canonical than ship" ordering
+holds at serving-relevant geometry (absolute cross-geometry KLD magnitudes are
+not comparable; the within-geometry ordering is the claim).
+
 ## Status: SHIP-BLOCKED ON GATE POLICY, not on evidence
 
 C4 passes golden, holds every throughput floor, delivers +400% prefill, and is
