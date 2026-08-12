@@ -51,9 +51,30 @@ LX_KLD_MIN_SAME_TOP="${LX_KLD_MIN_SAME_TOP:-99.0}"
 
 CAPTURE_BASE=0
 [[ "${1:-}" == "--capture-base" ]] && CAPTURE_BASE=1
+CAPTURE_CANON=0
+[[ "${1:-}" == "--capture-canon" ]] && CAPTURE_CANON=1
+
+# --- canonical arbiter (gate policy (b), operator decision 2026-08-11) -------
+# The pinned base encodes the code path it was captured on; every historical
+# pass was bit-identical to it. A candidate that legitimately changes wide-N
+# numerics can therefore only fail the pinned leg. Policy (b): such a
+# candidate still PASSES iff it is at least as close to CANONICAL math
+# (linear weights + fp16/oneMKL, GGML_SYCL_ENABLE_OPT=0 on the control
+# binary) as the currently shipped path, with PPL-vs-canon not worse. Bounds
+# are the measured shipped-path-vs-canonical numbers
+# (results/reorder-multicol-20260811T201630Z, canon-vs-off.log +
+# FINDING_20260811_reorder_multicol_c4): mean KLD 0.056310, same-top
+# 91.667%, ln(PPL/canon) +0.023650 (includes the u16-store constant, same
+# artifact on both sides of the comparison). The canonical store is captured
+# from LX_BASE_BIN only (--capture-canon) — a candidate never pins either
+# reference.
+LX_KLD_CANON_MAX_MEAN="${LX_KLD_CANON_MAX_MEAN:-0.056310}"
+LX_KLD_CANON_MIN_SAME_TOP="${LX_KLD_CANON_MIN_SAME_TOP:-91.667}"
+LX_KLD_CANON_MAX_PPL_RATIO="${LX_KLD_CANON_MAX_PPL_RATIO:-0.023650}"
 
 MODEL_TAG="$(basename "$LX_MODEL" .gguf)"
 BASE_LOGITS="${LX_KLD_BASE:-$LX_KLD_STORE/${MODEL_TAG}-c${LX_KLD_CTX}-n${LX_KLD_CHUNKS}.kld}"
+CANON_LOGITS="${LX_KLD_CANON_BASE:-$LX_KLD_STORE/canonical-${MODEL_TAG}-c${LX_KLD_CTX}-n${LX_KLD_CHUNKS}.kld}"
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 OUTDIR="$ROOT/results/kld-$STAMP"
 mkdir -p "$OUTDIR" "$LX_KLD_STORE"
@@ -219,6 +240,64 @@ print("== [kld] QUALITY GATE " + ("PASS" if passed else "FAIL"))
 raise SystemExit(0 if passed else 1)
 PY
 RC=$?
+
+# --- 3b) canonical arbiter (only when the pinned leg failed) -----------------
+if [[ "$CAPTURE_CANON" -eq 1 ]]; then
+  echo "== [kld] capturing CANONICAL logits from the control binary (ENABLE_OPT=0) …"
+  rm -f "$CANON_LOGITS"
+  if ! GGML_SYCL_ENABLE_OPT=0 run_ppl "$LX_BASE_BIN" "$OUTDIR/canon-capture.log" \
+        --kl-divergence-base "$CANON_LOGITS"; then
+    echo "== [kld] CANON CAPTURE FAIL"; tail -10 "$OUTDIR/canon-capture.log"; exit 2
+  fi
+  if [[ ! -s "$CANON_LOGITS" ]] || grep -q "failed to open" "$OUTDIR/canon-capture.log"; then
+    echo "== [kld] CANON CAPTURE FAIL (silent no-op class)"; exit 2
+  fi
+  echo "== [kld] canonical logits captured → $CANON_LOGITS ($(du -h "$CANON_LOGITS" | cut -f1))"
+fi
+if [[ $RC -eq 1 && -s "$CANON_LOGITS" ]]; then
+  echo "== [kld] pinned leg FAILED — canonical arbiter (policy b, 2026-08-11) …"
+  if run_ppl "$LX_BIN" "$OUTDIR/candidate-canon.log" \
+        --kl-divergence --kl-divergence-base "$CANON_LOGITS"; then
+    python3 - "$OUTDIR/candidate-canon.log" "$OUTDIR/kld.json" \
+             "$LX_KLD_CANON_MAX_MEAN" "$LX_KLD_CANON_MIN_SAME_TOP" "$LX_KLD_CANON_MAX_PPL_RATIO" <<'PY'
+import json, pathlib, re, sys
+log, out, max_mean, min_same, max_ppl = sys.argv[1:6]
+text = pathlib.Path(log).read_text(errors="replace")
+def grab(pattern):
+    m = re.search(pattern, text)
+    return float(m.group(1)) if m else None
+mean_kld  = grab(r"Mean\s+KLD:\s*([0-9.eE+-]+)")
+same_top  = grab(r"Same top p:\s*([0-9.eE+-]+)")
+ppl_ratio = grab(r"Mean\s+ln\(PPL\(Q\)/PPL\(base\)\)\s*:\s*([0-9.eE+-]+)")
+if mean_kld is None or same_top is None:
+    print("== [kld] canon arbiter PARSE FAIL"); raise SystemExit(2)
+ok = (mean_kld <= float(max_mean) and same_top >= float(min_same) and
+      (ppl_ratio is None or ppl_ratio <= float(max_ppl)))
+p = pathlib.Path(out); d = json.loads(p.read_text())
+d.update({"canon_mean_kld": mean_kld, "canon_same_top_pct": same_top,
+          "canon_ln_ppl_ratio": ppl_ratio,
+          "canon_max_mean_kld": float(max_mean),
+          "canon_min_same_top_pct": float(min_same),
+          "canon_max_ln_ppl_ratio": float(max_ppl),
+          "canon_ok": ok})
+if ok:
+    d["passed"] = True
+    d["passed_via"] = "canonical_arbiter"
+p.write_text(json.dumps(d, indent=2) + "\n")
+print(f"== [kld] canon mean KLD : {mean_kld:.6f}  (bound {max_mean})  {'OK' if mean_kld <= float(max_mean) else 'FAIL'}")
+print(f"== [kld] canon same top : {same_top:.3f}% (bound {min_same}%) {'OK' if same_top >= float(min_same) else 'FAIL'}")
+if ppl_ratio is not None:
+    print(f"== [kld] canon ln(PPL)  : {ppl_ratio:+.6f} (bound +{max_ppl})")
+print("== [kld] CANONICAL ARBITER " + ("PASS — candidate is at least as close to canonical as the shipped path" if ok else "FAIL"))
+raise SystemExit(0 if ok else 1)
+PY
+    [[ $? -eq 0 ]] && RC=0
+  else
+    echo "== [kld] canon arbiter candidate run failed; pinned verdict stands"
+  fi
+elif [[ $RC -eq 1 ]]; then
+  echo "== [kld] pinned leg FAILED and no canonical store at $CANON_LOGITS — run --capture-canon once (control binary) to enable the arbiter"
+fi
 
 # Stamp the receipt and expose a stable pointer for the promote path.
 if [[ -s "$OUTDIR/kld.json" ]]; then
