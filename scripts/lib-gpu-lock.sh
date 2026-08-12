@@ -187,8 +187,8 @@ lx_gpu_lock_leave() {
     return 0
   fi
   _lx_gpu_clear_meta
-  eval "flock -u ${LX_GPU_LOCK_FD} 2>/dev/null || true"
-  eval "exec ${LX_GPU_LOCK_FD}>&- 2>/dev/null || true"
+  eval "flock -u ${LX_GPU_LOCK_FD}" 2>/dev/null || true
+  eval "exec ${LX_GPU_LOCK_FD}>&-" 2>/dev/null || true
   _LX_GPU_LOCK_HELD=0
   _lx_gpu_log "RELEASED pid=$$"
 }
