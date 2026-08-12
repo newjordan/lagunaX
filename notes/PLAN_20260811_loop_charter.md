@@ -96,5 +96,11 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
   amended gate via canonical arbiter; serving config shipped (e9ff366);
   server restart with operator. PACE UP per operator: shorter wakeups,
   parallel drafts.
-- Next: q6_K band extension (agent drafting), then N<=64 widen probe, then
-  env.sh knob adoption + bench-serial board promotion.
+- 2026-08-12 iter 11 DONE: q6_K band committed (9272b77c9: 131K prefill
+  1767 t/s, pp512 1573, reorder-SoA q6_K verified). BOARD PROMOTED:
+  1.3122 -> 1.40924 (results/20260812T004213Z), decode held, KLD via
+  canonical arbiter. **The campaign's original acceptance target
+  (LX_TARGET_SCORE 1.40, LOOP_RUNBOOK) is MET.** Serving launch still
+  operator-run; env.sh commit still operator-run (pre-existing LX_BIN diff).
+- Next: N<=64 widen probe; then frontier work (C1 v3 wider XMX coverage,
+  M3, decode-logit instrument) at operator's pleasure.
