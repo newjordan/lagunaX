@@ -22,6 +22,13 @@ updates it, commits findings. AGENTS.md rules bind every iteration unchanged.
 - Subagents: read-only recon/analysis in parallel is fine; GPU measurements
   stay serialized through the lock, one at a time.
 
+## Operator workload statement (2026-08-12, overrides priority ordering)
+
+The operator runs RL loops at max context — never short-context serving.
+**The metric that matters is decode throughput at full depth (50K-131K KV)**,
+then max-context prefill (ingest), then everything else. tg128 d0 remains a
+floor (never regress it) but is not the optimization target.
+
 ## Priority queue (owner: the loop; reorder with reasons, in commits)
 
 P1 **Decode-at-depth wall** (user priority: max context). 81 t/s at 23K depth
@@ -102,5 +109,10 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
   canonical arbiter. **The campaign's original acceptance target
   (LX_TARGET_SCORE 1.40, LOOP_RUNBOOK) is MET.** Serving launch still
   operator-run; env.sh commit still operator-run (pre-existing LX_BIN diff).
-- Next: N<=64 widen probe; then frontier work (C1 v3 wider XMX coverage,
-  M3, decode-logit instrument) at operator's pleasure.
+- 2026-08-12: operator workload statement recorded — max-context decode is
+  THE target. Deep-depth sweep launched (d 49K/98K/122K x pb 16/32/64):
+  first-ever measurement of this model's decode at RL-loop depths, plus
+  depth-scaled split-K tuning. N<=64 widen and other prefill items demoted
+  behind decode-at-depth work.
+- Next after sweep: pick per-depth optimal pb (consider auto-scaling pb with
+  kv_len in-kernel), then M3 lane contiguity, then the deeper FA rework.
