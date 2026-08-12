@@ -151,3 +151,22 @@ segments) is the remaining bounded FA idea. The L2-absorption evidence also
 lowers M3's expected value — the loads may already coalesce adequately at
 the L2 interface. Next iteration: M3 only if cheap; otherwise pivot to P2
 (expert-tile GEMM evidence unit at serving geometry).
+
+## Deep-depth close-out (2026-08-12, RL-workload priority)
+
+First measurement of this model's decode at RL-loop depths, full stack,
+`results/p1-deepdepth-20260812T*/`. pb sweep {16,32,64} at d {49152, 98304,
+122880}: **pb=16 is the flat optimum at every depth** (wider splits pay
+combine overhead faster than they add parallelism) — no depth-scaling patch
+needed; the shipped knob is already right. Stock-vs-shipped A/B (tg64):
+
+| depth | stock pb=4 | pb=16 | M1 win |
+|---|---|---|---|
+| 49152 | 64.16 | 69.63 | +8.5% |
+| 98304 | 42.20 | 47.29 | +12.1% |
+| 122880 | 36.02 | **40.80** | **+13.3%** |
+
+The split-K win grows with depth as the serial-walk model predicted. Decode
+at the full 131K window: **40.8 t/s** (was ~36 stock, never measured before
+today). Remaining headroom to BW-ideal at 122K is still ~1.6x — M3 and the
+future FA rework own it.
