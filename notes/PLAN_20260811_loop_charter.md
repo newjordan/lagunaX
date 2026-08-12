@@ -114,5 +114,8 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
   first-ever measurement of this model's decode at RL-loop depths, plus
   depth-scaled split-K tuning. N<=64 widen and other prefill items demoted
   behind decode-at-depth work.
-- Next after sweep: pick per-depth optimal pb (consider auto-scaling pb with
-  kv_len in-kernel), then M3 lane contiguity, then the deeper FA rework.
+- 2026-08-12 CHAPTER CLOSED: deep sweep banked (pb=16 depth-flat; +13.3% at
+  122K vs stock); M3 falsified (−22%); due-diligence battery green (golden
+  x3, canonical-arbiter KLD pass, 1536-token NaN watch clean at 131K on the
+  stack). CLOSEOUT_20260812_laguna_b70.md is the book. Loop STOPPED.
+  Operator items outstanding: server start, env.sh commit.

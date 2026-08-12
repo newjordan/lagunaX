@@ -25,16 +25,23 @@ top-1 93.4% vs 91.7%, PPL better at 16 and 64 chunks). Golden with knobs off
 is bit-parity; knobs-on greedy diverges at near-ties (reduction-order class,
 documented).
 
-## Final numbers (fill in closing battery)
+## Final numbers (closing battery 2026-08-12, results/closeout-battery-*)
 
-| metric | champion (2026-08-11 AM) | final stack |
+| metric | champion (2026-08-11 AM) | final stack (9272b77c9) |
 |---|---|---|
-| 131K real-text 23K-prompt ingest | 307 t/s (74 s) | 1767 t/s (14 s) |
-| decode @ 23K depth | 81.5 | 89.5–90 |
-| decode @ 49K / 98K / 122K | never measured | (deep sweep — pending) |
+| 131K real-text 23K-prompt ingest | 307 t/s (74 s) | **1764–1767 t/s (14 s, 5.75x)** |
+| decode @ 23K depth | 81.5 | **89.5–90 (+10%)** |
+| decode @ 49K / 98K / 122K | never measured (stock: 64.2/42.2/36.0) | **69.6 / 47.3 / 40.8 (+8.5/+12.1/+13.3%)** |
 | tg128 d0 floor | 152.5 | 152.3–153.2 (held) |
-| board score | 1.3122 | 1.40924 |
-| long-gen NaN watch (≥1024 tok @ depth) | — | (pending) |
+| board score | 1.3122 | **1.40924 (target 1.40 MET)** |
+| golden ×3 knobs-off | — | bit-parity, 3/3 |
+| final KLD (policy b) | — | pinned FAIL (by construction) → **canonical arbiter PASS** (0.0447 / 92.8% / +0.0152, bounds 0.0563 / 91.7% / +0.0237) |
+| 1536-token NaN watch @ 131K, stack on | — | **0 nan/inf**, decode 87.9 t/s sustained |
+| final .so sha256 | — | 53dcd726b7cd6b57… |
+
+Mutation ledger, final: landed C4 + M1 + C1v2(+q6_K); falsified with
+mechanism M2 (GQA head-batch), C1v1 (SIMT tile), M3 (lane contiguity),
+q8_0 KV, FORCE_TILE. pb=16 is depth-flat optimal 24.5K→122K.
 
 ## The mechanism story (one paragraph)
 
