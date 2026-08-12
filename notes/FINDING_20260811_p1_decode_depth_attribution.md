@@ -170,3 +170,16 @@ The split-K win grows with depth as the serial-walk model predicted. Decode
 at the full 131K window: **40.8 t/s** (was ~36 stock, never measured before
 today). Remaining headroom to BW-ideal at 122K is still ~1.6x — M3 and the
 future FA rework own it.
+
+## M3 (K/V lane contiguity) — FALSIFIED; mutation phase of the chapter closed
+
+Implemented cleanly (env-gated, stock-path parity golden OK; patch preserved
+in results/closeout-battery-*/m3-lane-contig.patch), measured **−22% tg64 at
+d98304** (47.2 → 36.8, tight error bars, OFF leg matches the deep-sweep
+baseline). Mechanism: the stock mapping's two 128 B segments per SIMD16 are
+already full cache lines (B70 coalesces them); the 16-lane remap buys no
+bandwidth and pays ~2.7× the shuffle-reduction traffic in the K pass plus
+serialized V rows. Reverted. With M2 and M3 both falsified and split-K
+depth-tuned flat at pb=16, the remaining decode-at-depth headroom (~1.6x to
+BW-ideal at 122K) requires a from-scratch depth-decode FA design — recorded
+as the top open frontier in CLOSEOUT_20260812_laguna_b70.
