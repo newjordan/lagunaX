@@ -31,7 +31,17 @@
 
 set -euo pipefail
 
-REPO=${REPO:-/home/frosty40/turbo/worktrees/lx-champion-tier12}
+# 2026-08-12: serving moved to the lx/reorder-multicol-mkl stack build
+# (05755f5f3 = champion c7d3bfe6d + reorder-multicol + fattn split-K + XMX
+# expert tile). Gated under policy (b): pinned KLD fails by construction
+# (base encodes the old wide-N path), canonical arbiter PASSES —
+# results/kld-20260812T002134Z (canon KLD 0.0362 vs shipped-path 0.0563,
+# top-1 93.4% vs 91.7%, PPL better). Receipts: 131K real text prefill
+# 307->1726 t/s (5.6x), at-depth decode 81.5->89.5 (+10%), tg128 d0 and
+# short-context serving unchanged. FINDING_20260811_reorder_multicol_c4 +
+# FINDING_20260811_p1_decode_depth_attribution +
+# FINDING_20260811_p2_expert_gemm_sizing.
+REPO=${REPO:-/home/frosty40/turbo/worktrees/lx-reorder-multicol}
 BIN="$REPO/build/bin"
 MODEL=${MODEL:-/mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf}
 TEMPLATE=${TEMPLATE:-/home/frosty40/turbo/worktrees/treebeard-pr-private-latest/models/templates/poolside-Laguna-XS-2.1.jinja}
@@ -54,6 +64,10 @@ export GGML_SYCL_DISABLE_MUL_MAT_ADD_FUSE=0
 export GGML_SYCL_DISABLE_MOE_DUAL_DOWN=1
 export GGML_SYCL_DISABLE_MOE_DUAL_MULTITOKEN=1
 export GGML_SYCL_DISABLE_QKV_SHARED_QUANT=1
+# lx stack knobs (2026-08-12, policy-b gated — see header):
+export GGML_SYCL_LX_REORDER_MULTICOL_MKL=1   # wide batches: fp16/oneMKL not 8-col MMVQ (+400% prefill)
+export GGML_SYCL_LX_FATTN_PARALLEL_BLOCKS=16 # FA decode split-K width (+10% at-depth decode)
+export GGML_SYCL_LX_EXPERT_TILE_GEMM=1       # XMX fused dequant-GEMM, small-N experts (+12% prefill)
 
 # Loader-resolution assert (FINDING_20260810 trap family): the server must run
 # THIS build's kernels, not whatever else is on the path.
@@ -75,7 +89,7 @@ exec "$BIN/llama-server" \
   -t 16 \
   --host 0.0.0.0 --port "$PORT" \
   --jinja --chat-template-file "$TEMPLATE" \
-  --temp 1.0 --top-k 20 --top-p 1.0 --min-p 0.0 \
+  --temp 0.7 --top-k 20 --top-p 0.95 --min-p 0.05 \
   -n -1 \
   --metrics \
   >>"$LOG" 2>&1
