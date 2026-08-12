@@ -113,3 +113,12 @@ tg128 d0 and short-context serving unchanged · absolute PPL better ·
 closer to canonical math than the shipped path on every measure.**
 All of it dark behind env knobs, promotion blocked solely on the
 KLD-gate policy decision documented in FINDING_20260811_reorder_multicol_c4.
+
+## v2 addendum — reorder-SoA path receipted on real text (iteration 9)
+
+23K real-text leg, all knobs + VERIFY: **208 reorder-soa + 192 linear
+dispatches verified**; worst reordered max_abs/rel err 2.6e-02 — same class
+as linear (2.2e-02), i.e. the SoA offset math is correct and the residual is
+fp16-reference rounding. The production (post-warmup, reordered) path now has
+a runtime numerics receipt. Verify-mode leg still ran 1491 t/s prefill /
+89.9 decode. `results/p2-c1v2-*/verify-reorder.log`. C1 v2 fully receipted.

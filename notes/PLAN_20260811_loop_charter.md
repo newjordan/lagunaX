@@ -88,6 +88,8 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
   KLD unchanged, verify-mode numerics receipted. DAY-1 CLOSE: stacked knobs =
   5.6x max-context prefill + 10% at-depth decode vs shipped champion, all
   dark behind env, blocked only on the gate-policy decision.
-- Next (iter 9+): v2.1 (q6_K band, N<=64 widen, reorder-path runtime receipt);
-  or M3; or operator direction. Board bench-serial with the full stack worth
-  running for the record once the gate policy is decided.
+- 2026-08-11 iter 9 DONE: reorder-SoA tile path receipted on real text (208
+  reordered dispatches, worst err 2.6e-02 = linear class). C1 v2 complete.
+- Next (iter 10+): v2.1 small candidates (q6_K band ~+1-2%, N<=64 widen
+  ~+3-5%), M3, or operator direction. Board bench-serial with the full stack
+  once gate policy is decided. Night pace: one unit per wake.
