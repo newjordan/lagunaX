@@ -7,10 +7,12 @@ updates it, commits findings. AGENTS.md rules bind every iteration unchanged.
 
 ## Standing boundaries (not mine to move)
 
-- **KLD gate policy** stays as-is until the operator answers the question in
-  FINDING_20260811_reorder_multicol_c4 (re-pin to canonical / add canonical
-  arbiter / override). Until then: no promotion of wide-N-numerics candidates,
-  `serve-laguna.sh` untouched, the pinned base never re-captured.
+- **KLD gate policy RESOLVED 2026-08-12: operator chose (b)** — canonical
+  arbiter added to quality-gate-kld.sh (b13e51f); full stack PASSES
+  (kld-20260812T002134Z). serve-laguna.sh now ships the stack (e9ff366);
+  the server restart itself is operator-run (classifier boundary). The
+  pinned base is still never re-captured; canonical store is control-bin
+  only (--capture-canon).
 - Decode floors: tg128 d0 ≥ 152.5; real-text at-depth decode ≥ its same-session
   control. Never buy prefill with decode.
 - GPU: exclusive lock always; never SIGKILL a llama process (blitter wedge —
@@ -90,6 +92,9 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
   dark behind env, blocked only on the gate-policy decision.
 - 2026-08-11 iter 9 DONE: reorder-SoA tile path receipted on real text (208
   reordered dispatches, worst err 2.6e-02 = linear class). C1 v2 complete.
-- Next (iter 10+): v2.1 small candidates (q6_K band ~+1-2%, N<=64 widen
-  ~+3-5%), M3, or operator direction. Board bench-serial with the full stack
-  once gate policy is decided. Night pace: one unit per wake.
+- 2026-08-12 iter 10 DONE: policy (b) implemented + full stack PASSES the
+  amended gate via canonical arbiter; serving config shipped (e9ff366);
+  server restart with operator. PACE UP per operator: shorter wakeups,
+  parallel drafts.
+- Next: q6_K band extension (agent drafting), then N<=64 widen probe, then
+  env.sh knob adoption + bench-serial board promotion.

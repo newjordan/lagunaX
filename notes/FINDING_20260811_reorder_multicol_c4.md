@@ -122,3 +122,14 @@ the gate-policy decision. The residual prefill gap to the OPT=0 ceiling
 (1535.6 vs 1610.8, −4.7%) is likewise mostly NOT narrow slices (~1-2% of rows
 at serving geometry) — reorder-aware dequant kernel efficiency vs linear, or
 session variance; unattributed-minor.
+
+## RESOLUTION (2026-08-12): operator chose policy (b) — canonical arbiter
+
+Gate amended (`scripts/quality-gate-kld.sh`, commit b13e51f): when the pinned
+leg fails, the candidate passes iff it is at least as close to canonical
+(control-bin ENABLE_OPT=0 store, captured via --capture-canon) as the shipped
+path — bounds 0.056310 / 91.667% / +0.023650, from this finding's receipts.
+Full stack verdict (results/kld-20260812T002134Z): canon 0.036245 / 93.431% /
++0.016855 → **PASS via canonical_arbiter**. Serving config moved to the stack
+build with the three knobs (commit e9ff366); server restart is with the
+operator. Board/env.sh promotion queued behind the serving smoke.
