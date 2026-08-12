@@ -83,7 +83,11 @@ P4 **Gate tooling**: add an OPTIONAL canonical-triangulation leg to
 - 2026-08-11 iter 7 DONE: XMX microbench GO — fused XMX beats MKL 1.33x@N16
   / 1.21x@N32, tie@64, lose@128; numerics better than MKL. Revised C1 v2
   prize: +15-20% prefill@131K (band N<=32). benchmark/xmx-dequant-gemm/.
-- Next (iter 8): integrated C1 v2 = v1 skeleton + microbench XMX kernel +
-  dst-parity VERIFY mode, band N<=32, full gate battery. Day-1 net: C4 +400%
-  prefill@131K, M1 +10% at-depth decode, 4 receipts (M2, C1v1, q8_0-KV,
-  FORCE_TILE dead; XMX GO). Gate-policy decision still with operator.
+- 2026-08-11 iter 8 DONE: C1 v2 LANDED (05755f5f3): +11.7% prefill@131K
+  (1726 t/s), +33% pp512 (1547), decode untouched (interleaved A/B), canonical
+  KLD unchanged, verify-mode numerics receipted. DAY-1 CLOSE: stacked knobs =
+  5.6x max-context prefill + 10% at-depth decode vs shipped champion, all
+  dark behind env, blocked only on the gate-policy decision.
+- Next (iter 9+): v2.1 (q6_K band, N<=64 widen, reorder-path runtime receipt);
+  or M3; or operator direction. Board bench-serial with the full stack worth
+  running for the record once the gate policy is decided.

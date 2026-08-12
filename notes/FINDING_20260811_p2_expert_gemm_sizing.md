@@ -81,3 +81,35 @@ deletion + fp16 round-trip on the N≤32 band (39.4% of calls, 8.7% of rows)
 at kernel parity+ ≈ **+15-20% prefill at 131K**, more if the band widens to
 64 after verify. C1 v2 = v1's integration skeleton (engagement/skip/metadata
 were correct) + the microbench kernel + a dst-parity VERIFY mode, band ≤32.
+
+## C1 v2 (XMX) — LANDED. +11.7% prefill@131K, +33% pp512, decode untouched
+
+Commit `05755f5f3` (stacks on C4+M1), knob `GGML_SYCL_LX_EXPERT_TILE_GEMM=1`
+default OFF, verify mode `..._VERIFY=1`. Receipts: `results/p2-c1v2-*/`
+(battery + interleaved tg floor A/B) and the agent verify log in
+`results/p2-c1-tile-20260811T225429Z/c2-xmx-verify-golden.log`.
+
+| gate | result |
+|---|---|
+| 131K real text | prefill **1544.6 → 1726.1 (+11.7%)**, decode 89.9 → 89.5 (noise) |
+| pp512 (board) | **1160 → 1547 (+33%)** — band ≈ all experts at T=512, works pre-reorder too |
+| tg128 d0 | interleaved off/on r=5: 152.22/152.22 vs 152.11/152.31 — Δ≈0 (both ~0.3 below the morning floor = thermal, state-independent) |
+| canonical KLD | 0.034444 / 93.211% — unchanged vs C4-only (0.0338/94.0) ⇒ numerics sound |
+| pinned KLD | 0.0504 — same class as C4 (base-path bias, see gate-policy question) |
+| verify mode | typical per-dispatch rel err 2-3e-3 vs fp16-accumulate oneMKL |
+| golden knob-ON | greedy near-tie flip, coherent — reduction-order class, KLD arbitrates |
+
+Open (v2.1 candidates): q6_K band support (down banks in 16 layers), widen
+band to N≤64 (microbench says tie — only launch-deletion would pay),
+runtime receipt for the reorder-SoA path (all golden dispatches ran linear).
+
+## Loop day-1 close-out (2026-08-11)
+
+Stacked env-gated candidate set on `lx/reorder-multicol-mkl` @ 05755f5f3:
+C4 (reorder-multicol) + M1 (fattn split-K pb16) + C1v2 (XMX expert tile).
+vs the shipped champion, real text at -c 131072:
+**prefill 307 → 1726 t/s (5.6x) · at-depth decode 81.5 → 89.5 (+10%) ·
+tg128 d0 and short-context serving unchanged · absolute PPL better ·
+closer to canonical math than the shipped path on every measure.**
+All of it dark behind env knobs, promotion blocked solely on the
+KLD-gate policy decision documented in FINDING_20260811_reorder_multicol_c4.
