@@ -1,0 +1,22 @@
+Laguna XS 2.1 on Intel Arc Pro B70 — long-context stack package (2026-08-12)
+
+kernel repo   : /home/frosty40/turbo/worktrees/lx-reorder-multicol
+branch        : lx/reorder-multicol-mkl
+tag           : lx-stack-1.4092-20260812
+head          : 9272b77c9 (base champion c7d3bfe6d)
+libggml-sycl  : sha256 53dcd726b7cd6b5739e3f3c6d967d0d258b55dc16ec49f3e0c6f9e145665c344
+model         : /mnt/data2tb/laguna/archived/Laguna-XS-2.1-GGUF-q4-20260705/Laguna-XS-2.1-Q4_K_M.gguf
+campaign repo : /home/frosty40/turbo/lx (notes/CLOSEOUT_20260812_laguna_b70.md is the book)
+board         : 1.40924 (results/20260812T004213Z), promoted, target 1.40 met
+quality       : gate policy (b) canonical-arbiter PASS (results/kld-20260812T002134Z + closeout battery)
+
+Env (all three required for the receipted numbers, individually kill-switchable):
+  GGML_SYCL_LX_REORDER_MULTICOL_MKL=1
+  GGML_SYCL_LX_FATTN_PARALLEL_BLOCKS=16
+  GGML_SYCL_LX_EXPERT_TILE_GEMM=1
+plus the ship block in serve-laguna.sh (DISABLE_DNN=1 etc — load-bearing).
+
+Headline numbers (23K wikitext, -c 131072, B70):
+  ingest  307 -> 1764 t/s (5.75x)     decode@23K  81.5 -> 90 (+10%)
+  decode@122K  36.0 -> 40.8 (+13.3%)  tg128 d0 held ~152.5
+  1536-token generation at 131K: 0 nan/inf, 87.9 t/s sustained
