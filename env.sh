@@ -19,7 +19,7 @@ export LX_ROOT="${LX_ROOT:-/home/frosty40/turbo/lx}"
 # decode 152.54). Older tiers: treebeard-base-control-latest/build-*.
 # NOTE: LX_BIN must be exported BEFORE sourcing env.sh — LD_LIBRARY_PATH is
 # captured from it at source time (FINDING_20260810).
-export LX_BIN="${LX_BIN:-/home/frosty40/turbo/worktrees/lx-champion-tier12/build/bin}"
+export LX_BIN="${LX_BIN:-/home/frosty40/turbo/lx/benchmark/kernel/build/bin}"
 export LX_LLAMA_BENCH="${LX_LLAMA_BENCH:-$LX_BIN/llama-bench}"
 export LX_LLAMA_CLI="${LX_LLAMA_CLI:-$LX_BIN/llama-cli}"
 export LX_LLAMA_SERVER="${LX_LLAMA_SERVER:-$LX_BIN/llama-server}"
@@ -128,3 +128,11 @@ mkdir -p "$LX_ROOT/baseline" "$LX_RESULTS" "$LX_ROOT/correctness"
 # loop-session candidate: force oneDNN off (FRONTIER_20260801_onednn_cache_hit_tax / onednn_postop_epilogue)
 export GGML_SYCL_DISABLE_DNN=1
 export LX_SYCL_DISABLE_DNN=1
+
+# lx stack knobs (2026-08-12, gate policy (b) — operator-approved; receipts:
+# FINDING_20260811_reorder_multicol_c4 RESOLUTION, kld-20260812T002134Z pass
+# via canonical arbiter). Default-on for the bench contract from this date;
+# each remains individually kill-switchable by exporting 0 before sourcing.
+export GGML_SYCL_LX_REORDER_MULTICOL_MKL="${GGML_SYCL_LX_REORDER_MULTICOL_MKL:-1}"
+export GGML_SYCL_LX_FATTN_PARALLEL_BLOCKS="${GGML_SYCL_LX_FATTN_PARALLEL_BLOCKS:-16}"
+export GGML_SYCL_LX_EXPERT_TILE_GEMM="${GGML_SYCL_LX_EXPERT_TILE_GEMM:-1}"
