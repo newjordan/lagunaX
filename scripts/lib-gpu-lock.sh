@@ -33,7 +33,7 @@ _lx_gpu_log() { echo "[lx-gpu-lock] $*" >&2; }
 
 # GPU-capable llama jobs we refuse to share the card with.
 # Match by process *name* (pgrep -x) so scanners/awk patterns never false-positive.
-# CPU-only embedding server (-ngl 0 / --embedding) is intentionally not matched.
+# Servers with explicit zero GPU layers are intentionally not matched.
 lx_gpu_foreign_procs() {
   local me=$$ line pid rest
   # exact binary names only
@@ -45,7 +45,7 @@ lx_gpu_foreign_procs() {
     [[ "$pid" == "$me" ]] && continue
     # drop CPU-only servers
     if [[ "$rest" == *llama-server* ]] || [[ "$(ps -p "$pid" -o comm= 2>/dev/null)" == "llama-server" ]]; then
-      if [[ "$rest" == *"--embedding"* ]] || [[ "$rest" == *"-ngl 0"* ]] || [[ "$rest" == *"-ngl=0"* ]]; then
+      if [[ "$rest" =~ (^|[[:space:]])(-ngl|--gpu-layers|--n-gpu-layers)([[:space:]]+|=)0([[:space:]]|$) ]]; then
         continue
       fi
     fi
@@ -58,6 +58,8 @@ lx_gpu_foreign_procs() {
     pgrep -a -x llama-perplexit 2>/dev/null || true
     pgrep -a -x llama-cli 2>/dev/null || true
     pgrep -a -x llama-server 2>/dev/null || true
+    # test-backend-ops exceeds Linux's 15-character process-name limit.
+    pgrep -a -x test-backend-op 2>/dev/null || true
   )
 }
 
