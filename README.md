@@ -1,6 +1,6 @@
 # lagunaX — absolute serial speed on Arc B70
 
-Private campaign repo: **Laguna XS 2.1** serial (one stream) on Intel Arc Pro B70.
+Campaign repo: **Laguna XS 2.1** serial (one stream) on Intel Arc Pro B70.
 
 **Mission:** push serial tok/s to the hardware limit. mlx.fast-shaped score is the *yardstick* (decode-weighted speedup + golden), not multi-slot capacity.
 
@@ -17,7 +17,7 @@ See [TASK.md](TASK.md) for the full contract.
 ## Quickstart
 
 ```bash
-cd /home/frosty40/turbo/lx
+# from the repo root
 source env.sh
 
 # Pin baseline once (control binary + Q4_K_M + serial flags)
